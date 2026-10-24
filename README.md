@@ -23,7 +23,7 @@ Think of it less like a submission dropbox and more like a **living library of w
 |---|---|
 | 📚 **Knowledge base** | Every project is a teaching artifact — not just a grade |
 | 🌱 **Growth over time** | See how Scholar skills evolve, cohort after cohort |
-| 🔁 **Build, don't restart** | Future Scholars can fork, extend, or remix past work |
+| 🔁 **Build** | Future Scholars can make pull request, extend, or remix past work |
 | 📣 **Proof of impact** | A public artifact MMC can point to with pride — for Google, partners, and future Scholars |
 
 ---
