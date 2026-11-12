@@ -4,7 +4,7 @@
 > **Target Audience:** Hackathon Judges, Climate Resilience Operators, Municipal Stakeholders  
 > **Production Service:** [https://climateops-api-4twvqq3jta-uc.a.run.app](https://climateops-api-4twvqq3jta-uc.a.run.app)  
 > **OpenAPI Contract:** [https://climateops-api-4twvqq3jta-uc.a.run.app/docs](https://climateops-api-4twvqq3jta-uc.a.run.app/docs)  
-> **Repository:** [https://github.com/creova-gif/climateops-mvp](https://github.com/creova-gif/climateops-mvp)
+> **Showcase Repository:** [https://github.com/Mentor-Me-Collective/google-cloud-launchpad-showcase/tree/team/climateops/2026-cohort/climateops](https://github.com/Mentor-Me-Collective/google-cloud-launchpad-showcase/tree/team/climateops/2026-cohort/climateops)
 
 ---
 
@@ -18,10 +18,10 @@
 - **UN Sustainable Development Goal:** SDG 13: Climate Action (Target 13.1 — Resilience & Adaptive Capacity)
 - **Live Cloud Run Service:** `https://climateops-api-4twvqq3jta-uc.a.run.app`
 - **Team Roster:**
-  - **Justin** (`@creova-gif`) — Product Lead, Governance & GCP Architecture
-  - **Blanca** (`@bcperez14`) — Cloud Run, NVIDIA NIM & Ingestion Pipeline
-  - **Kseniya** (`@ksen-nm`) — Bronx Facility Datasets, Provenance & Scoring
-  - **Shiksha** (`@Shiksha99`) — STRIDE Security, RBAC & Cloud Storage Uploads
+  - **Blanca** (`@bcperez14`) — Team Lead · AI Research Foundations
+  - **Justin** (`@creova-gif`) — AI Cloud Leader
+  - **Kseniya** (`@ksen-nm`) — Cloud Data Analytics
+  - **Shiksha** (`@Shiksha99`) — Cloud Cybersecurity
 
 ### The One-Sentence Takeaway
 > **"Turning raw weather alerts into accountable, human-approved readiness actions before extreme heat hits vulnerable urban communities."**
@@ -129,7 +129,9 @@
 
 ### Live Infrastructure Telemetry
 - **Compute:** Google Cloud Run (`climateops-api` in `us-central1`, containerized via multi-stage Dockerfile).
-- **AI Inference:** NVIDIA NIM API Catalog (`nvidia/nemotron-3.5-bolt-e4b`), benchmarked at ~10.6s latency.
+- **AI Inference (NVIDIA NIM):**
+  - `nvidia/nemotron-3.5-bolt-e4b`: Source-grounded heat brief synthesis benchmarked at ~10.6s latency.
+  - `meta/llama-3.2-90b-vision-instruct`: Multimodal visual inspection of uploaded facility proof (HVAC inspection tags, cooling center gauges).
 - **Resilience:** Automatic fallback to deterministic evidence templates if the model endpoint is unavailable.
 - **Persistence:** Cloud Firestore (Native Mode) with multi-tenant data isolation and event sourcing.
 - **Proof Storage:** Google Cloud Storage private bucket with time-limited HMAC signed upload URLs.
@@ -265,10 +267,10 @@ $$\text{Priority Score} = \sum (\text{Hazard}_{30} + \text{Vulnerability}_{25} +
 ### Team Ownership & Contributions
 | Team Member | Role | Core Contributions |
 |---|---|---|
-| **Justin** (`@creova-gif`) | Product Lead & GCP Architect | Problem framing, SDG 13 alignment, approval workflow governance, frontend UI/UX engineering, Cloud Run deployment. |
-| **Blanca** (`@bcperez14`) | Cloud Infrastructure & AI Lead | FastAPI service architecture, NVIDIA NIM integration & benchmarking, Cloud Scheduler ingestion pipeline, Docker containerization. |
-| **Kseniya** (`@ksen-nm`) | Data & Provenance Lead | South Bronx facility research, data schemas, simulated weather fixtures, deterministic scoring algorithms. |
-| **Shiksha** (`@Shiksha99`) | Security & Compliance Lead | STRIDE threat modeling, RBAC policy enforcement, Secret Manager integration, GCS signed URL proof security, audit ledger. |
+| **Blanca** (`@bcperez14`) | Team Lead · AI Research Foundations | End-to-end pipeline from forecast to cited brief, NVIDIA NIM models (`nvidia/nemotron-3.5-bolt-e4b` & `meta/llama-3.2-90b-vision-instruct`), model behavior, visible prioritization. |
+| **Justin** (`@creova-gif`) | AI Cloud Leader | Workflow definition, requirements, feature priorities, manager approval flow, value framing, UI/UX console engineering, Cloud Run container deployment. |
+| **Kseniya** (`@ksen-nm`) | Cloud Data Analytics | South Bronx facility research, data validation, Mott Haven & Melrose data schemas, simulated weather fixtures, deterministic scoring algorithms. |
+| **Shiksha** (`@Shiksha99`) | Cloud Cybersecurity | STRIDE threat modeling, access security and RBAC roles, Secret Manager integration, GCS signed URL proof security, immutable audit ledger. |
 
 ### Honest Boundaries & Disclosures
 - **Operational Grounding:** Operational protocols and checklist templates are grounded in published NYC Emergency Management (NYCEM) Heat Emergency Plans and CDC/OSHA facility guidelines; direct municipal operator fieldwork was excluded to adhere to strict institutional research boundaries.

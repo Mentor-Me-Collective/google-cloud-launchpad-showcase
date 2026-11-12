@@ -1,6 +1,6 @@
 # Project charter — ClimateOps
 
-**Status:** proposed · **Accountable lead:** Justin · **Duration:** 4-week MVP following kickoff before 2026-11-04.
+**Status:** active · **Team Lead:** Blanca Perez · **Duration:** 4-week MVP following kickoff on 2026-11-01.
 
 ## Mission and outcome
 
@@ -30,7 +30,10 @@ A South Bronx facility manager with limited staff can understand an extreme-heat
 
 ## Team responsibilities
 
-Justin: accountable requirements owner, workflow/UX, research and evaluation, gate acceptance. Blanca: application, backend, cloud and pipelines. Kseniya: data and evaluation support. Shiksha: threat modeling and security gate. AI research track: assign named owner at kickoff. Responsibilities proposed; confirm agreement.
+- **Blanca Perez (Team Lead · AI Research Foundations):** Builds the core pipeline from forecast to cited readiness brief, NVIDIA NIM models (`nvidia/nemotron-3.5-bolt-e4b` and `meta/llama-3.2-90b-vision-instruct`), model behavior, and visible prioritization.
+- **Justin Mafie (AI Cloud Leader):** Defines the workflow, requirements, feature priorities, manager approval flow, value framing, UI/UX console engineering, and Cloud Run deployment.
+- **Kseniya Naumovich (Cloud Data Analytics):** Validates data, facility and neighborhood records, forecast quality, success metrics, and evaluation sets.
+- **Shiksha Kandel (Cloud Cybersecurity):** Secures access, sign-in and RBAC roles, API key management in Secret Manager, input validation, and privacy of facility data.
 
 ## Definition of done
 
@@ -43,4 +46,4 @@ Justin: accountable requirements owner, workflow/UX, research and evaluation, ga
 
 ## Governance and change control
 
-Only Justin accepts product scope decisions after team review. Shiksha can block security release; Kseniya can block invalid data; Blanca can block unsafe integration. Record tradeoffs and changed commitments in decision log and ADRs. No blocked gate can be overridden silently.
+Decisions are reviewed collaboratively across all four tracks. Shiksha can block security release; Kseniya can block invalid data; Blanca can block unsafe integration; Justin accepts workflow requirements. Record tradeoffs and changed commitments in decision log and ADRs. No blocked gate can be overridden silently.

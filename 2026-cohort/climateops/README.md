@@ -1,6 +1,6 @@
 # ClimateOps: SDG 13 Extreme Heat Readiness MVP
 
-> **Status (7 Nov 2026):** Verified live build (backend + web console + 44 passing automated tests) running on **Google Cloud Run** with **NVIDIA NIM** (`nvidia/nemotron-3.5-bolt-e4b`), native **Firestore**, private **Google Cloud Storage** proof bucket, **Google Secret Manager**, and **Cloud Scheduler**. All automated gate, authorization, and grounding tests passing.
+> **Status (7 Nov 2026):** Verified live build (backend + web console + 44 passing automated tests) running on **Google Cloud Run** with **NVIDIA NIM** (`nvidia/nemotron-3.5-bolt-e4b` for cited briefings and `meta/llama-3.2-90b-vision-instruct` for multimodal evidence review), native **Firestore**, private **Google Cloud Storage** proof bucket, **Google Secret Manager**, and **Cloud Scheduler**. All automated gate, authorization, and grounding tests passing.
 
 ClimateOps helps a time-constrained facility manager in Mott Haven/Melrose, South Bronx, turn National Weather Service (NWS) heat alerts into a prioritized, evidence-cited readiness brief, obtain **human manager approval**, assign due-dated tasks, collect proof of completion, and review the event history.
 
@@ -23,7 +23,8 @@ Both must make a real feature work. Where each fits, how the demo shows it, and 
 
 | Technology | Feature it powers | Status | Show in demo | Reproduce |
 |---|---|---|---|---|
-| **NVIDIA NIM** (API Catalog, OpenAI-compatible endpoint) | Writes the cited readiness brief from a validated evidence bundle; cannot set scores or approve anything | **Verified live** (`nvidia/nemotron-3.5-bolt-e4b`, ~10.6s latency, valid JSON citations, `fallback: False`) | Console "Integrations" panel shows model id, last-brief source (AI vs template) and latency; brief header says `AI DRAFT` | `python scripts/smoke_nim.py`, then `make run` and Generate |
+| **NVIDIA NIM (Text / Briefing)** | Writes the cited readiness brief from a validated evidence bundle; cannot set scores or approve anything (`nvidia/nemotron-3.5-bolt-e4b`) | **Verified live** (`nvidia/nemotron-3.5-bolt-e4b`, ~10.6s latency, valid JSON citations, `fallback: False`) | Console "Integrations" panel shows model id, last-brief source (AI vs template) and latency; brief header says `AI DRAFT` | `python scripts/smoke_nim.py`, then `make run` and Generate |
+| **NVIDIA NIM (Vision / Inspection)** | Multimodal evidence verification (`meta/llama-3.2-90b-vision-instruct`); analyzes uploaded facility proof (HVAC inspection tags, cooling center thermostat gauges) | **Verified supported** (`meta/llama-3.2-90b-vision-instruct` via build.nvidia.com API catalog) | Visual proof review in evidence drawer; verified image inspection | configure `NVIDIA_VISION_MODEL_ID` |
 | **Google Cloud Run** | Hosts the API + console | **Verified deployed** (`climateops-api` in `climateops-justin`) | Integrations panel shows "running on Cloud Run: climateops-api"; public URL `https://climateops-api-4twvqq3jta-uc.a.run.app` | `deploy/README.md` |
 | **Firestore** | Persists facilities, briefs, approvals, tasks, events | **Verified live** in Datastore/Firestore native mode | Integrations panel: Firestore "in use" | set `STORE_BACKEND=firestore` |
 | **Cloud Storage (private)** | Staff proof uploads via short-lived signed URLs, tenant-scoped paths | **Verified live** (`climateops-justin-climateops-proof`) | Upload mode shows `gcs` | set `STORAGE_BUCKET` |
@@ -63,10 +64,10 @@ Copy `.env.example` to `.env` (git-ignored) for real keys; see [TEAM-START.md](T
 ## Team credits and individual contributions
 | Contributor | GitHub | Planned responsibility | Verified contribution |
 |---|---|---|---|
-| Justin | `@creova-gif` | Product lead, requirements, research, cloud leadership, codebase | Project architecture, Google Cloud project provisioning, approval-first workflow design, acceptance testing |
-| Blanca | `@bcperez14` | NVIDIA integration, API/cloud, deployment | Cloud Run deployment, NVIDIA NIM model benchmarking (`nvidia/nemotron-3.5-bolt-e4b`), Cloud Scheduler ingestion setup |
-| Kseniya | `@ksen-nm` | Data sources, provenance, scoring rules | Mott Haven / Melrose public facility dataset, simulated heat warning fixtures, deterministic ranking validation |
-| Shiksha | `@Shiksha99` | Security, secrets, access control, proof storage | Secret Manager integration (`nvidia-api-key`, `ingest-token`), Cloud Storage private signed URLs, IAM roles & audit logging |
+| Blanca | `@bcperez14` | **Team Lead** · AI Research Foundations | Core pipeline from forecast to cited readiness brief, NVIDIA NIM models (`nvidia/nemotron-3.5-bolt-e4b` and `meta/llama-3.2-90b-vision-instruct`), model behavior, and visible prioritization |
+| Justin | `@creova-gif` | **AI Cloud Leader** | Workflow definition, requirements, feature priorities, manager approval flow, value framing, UI/UX console engineering, and Cloud Run deployment |
+| Kseniya | `@ksen-nm` | **Cloud Data Analytics** | Facility and neighborhood records, Mott Haven / Melrose dataset validation, forecast quality, success metrics, and evaluation sets |
+| Shiksha | `@Shiksha99` | **Cloud Cybersecurity** | Access security, sign-in and RBAC roles, API key management in Secret Manager, input validation, and facility data privacy |
 
 ## Start here
 

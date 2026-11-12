@@ -21,6 +21,9 @@ class Settings:
     nvidia_model_id: str = field(
         default_factory=lambda: os.getenv("NVIDIA_MODEL_ID", "nvidia/nemotron-3.5-bolt-e4b")
     )
+    nvidia_vision_model_id: str = field(
+        default_factory=lambda: os.getenv("NVIDIA_VISION_MODEL_ID", "meta/llama-3.2-90b-vision-instruct")
+    )
     nvidia_base_url: str = field(
         default_factory=lambda: os.getenv("NVIDIA_BASE_URL", "https://integrate.api.nvidia.com/v1")
     )

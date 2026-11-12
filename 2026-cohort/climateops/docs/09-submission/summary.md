@@ -5,7 +5,7 @@
 **OpenAPI Specification:** [https://climateops-api-4twvqq3jta-uc.a.run.app/docs](https://climateops-api-4twvqq3jta-uc.a.run.app/docs)  
 **Verification Date:** 7 November 2026  
 **Target SDG:** UN Sustainable Development Goal 13: Climate Action (Target 13.1 — Climate Resilience & Adaptive Capacity)  
-**Team:** Justin (`@creova-gif`, Product Lead & GCP Architect), Blanca (`@bcperez14`, Cloud Infrastructure & AI Lead), Kseniya (`@ksen-nm`, Data & Provenance Lead), Shiksha (`@Shiksha99`, Security & Compliance Lead)
+**Team:** Blanca (`@bcperez14`, Team Lead · AI Research Foundations), Justin (`@creova-gif`, AI Cloud Leader), Kseniya (`@ksen-nm`, Cloud Data Analytics Lead), Shiksha (`@Shiksha99`, Cloud Cybersecurity Lead)
 
 ---
 
@@ -96,7 +96,9 @@ ClimateOps bridges Google Cloud's serverless infrastructure with NVIDIA's accele
 ```
 
 1. **Google Cloud Run:** Hosts the containerized FastAPI backend and responsive emerald web dashboard in `us-central1`. Configured with automated health checking (`/healthz`), auto-scaling, and container execution timeouts tailored for model inference.
-2. **NVIDIA NIM API Catalog (`nvidia/nemotron-3.5-bolt-e4b`):** Generates structured, evidence-grounded operational briefs in ~10.6s. The model is strictly constrained to the verified evidence bundle JSON. Every claim and action item must cite explicit source identifiers (`[SRC-NWS-OKX]`, `[FAC:FAC-PATTERSON-CC]`). The model cannot autonomously approve tasks or invent unverified scores.
+2. **NVIDIA NIM API Catalog (`nvidia/nemotron-3.5-bolt-e4b` & `meta/llama-3.2-90b-vision-instruct`):**
+   - **Operational Briefing:** `nvidia/nemotron-3.5-bolt-e4b` generates structured, evidence-grounded operational briefs in ~10.6s. The model is strictly constrained to the verified evidence bundle JSON. Every claim and action item must cite explicit source identifiers (`[SRC-NWS-OKX]`, `[FAC:FAC-PATTERSON-CC]`). The model cannot autonomously approve tasks or invent unverified scores.
+   - **Multimodal Visual Inspection:** `meta/llama-3.2-90b-vision-instruct` provides visual reasoning and verification over uploaded facility completion evidence (HVAC compressor service tags, chiller pressure gauges, cooling center thermostat photos), ensuring physical proof matches assigned readiness tasks before final sign-off.
 3. **Citation Validator & Fallback Resiliency:** A post-inference verification engine parses model output with regular expressions and AST traversal, verifying that every citation exists in the evidence bundle. If the NVIDIA NIM endpoint is unreachable, ClimateOps automatically falls back to an evidence-grounded deterministic template, ensuring zero operational downtime.
 4. **Google Cloud Firestore (Native Mode):** Stores multi-tenant facility profiles, versioned readiness briefs, cryptographic approvals, operational tasks, and an immutable event-sourced audit ledger.
 5. **Private Google Cloud Storage:** Staff proof images are uploaded directly from client browsers to a private bucket using time-limited (15-minute) HMAC-signed PUT URLs, eliminating proxy memory bottlenecks on Cloud Run.
@@ -140,10 +142,10 @@ ClimateOps was engineered under strict software quality and security controls:
 ### 6. Team Contributions, Honest Boundaries, and Future Roadmap
 
 #### Team Ownership & Specific Contributions
-- **Justin (`@creova-gif`, Product Lead & GCP Architect):** Project vision, SDG 13 alignment, approval workflow governance, frontend UI/UX engineering, Cloud Run container deployment, and end-to-end acceptance testing.
-- **Blanca (`@bcperez14`, Cloud Infrastructure & AI Lead):** FastAPI backend services, Dockerfile containerization, NVIDIA NIM model benchmarking and integration, Cloud Scheduler ingestion pipeline, and CI/CD verification.
-- **Kseniya (`@ksen-nm`, Data & Provenance Lead):** South Bronx public facility research, data schemas, simulated weather fixtures, deterministic scoring algorithms, and data provenance auditing.
-- **Shiksha (`@Shiksha99`, Security & Compliance Lead):** STRIDE threat modeling, RBAC authorization matrices, Secret Manager integration, GCS signed upload security, and immutable event ledger design.
+- **Blanca (`@bcperez14`, Team Lead · AI Research Foundations):** End-to-end pipeline from forecast to cited readiness brief, NVIDIA NIM models (`nvidia/nemotron-3.5-bolt-e4b` for briefing & `meta/llama-3.2-90b-vision-instruct` for visual inspection), model behavior, Cloud Scheduler ingestion pipeline, and visible prioritization.
+- **Justin (`@creova-gif`, AI Cloud Leader):** Workflow definition, requirements, feature priorities, manager approval flow, value framing, UI/UX console engineering, Cloud Run container deployment, and end-to-end acceptance testing.
+- **Kseniya (`@ksen-nm`, Cloud Data Analytics Lead):** South Bronx public facility research, Mott Haven & Melrose data validation, data schemas, simulated weather fixtures, deterministic scoring algorithms, and data provenance auditing.
+- **Shiksha (`@Shiksha99`, Cloud Cybersecurity Lead):** STRIDE threat modeling, access security and RBAC roles, Secret Manager integration, GCS signed upload security, and immutable event ledger design.
 
 #### Honest Boundaries & Disclosures
 1. **Operational Grounding & Data Boundaries:** Operational workflows and task templates are grounded in published NYC Emergency Management (NYCEM) Heat Emergency Plans, NYC DOHMH cooling center protocols, and CDC/OSHA facility heat safety guidelines. Direct municipal operator fieldwork was explicitly excluded from scope to respect institutional research boundaries, while facility telemetry is maintained as transparent DEMO records.

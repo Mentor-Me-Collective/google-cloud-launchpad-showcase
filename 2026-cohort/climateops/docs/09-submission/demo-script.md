@@ -4,7 +4,7 @@
 > **Target Rehearsal Runtime:** **4 minutes 45 seconds** (15-second safety buffer).  
 > **Production Service:** [https://climateops-api-4twvqq3jta-uc.a.run.app](https://climateops-api-4twvqq3jta-uc.a.run.app)  
 > **Local Demo Fallback:** `http://localhost:8080` (via `uvicorn app.main:app --port 8080`)  
-> **Presenter:** Justin (`@creova-gif`, Product Lead) or team representative.
+> **Presenter:** Justin (`@creova-gif`, AI Cloud Leader) or team representative.
 
 ---
 
@@ -198,7 +198,7 @@ Before pressing the record button, ensure the following steps are prepared:
    - `TASK_VERIFIED (Justin)`
 
 #### Verbatim Spoken Narrative
-> *"Switching back to Justin, the facility manager, I inspect Marcus's uploaded photo proof. The chiller gauge shows normal operating pressure. I click 'Verify & Sign Off'. 
+> *"Switching back to Justin, the facility manager, I inspect Marcus's uploaded photo proof. Supported by NVIDIA's `meta/llama-3.2-90b-vision-instruct` multimodal model, the system visually inspects uploaded inspection tags and chiller gauges to verify operating conditions. I click 'Verify & Sign Off'. 
 > 
 > Finally, we navigate to the Audit Ledger. Powered by Google Cloud Firestore native mode event sourcing, every single event in this lifecycle is recorded with microsecond timestamps, actor IDs, content hashes, and Cloud Storage URIs. 
 > 

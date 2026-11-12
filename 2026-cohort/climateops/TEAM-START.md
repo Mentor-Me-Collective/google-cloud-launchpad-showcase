@@ -15,12 +15,12 @@ Console sign-ins are fake DEMO users. Weather in demo mode is a labelled SIMULAT
 **Judged against the organizer rubric:** see `docs/09-submission/rubric-checklist.md`. Codebase (25%) needs *meaningful, demonstrated* Google Cloud AND NVIDIA integration, so the integrations are the priority this week, not new features. The console's Integrations panel shows what is really live.
 
 ## Who changes what (one owner per file avoids conflicts)
-| Person | First task | Files |
+| Person | Role & Focus | Files |
 |---|---|---|
-| **Blanca (`@bcperez14`)** | `python scripts/smoke_nim.py` with a real key; record the model id in DEC-06. Set `NVIDIA_MODEL_ID`/`NVIDIA_API_KEY`, run `make demo`, check `used_fallback` is false. Tune the prompt. Deploy per `deploy/README.md`. Wire Firestore. | `nim.py`, `deploy/`, `store.py` |
-| **Kseniya (`@ksen-nm`)** | Fill `data/fixtures/public_sites.csv` (5-10 verified sites; header exists). Finalise factors/weights and unknown handling in `scoring.py` (open question below). Edit `demo_orgs.json`. Source-register entries. | `scoring.py`, `data/fixtures/*`, `docs/01-research`, `docs/04-data` |
-| **Shiksha (`@Shiksha99`)** | Confirm secret storage; run `make scan` before the first push (CI also runs it); review `auth.py` (demo tokens are public fakes), pick the real identity provider; threat model; budget alerts. | `auth.py`, `scripts/scan_secrets.py`, `docs/06-security` |
-| **Justin (`@creova-gif`)** | Product brief, playbook (`data/fixtures/heat_tasks.json`), user testing, review every PR against the approval gate, demo script. | `docs/02-product`, `docs/09-submission` |
+| **Blanca (`@bcperez14`)** | **Team Lead · AI Research Foundations:** NVIDIA NIM models (`nvidia/nemotron-3.5-bolt-e4b` & `meta/llama-3.2-90b-vision-instruct`), model behavior, prompt tuning, Firestore integration, Cloud Scheduler setup. | `nim.py`, `deploy/`, `store.py` |
+| **Justin (`@creova-gif`)** | **AI Cloud Leader:** Workflow definition, requirements, feature priorities, manager approval flow, value framing, UI/UX console engineering, Cloud Run container deployment. | `docs/02-product`, `docs/09-submission`, `web/` |
+| **Kseniya (`@ksen-nm`)** | **Cloud Data Analytics:** Fill `data/fixtures/public_sites.csv` (5-10 verified sites), scoring factors/weights, simulated weather fixtures, dataset validation. | `scoring.py`, `data/fixtures/*`, `docs/01-research`, `docs/04-data` |
+| **Shiksha (`@Shiksha99`)** | **Cloud Cybersecurity:** Secret storage (`scan_secrets.py`), auth review, RBAC role enforcement, Cloud Storage signed upload security, STRIDE threat modeling. | `auth.py`, `scripts/scan_secrets.py`, `docs/06-security` |
 
 ## Hard rules (tests enforce most of these)
 1. `Service.create_tasks` in `services.py` is the gate. Do not add another way to create tasks.
