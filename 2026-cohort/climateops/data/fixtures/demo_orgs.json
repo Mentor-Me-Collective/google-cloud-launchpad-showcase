@@ -1,0 +1,162 @@
+{
+  "tenants": [
+    {
+      "tenant_id": "demo-a",
+      "name": "South Bronx Community Resilience Network",
+      "district": "Bronx Community District 1 (Mott Haven / Melrose)",
+      "default_staff_id": "staff_demo_a1"
+    },
+    {
+      "tenant_id": "demo-b",
+      "name": "Melrose Community Operations",
+      "district": "Bronx Community District 1 (Melrose)",
+      "default_staff_id": "staff_demo_b1"
+    }
+  ],
+  "facilities": [
+    {
+      "facility_id": "FAC-MOTT-LIB",
+      "tenant_id": "demo-a",
+      "name": "Mott Haven Branch Library (NYPL)",
+      "address": "321 E 140th St, Bronx, NY 10454",
+      "lat": 40.8090,
+      "lon": -73.9245,
+      "provenance": "PUBLIC_VERIFIED",
+      "source_url": "https://www.nypl.org/locations/mott-haven",
+      "status": {
+        "as_of_hours_ago": 2,
+        "ac_status": "none",
+        "vulnerable_level": "many",
+        "people_on_site": 45,
+        "staff_on_shift": 2,
+        "staff_required": 4
+      }
+    },
+    {
+      "facility_id": "FAC-BETANCES-CC",
+      "tenant_id": "demo-a",
+      "name": "Betances Community Center (NYC Parks)",
+      "address": "510 E 140th St, Bronx, NY 10454",
+      "lat": 40.8095,
+      "lon": -73.9197,
+      "provenance": "PUBLIC_VERIFIED",
+      "source_url": "https://www.nycgovparks.org/parks/betances-community-center",
+      "status": {
+        "as_of_hours_ago": 3,
+        "ac_status": "working",
+        "vulnerable_level": "some",
+        "people_on_site": 20,
+        "staff_on_shift": 3,
+        "staff_required": 3
+      }
+    },
+    {
+      "facility_id": "FAC-MILLPOND-REC",
+      "tenant_id": "demo-a",
+      "name": "Mill Pond Park Recreation Center (NYC Parks)",
+      "address": "1 Mill Pond Park, Bronx, NY 10454",
+      "lat": 40.8043,
+      "lon": -73.9238,
+      "provenance": "PUBLIC_VERIFIED",
+      "source_url": "https://www.nycgovparks.org/parks/mill-pond-park",
+      "status": {
+        "as_of_hours_ago": 4,
+        "ac_status": "partial",
+        "vulnerable_level": "some",
+        "people_on_site": 30,
+        "staff_on_shift": 1,
+        "staff_required": 2
+      }
+    },
+    {
+      "facility_id": "FAC-STMARYS-CC",
+      "tenant_id": "demo-a",
+      "name": "St. Mary's Recreation Center (NYC Parks)",
+      "address": "St. Ann's Ave & E 145th St, Bronx, NY 10455",
+      "lat": 40.8099,
+      "lon": -73.9104,
+      "provenance": "PUBLIC_VERIFIED",
+      "source_url": "https://www.nycgovparks.org/parks/st-marys-park",
+      "status": {
+        "as_of_hours_ago": 1,
+        "ac_status": "unknown",
+        "vulnerable_level": "many",
+        "people_on_site": 35,
+        "staff_on_shift": 2,
+        "staff_required": 3
+      }
+    },
+    {
+      "facility_id": "FAC-MELROSE-LIB",
+      "tenant_id": "demo-b",
+      "name": "Melrose Branch Library (NYPL)",
+      "address": "910 Morris Ave, Bronx, NY 10451",
+      "lat": 40.8193,
+      "lon": -73.9238,
+      "provenance": "PUBLIC_VERIFIED",
+      "source_url": "https://www.nypl.org/locations/melrose",
+      "status": {
+        "as_of_hours_ago": 3,
+        "ac_status": "working",
+        "vulnerable_level": "some",
+        "people_on_site": 15,
+        "staff_on_shift": 2,
+        "staff_required": 2
+      }
+    },
+    {
+      "facility_id": "FAC-MELROSE-REC",
+      "tenant_id": "demo-b",
+      "name": "Melrose Recreation Center (NYC Parks)",
+      "address": "286 E 163rd St, Bronx, NY 10451",
+      "lat": 40.8222,
+      "lon": -73.9181,
+      "provenance": "PUBLIC_VERIFIED",
+      "source_url": "https://www.nycgovparks.org/parks/melrose-playground",
+      "status": {
+        "as_of_hours_ago": 2,
+        "ac_status": "broken",
+        "vulnerable_level": "many",
+        "people_on_site": 40,
+        "staff_on_shift": 1,
+        "staff_required": 3
+      }
+    },
+    {
+      "facility_id": "FAC-RAY-NYCHA",
+      "tenant_id": "demo-b",
+      "name": "Ray Avenue Community Center (NYCHA)",
+      "address": "610 E 152nd St, Bronx, NY 10455",
+      "lat": 40.8158,
+      "lon": -73.9147,
+      "provenance": "PUBLIC_VERIFIED",
+      "source_url": "https://www.nyc.gov/site/nycha/residents/community-centers.page",
+      "status": {
+        "as_of_hours_ago": 5,
+        "ac_status": "partial",
+        "vulnerable_level": "some",
+        "people_on_site": 25,
+        "staff_on_shift": 2,
+        "staff_required": 2
+      }
+    },
+    {
+      "facility_id": "FAC-CLARK-HUB",
+      "tenant_id": "demo-b",
+      "name": "Clark Community Hub (NYC Parks)",
+      "address": "339 E 144th St, Bronx, NY 10454",
+      "lat": 40.8139,
+      "lon": -73.9211,
+      "provenance": "PUBLIC_VERIFIED",
+      "source_url": "https://www.nycgovparks.org/parks/clark-playground",
+      "status": {
+        "as_of_hours_ago": 4,
+        "ac_status": "none",
+        "vulnerable_level": "many",
+        "people_on_site": 30,
+        "staff_on_shift": 1,
+        "staff_required": 2
+      }
+    }
+  ]
+}

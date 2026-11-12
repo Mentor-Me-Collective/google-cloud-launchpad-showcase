@@ -1,0 +1,173 @@
+{
+  "fixture": true,
+  "label": "DEMO task candidates: not official guidance",
+  "retrieved_at": "2026-11-02",
+  "tiers": {
+    "watch": "24-48h before heat",
+    "advisory_or_warning": "within 24h",
+    "day_of": "during the event"
+  },
+  "sources": {
+    "SRC-NYCEM-HEAT": {
+      "issuer": "NYC Emergency Management + NYC Health Department",
+      "title": "City officials urge New Yorkers to stay safe in Tuesday's heat (press release, 2025-07-07)",
+      "url": "https://www.nyc.gov/site/em/about/press-releases/20250707_pr_nycem_City-Officials-Urge-NYers-To-Stay-Safe-Tuesdays-Heat.page",
+      "retrieved_at": "2026-11-02",
+      "limits": "Seasonal press release, not a standing guidance page; re-check for a current canonical NYC EM heat page before final submission."
+    },
+    "SRC-NWS-OKX": {
+      "issuer": "NWS New York, NY (OKX)",
+      "title": "Extreme Heat page: alert criteria and safety actions",
+      "url": "https://www.weather.gov/okx/extremeheat",
+      "retrieved_at": "2026-11-02",
+      "limits": "Criteria are for the NWS New York office area; confirm applicability to the Bronx zone via the alert's own geography fields."
+    },
+    "SRC-CDC-HEAT": {
+      "issuer": "CDC",
+      "title": "About Heat and Your Health",
+      "url": "https://www.cdc.gov/heat-health/about/index.html",
+      "retrieved_at": "2026-11-02",
+      "limits": "General public guidance; gives symptoms but no first-aid steps."
+    }
+  },
+  "tasks": [
+    {
+      "id": "HT-01",
+      "tier": "watch",
+      "title": "Confirm air conditioning works in the rooms where at-risk people spend time; clean filters",
+      "source_ids": [
+        "SRC-NYCEM-HEAT"
+      ],
+      "risk_factor": "No working AC",
+      "demo_proof": "DEMO checklist: AC status + timestamp",
+      "caveat": "AC status is DEMO_SYNTHETIC unless a verified source supplies it. Never state a real site's AC status."
+    },
+    {
+      "id": "HT-02",
+      "tier": "watch",
+      "title": "Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names",
+      "source_ids": [
+        "SRC-NYCEM-HEAT",
+        "SRC-CDC-HEAT"
+      ],
+      "risk_factor": "Vulnerable users",
+      "demo_proof": "DEMO count by group",
+      "caveat": "No personal data. NYC EM says 60+, CDC says 65+; show both and let the manager choose."
+    },
+    {
+      "id": "HT-03",
+      "tier": "watch",
+      "title": "Find the nearest cooling center or free air-conditioned space and confirm it is open today",
+      "source_ids": [
+        "SRC-NYCEM-HEAT"
+      ],
+      "risk_factor": "No working AC",
+      "demo_proof": "Screenshot or link of the City cooling-options map with retrieval time",
+      "caveat": "Source says locations may have changed. Never claim a sampled site is an active cooling center."
+    },
+    {
+      "id": "HT-04",
+      "tier": "watch",
+      "title": "Sign the facility lead up for Notify NYC alerts (text NotifyNYC to 692-692)",
+      "source_ids": [
+        "SRC-NYCEM-HEAT"
+      ],
+      "risk_factor": "None (general readiness)",
+      "demo_proof": "DEMO confirmation checkbox",
+      "caveat": "Use a demo role, not a real person's number."
+    },
+    {
+      "id": "HT-05",
+      "tier": "watch",
+      "title": "Check the power-outage plan for electric medical equipment and refrigerated medication",
+      "source_ids": [
+        "SRC-NYCEM-HEAT",
+        "SRC-CDC-HEAT"
+      ],
+      "risk_factor": "Vulnerable users",
+      "demo_proof": "DEMO plan checklist",
+      "caveat": "Do not collect medical details. A checklist tick is not proof of readiness."
+    },
+    {
+      "id": "HT-06",
+      "tier": "advisory_or_warning",
+      "title": "Move strenuous activity and outdoor programs out of 11 AM–4 PM",
+      "source_ids": [
+        "SRC-NYCEM-HEAT",
+        "SRC-NWS-OKX"
+      ],
+      "risk_factor": "People on site",
+      "demo_proof": "Revised DEMO schedule",
+      "caveat": "Time window comes from NYC EM guidance for the public; the manager may adjust it."
+    },
+    {
+      "id": "HT-07",
+      "tier": "advisory_or_warning",
+      "title": "Make drinking water available and schedule water breaks",
+      "source_ids": [
+        "SRC-NYCEM-HEAT",
+        "SRC-CDC-HEAT"
+      ],
+      "risk_factor": "People on site",
+      "demo_proof": "DEMO water-station check",
+      "caveat": "Do not invent stock levels."
+    },
+    {
+      "id": "HT-08",
+      "tier": "advisory_or_warning",
+      "title": "Set a buddy system and shaded or cool rest breaks for anyone working outdoors",
+      "source_ids": [
+        "SRC-NYCEM-HEAT"
+      ],
+      "risk_factor": "Low staffing",
+      "demo_proof": "DEMO buddy list using role IDs (staff_demo_01)",
+      "caveat": "Source says employers must provide water, rest and shade to outdoor workers. Do not turn this into a legal-compliance claim."
+    },
+    {
+      "id": "HT-09",
+      "tier": "advisory_or_warning",
+      "title": "Close blinds and shades, keep doors shut while AC runs, and run heat-producing appliances early morning or late night",
+      "source_ids": [
+        "SRC-NYCEM-HEAT"
+      ],
+      "risk_factor": "How hot it will get",
+      "demo_proof": "DEMO checklist",
+      "caveat": "Low-cost step; do not present it as a substitute for cooling."
+    },
+    {
+      "id": "HT-10",
+      "tier": "advisory_or_warning",
+      "title": "Brief staff on heat-illness warning signs and when to call 911",
+      "source_ids": [
+        "SRC-NYCEM-HEAT",
+        "SRC-CDC-HEAT"
+      ],
+      "risk_factor": "Low staffing",
+      "demo_proof": "DEMO briefing sign-off (role IDs)",
+      "caveat": "Copy the 911 criteria from the source verbatim. Do not paraphrase medical guidance with the model."
+    },
+    {
+      "id": "HT-11",
+      "tier": "day_of",
+      "title": "Check on at-risk people at intervals the manager sets",
+      "source_ids": [
+        "SRC-NYCEM-HEAT",
+        "SRC-CDC-HEAT"
+      ],
+      "risk_factor": "Vulnerable users",
+      "demo_proof": "DEMO check-in log with timestamps",
+      "caveat": "The interval is our design choice, not sourced. Label it as a manager decision."
+    },
+    {
+      "id": "HT-12",
+      "tier": "day_of",
+      "title": "Use fans only if indoor temperature is below 90°F; otherwise move people to a cooler space",
+      "source_ids": [
+        "SRC-CDC-HEAT"
+      ],
+      "risk_factor": "No working AC",
+      "demo_proof": "DEMO temperature reading + timestamp",
+      "caveat": "Applies to indoor fan use only; the manager decides where people move."
+    }
+  ]
+}

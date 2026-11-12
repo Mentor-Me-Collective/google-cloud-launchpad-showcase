@@ -1,0 +1,104 @@
+{
+  "$defs": {
+    "Role": {
+      "enum": [
+        "manager",
+        "staff",
+        "validator"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "TaskStatus": {
+      "enum": [
+        "ASSIGNED",
+        "IN_PROGRESS",
+        "COMPLETION_SUBMITTED",
+        "VERIFIED",
+        "CANCELLED"
+      ],
+      "title": "TaskStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "tenant_id": {
+      "title": "Tenant Id",
+      "type": "string"
+    },
+    "brief_id": {
+      "title": "Brief Id",
+      "type": "string"
+    },
+    "approval_id": {
+      "title": "Approval Id",
+      "type": "string"
+    },
+    "approved_version": {
+      "title": "Approved Version",
+      "type": "integer"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "assignee_role": {
+      "$ref": "#/$defs/Role",
+      "default": "staff"
+    },
+    "assignee_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Assignee Id"
+    },
+    "deadline": {
+      "format": "date-time",
+      "title": "Deadline",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/$defs/TaskStatus",
+      "default": "ASSIGNED"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "updated_at": {
+      "format": "date-time",
+      "title": "Updated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "tenant_id",
+    "brief_id",
+    "approval_id",
+    "approved_version",
+    "title",
+    "description",
+    "deadline",
+    "created_at",
+    "updated_at"
+  ],
+  "title": "Task",
+  "type": "object"
+}

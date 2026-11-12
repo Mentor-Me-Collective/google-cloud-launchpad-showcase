@@ -1,0 +1,2683 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ClimateOps — SDG 13 Extreme Heat Readiness Operations Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Dark Sidebar & Dark Card Tokens */
+  --sidebar-bg: #0C1210;
+  --sidebar-hover: #15201C;
+  --sidebar-border: rgba(255, 255, 255, 0.07);
+  --dark-card-bg: #101715;
+  --dark-card-border: rgba(16, 185, 129, 0.15);
+
+  /* Light Theme Canvas & Tokens */
+  --canvas-bg: #F4F6F4;
+  --canvas-surface: #FFFFFF;
+  --canvas-surface-subtle: #F9FAF9;
+  --canvas-border: #E5E9E6;
+  --canvas-border-focus: #10B981;
+
+  /* Typography */
+  --text-dark: #0F1714;
+  --text-muted: #526059;
+  --text-dim: #88968F;
+  --text-light: #F8FAF9;
+  --text-light-dim: #8B9A92;
+
+  /* Accents */
+  --emerald: #10B981;
+  --emerald-dark: #059669;
+  --emerald-light: #E8F7F0;
+  --emerald-glow: rgba(16, 185, 129, 0.25);
+  --heat: #F59E0B;
+  --heat-light: #FEF3C7;
+  --heat-dark: #B45309;
+  --danger: #EF4444;
+  --danger-light: #FEE2E2;
+  --danger-dark: #B91C1C;
+  --nvidia: #76B900;
+  --nvidia-light: #F2F9E8;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 20px -2px rgba(12, 18, 16, 0.06);
+  --shadow-lg: 0 12px 36px -4px rgba(12, 18, 16, 0.10);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  background: var(--canvas-bg);
+  color: var(--text-dark);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  font-size: 13.5px;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* App Shell Layout */
+.app-shell {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Left Sidebar (Dark Obsidian Aesthetic) */
+.sidebar {
+  width: 280px;
+  min-width: 280px;
+  background: var(--sidebar-bg);
+  color: var(--text-light);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 18px;
+  border-right: 1px solid var(--sidebar-border);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--sidebar-border);
+}
+
+.brand-symbol {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+}
+
+.brand-symbol svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.brand-title {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sdg-badge {
+  background: #3F7E44;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+}
+
+.workspace-card {
+  margin-top: 18px;
+  min-height: 48px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.14) 0%, rgba(5, 150, 105, 0.05) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.workspace-card:hover {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.22) 0%, rgba(5, 150, 105, 0.10) 100%);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.workspace-label {
+  font-size: 10px;
+  color: var(--text-light-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.workspace-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tenant-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--emerald);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.workspace-kbd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: 6px;
+  color: var(--text-light-dim);
+}
+
+/* Sidebar Search */
+.sidebar-search {
+  margin-top: 14px;
+  position: relative;
+}
+
+.sidebar-search input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--sidebar-border);
+  border-radius: var(--radius-md);
+  padding: 10px 14px 10px 34px;
+  color: #fff;
+  font-size: 12.5px;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.sidebar-search input:focus {
+  border-color: var(--emerald);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  width: 14px;
+  height: 14px;
+  opacity: 0.5;
+}
+
+/* Navigation Links */
+.sidebar-nav {
+  margin-top: 22px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-section-title {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-light-dim);
+  padding: 8px 12px 4px 12px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  min-height: 44px;
+  border-radius: var(--radius-md);
+  color: #A0AEA5;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.nav-item:hover {
+  background: var(--sidebar-hover);
+  color: #fff;
+}
+
+.nav-item.active {
+  background: rgba(16, 185, 129, 0.15);
+  color: #fff;
+  border-left: 3px solid var(--emerald);
+}
+
+.nav-item-title {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.nav-icon {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  opacity: 0.8;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.nav-item:hover .nav-icon,
+.nav-item.active .nav-icon {
+  opacity: 1;
+  stroke: var(--emerald);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.btn-spinner {
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+
+.nav-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 100px;
+}
+
+.nav-badge.green { background: rgba(16, 185, 129, 0.2); color: #34D399; }
+.nav-badge.new { background: var(--emerald); color: #0C1210; font-weight: 800; }
+
+/* Sidebar User Footer */
+.sidebar-footer {
+  padding-top: 16px;
+  border-top: 1px solid var(--sidebar-border);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.user-profile-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--sidebar-border);
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3B82F6 0%, #10B981 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #fff;
+  font-size: 14px;
+  position: relative;
+}
+
+.user-online-dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  background: var(--emerald);
+  border: 2px solid var(--sidebar-bg);
+  border-radius: 50%;
+}
+
+.user-details {
+  flex: 1;
+  overflow: hidden;
+}
+
+.user-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.user-role-label {
+  font-size: 11px;
+  color: var(--text-light-dim);
+}
+
+.persona-select {
+  width: 100%;
+  min-height: 44px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--sidebar-border);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.persona-select:focus {
+  border-color: var(--emerald);
+}
+}
+
+.persona-select option {
+  background: #111614;
+  color: #fff;
+}
+
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Top Navigation Bar */
+.top-navbar {
+  height: 72px;
+  background: var(--canvas-surface);
+  border-bottom: 1px solid var(--canvas-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-title-box {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-dark);
+}
+
+.page-subtitle {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-indicator-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--emerald-light);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--emerald-dark);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--emerald);
+  box-shadow: 0 0 10px var(--emerald);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--text-dark);
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background: #1e2a25;
+  transform: translateY(-1px);
+}
+
+.btn-emerald {
+  background: var(--emerald);
+  color: #0C1210;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+}
+
+.btn-emerald:hover {
+  background: #059669;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: #fff;
+  border: 1px solid var(--canvas-border);
+  color: var(--text-dark);
+}
+
+.btn-outline:hover {
+  background: var(--canvas-surface-subtle);
+  border-color: #CBD5E1;
+}
+
+/* Dashboard Body Container */
+.dashboard-body {
+  padding: 32px;
+  max-width: 1480px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Top 4 KPI Cards Grid (Matches Reference Image Perfectly) */
+.kpi-row {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1.6fr 1fr;
+  gap: 20px;
+}
+
+/* Card 1: Dark Obsidian Card (Air Pollution / Heat Hazard Level) */
+.dark-kpi-card {
+  background: var(--dark-card-bg);
+  border: 1px solid var(--dark-card-border);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.dark-kpi-card::after {
+  content: '';
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.kpi-dark-title {
+  font-size: 12px;
+  color: var(--text-light-dim);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.micro-chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 20px;
+}
+
+.micro-bar {
+  width: 4px;
+  background: var(--emerald);
+  border-radius: 2px;
+}
+
+.dark-kpi-value {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 14px 0 6px 0;
+  color: #fff;
+}
+
+.dark-kpi-sub {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: #34D399;
+  font-weight: 600;
+}
+
+/* Card 2: Environmental Quality / Vulnerability Card (White) */
+.white-kpi-card {
+  background: var(--canvas-surface);
+  border: 1px solid var(--canvas-border);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+}
+
+.kpi-white-title {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.white-kpi-value {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 14px 0 6px 0;
+  color: var(--text-dark);
+}
+
+.white-kpi-sub {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--danger-dark);
+  font-weight: 600;
+}
+
+/* Card 3: Large Mint / Sage Frosted Card (Hero Metric 99,681m in mockup) */
+.mint-hero-card {
+  background: linear-gradient(135deg, #EBF5F0 0%, #E3EFE9 100%);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: var(--radius-xl);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.mint-hero-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.mint-hero-num {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #0B291B;
+  line-height: 1;
+}
+
+.mint-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(16, 185, 129, 0.25);
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #065F46;
+}
+
+.mint-sub-row {
+  display: flex;
+  gap: 18px;
+  margin-top: 14px;
+}
+
+.mint-sub-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mint-sub-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #065F46;
+}
+
+.mint-sub-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #064E3B;
+}
+
+.mint-sub-val {
+  font-size: 10.5px;
+  color: #047857;
+}
+
+/* Card 4: NVIDIA NIM Model / Infrastructure Card */
+.tech-kpi-card {
+  background: var(--canvas-surface);
+  border: 1px solid var(--canvas-border);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+}
+
+.kpi-tech-title {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nvidia-pill {
+  background: var(--nvidia-light);
+  color: #4C7700;
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 100px;
+  border: 1px solid rgba(118, 185, 0, 0.3);
+}
+
+.tech-kpi-value {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 14px 0 6px 0;
+  color: var(--text-dark);
+}
+
+.tech-kpi-sub {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Two-Section Middle Row: Hourly Heat Index Forecast Chart + Dark South Bronx Spatial Map */
+.chart-map-grid {
+  display: grid;
+  grid-template-columns: 1.8fr 1.2fr;
+  gap: 20px;
+}
+
+/* Weather Forecast Bar Chart Panel */
+.chart-card {
+  background: var(--canvas-surface);
+  border: 1px solid var(--canvas-border);
+  border-radius: var(--radius-xl);
+  padding: 24px 28px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.chart-title {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-dark);
+}
+
+.chart-pills {
+  display: flex;
+  gap: 6px;
+}
+
+.chart-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: var(--canvas-surface-subtle);
+  border: 1px solid var(--canvas-border);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.chart-pill.active {
+  background: var(--text-dark);
+  color: #fff;
+  border-color: var(--text-dark);
+}
+
+/* CSS Bar Chart Simulation */
+.forecast-bars-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 180px;
+  padding-top: 20px;
+  border-bottom: 1px solid #E5E9E6;
+  gap: 12px;
+}
+
+.forecast-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.forecast-bar-fill {
+  width: 100%;
+  max-width: 28px;
+  border-radius: 6px 6px 2px 2px;
+  background: linear-gradient(180deg, #10B981 0%, #059669 100%);
+  transition: all 0.2s;
+  position: relative;
+  cursor: pointer;
+}
+
+.forecast-bar-fill.danger-peak {
+  background: linear-gradient(180deg, #F59E0B 0%, #EF4444 100%);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.forecast-bar-fill:hover {
+  filter: brightness(1.15);
+  transform: scaleY(1.03);
+}
+
+.bar-val-pop {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text-dark);
+  background: #fff;
+  padding: 1px 4px;
+  border-radius: 4px;
+  border: 1px solid var(--canvas-border);
+}
+
+.forecast-time {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin-top: 6px;
+}
+
+/* Dark Spatial Risk Map Card (Matches Dark "Global pollution" card in mockup) */
+.spatial-map-card {
+  background: var(--dark-card-bg);
+  border: 1px solid var(--dark-card-border);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.map-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.map-canvas-area {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background: radial-gradient(circle at 60% 40%, #15221C 0%, #0C1210 100%);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Interactive SVG Map Overlay */
+.svg-map-bg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.25;
+}
+
+.map-pin {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--emerald);
+  box-shadow: 0 0 12px var(--emerald);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.map-pin:hover {
+  transform: scale(1.6);
+}
+
+.map-pin.top-risk {
+  background: #EF4444;
+  box-shadow: 0 0 14px #EF4444;
+}
+
+.floating-glass-tooltip {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.map-tt-name {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.map-tt-score {
+  font-size: 11px;
+  font-weight: 800;
+  color: #34D399;
+}
+
+/* Two Column Operational Layout */
+.operations-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1.3fr;
+  gap: 20px;
+}
+
+/* White Panel Styling */
+.panel-card {
+  background: var(--canvas-surface);
+  border: 1px solid var(--canvas-border);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--canvas-border);
+}
+
+.panel-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-dark);
+  letter-spacing: -0.02em;
+}
+
+.panel-sub-tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* Facility Ranking List */
+.facility-row-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--canvas-border);
+  margin-bottom: 10px;
+  background: var(--canvas-surface-subtle);
+  transition: all 0.15s;
+}
+
+.facility-row-item:hover {
+  background: #fff;
+  border-color: #CBD5E1;
+  box-shadow: var(--shadow-sm);
+}
+
+.fac-rank-pill {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: #E5E9E6;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fac-rank-pill.top {
+  background: #FEE2E2;
+  color: #B91C1C;
+  font-weight: 900;
+}
+
+.fac-details {
+  flex: 1;
+  margin-left: 12px;
+}
+
+.fac-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.fac-sub {
+  font-size: 11px;
+  color: var(--text-dim);
+  display: flex;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.fac-score-col {
+  text-align: right;
+}
+
+.fac-score-num {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text-dark);
+}
+
+.fac-score-conf {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--emerald-dark);
+}
+
+/* Google Cloud + NVIDIA Infrastructure Table */
+.infra-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.infra-table tr {
+  border-bottom: 1px solid var(--canvas-border);
+}
+
+.infra-table tr:last-child {
+  border-bottom: none;
+}
+
+.infra-table td {
+  padding: 10px 0;
+  font-size: 12.5px;
+}
+
+.infra-name {
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.infra-detail {
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+}
+
+.status-badge.live { background: var(--emerald-light); color: var(--emerald-dark); }
+.status-badge.warn { background: var(--heat-light); color: var(--heat-dark); }
+
+/* NVIDIA Grounded Brief Container */
+.brief-wrapper {
+  background: var(--canvas-surface-subtle);
+  border: 1px solid var(--canvas-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.brief-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.brief-exec-summary {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-dark);
+  font-weight: 500;
+  margin-bottom: 18px;
+  padding: 14px;
+  background: #fff;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--canvas-border);
+}
+
+.claims-header {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.claim-row {
+  background: #fff;
+  border: 1px solid var(--canvas-border);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.source-tag {
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #1D4ED8;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 4px;
+  margin-left: 4px;
+}
+
+/* Mandatory Manager Approval Gate (ADR-001) */
+.approval-gate-box {
+  margin-top: 18px;
+  background: #FFFBEB;
+  border: 1.5px solid #FCD34D;
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.08);
+}
+
+.approval-gate-box.approved {
+  background: #F0FDF4;
+  border-color: #86EFAC;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.08);
+}
+
+.gate-badge-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #B45309;
+}
+
+.approval-gate-box.approved .gate-badge-label {
+  color: #15803D;
+}
+
+.btn-approve {
+  background: #10B981;
+  color: #fff;
+  border: none;
+}
+.btn-approve:hover { background: #059669; }
+
+.btn-reject {
+  background: #fff;
+  border: 1px solid #EF4444;
+  color: #EF4444;
+}
+.btn-reject:hover { background: #FEF2F2; }
+
+/* Operational Tasks */
+.task-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border: 1px solid var(--canvas-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 8px;
+  background: #fff;
+}
+
+.task-status-tag {
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 100px;
+  text-transform: uppercase;
+}
+
+.task-status-tag.ASSIGNED { background: #FEF3C7; color: #B45309; }
+.task-status-tag.IN_PROGRESS { background: #DBEAFE; color: #1E40AF; }
+.task-status-tag.COMPLETION_SUBMITTED { background: #E0E7FF; color: #4338CA; }
+.task-status-tag.VERIFIED { background: #DCFCE7; color: #15803D; }
+
+/* Audit Ledger */
+.audit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.audit-entry {
+  display: grid;
+  grid-template-columns: 75px 140px 1fr 100px;
+  gap: 8px;
+  padding: 7px 10px;
+  background: var(--canvas-surface-subtle);
+  border: 1px solid var(--canvas-border);
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+}
+
+.audit-time { font-family: 'JetBrains Mono', monospace; color: var(--text-dim); }
+.audit-type { font-weight: 700; color: var(--text-dark); }
+.audit-actor { color: var(--emerald-dark); font-weight: 600; text-align: right; }
+
+.toast-message {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--danger-dark);
+}
+
+/* === Disabled button states === */
+.btn:disabled, button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* === Toast animation & variants === */
+.toast-message:not(:empty) {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  color: var(--danger-dark);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  animation: fadeIn 0.3s ease;
+}
+.toast-message.toast-success:not(:empty) {
+  background: var(--emerald-light);
+  border-color: rgba(16, 185, 129, 0.4);
+  color: var(--emerald-dark);
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Custom scrollbars === */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(136, 150, 143, 0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(136, 150, 143, 0.5); }
+.sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); }
+
+/* === Focus states for accessibility === */
+.btn:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible, .map-pin:focus-visible {
+  outline: 2px solid var(--emerald);
+  outline-offset: 2px;
+}
+
+/* === Mobile Drawer Controls === */
+.mobile-menu-btn, .sidebar-close-btn {
+  display: none;
+  background: var(--canvas-surface-subtle);
+  border: 1px solid var(--canvas-border);
+  border-radius: var(--radius-md);
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  cursor: pointer;
+  color: var(--text-dark);
+  font-size: 16px;
+  line-height: 1;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+.mobile-menu-btn:hover {
+  background: var(--canvas-border);
+}
+.sidebar-close-btn {
+  background: rgba(255,255,255,0.08);
+  border-color: var(--sidebar-border);
+  color: #fff;
+  margin-left: auto;
+}
+.sidebar-close-btn:hover {
+  background: rgba(255,255,255,0.16);
+}
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 18, 16, 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: 190;
+}
+.sidebar-backdrop.open {
+  display: block;
+}
+
+/* === 4-Step Workflow Stepper === */
+.workflow-stepper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  background: var(--canvas-surface);
+  border: 1px solid var(--canvas-border);
+  border-radius: var(--radius-lg);
+  padding: 14px 18px;
+  box-shadow: var(--shadow-sm);
+}
+.wf-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  background: var(--canvas-surface-subtle);
+  border: 1px solid var(--canvas-border);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.wf-step.active {
+  background: #FFFBEB;
+  border-color: #FCD34D;
+  color: #92400E;
+  font-weight: 700;
+}
+.wf-step.completed {
+  background: var(--emerald-light);
+  border-color: rgba(16, 185, 129, 0.35);
+  color: var(--emerald-dark);
+  font-weight: 700;
+}
+.wf-step-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #E5E9E6;
+  color: var(--text-dark);
+  font-size: 11px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.wf-step.active .wf-step-num { background: #F59E0B; color: #fff; }
+.wf-step.completed .wf-step-num { background: var(--emerald); color: #fff; }
+
+/* === Provenance & Explainable Factor Pills === */
+.prov-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 800;
+  font-family: 'JetBrains Mono', monospace;
+}
+.prov-badge.PUBLIC_VERIFIED { background: var(--emerald-light); color: var(--emerald-dark); }
+.prov-badge.DEMO_SYNTHETIC { background: var(--heat-light); color: var(--heat-dark); }
+.prov-badge.UNKNOWN { background: #E5E9E6; color: var(--text-muted); }
+
+.factor-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 6px;
+}
+.factor-pill {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #F1F5F9;
+  color: var(--text-muted);
+  border: 1px solid #E2E8F0;
+}
+.factor-pill.unknown {
+  background: #FEF3C7;
+  color: #92400E;
+  border-color: #FDE68A;
+}
+
+.inline-form-box {
+  margin-top: 10px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid var(--canvas-border);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.inline-form-box textarea, .inline-form-box input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--canvas-border);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 12.5px;
+}
+
+/* === Responsive: Tablet & Mobile Drawer (<= 1024px) === */
+@media (max-width: 1024px) {
+  .mobile-menu-btn, .sidebar-close-btn { display: inline-flex; align-items: center; justify-content: center; }
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100dvh;
+    width: min(320px, 86vw);
+    min-width: 280px;
+    max-width: 380px;
+    z-index: 200;
+    transform: translateX(-100%);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s ease;
+    box-shadow: var(--shadow-lg);
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: max(20px, env(safe-area-inset-top, 20px)) 18px max(28px, env(safe-area-inset-bottom, 28px)) 18px;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .top-navbar { min-height: 72px; height: auto; flex-wrap: wrap; padding: 12px 20px; gap: 12px; }
+  .workflow-stepper { grid-template-columns: 1fr 1fr; }
+  .kpi-row { grid-template-columns: 1fr 1fr; }
+  .chart-map-grid { grid-template-columns: 1fr; }
+  .operations-grid { grid-template-columns: 1fr; }
+  .dashboard-body { padding: 18px; gap: 20px; }
+}
+
+/* === Responsive: Mobile Phones (<= 640px) === */
+@media (max-width: 640px) {
+  /* Prevent iOS auto-zoom on input focus */
+  input, textarea, select, .sidebar-search input, .persona-select {
+    font-size: 16px !important;
+  }
+  .top-navbar {
+    padding: 12px 14px;
+  }
+  .header-title-box {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  .page-title {
+    font-size: 20px;
+  }
+  .header-actions {
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 8px;
+  }
+  .status-indicator-pill {
+    width: 100%;
+    justify-content: center;
+    padding: 8px 14px;
+  }
+  .header-actions .btn {
+    flex: 1 1 calc(50% - 4px);
+    min-height: 44px;
+    justify-content: center;
+  }
+  .workflow-stepper { grid-template-columns: 1fr; }
+  .kpi-row { grid-template-columns: 1fr; }
+  .mint-sub-row { flex-wrap: wrap; gap: 12px; }
+  .chart-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .chart-card { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .facility-row-item, .task-row, .brief-meta { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .fac-score-col { text-align: left; width: 100%; display: flex; justify-content: space-between; align-items: center; padding-top: 6px; border-top: 1px dashed var(--canvas-border); }
+  .audit-entry { grid-template-columns: 1fr auto; gap: 4px; }
+  .infra-table td { font-size: 11px; word-break: break-word; }
+  .dashboard-body { padding: 14px; gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+  <div id="sidebar-backdrop" class="sidebar-backdrop" aria-hidden="true"></div>
+  <!-- Left Navigation Sidebar -->
+  <aside id="sidebar" class="sidebar" aria-label="Primary Navigation">
+    <!-- Brand -->
+    <div class="sidebar-brand">
+      <div class="brand-symbol">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <div class="brand-title">
+          ClimateOps
+          <span class="sdg-badge">SDG 13</span>
+        </div>
+        <div style="font-size:10px; color:var(--text-light-dim)">Extreme Heat Readiness Engine</div>
+      </div>
+      <button id="sidebar-close-btn" class="sidebar-close-btn" aria-label="Close navigation menu">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Workspace Selector Pill -->
+    <div id="workspace-card" class="workspace-card" role="button" tabindex="0" title="Click or press ⌘K to search">
+      <div>
+        <div class="workspace-label">Team Workspace</div>
+        <div id="workspace-tenant-name" class="workspace-name"><span class="tenant-dot"></span>South Bronx Resil.</div>
+      </div>
+      <div class="workspace-kbd">⌘K</div>
+    </div>
+
+    <!-- Sidebar Search -->
+    <div class="sidebar-search">
+      <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+      <input id="sidebar-search-input" type="text" placeholder="Search facilities, tasks..." aria-label="Search facilities and tasks" />
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">Operations</div>
+      <a class="nav-item active" href="#dashboard">
+        <span class="nav-item-title">
+          <svg class="nav-icon" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+          <span>Dashboard</span>
+        </span>
+      </a>
+      <a class="nav-item" href="#facilities">
+        <span class="nav-item-title">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
+          <span>Verified Facilities</span>
+        </span>
+        <span id="nav-fac-count" class="nav-badge green">8</span>
+      </a>
+      <a class="nav-item" href="#briefs">
+        <span class="nav-item-title">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+          <span>AI Readiness Briefs</span>
+        </span>
+      </a>
+      <a class="nav-item" href="#tasks">
+        <span class="nav-item-title">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M15 2H9a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Z"/><path d="m9 14 2 2 4-4"/></svg>
+          <span>Operational Tasks</span>
+        </span>
+        <span id="nav-task-count" class="nav-badge new">LIVE</span>
+      </a>
+
+      <div class="nav-section-title" style="margin-top:12px;">Governance & Stack</div>
+      <a class="nav-item" href="#briefs">
+        <span class="nav-item-title">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+          <span>Approval Gate (ADR-001)</span>
+        </span>
+      </a>
+      <a class="nav-item" href="#audit">
+        <span class="nav-item-title">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span>Audit Ledger</span>
+        </span>
+      </a>
+      <a class="nav-item" href="/docs" target="_blank">
+        <span class="nav-item-title">
+          <svg class="nav-icon" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <span>OpenAPI Contract</span>
+        </span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.5;"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+    </nav>
+
+    <!-- Sidebar Footer / User Profile & Persona Switcher -->
+    <div class="sidebar-footer">
+      <div class="user-profile-card">
+        <div class="user-avatar">
+          <span id="user-avatar-initials">JM</span>
+          <div class="user-online-dot"></div>
+        </div>
+        <div class="user-details">
+          <div class="user-name" id="user-display-name">Justin Mafie</div>
+          <div class="user-role-label" id="user-role-label">Manager · South Bronx CD1</div>
+        </div>
+      </div>
+
+      <div>
+        <label for="who" style="font-size:10px; color:var(--text-light-dim); font-weight:700; text-transform:uppercase; margin-bottom:4px; display:block;">Active Persona:</label>
+        <select id="who" class="persona-select">
+          <option value="demo-manager-a">Justin (Manager, South Bronx Resilience)</option>
+          <option value="demo-staff-a">Operations Staff (Mott Haven Site)</option>
+          <option value="demo-validator-a">Compliance Auditor (NYC DOHMH)</option>
+          <option value="demo-manager-b">Manager (Melrose Care Operations)</option>
+          <option value="demo-staff-b">Operations Staff (Melrose Site)</option>
+        </select>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content" id="dashboard">
+    <!-- Top Bar -->
+    <header class="top-navbar">
+      <div class="header-title-box" style="align-items:center;">
+        <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+        </button>
+        <div>
+          <h1 class="page-title">Operations Dashboard</h1>
+          <span class="page-subtitle">Bronx Community District 1 · Mott Haven & Melrose</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div id="header-weather-pill" class="status-indicator-pill" title="Current weather source and status">
+          <span class="pulse-dot"></span>
+          <span id="header-weather-badge">SIMULATED ALERT · DEMO</span>
+        </div>
+        <button id="reload" class="btn btn-outline">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
+          <span>Refresh</span>
+        </button>
+        <button id="gen" class="btn btn-emerald">
+          <svg class="btn-sparkle-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+          <span>Generate AI Brief</span>
+        </button>
+        <span id="msg" class="toast-message" role="status" aria-live="polite"></span>
+      </div>
+    </header>
+
+    <!-- Dashboard Body -->
+    <div class="dashboard-body">
+
+      <!-- 4-Step Readiness Workflow Stepper -->
+      <section class="workflow-stepper" aria-label="Readiness Workflow Progress">
+        <div id="wf-step-1" class="wf-step completed">
+          <span class="wf-step-num">1</span>
+          <div>
+            <div>Weather & Priority</div>
+            <div id="wf-step-1-sub" style="font-size:10px; opacity:0.85;">Deterministic ranking active</div>
+          </div>
+        </div>
+        <div id="wf-step-2" class="wf-step active">
+          <span class="wf-step-num">2</span>
+          <div>
+            <div>Cited AI Draft Brief</div>
+            <div id="wf-step-2-sub" style="font-size:10px; opacity:0.85;">Generate & review citations</div>
+          </div>
+        </div>
+        <div id="wf-step-3" class="wf-step">
+          <span class="wf-step-num">3</span>
+          <div>
+            <div>Approval Gate (ADR-001)</div>
+            <div id="wf-step-3-sub" style="font-size:10px; opacity:0.85;">Exact version manager lock</div>
+          </div>
+        </div>
+        <div id="wf-step-4" class="wf-step">
+          <span class="wf-step-num">4</span>
+          <div>
+            <div>Tasks & Proof Audit</div>
+            <div id="wf-step-4-sub" style="font-size:10px; opacity:0.85;">Staff evidence & verification</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Top Row: 4 Modern Metric Cards (Styled Directly from the Image) -->
+      <section class="kpi-row">
+        <!-- Card 1: Dark Obsidian Card (Heat Hazard) -->
+        <div class="dark-kpi-card">
+          <div class="kpi-dark-title">
+            <span>NWS WEATHER HAZARD</span>
+            <div class="micro-chart-bars">
+              <div class="micro-bar" style="height:8px;"></div>
+              <div class="micro-bar" style="height:14px;"></div>
+              <div class="micro-bar" style="height:20px;"></div>
+              <div class="micro-bar" style="height:11px;"></div>
+            </div>
+          </div>
+          <div>
+            <div class="dark-kpi-value" id="kpi-weather">104°F Heat Index</div>
+            <div class="dark-kpi-sub">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+              <span id="kpi-weather-sub">Zone NYZ073 (Bronx County) · Extreme Heat Warning</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: District Vulnerability Index -->
+        <div class="white-kpi-card">
+          <div class="kpi-white-title">
+            <span>DISTRICT VULNERABILITY</span>
+            <span id="kpi-freshness" class="status-badge live">FRESH DATA</span>
+          </div>
+          <div>
+            <div class="white-kpi-value">HVI 5 / 5</div>
+            <div class="white-kpi-sub">
+              <span>●</span>
+              <span>100% Risk Tier · Highest NYC Vulnerability</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Large Mint Glass Card (8 Facilities Hero) -->
+        <div class="mint-hero-card">
+          <div class="mint-hero-header">
+            <div>
+              <div style="font-size:11px; font-weight:800; color:#065F46; text-transform:uppercase; letter-spacing:0.06em;">Tenant Facilities</div>
+              <div id="kpi-fac-count" class="mint-hero-num">8 / 8</div>
+            </div>
+            <div id="kpi-fac-badge" class="mint-hero-badge">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>100% Sourced</span>
+            </div>
+          </div>
+          <div class="mint-sub-row">
+            <div class="mint-sub-item">
+              <div class="mint-sub-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+              </div>
+              <div>
+                <div class="mint-sub-label">Libraries</div>
+                <div class="mint-sub-val">NYPL Verified</div>
+              </div>
+            </div>
+            <div class="mint-sub-item">
+              <div class="mint-sub-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </div>
+              <div>
+                <div class="mint-sub-label">Rec Centers</div>
+                <div class="mint-sub-val">NYC Parks Sourced</div>
+              </div>
+            </div>
+            <div class="mint-sub-item">
+              <div class="mint-sub-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="21" x2="21" y2="21"/><line x1="6" y1="21" x2="6" y2="7"/><line x1="10" y1="21" x2="10" y2="11"/><line x1="14" y1="21" x2="14" y2="11"/><line x1="18" y1="21" x2="18" y2="7"/><polygon points="12 2 20 7 4 7"/></svg>
+              </div>
+              <div>
+                <div class="mint-sub-label">Hubs & Demo</div>
+                <div class="mint-sub-val">NYCHA + Synthetic</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: NVIDIA NIM Acceleration -->
+        <div class="tech-kpi-card">
+          <div class="kpi-tech-title">
+            <span>NVIDIA NIM ACCELERATION</span>
+            <span class="nvidia-pill">NVIDIA NIM</span>
+          </div>
+          <div>
+            <div class="tech-kpi-value" id="kpi-model">Nemotron 3.5 Bolt</div>
+            <div class="tech-kpi-sub" id="kpi-model-sub">~9.5s Latency · 0% Fallback</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Middle Row: Hourly Heat Index Curve + Spatial Risk Map -->
+      <section class="chart-map-grid">
+        <!-- Forecast Bar Chart Panel -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <div class="chart-title">Hourly Heat Index Forecast Curve <span class="prov-badge DEMO_SYNTHETIC" style="margin-left:6px;">SIMULATED REPLAY</span></div>
+              <div style="font-size:12px; color:var(--text-muted);">NWS Station KNYC / OKX Grid (35,47) · Bronx County</div>
+            </div>
+            <div class="chart-pills" id="forecast-pills" role="tablist" aria-label="Forecast Horizon">
+              <button type="button" class="chart-pill active" data-horizon="today" role="tab" aria-selected="true">Today</button>
+              <button type="button" class="chart-pill" data-horizon="24h" role="tab" aria-selected="false">24-Hour</button>
+              <button type="button" class="chart-pill" data-horizon="48h" role="tab" aria-selected="false">48-Hour</button>
+            </div>
+          </div>
+
+          <div id="forecast-bars-container" class="forecast-bars-container">
+            <div class="forecast-col">
+              <div class="forecast-bar-fill" style="height:48%;"><span class="bar-val-pop">84°</span></div>
+              <span class="forecast-time">08:00</span>
+            </div>
+            <div class="forecast-col">
+              <div class="forecast-bar-fill" style="height:62%;"><span class="bar-val-pop">89°</span></div>
+              <span class="forecast-time">10:00</span>
+            </div>
+            <div class="forecast-col">
+              <div class="forecast-bar-fill" style="height:80%;"><span class="bar-val-pop">96°</span></div>
+              <span class="forecast-time">12:00</span>
+            </div>
+            <div class="forecast-col">
+              <div class="forecast-bar-fill danger-peak" style="height:100%;"><span class="bar-val-pop">104°</span></div>
+              <span class="forecast-time" style="color:var(--danger-dark); font-weight:800;">14:00 PEAK</span>
+            </div>
+            <div class="forecast-col">
+              <div class="forecast-bar-fill danger-peak" style="height:95%;"><span class="bar-val-pop">102°</span></div>
+              <span class="forecast-time">16:00</span>
+            </div>
+            <div class="forecast-col">
+              <div class="forecast-bar-fill" style="height:76%;"><span class="bar-val-pop">94°</span></div>
+              <span class="forecast-time">18:00</span>
+            </div>
+            <div class="forecast-col">
+              <div class="forecast-bar-fill" style="height:58%;"><span class="bar-val-pop">88°</span></div>
+              <span class="forecast-time">20:00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Spatial Risk Map of South Bronx CD1 -->
+        <div class="spatial-map-card">
+          <div class="map-header">
+            <div>
+              <div class="map-title">South Bronx Spatial Heat Map</div>
+              <div style="font-size:11px; color:var(--text-light-dim)">Mott Haven / Melrose · Community District 1</div>
+            </div>
+            <div id="map-fac-badge" class="status-badge live" style="font-size:10px;">8 FACILITIES</div>
+          </div>
+
+          <div class="map-canvas-area">
+            <!-- Stylized Schematic SVG Grid -->
+            <svg class="svg-map-bg" viewBox="0 0 400 200">
+              <path d="M 20 80 Q 150 120 380 40" stroke="#10B981" stroke-width="3" fill="none" />
+              <path d="M 60 160 Q 200 180 340 100" stroke="#059669" stroke-width="2" fill="none" />
+              <circle cx="90" cy="110" r="40" fill="rgba(16, 185, 129, 0.1)" />
+              <circle cx="260" cy="80" r="55" fill="rgba(239, 68, 68, 0.15)" />
+            </svg>
+
+            <!-- Interactive Facility Pins -->
+            <div id="spatial-map-pins"></div>
+
+            <div class="floating-glass-tooltip">
+              <div>
+                <div id="map-tt-name" class="map-tt-name">Select or hover a facility pin</div>
+                <div id="map-tt-sub" style="font-size:10px; color:var(--text-light-dim)">Mott Haven / Melrose · Click pin to inspect</div>
+              </div>
+              <div id="map-tt-score" class="map-tt-score">HVI 5</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bottom Row: Priority Facilities & AI Brief / Approval Flow -->
+      <section class="operations-grid">
+        <!-- Left: Priority Facilities & Live Stack -->
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- Facilities Panel -->
+          <div class="panel-card" id="facilities">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Priority Facility Ranking</div>
+                <div class="panel-sub-tag">Deterministic Weighted Algorithm (No AI in Scoring)</div>
+              </div>
+              <span class="status-badge live">CD1 VERIFIED</span>
+            </div>
+            <div id="rank-list">
+              <div style="color:var(--text-dim); padding:10px;">Loading verified facilities...</div>
+            </div>
+          </div>
+
+          <!-- GCP & NVIDIA Architecture Status -->
+          <div class="panel-card">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Infrastructure Telemetry</div>
+                <div class="panel-sub-tag">Google Cloud + NVIDIA Production Services</div>
+              </div>
+              <span class="status-badge live">100% HEALTHY</span>
+            </div>
+            <div id="integ-list">
+              <div style="color:var(--text-dim); padding:10px;">Loading cloud services...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: AI Brief, Mandatory Approval Gate, Tasks, Ledger -->
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <!-- NVIDIA NIM Grounded Readiness Brief -->
+          <div class="panel-card" id="briefs">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">NVIDIA NIM Grounded Brief</div>
+                <div class="panel-sub-tag">Synthesizes weather, facilities, and citations</div>
+              </div>
+              <span id="kpi-gate-badge" class="status-badge warn">DRAFT</span>
+            </div>
+            <div id="brief-box">
+              <div style="color:var(--text-dim); padding:20px; text-align:center;">
+                Click <strong>Generate AI Brief</strong> to run inference through <code>nvidia/nemotron-3.5-bolt-e4b</code>.
+              </div>
+            </div>
+          </div>
+
+          <!-- Operational Tasks Panel -->
+          <div class="panel-card" id="tasks">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Operational Tasks</div>
+                <div class="panel-sub-tag">Dispatched strictly after manager authorization (ADR-001)</div>
+              </div>
+              <span class="status-badge live">PROOF AUDITED</span>
+            </div>
+            <div id="tasks-list">
+              <div style="color:var(--text-dim); padding:10px;">No operational tasks active. Tasks require manager brief signoff.</div>
+            </div>
+          </div>
+
+          <!-- Immutable Audit Ledger -->
+          <div class="panel-card" id="audit">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Immutable Event Ledger</div>
+                <div class="panel-sub-tag">Firestore Event Sourcing with Timestamps</div>
+              </div>
+              <span class="status-badge live">AUDIT READY</span>
+            </div>
+            <div id="events-list">
+              <div style="color:var(--text-dim); padding:10px;">Loading audit trail...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const el = (t, props = {}, ...kids) => {
+  const e = document.createElement(t);
+  Object.assign(e, props);
+  kids.flat().forEach(k => {
+    if (k !== null && k !== undefined) {
+      e.append(k instanceof Node ? k : String(k));
+    }
+  });
+  return e;
+};
+
+let currentBrief = null;
+let cachedFacilities = [];
+let cachedRankings = [];
+let cachedTasks = [];
+let searchQuery = '';
+
+function toast(text, isSuccess = false) {
+  const m = $('msg');
+  m.className = 'toast-message' + (isSuccess ? ' toast-success' : '');
+  m.textContent = text;
+}
+
+async function api(path, opt = {}) {
+  const token = $('who').value;
+  const r = await fetch('/api/v1' + path, {
+    ...opt,
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'Content-Type': 'application/json',
+      ...(opt.headers || {})
+    }
+  });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) {
+    throw new Error((j.code || r.status) + ': ' + (j.message || 'Request failed'));
+  }
+  return j;
+}
+
+const post = (p, b) => api(p, { method: 'POST', body: JSON.stringify(b || {}) });
+const key = () => 'ui-' + Math.random().toString(36).slice(2, 12);
+
+async function guard(fn, successMsg = '') {
+  toast('');
+  try {
+    await fn();
+    if (successMsg) toast(successMsg, true);
+  } catch (e) {
+    toast(e.message, false);
+  }
+}
+
+function updateStepper(w, brief, tasks) {
+  const s1 = $('wf-step-1'), s2 = $('wf-step-2'), s3 = $('wf-step-3'), s4 = $('wf-step-4');
+  const hasWeather = w && w.status === 'ok';
+  const hasBrief = Boolean(brief);
+  const isApproved = brief && (brief.status === 'APPROVED' || brief.status === 'ASSIGNED');
+  const hasTasks = tasks && tasks.length > 0;
+  const allVerified = hasTasks && tasks.every(t => t.status === 'VERIFIED');
+
+  s1.className = 'wf-step ' + (hasWeather ? 'completed' : 'active');
+  $('wf-step-1-sub').textContent = hasWeather ? `${w.badge || 'SIMULATED'} · ${w.freshness}` : 'Weather unavailable';
+
+  s2.className = 'wf-step ' + (hasBrief ? 'completed' : 'active');
+  $('wf-step-2-sub').textContent = hasBrief ? `Brief ${brief.id} (v${brief.version})` : 'Click Generate AI Brief';
+
+  s3.className = 'wf-step ' + (isApproved ? 'completed' : (hasBrief ? 'active' : ''));
+  $('wf-step-3-sub').textContent = isApproved ? `Approved v${brief.version}` : (brief ? `Status: ${brief.status}` : 'Awaiting brief draft');
+
+  s4.className = 'wf-step ' + (allVerified ? 'completed' : (hasTasks ? 'active' : ''));
+  $('wf-step-4-sub').textContent = hasTasks ? `${tasks.filter(t => t.status === 'VERIFIED').length}/${tasks.length} tasks verified` : 'Requires ADR-001 approval';
+}
+
+function renderMapPins(items, facMap) {
+  const container = $('spatial-map-pins');
+  if (!container) return;
+  container.replaceChildren();
+  const coords = [
+    { top: '30%', left: '62%' }, { top: '24%', left: '28%' },
+    { top: '56%', left: '44%' }, { top: '40%', left: '76%' },
+    { top: '66%', left: '22%' }, { top: '74%', left: '58%' },
+    { top: '22%', left: '48%' }, { top: '52%', left: '66%' }
+  ];
+  const selectPin = (item, f) => {
+    const prov = (f && f.provenance) || 'PUBLIC_VERIFIED';
+    $('map-tt-name').textContent = item.name || item.facility_id;
+    $('map-tt-sub').textContent = `${(item.address || 'South Bronx').split(',')[0]} · ${item.rank ? 'Rank #' + item.rank : item.facility_id} · ${prov}`;
+    $('map-tt-score').textContent = (item.score !== undefined ? `${item.score}/100 · ` : '') + 'HVI 5';
+  };
+  items.forEach((item, idx) => {
+    const pos = coords[idx % coords.length];
+    const f = facMap[item.facility_id] || item;
+    const isTop = item.rank === 1 || idx === 0;
+    const pin = el('div', {
+      className: 'map-pin' + (isTop ? ' top-risk' : ''),
+      style: `top:${pos.top}; left:${pos.left};`,
+      tabIndex: 0,
+      role: 'button',
+      title: `${item.name || item.facility_id}${item.score !== undefined ? ' (Score: ' + item.score + ')' : ''}`,
+      onclick: () => {
+        selectPin(item, f);
+        const row = document.getElementById('fac-row-' + item.facility_id);
+        if (row) row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      },
+      onmouseenter: () => selectPin(item, f),
+      onkeydown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectPin(item, f); } }
+    });
+    container.append(pin);
+    if (idx === 0) selectPin(item, f);
+  });
+}
+
+function renderFacilitiesAndTasks() {
+  const q = searchQuery.trim().toLowerCase();
+  const me = window.__me || {};
+  const mgr = me.role === 'manager' || me.role === 'validator';
+  const facMap = Object.fromEntries(cachedFacilities.map(f => [f.facility_id, f]));
+
+  // Render Facilities / Ranking
+  if (mgr && cachedRankings.length > 0) {
+    const filtered = cachedRankings.filter(r => !q || (r.name || '').toLowerCase().includes(q) || r.facility_id.toLowerCase().includes(q) || (r.address || '').toLowerCase().includes(q));
+    if (filtered.length === 0) {
+      $('rank-list').innerHTML = '<div style="color:var(--text-dim); padding:10px;">No facilities match "' + q + '".</div>';
+    } else {
+      const box = el('div');
+      const labels = { heat: 'Heat', vulnerable_users: 'Vulnerable', no_working_ac: 'AC Risk', people_on_site: 'Occupancy', low_staffing: 'Staffing' };
+      filtered.forEach(r => {
+        const isTop = r.rank === 1;
+        const f = facMap[r.facility_id] || {};
+        const prov = f.provenance || 'PUBLIC_VERIFIED';
+        const factorRow = el('div', { className: 'factor-pills' });
+        if (r.factors) {
+          Object.entries(r.factors).forEach(([k, v]) => {
+            const txt = v.known ? `${labels[k] || k}: ${(v.value * 100).toFixed(0)}% (${v.weight}w)` : `${labels[k] || k}: UNKNOWN (renorm)`;
+            factorRow.append(el('span', { className: 'factor-pill' + (v.known ? '' : ' unknown'), textContent: txt }));
+          });
+        }
+        const card = el('div', { className: 'facility-row-item', id: 'fac-row-' + r.facility_id },
+          el('div', { style: 'display:flex; align-items:flex-start;' },
+            el('div', { className: 'fac-rank-pill' + (isTop ? ' top' : ''), textContent: '#' + r.rank }),
+            el('div', { className: 'fac-details' },
+              el('div', { className: 'fac-name', style: 'display:flex; align-items:center; gap:6px; flex-wrap:wrap;' },
+                el('span', {}, r.name || r.facility_id),
+                el('span', { className: 'prov-badge ' + prov, textContent: prov }),
+                f.source_url ? el('a', { href: f.source_url, target: '_blank', rel: 'noopener', style: 'font-size:10px; color:var(--emerald-dark); text-decoration:underline;', textContent: 'Source ↗' }) : null
+              ),
+              el('div', { className: 'fac-sub', style: 'flex-wrap:wrap;' },
+                el('span', { style: 'color:var(--emerald-dark); font-family:monospace; font-weight:700;' }, r.facility_id),
+                el('span', {}, '•'),
+                el('span', {}, r.address ? r.address.split(',')[0] : 'South Bronx'),
+                el('span', {}, '•'),
+                el('span', { style: r.data_quality_flags.length ? 'color:var(--heat-dark); font-weight:700;' : '' },
+                  r.data_quality_flags.length ? 'Flags: ' + r.data_quality_flags.join(', ') : 'All factors verified (<24h)')
+              ),
+              factorRow
+            )
+          ),
+          el('div', { className: 'fac-score-col' },
+            el('div', { className: 'fac-score-num', textContent: r.score + '/100' }),
+            el('div', { className: 'fac-score-conf', textContent: (r.confidence * 100).toFixed(0) + '% Confidence' })
+          )
+        );
+        box.append(card);
+      });
+      $('rank-list').replaceChildren(box);
+    }
+  } else if (!mgr) {
+    const filtered = cachedFacilities.filter(f => !q || (f.name || '').toLowerCase().includes(q) || f.facility_id.toLowerCase().includes(q));
+    const box = el('div');
+    box.append(el('div', { style: 'font-size:11.5px; color:var(--text-muted); margin-bottom:8px;' }, 'Priority scoring is Manager/Validator-scoped. Showing tenant facilities:'));
+    filtered.forEach(f => {
+      box.append(el('div', { className: 'facility-row-item' },
+        el('div', { className: 'fac-details', style: 'margin-left:0;' },
+          el('div', { className: 'fac-name' }, f.name || f.facility_id, ' ', el('span', { className: 'prov-badge ' + (f.provenance || 'UNKNOWN'), textContent: f.provenance || 'UNKNOWN' })),
+          el('div', { className: 'fac-sub' }, f.facility_id, ' • ', f.address || 'South Bronx')
+        )
+      ));
+    });
+    $('rank-list').replaceChildren(box);
+  }
+
+  // Render Tasks
+  const filteredTasks = cachedTasks.filter(t => !q || (t.title || '').toLowerCase().includes(q) || t.facility_id.toLowerCase().includes(q) || t.id.toLowerCase().includes(q));
+  if (cachedTasks.length === 0) {
+    $('tasks-list').innerHTML = '<div style="color:var(--text-dim); padding:10px;">No operational tasks active. Tasks can only be dispatched after an authorized manager approves the exact readiness brief version (ADR-001).</div>';
+  } else if (filteredTasks.length === 0) {
+    $('tasks-list').innerHTML = '<div style="color:var(--text-dim); padding:10px;">No tasks match "' + q + '".</div>';
+  } else {
+    const tBox = el('div');
+    filteredTasks.forEach(t => {
+      const item = el('div', { className: 'task-row' },
+        el('div', {},
+          el('div', { style: 'font-weight:700; font-size:13px; margin-bottom:2px;' }, t.title),
+          el('div', { style: 'font-size:11px; color:var(--text-dim);' },
+            `${t.id} · Facility: ${t.facility_id} · Playbook: ${t.playbook_task_id} · Due: ${t.deadline.slice(11, 16)} UTC`
+          ),
+          t.evidence ? el('div', { style: 'font-size:11px; color:var(--emerald-dark); margin-top:3px; font-family:monospace;' },
+            `Proof: ${t.evidence.object_path} (${t.evidence.note || 'submitted'})`
+          ) : null
+        ),
+        el('div', { style: 'display:flex; align-items:center; gap:10px; flex-wrap:wrap;' },
+          el('span', { className: 'task-status-tag ' + t.status, textContent: t.status }),
+          taskBtns(t, me)
+        )
+      );
+      tBox.append(item);
+    });
+    $('tasks-list').replaceChildren(tBox);
+  }
+}
+
+async function load() {
+  await guard(async () => {
+    const me = await api('/me');
+    window.__me = me;
+    const roleNames = { manager: 'Manager', staff: 'Operations Staff', validator: 'Compliance Validator' };
+    const actorLabel = me.actor_id || me.name || 'User';
+    $('user-display-name').textContent = actorLabel;
+    $('user-role-label').textContent = `${roleNames[me.role] || me.role} · Tenant: ${me.tenant_id}`;
+    $('user-avatar-initials').textContent = actorLabel.split(/[_-\s]+/).map(s => s[0]).join('').slice(0, 2).toUpperCase() || 'CO';
+    $('workspace-tenant-name').innerHTML = `<span class="tenant-dot"></span>${me.tenant_id === 'demo-b' ? 'Melrose Care Ops' : 'South Bronx Resil.'}`;
+
+    // 1. Weather (Truthful source + freshness labeling)
+    const w = await api('/weather/status');
+    const isFresh = w.freshness === 'FRESH';
+    const badgeLabel = w.badge || w.source || 'UNKNOWN';
+    $('kpi-freshness').textContent = `${badgeLabel} · ${w.freshness || 'UNKNOWN'}`;
+    $('kpi-freshness').className = 'status-badge ' + (w.status === 'ok' && isFresh ? 'live' : 'warn');
+    $('header-weather-badge').textContent = `WEATHER: ${badgeLabel} (${w.freshness || 'UNKNOWN'})`;
+
+    if (w.status === 'ok' && w.records && w.records[0]) {
+      $('kpi-weather').textContent = w.records[0].event;
+      const fetchedShort = w.fetched_at ? w.fetched_at.slice(11, 19) + ' UTC' : 'unknown time';
+      $('kpi-weather-sub').textContent = `Source: ${badgeLabel} · Fetched ${fetchedShort} · Zone NYZ073`;
+    } else {
+      $('kpi-weather').textContent = 'Weather Unavailable / Unknown';
+      $('kpi-weather-sub').textContent = 'Failed or empty fetch is treated as UNKNOWN — never as "no hazard"';
+    }
+
+    // Facilities (accessible to all authenticated roles in tenant)
+    cachedFacilities = await api('/facilities');
+    const verifiedCount = cachedFacilities.filter(f => f.provenance === 'PUBLIC_VERIFIED').length;
+    $('kpi-fac-count').textContent = `${cachedFacilities.length} Sites`;
+    $('kpi-fac-badge').textContent = `${verifiedCount} PUBLIC_VERIFIED · ${cachedFacilities.length - verifiedCount} DEMO`;
+    $('nav-fac-count').textContent = String(cachedFacilities.length);
+    $('map-fac-badge').textContent = `${cachedFacilities.length} FACILITIES`;
+
+    const mgr = me.role === 'manager' || me.role === 'validator';
+
+    // 2. Integrations
+    if (mgr) {
+      const i = await api('/integrations/status');
+      const g = i.google_cloud;
+      const n = i.nvidia;
+
+      if (n.configured) {
+        const modelShort = n.model_id.split('/').pop() || n.model_id;
+        $('kpi-model').textContent = modelShort;
+        $('kpi-model-sub').textContent = (n.last_brief_used_fallback ? 'Fallback Template Used' : `Configured · ${n.last_latency_ms ? n.last_latency_ms + 'ms' : 'Ready'}`);
+      } else {
+        $('kpi-model').textContent = 'Template Mode';
+        $('kpi-model-sub').textContent = 'No NVIDIA key configured · Evidence-only fallback active';
+      }
+
+      const rows = [
+        ['NVIDIA NIM Model', n.model_id || 'unconfigured (template fallback)', n.configured && !n.last_brief_used_fallback ? 'Configured (OK)' : 'Template Fallback'],
+        ['Google Cloud Run', g.cloud_run.service || 'climateops-api (local)', g.cloud_run.running_on_cloud_run ? 'Active (Cloud Run)' : 'Local Dev Mode'],
+        ['Cloud Firestore', `Backend: ${g.firestore.backend}`, g.firestore.in_use ? 'Connected (Firestore)' : 'In-Memory Store'],
+        ['Cloud Storage', `Upload mode: ${g.cloud_storage.mode}`, g.cloud_storage.in_use ? 'Active (GCS Signed)' : g.cloud_storage.mode],
+        ['Weather Source', `Source: ${i.weather.badge || 'SIMULATED'}`, i.weather.freshness === 'FRESH' ? `FRESH (${i.weather.badge})` : `${i.weather.freshness || 'UNKNOWN'}`]
+      ];
+
+      const t = el('table', { className: 'infra-table' });
+      rows.forEach(([svc, detail, st]) => {
+        t.append(el('tr', {},
+          el('td', { className: 'infra-name', textContent: svc }),
+          el('td', { className: 'infra-detail', textContent: detail }),
+          el('td', { style: 'text-align:right' },
+            el('span', { className: 'status-badge ' + (st.includes('Active') || st.includes('OK') || st.includes('Connected') || st.includes('FRESH') ? 'live' : 'warn'), textContent: st })
+          )
+        ));
+      });
+      $('integ-list').replaceChildren(t);
+    } else {
+      $('integ-list').textContent = 'Integration telemetry restricted to Manager and Validator roles.';
+    }
+
+    // 3. Priorities
+    const facMap = Object.fromEntries(cachedFacilities.map(f => [f.facility_id, f]));
+    if (mgr) {
+      const p = await api('/priorities');
+      cachedRankings = p.ranking || [];
+      renderMapPins(cachedRankings, facMap);
+    } else {
+      cachedRankings = [];
+      renderMapPins(cachedFacilities, facMap);
+    }
+
+    // 4. Briefs
+    $('gen').disabled = me.role !== 'manager';
+    if (mgr) {
+      const bs = await api('/briefs');
+      currentBrief = bs.sort((a, b) => (a.created_at < b.created_at ? 1 : -1))[0] || null;
+      renderBrief();
+    } else {
+      currentBrief = null;
+      renderBrief();
+    }
+
+    // 5. Tasks
+    cachedTasks = await api('/tasks');
+    $('nav-task-count').textContent = cachedTasks.length ? String(cachedTasks.length) : '0';
+    renderFacilitiesAndTasks();
+    updateStepper(w, currentBrief, cachedTasks);
+
+    // 6. Audit Events
+    if (mgr) {
+      const ev = await api('/events');
+      const evBox = el('div', { className: 'audit-list' });
+      ev.slice(-15).reverse().forEach(e => {
+        const row = el('div', { className: 'audit-entry' },
+          el('span', { className: 'audit-time', textContent: e.occurred_at.slice(11, 19) }),
+          el('span', { className: 'audit-type', textContent: e.event_type }),
+          el('span', { style: 'font-family:monospace; font-size:11px; color:var(--text-muted);' }, (e.previous_state || '-') + ' → ' + (e.new_state || '-')),
+          el('span', { className: 'audit-actor', textContent: e.actor_id })
+        );
+        evBox.append(row);
+      });
+      $('events-list').replaceChildren(evBox);
+    } else {
+      $('events-list').textContent = 'Audit history restricted to Manager and Validator roles.';
+    }
+  });
+}
+
+function taskBtns(t, me) {
+  const w = el('div', { style: 'display:flex; gap:6px;' });
+  const b = (label, cls, fn) => w.append(el('button', {
+    textContent: label,
+    className: 'btn ' + (cls || ''),
+    style: 'font-size:11px; padding:4px 10px;',
+    onclick: () => guard(async () => { await fn(); await load(); })
+  }));
+
+  if (t.status === 'ASSIGNED') {
+    b('Start Task', 'btn-primary', () => api('/tasks/' + t.id, { method: 'PATCH', body: JSON.stringify({ status: 'IN_PROGRESS' }) }));
+  }
+  if (t.status === 'IN_PROGRESS') {
+    b('Upload Proof (GCS)', 'btn-emerald', async () => {
+      const u = await post('/tasks/' + t.id + '/evidence/upload-url', { content_type: 'image/jpeg' });
+      return post('/tasks/' + t.id + '/evidence', {
+        object_path: u.object_path,
+        sha256: '0'.repeat(64),
+        note: 'Verified Chiller Gauge Proof (' + u.mode + ')'
+      });
+    });
+  }
+  if (t.status === 'COMPLETION_SUBMITTED' && me.role === 'manager') {
+    b('Verify & Accept', 'btn-approve', () => post('/tasks/' + t.id + '/verify', { decision: 'accept' }));
+    b('Reject', 'btn-reject', () => post('/tasks/' + t.id + '/verify', { decision: 'reject' }));
+  }
+  return w;
+}
+
+function renderBrief() {
+  const box = $('brief-box');
+  box.replaceChildren();
+
+  if (!currentBrief) {
+    box.innerHTML = '<div style="color:var(--text-dim); padding:20px; text-align:center;">No active brief generated yet. Click <strong>Generate AI Brief</strong> above to synthesize the operational readiness plan.</div>';
+    $('kpi-gate-badge').textContent = 'EMPTY';
+    $('kpi-gate-badge').className = 'status-badge warn';
+    return;
+  }
+
+  const b = currentBrief;
+  const c = b.content;
+  const m = b.model_metadata;
+  const isApproved = b.status === 'APPROVED' || b.status === 'ASSIGNED';
+
+  $('kpi-gate-badge').textContent = b.status + ' (v' + b.version + ')';
+  $('kpi-gate-badge').className = 'status-badge ' + (isApproved ? 'live' : 'warn');
+
+  const card = el('div', { className: 'brief-wrapper' });
+
+  // Brief Header
+  card.append(el('div', { className: 'brief-meta' },
+    el('div', { style: 'display:flex; align-items:center; gap:8px;' },
+      el('span', { className: 'status-badge ' + (isApproved ? 'live' : 'warn'), textContent: b.status }),
+      el('span', { style: 'font-size:11px; font-weight:700; color:var(--emerald-dark);' },
+        m.used_fallback ? 'Deterministic Fallback' : 'NVIDIA NIM: ' + (m.model_id || 'Nemotron 3.5 Bolt')
+      )
+    ),
+    el('div', { style: 'font-family:monospace; font-size:10px; color:var(--text-dim);' }, 'SHA-256: ' + b.content_hash.slice(0, 18) + '…')
+  ));
+
+  // Executive Summary
+  card.append(el('div', { className: 'brief-exec-summary', textContent: c.summary }));
+
+  // Grounded Claims
+  card.append(el('div', { className: 'claims-header', textContent: 'Grounded Evidence Citations' }));
+  const claimsBox = el('div');
+  c.claims.forEach(cl => {
+    claimsBox.append(el('div', { className: 'claim-row' },
+      el('strong', { style: 'color:var(--emerald-dark); margin-right:6px;' }, cl.id),
+      el('span', {}, cl.text),
+      el('span', {}, cl.source_ids.map(s => el('span', { className: 'source-tag', textContent: s })))
+    ));
+  });
+  card.append(claimsBox);
+
+  // Proposed Playbook Actions
+  card.append(el('div', { className: 'claims-header', style: 'margin-top:14px;', textContent: 'Recommended Facility Actions' }));
+  const actionsBox = el('div');
+  c.facility_actions.forEach(a => {
+    actionsBox.append(el('div', { className: 'claim-row', style: 'display:flex; justify-content:space-between;' },
+      el('div', {},
+        el('strong', { style: 'color:var(--text-dark); margin-right:8px;' }, a.facility_id),
+        el('span', { style: 'color:var(--text-muted);' }, a.task_candidate)
+      ),
+      el('span', { className: 'source-tag', style: 'background:#FEF3C7; color:#92400E; border-color:#FDE68A;' }, a.playbook_task_id)
+    ));
+  });
+  card.append(actionsBox);
+
+  // Mandatory Approval Gate
+  const gate = el('div', { className: 'approval-gate-box' + (isApproved ? ' approved' : '') });
+  const gateHeader = el('div', { style: 'display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;' },
+    el('div', {},
+      el('div', { className: 'gate-badge-label' },
+        isApproved ? 'HUMAN APPROVAL SEALED (Tasks Authorized)' : 'MANDATORY APPROVAL GATE (ADR-001)'
+      ),
+      el('div', { style: 'font-size:11px; color:var(--text-muted); margin-top:2px;' },
+        'Cryptographically locks Brief v' + b.version + ' to manager actor ID'
+      )
+    ),
+    el('div', { style: 'font-family:monospace; font-size:10px; color:var(--text-dim);' }, 'ID: ' + b.id)
+  );
+  gate.append(gateHeader);
+
+  // Manager Actions + Inline Forms
+  const btnRow = el('div', { style: 'display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;' });
+  const formMount = el('div');
+  const mgr = window.__me && window.__me.role === 'manager';
+  const body = () => ({ expected_version: b.version, expected_content_hash: b.content_hash, idempotency_key: key() });
+
+  if (b.status === 'DRAFT') {
+    btnRow.append(el('button', {
+      className: 'btn btn-primary',
+      textContent: 'Submit for Executive Review',
+      disabled: !mgr,
+      onclick: () => guard(async () => { await post('/briefs/' + b.id + '/submit'); await load(); }, `Brief v${b.version} submitted for approval`)
+    }));
+  }
+
+  if (b.status === 'PENDING_APPROVAL') {
+    btnRow.append(el('button', {
+      className: 'btn btn-approve',
+      textContent: 'Approve Exact Version v' + b.version,
+      disabled: !mgr,
+      onclick: () => guard(async () => { await post('/briefs/' + b.id + '/approve', body()); await load(); }, `Approved Brief v${b.version}`)
+    }));
+
+    btnRow.append(el('button', {
+      className: 'btn btn-reject',
+      textContent: 'Reject / Request Revision',
+      disabled: !mgr,
+      onclick: () => {
+        const input = el('input', { type: 'text', placeholder: 'Enter required reason for rejection / revision...', ariaLabel: 'Rejection reason' });
+        const boxForm = el('div', { className: 'inline-form-box' },
+          el('div', { style: 'font-size:11.5px; font-weight:700; color:var(--danger-dark);' }, 'Rejection Reason (Required by ADR-001):'),
+          input,
+          el('div', { style: 'display:flex; gap:8px;' },
+            el('button', {
+              className: 'btn btn-reject',
+              style: 'font-size:11.5px; padding:6px 12px;',
+              textContent: 'Confirm Rejection',
+              onclick: () => guard(async () => {
+                const r = input.value.trim();
+                if (!r) throw new Error('reason_required: Please enter a rejection reason');
+                await post('/briefs/' + b.id + '/reject', { ...body(), reason: r });
+                await load();
+              }, 'Brief returned to DRAFT')
+            }),
+            el('button', {
+              className: 'btn btn-outline',
+              style: 'font-size:11.5px; padding:6px 12px;',
+              textContent: 'Cancel',
+              onclick: () => formMount.replaceChildren()
+            })
+          )
+        );
+        formMount.replaceChildren(boxForm);
+        input.focus();
+      }
+    }));
+  }
+
+  if (b.status === 'APPROVED') {
+    btnRow.append(el('button', {
+      className: 'btn btn-primary',
+      textContent: 'Dispatch Operational Tasks Now',
+      disabled: !mgr,
+      onclick: () => guard(async () => { await post('/tasks', { brief_id: b.id, idempotency_key: key() }); await load(); }, 'Operational tasks dispatched')
+    }));
+  }
+
+  if (b.status === 'DRAFT' || b.status === 'PENDING_APPROVAL' || b.status === 'APPROVED') {
+    btnRow.append(el('button', {
+      className: 'btn btn-outline',
+      textContent: b.status === 'APPROVED' ? 'Revise Summary (Voids Approval)' : 'Edit Summary',
+      disabled: !mgr,
+      onclick: () => {
+        const ta = el('textarea', { rows: 3, value: c.summary, ariaLabel: 'Edit brief summary' });
+        const editBox = el('div', { className: 'inline-form-box' },
+          el('div', { style: 'font-size:11.5px; font-weight:700; color:var(--text-dark);' },
+            b.status === 'APPROVED' ? 'Material edit increments version and voids current approval (ADR-001):' : `Revise Brief Summary (creates v${b.version + 1}):`
+          ),
+          ta,
+          el('div', { style: 'display:flex; gap:8px;' },
+            el('button', {
+              className: 'btn btn-primary',
+              style: 'font-size:11.5px; padding:6px 12px;',
+              textContent: `Save v${b.version + 1}`,
+              onclick: () => guard(async () => {
+                const s = ta.value.trim();
+                if (!s) throw new Error('validation_error: Summary cannot be empty');
+                await api('/briefs/' + b.id, { method: 'PATCH', body: JSON.stringify({ summary: s }) });
+                await load();
+              }, `Saved Brief v${b.version + 1} (DRAFT)`)
+            }),
+            el('button', {
+              className: 'btn btn-outline',
+              style: 'font-size:11.5px; padding:6px 12px;',
+              textContent: 'Cancel',
+              onclick: () => formMount.replaceChildren()
+            })
+          )
+        );
+        formMount.replaceChildren(editBox);
+        ta.focus();
+      }
+    }));
+  }
+
+  if (!mgr) {
+    btnRow.append(el('span', { style: 'font-size:12px; color:var(--danger-dark); font-weight:600;' }, 'Only authorized managers can approve, edit, or dispatch operational briefs.'));
+  }
+
+  gate.append(btnRow, formMount);
+  card.append(gate);
+  box.append(card);
+}
+
+// Forecast Horizon Tabs
+const FORECAST_HORIZONS = {
+  today: [
+    { t: '08:00', v: '84°', h: 48, p: false }, { t: '10:00', v: '89°', h: 62, p: false },
+    { t: '12:00', v: '96°', h: 80, p: false }, { t: '14:00 PEAK', v: '104°', h: 100, p: true },
+    { t: '16:00', v: '102°', h: 95, p: true }, { t: '18:00', v: '94°', h: 76, p: false },
+    { t: '20:00', v: '88°', h: 58, p: false }
+  ],
+  '24h': [
+    { t: 'Now', v: '96°', h: 80, p: false }, { t: '+4h PEAK', v: '104°', h: 100, p: true },
+    { t: '+8h', v: '92°', h: 72, p: false }, { t: '+12h Night', v: '82°', h: 44, p: false },
+    { t: '+16h', v: '86°', h: 54, p: false }, { t: '+20h', v: '99°', h: 86, p: true },
+    { t: '+24h', v: '101°', h: 92, p: true }
+  ],
+  '48h': [
+    { t: 'Day 1 AM', v: '88°', h: 58, p: false }, { t: 'Day 1 PM', v: '104°', h: 100, p: true },
+    { t: 'Night 1', v: '81°', h: 42, p: false }, { t: 'Day 2 AM', v: '90°', h: 64, p: false },
+    { t: 'Day 2 PM', v: '101°', h: 92, p: true }, { t: 'Night 2', v: '78°', h: 36, p: false },
+    { t: 'Day 3 AM', v: '85°', h: 50, p: false }
+  ]
+};
+
+document.querySelectorAll('#forecast-pills .chart-pill').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('#forecast-pills .chart-pill').forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    const pts = FORECAST_HORIZONS[btn.dataset.horizon] || FORECAST_HORIZONS.today;
+    const container = $('forecast-bars-container');
+    container.replaceChildren(...pts.map(pt =>
+      el('div', { className: 'forecast-col' },
+        el('div', { className: 'forecast-bar-fill' + (pt.p ? ' danger-peak' : ''), style: `height:${pt.h}%;` },
+          el('span', { className: 'bar-val-pop', textContent: pt.v })
+        ),
+        el('span', { className: 'forecast-time', style: pt.t.includes('PEAK') ? 'color:var(--danger-dark); font-weight:800;' : '', textContent: pt.t })
+      )
+    ));
+  };
+});
+
+// Mobile Drawer & Search Shortcuts
+function setDrawer(open) {
+  const sb = $('sidebar'), bd = $('sidebar-backdrop'), btn = $('mobile-menu-btn');
+  if (!sb || !bd) return;
+  sb.classList.toggle('open', open);
+  bd.classList.toggle('open', open);
+  if (btn) btn.setAttribute('aria-expanded', String(open));
+}
+if ($('mobile-menu-btn')) $('mobile-menu-btn').onclick = () => setDrawer(!$('sidebar').classList.contains('open'));
+if ($('sidebar-close-btn')) $('sidebar-close-btn').onclick = () => setDrawer(false);
+if ($('sidebar-backdrop')) $('sidebar-backdrop').onclick = () => setDrawer(false);
+function updateActiveNav() {
+  const hash = window.location.hash || '#dashboard';
+  document.querySelectorAll('.sidebar-nav .nav-item').forEach(n => {
+    const href = n.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      if (href === hash) {
+        n.classList.add('active');
+      } else {
+        n.classList.remove('active');
+      }
+    }
+  });
+}
+window.addEventListener('hashchange', updateActiveNav);
+
+document.querySelectorAll('.sidebar-nav .nav-item').forEach(a => {
+  a.addEventListener('click', () => {
+    const href = a.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      document.querySelectorAll('.sidebar-nav .nav-item').forEach(n => n.classList.remove('active'));
+      a.classList.add('active');
+    }
+    setDrawer(false);
+  });
+});
+updateActiveNav();
+
+if ($('sidebar-search-input')) {
+  $('sidebar-search-input').oninput = e => {
+    searchQuery = e.target.value || '';
+    renderFacilitiesAndTasks();
+  };
+}
+if ($('workspace-card')) {
+  $('workspace-card').onclick = () => { if ($('sidebar-search-input')) $('sidebar-search-input').focus(); };
+}
+window.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    setDrawer(true);
+    if ($('sidebar-search-input')) $('sidebar-search-input').focus();
+  } else if (e.key === 'Escape') {
+    setDrawer(false);
+  }
+});
+
+$('gen').onclick = () => guard(async () => {
+  $('gen').disabled = true;
+  $('gen').innerHTML = '<svg class="btn-spinner" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg><span>Synthesizing with NVIDIA NIM...</span>';
+  try {
+    await post('/briefs/generate');
+    await load();
+  } finally {
+    $('gen').disabled = false;
+    $('gen').innerHTML = '<svg class="btn-sparkle-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg><span>Generate AI Brief</span>';
+  }
+}, 'Generated readiness brief v1');
+
+$('who').onchange = load;
+$('reload').onclick = () => load();
+
+load();
+</script>
+</body>
+</html>

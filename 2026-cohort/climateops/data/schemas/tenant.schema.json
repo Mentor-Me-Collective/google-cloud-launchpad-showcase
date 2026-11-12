@@ -1,0 +1,24 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "tenant_id": {
+      "title": "Tenant Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "demo_flag": {
+      "default": true,
+      "title": "Demo Flag",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "tenant_id",
+    "name"
+  ],
+  "title": "Tenant",
+  "type": "object"
+}
