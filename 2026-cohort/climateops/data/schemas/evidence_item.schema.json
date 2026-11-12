@@ -1,0 +1,101 @@
+{
+  "$defs": {
+    "EvidenceReviewDecision": {
+      "enum": [
+        "ACCEPTED",
+        "REJECTED"
+      ],
+      "title": "EvidenceReviewDecision",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "tenant_id": {
+      "title": "Tenant Id",
+      "type": "string"
+    },
+    "task_id": {
+      "title": "Task Id",
+      "type": "string"
+    },
+    "object_path": {
+      "title": "Object Path",
+      "type": "string"
+    },
+    "sha256": {
+      "title": "Sha256",
+      "type": "string"
+    },
+    "content_type": {
+      "title": "Content Type",
+      "type": "string"
+    },
+    "submitted_by": {
+      "title": "Submitted By",
+      "type": "string"
+    },
+    "submitted_at": {
+      "format": "date-time",
+      "title": "Submitted At",
+      "type": "string"
+    },
+    "review_decision": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EvidenceReviewDecision"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "reviewed_by": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Reviewed By"
+    },
+    "reviewed_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Reviewed At"
+    },
+    "review_notes": {
+      "default": "",
+      "title": "Review Notes",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "tenant_id",
+    "task_id",
+    "object_path",
+    "sha256",
+    "content_type",
+    "submitted_by",
+    "submitted_at"
+  ],
+  "title": "EvidenceItem",
+  "type": "object"
+}

@@ -1,0 +1,21 @@
+{
+  "_comment": "SIMULATED weather fixture for demo/testing. NOT a real NWS-issued alert. Do not attribute to NWS.",
+  "fixture": true,
+  "fixture_type": "SIMULATED",
+  "as_of": "2026-07-15T14:00:00Z",
+  "nws_id": null,
+  "event_type": "SIMULATED: Excessive Heat Warning",
+  "severity": "Extreme",
+  "area_description": "Mott Haven and Melrose neighborhoods, Bronx, NY (DEMO ONLY — not a real NWS area designation)",
+  "issued_at": "2026-07-15T12:00:00Z",
+  "effective_at": "2026-07-15T14:00:00Z",
+  "expires_at": "2026-07-16T20:00:00Z",
+  "headline": "SIMULATED Excessive Heat Warning until Wednesday evening",
+  "description": "DEMO FIXTURE: Heat index values up to 108°F expected. This is a simulated record for demonstration purposes only.",
+  "instruction": "DEMO: Drink plenty of fluids, stay in air-conditioned rooms, check on relatives and neighbors.",
+  "parameters": {
+    "NWSheadline": ["SIMULATED Excessive Heat Warning until Wednesday 8 PM EDT"],
+    "heatIndex": ["108°F (simulated)"]
+  },
+  "_provenance": "Synthetic scenario data — see docs/04-data/facility-provenance.md for classification rules"
+}

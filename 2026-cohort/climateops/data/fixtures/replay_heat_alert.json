@@ -1,0 +1,19 @@
+{
+  "fixture": true,
+  "fixture_label": "SIMULATED",
+  "source_note": "National Weather Service New York, NY (NWS OKX) — Zone NYZ073 / Bronx County",
+  "features": [
+    {
+      "id": "NWS-OKX-HEAT-NYZ073-01",
+      "properties": {
+        "id": "NWS-OKX-HEAT-NYZ073-01",
+        "event": "Excessive Heat Warning",
+        "severity": "Severe",
+        "headline": "Excessive Heat Warning: Dangerously high temperatures and heat index values up to 105 degrees across Bronx County NYZ073",
+        "areaDesc": "Bronx, NY (Mott Haven, Melrose, Port Morris, Hunts Point)",
+        "sent_offset_h": -1,
+        "expires_offset_h": 24
+      }
+    }
+  ]
+}

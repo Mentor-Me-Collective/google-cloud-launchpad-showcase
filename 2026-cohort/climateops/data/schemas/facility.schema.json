@@ -1,0 +1,85 @@
+{
+  "$defs": {
+    "ProvenanceStatus": {
+      "enum": [
+        "PUBLIC_VERIFIED",
+        "DEMO_SYNTHETIC",
+        "UNKNOWN"
+      ],
+      "title": "ProvenanceStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "tenant_id": {
+      "title": "Tenant Id",
+      "type": "string"
+    },
+    "public_source_id": {
+      "title": "Public Source Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "address": {
+      "title": "Address",
+      "type": "string"
+    },
+    "neighborhood": {
+      "title": "Neighborhood",
+      "type": "string"
+    },
+    "latitude": {
+      "title": "Latitude",
+      "type": "number"
+    },
+    "longitude": {
+      "title": "Longitude",
+      "type": "number"
+    },
+    "source_url": {
+      "title": "Source Url",
+      "type": "string"
+    },
+    "retrieved_at": {
+      "format": "date-time",
+      "title": "Retrieved At",
+      "type": "string"
+    },
+    "verified_by": {
+      "title": "Verified By",
+      "type": "string"
+    },
+    "provenance_status": {
+      "$ref": "#/$defs/ProvenanceStatus"
+    },
+    "scenario_notes": {
+      "default": "",
+      "title": "Scenario Notes",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "tenant_id",
+    "public_source_id",
+    "name",
+    "address",
+    "neighborhood",
+    "latitude",
+    "longitude",
+    "source_url",
+    "retrieved_at",
+    "verified_by",
+    "provenance_status"
+  ],
+  "title": "Facility",
+  "type": "object"
+}

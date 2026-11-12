@@ -1,0 +1,120 @@
+{
+  "$defs": {
+    "BriefClaim": {
+      "additionalProperties": false,
+      "description": "A single cited claim in the readiness brief.",
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "source_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "confidence": {
+          "default": "supported",
+          "title": "Confidence",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "source_refs"
+      ],
+      "title": "BriefClaim",
+      "type": "object"
+    },
+    "BriefState": {
+      "enum": [
+        "DRAFT",
+        "PENDING_APPROVAL",
+        "APPROVED",
+        "REJECTED",
+        "SUPERSEDED"
+      ],
+      "title": "BriefState",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "tenant_id": {
+      "title": "Tenant Id",
+      "type": "string"
+    },
+    "facility_id": {
+      "title": "Facility Id",
+      "type": "string"
+    },
+    "version": {
+      "default": 1,
+      "title": "Version",
+      "type": "integer"
+    },
+    "evidence_bundle_id": {
+      "title": "Evidence Bundle Id",
+      "type": "string"
+    },
+    "claims": {
+      "items": {
+        "$ref": "#/$defs/BriefClaim"
+      },
+      "title": "Claims",
+      "type": "array"
+    },
+    "summary": {
+      "default": "",
+      "title": "Summary",
+      "type": "string"
+    },
+    "recommended_tasks": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Recommended Tasks",
+      "type": "array"
+    },
+    "state": {
+      "$ref": "#/$defs/BriefState",
+      "default": "DRAFT"
+    },
+    "content_hash": {
+      "default": "",
+      "title": "Content Hash",
+      "type": "string"
+    },
+    "model_used": {
+      "default": "template-fallback",
+      "title": "Model Used",
+      "type": "string"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "updated_at": {
+      "format": "date-time",
+      "title": "Updated At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "tenant_id",
+    "facility_id",
+    "evidence_bundle_id",
+    "created_at",
+    "updated_at"
+  ],
+  "title": "ReadinessBrief",
+  "type": "object"
+}

@@ -1,0 +1,121 @@
+{
+  "$defs": {
+    "WeatherFixtureType": {
+      "enum": [
+        "NWS_LIVE",
+        "NWS_REPLAY",
+        "SIMULATED"
+      ],
+      "title": "WeatherFixtureType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "source_url": {
+      "title": "Source Url",
+      "type": "string"
+    },
+    "nws_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Nws Id"
+    },
+    "issued_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Issued At"
+    },
+    "effective_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Effective At"
+    },
+    "expires_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Expires At"
+    },
+    "fetched_at": {
+      "format": "date-time",
+      "title": "Fetched At",
+      "type": "string"
+    },
+    "payload_hash": {
+      "title": "Payload Hash",
+      "type": "string"
+    },
+    "fixture_type": {
+      "$ref": "#/$defs/WeatherFixtureType",
+      "default": "NWS_LIVE"
+    },
+    "fixture_flag": {
+      "default": false,
+      "title": "Fixture Flag",
+      "type": "boolean"
+    },
+    "event_type": {
+      "default": "",
+      "title": "Event Type",
+      "type": "string"
+    },
+    "severity": {
+      "default": "",
+      "title": "Severity",
+      "type": "string"
+    },
+    "area_description": {
+      "default": "",
+      "title": "Area Description",
+      "type": "string"
+    },
+    "raw_properties": {
+      "additionalProperties": true,
+      "title": "Raw Properties",
+      "type": "object"
+    }
+  },
+  "required": [
+    "id",
+    "source_url",
+    "fetched_at",
+    "payload_hash"
+  ],
+  "title": "WeatherRecord",
+  "type": "object"
+}
