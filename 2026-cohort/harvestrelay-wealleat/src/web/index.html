@@ -316,6 +316,16 @@ details[open]>summary{border-bottom:1px solid var(--line)}
 html{scrollbar-gutter:stable;overflow-y:scroll}
 .ask-row{display:flex;gap:8px}.ask-row .input{flex:1;min-width:0}
 .ask-a{margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--blue-soft);font-size:15px;white-space:pre-wrap}
+/* packing, containers and how neighbors get food */
+.pack{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--tint);color:var(--ink);white-space:nowrap}
+.pack.bulk{background:var(--butter-soft)}
+.serve-badge{display:inline-flex;font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--blue-soft);color:var(--blue);white-space:nowrap;margin-top:4px}
+.serve-set{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.serve-set .chip{font-size:13px;padding:3px 10px}
+.callout.soft{background:var(--butter-soft)}
+.callout.info{background:var(--blue-soft)}
+.ret-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.sub-opts{margin:6px 0 0 4px;padding:12px 14px;border-left:3px solid var(--line);display:flex;flex-direction:column;gap:10px}
 /* decorative shapes */
 :root{--tomato-l:#EE958C;--green-l:#86C49C;--blue-l:#90A8EC;--butter-l:#F7DE8E;--tomato-d:#A9352B;--green-d:#1F6A3E;--blue-d:#1F3E9E;--butter-d:#D9A62C}
 .decohost{position:relative}
@@ -407,6 +417,7 @@ html{scrollbar-gutter:stable;overflow-y:scroll}
     <button class="btn primary" data-act="open-post">+ Post extra food</button>
   </div>
   <div class="impact" id="impact"></div>
+  <div class="card" id="donorReturns" hidden></div>
   <div class="card">
     <div class="subtabs" role="tablist">
       <button class="subtab" role="tab" data-act="dtab" data-v="open">Open donations <span class="n" id="n-dopen"></span></button>
@@ -500,6 +511,17 @@ const ALLERGENS = ["Wheat/Gluten","Milk","Egg","Peanut","Tree nuts","Soy","Fish"
 const STATUS = ["AVAILABLE","RESERVED","HANDOFF_CONFIRMED","EXPIRED","CANCELED","UNMATCHED"];
 const FRIENDLY = {AVAILABLE:"Waiting for a kitchen",RESERVED:"Kitchen on the way",HANDOFF_CONFIRMED:"Picked up",EXPIRED:"Expired",CANCELED:"Canceled",UNMATCHED:"No kitchen fits"};
 const HOLD_LABEL = {HELD:"Held",COLLECTED:"Picked up",EXPIRED:"Expired",CANCELED:"Canceled"};
+/* How food is packed, whether the donor needs containers back, and how neighbors get it. */
+const RETURN_OPTS = {24:"within 1 day", 48:"within 2 days", 168:"within a week"};
+const SERVE = {
+  packed:{label:"Packed to go", note:"Grab and go. Each serving is already packed.", how:["togo"]},
+  dinein:{label:"Eat here only", note:"Served on the kitchen's dishes. It can't be taken home.", how:["dinein"]},
+  byo:{label:"To go: bring a container", note:"Bring your own container with a lid. The kitchen fills it for you.", how:["togo"]},
+  both:{label:"Eat here or bring a container", note:"Eat at the kitchen, or bring a container with a lid to take it home.", how:["dinein","togo"]},
+  boxes:{label:"To go: containers provided", note:"The kitchen packs it to go for you.", how:["togo"]}
+};
+const HOW_LABEL = {dinein:"Eating at the kitchen", togo:"Taking it to go"};
+const serveOf = b => b.serve || (b.pack === "BULK" ? "dinein" : "packed");
 const ROLE = {
   donor:{name:"Donor",color:"var(--tomato)",soft:"var(--tomato-soft)",title:"Share your extra food",points:["Post a batch in under a minute","Get matched only with kitchens that can store it","Track meals donated, tax write-off and CO₂ saved"]},
   kitchen:{name:"Kitchen",color:"var(--green)",soft:"var(--green-soft)",title:"Bring more food to your table",points:["See only food you can store and reach in time","Pick up with your own team using a PIN","Hand reserved meals to neighbors with a code"]},
@@ -536,6 +558,15 @@ const batch = id => S.batches.find(b => b.id === id);
 const hold = id => S.holds.find(h => h.id === id);
 const fmtClock = t => new Date(t).toLocaleTimeString([], {hour:"numeric",minute:"2-digit",second:"2-digit"});
 const fmtShort = t => new Date(t).toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});
+const fmtDay = t => new Date(t).toLocaleString([], {weekday:"short",hour:"numeric",minute:"2-digit"});
+const returnDue = b => b.returnDueAt || (b.confirmedAt ? b.confirmedAt + (b.returnHours || 24)*60*MIN : null);
+const needsReturn = b => b.pack === "BULK" && b.returnDish && b.status === "HANDOFF_CONFIRMED" && !b.returnedAt;
+const isOverdue = b => needsReturn(b) && simNow > returnDue(b);
+const overdueReturns = kId => S.batches.filter(b => b.kitchenId === kId && isOverdue(b));
+const whatBack = b => b.returnWhat ? esc(b.returnWhat) : "the containers";
+const packChip = b => b.pack === "BULK"
+  ? `<span class="pack bulk">Bulk (trays/pans)${b.returnDish ? ` · containers back ${RETURN_OPTS[b.returnHours] || "within 1 day"}` : " · disposable containers"}</span>`
+  : `<span class="pack">Individually packed</span>`;
 function fmtLeft(ms){
   if (ms <= 0) return "0:00";
   const s = Math.floor(ms/1000), h = Math.floor(s/3600), m = Math.floor((s%3600)/60), ss = s%60;
@@ -672,6 +703,16 @@ async function seed(){
     if (status === "CANCELED"){ b.terminal = true; b.lastKitchen = kid; b.excluded = [kid]; b.updatedAt = m(-resAgo+18); log("STATE", id, `RESERVED → CANCELED · ${note}`, kitchen(kid).name, b.updatedAt); }
     S.batches.push(b);
   }
+  /* packing: [pack, needs containers back, return within hours, what to return, how neighbors get it] */
+  const PACKING = {"B-1001":["BULK",1,24,"2 full-size hotel pans"],"B-1005":["BULK",1,24,"3 half-size pans"],"B-1007":["BULK",1,48,"4 aluminum trays"],
+    "B-1008":["BULK",0],"B-1011":["BULK",1,24,"2 stock pots","byo"],"B-1012":["BULK",1,48,"5 serving platters","both"],"B-1014":["PACKED",0,0,"","packed"],
+    "B-1016":["BULK",0],"B-1017":["BULK",0],"B-1018":["BULK",1,24,"6 hotel pans"],"B-1020":["BULK",0]};
+  for (const b of S.batches){
+    const [pack, ret, hrs, what, serve] = PACKING[b.id] || ["PACKED",0];
+    Object.assign(b, {pack, returnDish: !!ret, returnHours: hrs || 24, returnWhat: what || "", returnedAt: null});
+    if (serve) b.serve = serve;
+    if (b.status === "HANDOFF_CONFIRMED" && b.returnDish) b.returnDueAt = b.confirmedAt + b.returnHours*60*MIN;
+  }
   for (const b of S.batches.filter(b => b.status === "RESERVED")){ b.pin = genPin(); b.pinHash = await sha256(pinMaterial(b, b.pin)); }
   const holds = [
     ["R-201","B-1012","Maria",3,-25,12,"HELD",null,FAKE_PHONE],
@@ -681,7 +722,7 @@ async function seed(){
   ];
   for (const [id,bid,name,qty,ago,left,status,userId,phone] of holds){
     const b = batch(bid);
-    const h = {id, batchId:bid, kitchenId:b.kitchenId, name, phone, qty, code:genPin(), createdAt:m(ago), expiresAt:m(left), status, userId, collectedAt: status === "COLLECTED" ? m(-15) : null};
+    const h = {id, batchId:bid, kitchenId:b.kitchenId, name, phone, qty, code:genPin(), createdAt:m(ago), expiresAt:m(left), status, userId, collectedAt: status === "COLLECTED" ? m(-15) : null, how: SERVE[serveOf(b)].how[id === "R-204" ? 1 : 0] || SERVE[serveOf(b)].how[0]};
     S.holds.push(h);
     log("COMMUNITY", id, `${name} reserved ${qty} of ${b.desc} at ${kitchen(b.kitchenId).name}`, name, h.createdAt);
     if (status === "COLLECTED") log("COMMUNITY", id, "Picked up · code matched", kitchen(b.kitchenId).name, h.collectedAt);
@@ -723,7 +764,8 @@ function runJobs(){
 function createBatch(f, actor){
   const b = { id:"B-" + (S.seq++), donorId:f.donorId, desc:f.desc, servings:f.servings, tag:f.tag, allergens:f.allergens,
     createdAt:simNow, cutoffAt:simNow + f.windowMin*MIN, status:"NEW", kitchenId:null, reservedAt:null, pickupDeadline:null,
-    pin:null, pinHash:null, attempts:0, locked:false, confirmedAt:null, excluded:[], alerted:false, terminal:false, note:"", lastKitchen:null, updatedAt:simNow };
+    pin:null, pinHash:null, attempts:0, locked:false, confirmedAt:null, excluded:[], alerted:false, terminal:false, note:"", lastKitchen:null, updatedAt:simNow,
+    pack:f.pack || "PACKED", returnDish:!!f.returnDish, returnHours:f.returnHours || 24, returnWhat:f.returnWhat || "", returnedAt:null };
   S.batches.push(b);
   const r = ranked(b);
   if (r.length){ transition(b, "AVAILABLE", actor, "posted"); log("MATCH", b.id, `${plural(r.length,"kitchen")} fit: ${r.map(e => e.k.name).join(", ")}`, "Matcher"); }
@@ -733,9 +775,12 @@ function createBatch(f, actor){
 async function claim(b, k){
   const ev = evaluate(b).find(e => e.k.id === k.id);
   if (b.status !== "AVAILABLE" || !ev.eligible){ toast("This donation is no longer available to your kitchen."); render(); return; }
+  const late = overdueReturns(k.id);
+  if (b.returnDish && late.length){ toast(`Return ${donor(late[0].donorId).name}'s containers first. They were due ${fmtDay(returnDue(late[0]))}.`); render(); return; }
   b.kitchenId = k.id; b.reservedAt = simNow; b.attempts = 0; b.locked = false;
   b.pickupDeadline = Math.min(simNow + RESERVATION_MIN*MIN, b.cutoffAt);
   transition(b, "RESERVED", k.name, `claimed · ${b.servings} servings held`);
+  if (b.returnDish) log("RETURN", b.id, `${k.name} agreed to return ${b.returnWhat || "the containers"} ${RETURN_OPTS[b.returnHours] || "within 1 day"} of pickup`, k.name);
   b.pin = genPin(); b.pinHash = await sha256(pinMaterial(b, b.pin));
   log("PIN", b.id, `Pickup PIN issued (stored as hash ${b.pinHash.slice(0,10)}…)`, "System");
   ui.ktab = "pickups"; render(); toast(`Claimed. Your pickup PIN is ${b.pin}.`);
@@ -756,6 +801,7 @@ async function verifyPin(b, input, actor){
   const h = await sha256(pinMaterial(b, input));
   if (h === b.pinHash){
     b.confirmedAt = simNow; log("PIN", b.id, `PIN matched (hash ${h.slice(0,10)}…)`, actor);
+    if (b.returnDish){ b.returnDueAt = simNow + b.returnHours*60*MIN; log("RETURN", b.id, `Containers due back to ${donor(b.donorId).name} by ${fmtDay(b.returnDueAt)}`, "System"); }
     transition(b, "HANDOFF_CONFIRMED", actor, `handed to ${kitchen(b.kitchenId).name}`); render(); return {ok:true};
   }
   b.attempts++; log("PIN", b.id, `Wrong PIN (${b.attempts} of 3)`, actor);
@@ -783,11 +829,11 @@ function nextReason(b){
   const saved = b.kitchenId; b.excluded.push(saved); b.kitchenId = null;
   const why = whyNoMatch(b); b.excluded.pop(); b.kitchenId = saved; return why;
 }
-function createHold(b, qty, afterMin=0){
+function createHold(b, qty, afterMin=0, how){
   const u = me();
-  const h = {id:"R-" + (S.hseq++), batchId:b.id, kitchenId:b.kitchenId, name:u.name.split(" ")[0], phone:u.phone || "", qty, code:genPin(), createdAt:simNow, readyAt:simNow + afterMin*MIN, expiresAt:simNow + (afterMin + HOLD_MIN)*MIN, status:"HELD", userId:u.id, collectedAt:null};
+  const h = {id:"R-" + (S.hseq++), batchId:b.id, kitchenId:b.kitchenId, name:u.name.split(" ")[0], phone:u.phone || "", qty, code:genPin(), createdAt:simNow, readyAt:simNow + afterMin*MIN, expiresAt:simNow + (afterMin + HOLD_MIN)*MIN, status:"HELD", userId:u.id, collectedAt:null, how: how || SERVE[serveOf(b)].how[0]};
   S.holds.push(h); ui.ctab = "mine";   /* show the new code under "Your reservations" */
-  log("COMMUNITY", h.id, `${h.name} reserved ${qty} of ${b.desc} at ${kitchen(b.kitchenId).name} · pickup ${holdWindow(h)}`, h.name);
+  log("COMMUNITY", h.id, `${h.name} reserved ${qty} of ${b.desc} at ${kitchen(b.kitchenId).name} · pickup ${holdWindow(h)} · ${HOW_LABEL[h.how].toLowerCase()}`, h.name);
   return h;
 }
 
@@ -1088,8 +1134,15 @@ function renderDonor(){
       note = `<p class="row-note">No kitchen fits: ${esc(whyNoMatch(b))}.</p>${S.kitchens.filter(k => k.tags.includes(b.tag)).slice(0,3).map(k => contactLine("kitchen", k.id, k.name + ":")).join("")}<p class="row-note"><span class="small muted">Call one of these kitchens to arrange it directly, or </span><span class="btn-row" style="margin-top:6px"><label class="small" for="sv-${b.id}" style="font-weight:600">Offer fewer servings:</label><input class="input" id="sv-${b.id}" type="number" min="1" max="${b.servings - 1}" value="${maxTakeable(b) || Math.max(1, Math.floor(b.servings/2))}" style="width:90px;padding:6px 10px"><button class="btn sm" data-act="set-servings" data-id="${b.id}">Update</button><button class="link danger" data-act="withdraw" data-id="${b.id}">Withdraw</button></span>${maxTakeable(b) ? `<span class="small muted" style="display:block;margin-top:4px">The most any kitchen can take right now is ${maxTakeable(b)} servings.</span>` : ""}</p>`;
     }
     return `<div class="row ${urgent(b) ? "urgent" : ""}"><div class="row-main"><div class="row-title">${esc(b.desc)} ${badge(b.status)}</div>
-      <div class="row-meta">${b.servings} servings · ${stor(b.tag)} · ${esc(contains(b))}</div>${note}</div><div class="row-side">${side}</div></div>`;
+      <div class="row-meta">${b.servings} servings · ${stor(b.tag)} · ${esc(contains(b))}</div><div class="row-meta">${packChip(b)}</div>${note}</div><div class="row-side">${side}</div></div>`;
   }).join("") : `<div class="empty">Nothing open right now. Press “Post extra food” when you have something to share.</div>`;
+  const outs = mine.filter(needsReturn).sort((a,b) => returnDue(a) - returnDue(b));
+  $("#donorReturns").hidden = !outs.length;
+  $("#donorReturns").innerHTML = outs.length ? `<div class="card-head"><h2>Containers to get back</h2><span class="small muted">${plural(outs.length,"donation")}</span></div><div class="rows">${outs.map(b => { const k = kitchen(b.kitchenId), late = isOverdue(b);
+    return `<div class="row ${late ? "urgent" : ""}"><div class="row-main"><div class="row-title">${whatBack(b)} ${late ? `<span class="badge b-LOCKED">Overdue</span>` : ""}</div>
+      <div class="row-meta">From ${esc(b.desc)} · with ${esc(k.name)}</div>${contactLine("kitchen", k.id, late ? "Overdue. Call the kitchen:" : "Questions? Call:")}
+      ${late ? `<p class="row-note small">Support has been told. <button class="link" data-act="open-help">Report a problem</button></p>` : ""}</div>
+      <div class="row-side"><span class="label">${late ? "Was due" : "Due back by"}</span><b>${fmtDay(returnDue(b))}</b><button class="btn sm" data-act="ret-done" data-id="${b.id}">Got them back</button></div></div>`; }).join("")}</div>` : "";
   $("#donorDone").innerHTML = done.length ? done.map(b => `<div class="row"><div class="row-main"><div class="row-title">${esc(b.desc)} ${badge(b.status)}</div>
     <div class="row-meta">${b.servings} servings · ${b.status === "HANDOFF_CONFIRMED" ? `to ${esc(kitchen(b.kitchenId).name)} at ${fmtShort(b.confirmedAt)} · receipt EE-${b.id.slice(2)}` : b.status === "EXPIRED" ? "no kitchen picked it up in time" : esc(b.note || "canceled")}</div></div></div>`).join("") : `<div class="empty">Nothing finished yet today.</div>`;
 }
@@ -1101,7 +1154,7 @@ function renderKitchen(){
     <div><div class="label">Room left today</div><div style="display:flex;align-items:center;gap:10px"><b>${open} of ${k.max}</b>
       <span class="meter" aria-hidden="true"><i style="width:${conf/k.max*100}%;background:var(--green)"></i><i style="width:${res/k.max*100}%;background:var(--butter)"></i></span></div></div>
     <div><div class="label">Can store</div>${k.tags.map(stor).join(" · ")}</div>
-    <div><div class="label">Travels up to</div>${k.radius} miles</div>`;
+    <div><div class="label">Travels up to</div>${k.radius} miles</div>${(() => { const late = overdueReturns(k.id); return late.length ? `<div class="callout" style="flex-basis:100%;font-size:14px"><b>Containers overdue:</b> ${late.map(b => `${whatBack(b)} to ${esc(donor(b.donorId).name)}`).join("; ")}. Return them to claim more food that needs containers back. See “On hand”.</div>` : ""; })()}`;
   const feed = [], hidden = {tag:0,cap:0,time:0,passed:0,far:0};
   for (const b of S.batches.filter(b => b.status === "AVAILABLE")){
     const mine = evaluate(b).find(e => e.k.id === k.id);
@@ -1116,7 +1169,7 @@ function renderKitchen(){
   let html = "", foot = "";
   if (ui.ktab === "claim"){
     html = (feed.length > 1 ? `<div class="sortbar">Sort by <button class="chip" data-act="ksort" data-v="cutoff" aria-pressed="${ui.ksort !== "donor"}">Soonest cutoff</button><button class="chip" data-act="ksort" data-v="donor" aria-pressed="${ui.ksort === "donor"}">Donor A–Z</button></div>` : "") + (feed.length ? feed.map(b => `<div class="row ${urgent(b) ? "urgent" : ""}"><div class="row-main"><div class="row-title">${esc(b.desc)}</div>
-      ${donorLine(donor(b.donorId))}<div class="row-meta"><b style="color:var(--ink)">${fmtMi(milesBetween(donor(b.donorId), k))} away · about ${tripMin(milesBetween(donor(b.donorId), k))} min</b> · ${b.servings} servings · ${stor(b.tag)} · ${esc(contains(b))}</div></div>
+      ${donorLine(donor(b.donorId))}<div class="row-meta"><b style="color:var(--ink)">${fmtMi(milesBetween(donor(b.donorId), k))} away · about ${tripMin(milesBetween(donor(b.donorId), k))} min</b> · ${b.servings} servings · ${stor(b.tag)} · ${esc(contains(b))}</div><div class="row-meta">${packChip(b)}</div></div>
       <div class="row-side"><span class="label">Cutoff in</span>${timer(b.cutoffAt)}<button class="btn primary sm" data-act="claim" data-id="${b.id}">Claim</button></div></div>`).join("")
       : `<div class="empty">Nothing you can take right now. New donations appear here automatically.</div>`);
     const h = [];
@@ -1128,7 +1181,8 @@ function renderKitchen(){
     foot = h.length ? `Not shown: ${h.join(", ")}.` : "";
   } else if (ui.ktab === "pickups"){
     html = pickups.length ? pickups.map(b => { const d = donor(b.donorId); return `<div class="row ${urgent(b) ? "urgent" : ""}"><div class="row-main">
-      <div class="row-title">${esc(b.desc)}</div>${donorLine(d, true)}${contactLine("donor", d.id)}<div class="row-meta">${fmtMi(milesBetween(d, k))} away · about ${tripMin(milesBetween(d, k))} min · ${b.servings} servings · ${stor(b.tag)}</div>
+      <div class="row-title">${esc(b.desc)}</div>${donorLine(d, true)}${contactLine("donor", d.id)}<div class="row-meta">${fmtMi(milesBetween(d, k))} away · about ${tripMin(milesBetween(d, k))} min · ${b.servings} servings · ${stor(b.tag)}</div><div class="row-meta">${packChip(b)}</div>
+      ${b.pack === "BULK" ? `<div class="callout soft">In bulk containers: bring carriers or insulated bags to keep it ${TAGS[b.tag].keep}.${b.returnDish ? ` You agreed to return ${whatBack(b)} ${RETURN_OPTS[b.returnHours] || "within 1 day"} of pickup.` : ""}</div>` : ""}
       ${b.locked ? `<div class="callout">${b.selfPinUsed ? "The donor's PIN entry locked again. Support has been alerted and will call you both." : `The donor's PIN entry locked after 3 wrong tries. Get a new PIN and read it to them. <button class="btn sm primary" data-act="self-newpin" data-id="${b.id}" style="margin-left:6px">Get a new PIN</button>`}</div>` : ""}
       <div class="pinbox"><div><div class="label">Pickup PIN</div><div class="pin">${b.pin}</div></div><div class="small" style="flex:1;min-width:180px">Show this to the donor. They type it in to release the food.${b.attempts ? ` <b>${plural(b.attempts,"wrong try","wrong tries")} so far.</b>` : ""}</div></div>
       <div class="btn-row" style="margin-top:10px"><button class="link danger" data-act="open-cancel" data-id="${b.id}">Cancel pickup</button></div></div>
@@ -1138,14 +1192,19 @@ function renderKitchen(){
     const served = S.walkins.filter(w => w.kitchenId === k.id).reduce((n,w) => n + w.qty, 0);
     html = `<div class="sortbar" style="justify-content:space-between"><span>Someone came in without a reservation? ${served ? `<b style="color:var(--ink)">${served} walk-in ${served === 1 ? "meal" : "meals"} served today.</b>` : ""}</span><button class="btn primary sm" data-act="open-walkin" ${stock.some(b => servingsLeft(b) > 0) ? "" : "disabled"}>Serve walk-in</button></div>`
       + (comm.length ? comm.map(h => `<div class="row"><div class="row-main"><div class="row-title">${esc(h.name)} · ${plural(h.qty,"serving")}</div>
-      <div class="row-meta">${esc(batch(h.batchId).desc)} · pickup ${holdWindow(h)}</div><div class="contact">${telLink(h.phone)}</div>
+      <div class="row-meta">${esc(batch(h.batchId).desc)} · pickup ${holdWindow(h)} · <b style="color:var(--ink)">${HOW_LABEL[h.how || "togo"]}</b>${h.how === "togo" && serveOf(batch(h.batchId)) === "byo" ? " (bringing a container)" : ""}</div><div class="contact">${telLink(h.phone)}</div>
       ${(h.readyAt || 0) <= simNow && h.expiresAt - simNow <= URGENT_MIN*MIN ? `<div class="callout">${h.phone ? `Their hold ends at ${fmtShort(h.expiresAt)}. Give them a call to check they're still coming.` : `Their hold ends at ${fmtShort(h.expiresAt)}. They didn't leave a phone number.`}</div>` : ""}</div>
       <div class="row-side">${h.readyAt > simNow ? `<span class="label">Coming at</span><b>${fmtShort(h.readyAt)}</b>` : `<span class="label">Held for</span>${timer(h.expiresAt)}`}<button class="btn blue sm" data-act="open-hold" data-id="${h.id}">Confirm pickup</button></div></div>`).join("")
       : `<div class="empty">Nobody has a reservation waiting right now.</div>`);
     foot = "For reservations, ask for the person's 4-digit code, then confirm. For walk-ins, just record how many meals you handed out. Reserved servings are never used for walk-ins.";
   } else {
     html = stock.length ? stock.map(b => { const held = S.holds.filter(h => h.batchId === b.id && h.status === "HELD").reduce((n,h)=>n+h.qty,0), got = S.holds.filter(h => h.batchId === b.id && h.status === "COLLECTED").reduce((n,h)=>n+h.qty,0);
-      return `<div class="row"><div class="row-main"><div class="row-title">${esc(b.desc)}</div>${donorLine(donor(b.donorId))}<div class="row-meta">Received at ${fmtShort(b.confirmedAt)} · ${stor(b.tag)}</div></div>
+      const opts = b.pack === "BULK" ? ["dinein","byo","both","boxes"] : ["packed","dinein"], late = isOverdue(b);
+      const serveCtl = `<div class="serve-set"><span class="small muted">Neighbors get it:</span>${opts.map(v => `<button class="chip" data-act="set-serve" data-id="${b.id}" data-v="${v}" aria-pressed="${serveOf(b) === v}">${SERVE[v].label}</button>`).join("")}</div>`;
+      const ret = needsReturn(b) ? `<div class="callout ${late ? "" : "soft"} ret-row"><span>${late ? "<b>Overdue:</b> return" : "Return"} ${whatBack(b)} to ${esc(donor(b.donorId).name)} ${late ? "(was due" : "by"} ${fmtDay(returnDue(b))}${late ? ")" : ""}.</span><button class="btn sm" data-act="ret-done" data-id="${b.id}">Containers returned</button></div>`
+        : b.returnDish && b.returnedAt ? `<p class="small muted" style="margin-top:6px">Containers returned ${fmtDay(b.returnedAt)}.</p>` : "";
+      const portion = b.pack === "BULK" && b.allergens.length ? `<p class="small muted" style="margin-top:6px">When portioning, keep the allergen list with each serving: ${esc(contains(b).toLowerCase())}.</p>` : "";
+      return `<div class="row"><div class="row-main"><div class="row-title">${esc(b.desc)}</div>${donorLine(donor(b.donorId))}<div class="row-meta">Received at ${fmtShort(b.confirmedAt)} · ${stor(b.tag)}</div><div class="row-meta">${packChip(b)}</div>${serveCtl}${portion}${ret}</div>
       <div class="row-side"><b>${servingsLeft(b)} of ${b.servings} left</b><span class="label">${held} on hold · ${got} reserved & picked up · ${walkedIn(b)} walk-in</span><button class="btn sm" data-act="open-walkin" data-id="${b.id}" ${servingsLeft(b) ? "" : "disabled"}>Serve walk-in</button></div></div>`; }).join("")
       : `<div class="empty">No food received yet today.</div>`;
   }
@@ -1164,7 +1223,7 @@ function renderCommunity(){
   if (mine.length) $("#myHolds").innerHTML = mine.map(h => { const b = batch(h.batchId), k = kitchen(h.kitchenId);
     return `<div class="row"><div class="row-main code-card">${h.status === "HELD" ? `<span class="code">${h.code}</span>` : ""}
       <div style="min-width:0"><div class="row-title">${plural(h.qty,"serving")} of ${esc(b.desc)} ${h.status !== "HELD" ? `<span class="badge b-${h.status}">${HOLD_LABEL[h.status]}</span>` : ""}</div>
-      <div class="row-meta">${esc(k.name)}, ${mapLink(k.addr)}</div>${contactLine("kitchen", k.id, "Running late? Call:")}</div></div>
+      <div class="row-meta">${esc(k.name)}, ${mapLink(k.addr)}</div><div class="row-meta"><b style="color:var(--ink)">${HOW_LABEL[h.how || "togo"]}</b>${h.how === "togo" && serveOf(b) === "byo" ? " · bring a container with a lid" : h.how === "dinein" ? " · eat during serving hours" : ""}</div>${contactLine("kitchen", k.id, "Running late? Call:")}</div></div>
       <div class="row-side">${h.status === "HELD" ? `<span class="label">Pick up ${holdWindow(h)}</span>${h.readyAt > simNow ? "" : timer(h.expiresAt)}<button class="link danger" data-act="cancel-hold" data-id="${h.id}">Cancel</button>` : ""}</div></div>`; }).join("");
   const u = me(), here = {x: u.x ?? 6, y: u.y ?? 6}, radius = u.radius || 3;
   const byDist = S.kitchens.map(k => ({k, mi: milesBetween(here, k)})).sort((a,b) => a.mi - b.mi);
@@ -1176,7 +1235,7 @@ function renderCommunity(){
     const meals = S.batches.filter(b => b.status === "HANDOFF_CONFIRMED" && b.kitchenId === k.id).sort((a,b) => b.confirmedAt - a.confirmedAt);
     return `<article class="card"><div class="card-head" style="display:block"><div class="kname"><span class="kdot" style="background:${k.color}"></span><h2>${esc(k.name)}</h2><span class="badge b-AVAILABLE" style="margin-left:auto">${fmtMi(mi)}</span></div>
       <p class="small muted" style="margin-top:4px">${mapLink(k.addr)} · ${esc(k.hours)}</p>${contactLine("kitchen", k.id)}</div>
-      <div class="rows">${meals.length ? meals.map(b => { const left = servingsLeft(b); return `<div class="row"><div class="row-main"><div class="row-title">${esc(b.desc)}</div><div class="row-meta">${esc(contains(b))}</div></div>
+      <div class="rows">${meals.length ? meals.map(b => { const left = servingsLeft(b); return `<div class="row"><div class="row-main"><div class="row-title">${esc(b.desc)}</div><div class="row-meta">${esc(contains(b))}</div><span class="serve-badge">${SERVE[serveOf(b)].label}</span></div>
         <div class="row-side"><span class="label">${left ? left + " left" : "All reserved"}</span><button class="btn sm ${left ? "blue" : ""}" data-act="open-reserve" data-id="${b.id}" ${left ? "" : "disabled"}>Reserve</button></div></div>`; }).join("")
         : `<div class="empty">Regular menu today. Nothing extra has arrived yet.</div>`}</div></article>`;
   };
@@ -1189,7 +1248,7 @@ function storyOf(b){
   if (b.status === "AVAILABLE"){ const r = ranked(b); return `Offered to ${plural(r.length,"kitchen")}. First in line: ${r[0] ? esc(r[0].k.name) : "none"}.`; }
   if (b.status === "UNMATCHED") return `No kitchen fits: ${esc(whyNoMatch(b))}.`;
   if (b.status === "RESERVED") return `${esc(kitchen(b.kitchenId).name)} is on the way.${b.attempts && !b.locked ? ` ${plural(b.attempts,"wrong PIN")} so far.` : ""}`;
-  if (b.status === "HANDOFF_CONFIRMED") return `Picked up by ${esc(kitchen(b.kitchenId).name)} at ${fmtShort(b.confirmedAt)}.`;
+  if (b.status === "HANDOFF_CONFIRMED") return `Picked up by ${esc(kitchen(b.kitchenId).name)} at ${fmtShort(b.confirmedAt)}.${b.returnDish ? (b.returnedAt ? " Containers returned." : isOverdue(b) ? ` Containers overdue (due ${fmtDay(returnDue(b))}).` : ` Containers due back ${fmtDay(returnDue(b))}.`) : ""}`;
   if (b.status === "EXPIRED") return "Nobody picked it up before the cutoff.";
   return esc(b.note || "Canceled.");
 }
@@ -1199,6 +1258,7 @@ function needsHelp(){
     if (b.status === "RESERVED" && b.locked && b.selfPinUsed) items.push({b, kind:"locked"});
     else if (b.status === "UNMATCHED") items.push({b, kind:"nomatch"});
     else if (b.status === "AVAILABLE" && b.cutoffAt - simNow <= URGENT_MIN*MIN) items.push({b, kind:"expiring"});
+    else if (isOverdue(b)) items.push({b, kind:"return"});
   }
   return items;
 }
@@ -1228,11 +1288,14 @@ function renderStaff(){
       <div class="row-meta">From ${esc(t.from)}${a ? " · " + ROLE[a.role].name : ""} · ${fmtShort(t.at)}</div><p class="row-note">“${esc(t.msg)}”</p>
       <div class="contact">${telLink(t.phone)}${t.email ? `<span class="muted">·</span>${mailLink(t.email)}` : ""}</div></div>
       <div class="row-side"><button class="btn primary sm" data-act="resolve-ticket" data-id="${t.id}">Mark resolved</button></div></div>`; }).join("") + help.map(({b, kind}) => {
-    const head = `<div class="row-title">${esc(b.desc)} ${kind === "locked" ? `<span class="badge b-LOCKED">PIN locked</span>` : kind === "nomatch" ? badge("UNMATCHED") : `<span class="badge b-CANCELED">Expiring soon</span>`}</div>${donorLine(donor(b.donorId))}`;
+    const head = `<div class="row-title">${esc(b.desc)} ${kind === "locked" ? `<span class="badge b-LOCKED">PIN locked</span>` : kind === "nomatch" ? badge("UNMATCHED") : kind === "return" ? `<span class="badge b-LOCKED">Containers overdue</span>` : `<span class="badge b-CANCELED">Expiring soon</span>`}</div>${donorLine(donor(b.donorId))}`;
     let note, side;
     if (kind === "locked"){
       note = `The PIN locked a second time, after the kitchen already got a new one, while ${esc(kitchen(b.kitchenId).name)} was picking up. Call both to confirm they're together, then let the donor try again or send the kitchen a new PIN.</p>${contactLine("donor", b.donorId, "Donor:")}${contactLine("kitchen", b.kitchenId, "Kitchen:")}<p class="row-note" hidden>`;
       side = `<span class="label">Pickup window</span>${timer(b.pickupDeadline)}<div class="btn-row" style="justify-content:flex-end"><button class="btn sm" data-act="ops-newpin" data-id="${b.id}">Send new PIN</button><button class="btn primary sm" data-act="ops-unlock" data-id="${b.id}">Reset PIN tries</button></div>`;
+    } else if (kind === "return"){
+      note = `${esc(kitchen(b.kitchenId).name)} hasn't returned ${whatBack(b)}. They were due ${fmtDay(returnDue(b))}. Call the kitchen to set a drop-off time. Until they're back, this kitchen can't claim food that needs containers returned.</p>${contactLine("kitchen", b.kitchenId, "Kitchen:")}${contactLine("donor", b.donorId, "Donor:")}<p class="row-note" hidden>`;
+      side = `<span class="label">Was due</span><b>${fmtDay(returnDue(b))}</b><button class="btn primary sm" data-act="ret-done" data-id="${b.id}">Mark returned</button>`;
     } else if (kind === "nomatch"){
       note = `No kitchen fits: ${esc(whyNoMatch(b))}. You could ask the donor to split it into smaller batches, or call a partner directly.`;
       side = `<span class="label">Cutoff in</span>${timer(b.cutoffAt)}<button class="btn sm" data-act="inspect" data-id="${b.id}">See details</button>`;
@@ -1291,7 +1354,7 @@ function renderDock(){
       <div class="btn-row" style="gap:6px"><button class="btn sm" data-act="jump" data-min="5">+5 min</button><button class="btn sm" data-act="jump" data-min="30">+30 min</button><button class="btn sm" data-act="jump" data-min="120">+2 h</button></div></div>
     <div class="grp"><span>Cause a problem</span><div class="btn-row" style="gap:6px">
       <button class="btn sm" data-act="lockdemo">3 wrong PINs</button><button class="btn sm" data-act="lockdemo2">PIN locks twice</button><button class="btn sm" data-act="test-miss">Kitchen misses pickup</button>
-      <button class="btn sm" data-act="test-expire">Donation expires</button><button class="btn sm" data-act="overflow">Batch too big</button></div></div>
+      <button class="btn sm" data-act="test-expire">Donation expires</button><button class="btn sm" data-act="overflow">Batch too big</button><button class="btn sm" data-act="test-return">Containers overdue</button></div></div>
     <button class="btn sm" data-act="reset">Reset all demo data</button>`;
 }
 
@@ -1349,6 +1412,17 @@ function drawModal(done){
       <div class="two"><div class="field"><label for="p-serv">Servings</label><input class="input" id="p-serv" type="number" min="1" max="1000" placeholder="40"></div>
         <div class="field"><label for="p-win">Must be picked up within</label><select class="input" id="p-win" style="width:100%"><option value="30">30 min</option><option value="60">1 hour</option><option value="90">1.5 hours</option><option value="120" selected>2 hours</option></select></div></div>
       <fieldset class="field"><legend>How is it stored?</legend><div class="opts">${Object.entries(TAGS).map(([k,v]) => `<label><input type="radio" name="p-tag" value="${k}"> ${v.label}</label>`).join("")}</div></fieldset>
+      <fieldset class="field"><legend>How is it packed?</legend><div class="opts" style="flex-direction:column;align-items:flex-start">
+        <label><input type="radio" name="p-pack" value="PACKED"> Ready to hand out (each serving in its own container)</label>
+        <label><input type="radio" name="p-pack" value="BULK"> In bulk (trays, pans or pots the kitchen portions out)</label></div>
+        <div class="sub-opts" id="p-bulk" hidden>
+          <div class="opts" style="flex-direction:column;align-items:flex-start"><span class="small" style="font-weight:600">Do you need the containers back?</span>
+            <label><input type="radio" name="p-ret" value="0" checked> No, they're disposable or the kitchen can keep them</label>
+            <label><input type="radio" name="p-ret" value="1"> Yes, please return them</label></div>
+          <div class="two" id="p-ret-more" hidden><div class="field"><label for="p-ret-hrs">Return after pickup</label><select class="input" id="p-ret-hrs" style="width:100%">${Object.entries(RETURN_OPTS).map(([v,l]) => `<option value="${v}">${l[0].toUpperCase() + l.slice(1)}</option>`).join("")}</select></div>
+            <div class="field"><label for="p-ret-what">What to return</label><input class="input" id="p-ret-what" maxlength="60" placeholder="e.g. 3 full-size hotel pans"></div></div>
+          <p class="small muted" id="p-ret-tip" hidden>Kitchens agree to the return when they claim it, and support is alerted if it's late. Label your containers with your business name.</p>
+        </div></fieldset>
       <fieldset class="field"><legend>Allergens</legend><div class="opts"><label><input type="checkbox" id="p-none"> None</label>${ALLERGENS.map(a => `<label><input type="checkbox" data-al value="${a}"> ${a}</label>`).join("")}<label><input type="checkbox" id="p-other"> Other:</label><input class="input" id="p-other-text" maxlength="60" placeholder="e.g. mustard, celery" aria-label="Other allergens" style="flex:1;min-width:160px;width:auto;padding:6px 12px;font-size:14px;border-radius:999px"></div></fieldset>
       <label class="small" style="display:flex;gap:8px"><input type="checkbox" id="p-safe"> It has been kept at that temperature and handled safely.</label>
       <p class="err" id="mErr" hidden></p>${actions("Post")}`;
@@ -1359,10 +1433,20 @@ function drawModal(done){
       <input id="m-code" class="code-input" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="••••" aria-label="4-digit PIN">
       <p class="small muted" id="mTries">${MAX_PIN_ATTEMPTS - b.attempts} of ${MAX_PIN_ATTEMPTS} tries left</p>
       <p class="err" id="mErr" hidden></p>${actions("Confirm handoff", `<button class="link" type="button" data-act="fill-code" style="margin-right:auto">Demo: fill in the PIN</button>`)}`;
+  } else if (m.kind === "claimret"){
+    const b = batch(m.id), d = donor(b.donorId);
+    f.innerHTML = `<h2>Claim ${esc(b.desc)}?</h2><p class="small muted">${b.servings} servings · ${stor(b.tag)} · from ${esc(d.name)}</p>
+      <div class="callout soft" style="font-size:14px;padding:12px 14px">This comes in the donor's own containers: <b>${whatBack(b)}</b>. They need them back <b>${RETURN_OPTS[b.returnHours] || "within 1 day"}</b> of pickup.</div>
+      <p class="small muted">If containers are late, support is alerted and your kitchen can't claim food that needs containers returned until they're back.</p>
+      <label class="small" style="display:flex;gap:8px"><input type="checkbox" id="cr-ok"> We'll wash and return the containers on time.</label>
+      <p class="err" id="mErr" hidden></p>${actions("Claim")}`;
   } else if (m.kind === "reserve"){
     const b = batch(m.id), k = kitchen(b.kitchenId), max = Math.min(HOLD_MAX, servingsLeft(b));
-    f.innerHTML = done ? `<h2>You're all set</h2><div class="success">Show code <span class="code" style="font-size:20px">${hold(done).code}</span> at <b>${esc(k.name)}</b>, ${mapLink(k.addr)}.<br><br>Pick up ${plural(hold(done).qty,"serving")} between <b>${holdWindow(hold(done))}</b>. We hold them until then. After that they go back to others.</div>${actions("")}`
+    f.innerHTML = done ? `<h2>You're all set</h2><div class="success">Show code <span class="code" style="font-size:20px">${hold(done).code}</span> at <b>${esc(k.name)}</b>, ${mapLink(k.addr)}.<br><br>Pick up ${plural(hold(done).qty,"serving")} between <b>${holdWindow(hold(done))}</b>. We hold them until then. After that they go back to others.${hold(done).how === "togo" && serveOf(b) === "byo" ? "<br><br><b>Remember to bring a container with a lid.</b>" : hold(done).how === "dinein" ? "<br><br>You'll eat at the kitchen. They'll have plates and utensils." : ""}</div>${actions("")}`
       : `<h2>Reserve ${esc(b.desc)}</h2><p class="small muted">${esc(k.name)} · ${mapLink(k.addr)}<br>${esc(contains(b))}</p>
+      <div class="callout info" style="font-size:14px;padding:10px 14px"><b>${SERVE[serveOf(b)].label}.</b> ${SERVE[serveOf(b)].note}${serveOf(b) === "dinein" ? ` Serving hours: ${esc(k.hours)}.` : ""}</div>
+      ${SERVE[serveOf(b)].how.length > 1 ? `<fieldset class="field"><legend>How will you have it?</legend><div class="opts"><label><input type="radio" name="r-how" value="dinein" checked> Eat at the kitchen</label><label><input type="radio" name="r-how" value="togo"> Take it home (I'll bring a container)</label></div></fieldset>` : ""}
+      ${SERVE[serveOf(b)].how.includes("togo") ? `<p class="small muted" id="r-togo-tip" ${SERVE[serveOf(b)].how[0] === "togo" ? "" : "hidden"}>Taking it home? Eat it soon, or refrigerate it within 2 hours.</p>` : ""}
       <div class="field"><label for="r-qty">How many servings?</label><select class="input" id="r-qty">${Array.from({length:max},(_,i) => `<option>${i+1}</option>`).join("")}</select></div>
       <div class="field"><label for="r-when">When will you pick up?</label><select class="input" id="r-when">
         ${[[0,"As soon as I can"],[60,"In about 1 hour"],[120,"In about 2 hours"],[180,"In about 3 hours"]].map(([v,l]) => `<option value="${v}">${l} (${fmtShort(simNow + v*MIN)}–${fmtShort(simNow + (v + HOLD_MIN)*MIN)})</option>`).join("")}</select>
@@ -1372,14 +1456,18 @@ function drawModal(done){
   } else if (m.kind === "help"){
     const u = me(), r = u?.role || "guest";
     const FAQ = {
-      donor: [["The kitchen's PIN won't work", "After 3 wrong tries it locks. Ask the kitchen to tap “Get a new PIN” in their app and read it to you. If it locks again, support is alerted automatically."],
+      donor: [["Will I get my pans and trays back?", "If you mark “Yes, please return them” when posting, the kitchen agrees to return them before it can claim. You'll see them under “Containers to get back”. Late returns alert support, and that kitchen can't claim more of that kind of food until they're back."],
+              ["The kitchen's PIN won't work", "After 3 wrong tries it locks. Ask the kitchen to tap “Get a new PIN” in their app and read it to you. If it locks again, support is alerted automatically."],
               ["No kitchen can take my food", "Tap “Offer fewer servings”, or call one of the kitchens listed under the donation. Their numbers are right there."],
               ["The kitchen is late", "Their phone number is on the donation. If they cancel, the food goes to the next kitchen on its own."]],
-      kitchen: [["We can't make a pickup", "Tap “Cancel pickup” and pick a reason. The food goes straight to the next kitchen that can take it."],
+      kitchen: [["How do neighbors get bulk food?", "On the “On hand” tab, choose how neighbors get it: eat here only, bring their own container, either, or you provide containers. Neighbors see this before they reserve."],
+                ["We have a donor's containers", "Wash them and tap “Containers returned” on the “On hand” tab once they're back with the donor. If they're late, you can't claim food that needs containers returned until they're back."],
+                ["We can't make a pickup", "Tap “Cancel pickup” and pick a reason. The food goes straight to the next kitchen that can take it."],
                 ["The food isn't safe or isn't as listed", "Don't take it. Tap “Cancel pickup” and choose “The food isn't as listed”. It's pulled and the donor is told."],
                 ["The donor's PIN entry locked", "Tap “Get a new PIN” on the pickup and read it to the donor."],
                 ["A neighbor is late for their meal", "Call the number on their reservation. If their hold runs out, the servings go back on offer automatically."]],
-      community: [["I'm running late", "Call the kitchen. Their number is on your reservation."],
+      community: [["Do I need to bring a container?", "Check the label on the meal. “Packed to go” and “containers provided” mean no. “Bring a container” means bring one with a lid. “Eat here only” means it's served at the kitchen."],
+                  ["I'm running late", "Call the kitchen. Their number is on your reservation."],
                   ["I can't make it anymore", "Tap “Cancel” on your reservation so someone else can have the food."],
                   ["I don't have my code", "Tell the kitchen your name. They can see your reservation and your phone number."]],
       staff: [["Who handles what?", "Donors, kitchens and neighbors fix most things themselves. You'll only see items that need a person: second PIN lockouts, food no kitchen can take, food about to expire, and support messages."]],
@@ -1458,7 +1546,7 @@ function drawModal(done){
   } else if (m.kind === "hold"){
     const h = hold(m.id), b = batch(h.batchId);
     f.innerHTML = done ? `<h2>Pickup confirmed</h2><div class="success">${esc(h.name)} picked up ${plural(h.qty,"serving")} of ${esc(b.desc)}.</div>${actions("")}`
-      : `<h2>Confirm community pickup</h2><p class="small muted">${esc(h.name)} · ${plural(h.qty,"serving")} of ${esc(b.desc)}</p>
+      : `<h2>Confirm community pickup</h2><p class="small muted">${esc(h.name)} · ${plural(h.qty,"serving")} of ${esc(b.desc)} · ${HOW_LABEL[h.how || "togo"]}</p>
       <input id="m-code" class="code-input" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="••••" aria-label="Their 4-digit code">
       <p class="err" id="mErr" hidden></p>${actions("Confirm pickup", `<button class="link" type="button" data-act="fill-code" style="margin-right:auto">Demo: fill in their code</button>`)}`;
   }
@@ -1476,13 +1564,17 @@ $("#modalForm").addEventListener("submit", async e => {
     const otherOn = $("#p-other").checked, otherText = $("#p-other-text").value.trim();
     if (otherOn && !otherText) return showErr("Type the other allergen, or untick Other.");
     if (otherOn) otherText.split(",").map(s => s.trim()).filter(Boolean).forEach(s => allergens.push(s));
+    const pack = (document.querySelector('input[name="p-pack"]:checked') || {}).value;
+    const returnDish = pack === "BULK" && (document.querySelector('input[name="p-ret"]:checked') || {}).value === "1";
     const err = !desc ? "Add a short name for the food." :
       !Number.isInteger(servings) || servings < 1 || servings > 1000 ? "Servings must be a whole number from 1 to 1000." :
       !tag ? "Choose how it's stored. Kitchens are matched on this." :
+      !pack ? "Choose how it's packed, so the kitchen knows what to bring." :
       !$("#p-none").checked && !allergens.length ? "Pick the allergens, or tick None." :
       !$("#p-safe").checked ? "Confirm the food was stored and handled safely." : "";
     if (err) return showErr(err);
-    const b = createBatch({donorId:myDonorId(), desc, servings, tag, allergens, windowMin:Math.min(MAX_WINDOW_MIN, Number($("#p-win").value))}, donor(myDonorId()).name);
+    const b = createBatch({donorId:myDonorId(), desc, servings, tag, allergens, windowMin:Math.min(MAX_WINDOW_MIN, Number($("#p-win").value)),
+      pack, returnDish, returnHours: Number($("#p-ret-hrs").value) || 24, returnWhat: returnDish ? $("#p-ret-what").value.trim() : ""}, donor(myDonorId()).name);
     closeModal(); render();
     toast(b.status === "AVAILABLE" ? `Posted. Offered to ${plural(ranked(b).length,"kitchen")}.` : "Posted, but no kitchen can take it yet.");
   } else if (m.kind === "pin"){
@@ -1536,10 +1628,15 @@ $("#modalForm").addEventListener("submit", async e => {
     const w = {id:"W-" + (S.wseq++), batchId:b.id, kitchenId:b.kitchenId, qty, at:simNow};
     S.walkins.push(w); log("COMMUNITY", b.id, `Served ${plural(qty,"walk-in meal")} (no reservation)`, kitchen(b.kitchenId).name);
     drawModal(w); render();
+  } else if (m.kind === "claimret"){
+    const b = batch(m.id);
+    if (!$("#cr-ok").checked) return showErr("Tick the box to agree to return the containers.");
+    closeModal(); await claim(b, kitchen(myKitchenId()));
   } else if (m.kind === "reserve"){
     const b = batch(m.id), qty = Number($("#r-qty").value);
     if (!qty || qty > servingsLeft(b)) return showErr("Those servings were just taken. Close and try again.");
-    const h = createHold(b, qty, Number($("#r-when").value) || 0); drawModal(h.id); render();
+    const how = (document.querySelector('input[name="r-how"]:checked') || {}).value || SERVE[serveOf(b)].how[0];
+    const h = createHold(b, qty, Number($("#r-when").value) || 0, how); drawModal(h.id); render();
   } else if (m.kind === "hold"){
     const h = hold(m.id), code = $("#m-code").value;
     if (h.status !== "HELD") return showErr("This reservation has ended.");
@@ -1553,6 +1650,9 @@ $("#modalForm").addEventListener("change", e => {
   if (e.target.id === "p-none" && e.target.checked){ document.querySelectorAll("[data-al]").forEach(c => c.checked = false); $("#p-other").checked = false; }
   if ((e.target.matches("[data-al]") || e.target.id === "p-other") && e.target.checked) $("#p-none").checked = false;
   if (e.target.id === "p-other" && e.target.checked) $("#p-other-text").focus();
+  if (e.target.name === "p-pack"){ $("#p-bulk").hidden = e.target.value !== "BULK"; }
+  if (e.target.name === "p-ret"){ const on = e.target.value === "1"; $("#p-ret-more").hidden = !on; $("#p-ret-tip").hidden = !on; }
+  if (e.target.name === "r-how"){ const t = $("#r-togo-tip"); if (t) t.hidden = e.target.value !== "togo"; }
 });
 $("#modalForm").addEventListener("input", e => { if (e.target.id === "p-other-text"){ const on = !!e.target.value.trim(); $("#p-other").checked = on; if (on) $("#p-none").checked = false; } });
 $("#modal").addEventListener("click", e => { if (e.target.id === "modal") closeModal(); });
@@ -1585,7 +1685,17 @@ document.addEventListener("click", async e => {
     case "open-walkin": openModal("walkin", el.dataset.id || null); break;
     case "close": closeModal(); break;
     case "fill-code": { const m = ui.modal; $("#m-code").value = m.kind === "pin" ? batch(m.id).pin : hold(m.id).code; break; }
-    case "claim": await claim(b, kitchen(myKitchenId())); break;
+    case "claim": {
+      if (b.returnDish){
+        const late = overdueReturns(myKitchenId());
+        if (late.length){ toast(`Return ${donor(late[0].donorId).name}'s containers first. They were due ${fmtDay(returnDue(late[0]))}.`); break; }
+        openModal("claimret", b.id); break;
+      }
+      await claim(b, kitchen(myKitchenId())); break;
+    }
+    case "set-serve": { b.serve = el.dataset.v; log("SYSTEM", b.id, `Serving set: ${SERVE[b.serve].label}`, kitchen(b.kitchenId).name); render(); toast(`Neighbors now see “${SERVE[b.serve].label}”.`); break; }
+    case "ret-done": { if (!b.returnedAt){ b.returnedAt = simNow; log("RETURN", b.id, `Containers returned to ${donor(b.donorId).name}`, me()?.name || "System"); } render(); toast("Marked as returned. Thanks!"); break; }
+    case "test-return": { ui.dock = false; const t = S.batches.find(needsReturn); if (!t){ toast("No containers out to test."); break; } t.returnDueAt = simNow - MIN; log("SYSTEM", t.id, "Test: container return made overdue", "Demo"); render(); renderDock(); toast(`${kitchen(t.kitchenId).name}'s containers for ${t.desc} are now overdue.`); break; }
     case "open-cancel": openModal("cancel", b.id); break;
     case "withdraw": transition(b, "CANCELED", donor(b.donorId).name, "withdrawn by donor"); b.terminal = true; b.note = "Withdrawn"; render(); break;
     case "set-servings": { const n = Number($("#sv-" + b.id).value);
