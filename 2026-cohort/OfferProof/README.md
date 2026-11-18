@@ -28,7 +28,7 @@ _Mentor Me Collective (MMC) BUILD, Fall 2026 · Google Cloud Launchpad Showcase 
 | -------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | Live demo / working product            | [Open OfferProof](https://offerproof-mmc.lovable.app/)                                           |
 | Presentation deck (up to 8 slides)     | [Open Presentation](https://docs.google.com/presentation/d/112Ww9Kd2vptrHf4hlNABtG2Q0HgkXWEk/edit?usp=share_link&ouid=101117221453340941138&rtpof=true&sd=true)                                                                                       |
-| Recorded walkthrough (up to 5 minutes) | <ADD LINK>                                                                                       |
+| Recorded walkthrough (up to 5 minutes) | [Open Video](https://drive.google.com/file/d/1Zg2yW70rpTAHxIBJ5B_wREHvc4SmhjLL/view?usp=sharing)                                                                                       |
 | Written summary (up to 3 pages)        | <ADD LINK>                                                                                       |
 | Team Findings (Google Drive)           | [Open Drive](https://drive.google.com/drive/folders/1Jdwh1QJlVpfTxtblkf1X1PwKmggzAcDd?usp=share_link) |
 | Samples for testing                    | [Open Samples](https://drive.google.com/drive/folders/1ykIK6lx0tlwseCikQxy8Vnl90B-ajc_L?usp=share_link)                                           |
@@ -431,7 +431,7 @@ Coverage areas include the fraud-detection rules (including negation handling), 
 | Scam Awareness Centre                       | [Scam Awareness](https://github.com/user-attachments/assets/a05ab39d-ff03-4a78-88a0-0c0b98b6a071)   |
 | BigQuery Dataset                            | [Big Query](https://github.com/user-attachments/assets/05cd8182-97f7-4ede-85a9-155882668005) |
 
-**Recorded walkthrough (up to 5 minutes):** `<ADD LINK>`l
+**Recorded walkthrough (up to 5 minutes):** [Video](https://drive.google.com/file/d/1Zg2yW70rpTAHxIBJ5B_wREHvc4SmhjLL/view?usp=sharing) 
 
 **Presentation deck (up to 8 slides):** [Presentation](https://github.com/user-attachments/files/35011109/OfferProof.pptx)
 
