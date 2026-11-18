@@ -431,7 +431,7 @@ Coverage areas include the fraud-detection rules (including negation handling), 
 | Scam Awareness Centre                       | [Scam Awareness](https://github.com/user-attachments/assets/a05ab39d-ff03-4a78-88a0-0c0b98b6a071)   |
 | BigQuery Dataset                            | [Big Query](https://github.com/user-attachments/assets/05cd8182-97f7-4ede-85a9-155882668005) |
 
-**Recorded walkthrough (up to 5 minutes):** `<ADD LINK>`
+**Recorded walkthrough (up to 5 minutes):** `<ADD LINK>`l
 
 **Presentation deck (up to 8 slides):** [Presentation](https://github.com/user-attachments/files/35011109/OfferProof.pptx)
 
