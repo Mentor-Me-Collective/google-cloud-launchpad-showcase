@@ -399,8 +399,6 @@ The production build targets Cloudflare Workers through Nitro. Deployment detail
 - **Sample offers:** the MVP is validated against **20 fictional offers** covering text, screenshot, and PDF inputs, with a mix of legitimate and fraudulent examples. [Sample data](https://drive.google.com/drive/folders/1ykIK6lx0tlwseCikQxy8Vnl90B-ajc_L?usp=sharing)
 - **Threat analytics dataset:** Google BigQuery table `offerproof_analytics.job_postings` (about 17,880 records). [Dataset](https://drive.google.com/file/d/1Ns5uC_LKnB-rD4yXVZPzXSvJjpxnvXcm/view?usp=share_link)
 
-All sample offers are fictional. No real individual's or company's data is included in the repository.
-
 ---
 
 ## 14. Testing and Quality Assurance
