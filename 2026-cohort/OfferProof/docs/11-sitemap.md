@@ -117,7 +117,7 @@ export const Route = createFileRoute("/_authenticated")({
 
 ## 5. SEO & Search Engine Sitemap (`public/sitemap.xml`)
 
-Search engine web crawlers are served an XML sitemap at `https://offerproof.lovable.app/sitemap.xml`.
+Search engine web crawlers are served an XML sitemap at `https://offerproof-mmc.lovable.app/sitemap.xml`.
 
 ### Indexing Policy (`public/robots.txt`)
 
