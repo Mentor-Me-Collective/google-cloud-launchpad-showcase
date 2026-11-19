@@ -396,9 +396,8 @@ The production build targets Cloudflare Workers through Nitro. Deployment detail
 
 ## 13. Data Sources and Sample Data
 
-- **Sample offers:** the MVP is validated against **20 fictional offers** covering text, screenshot, and PDF inputs, with a mix of legitimate and fraudulent examples. `<ADD PATH TO SAMPLE DATA FOLDER>`
-- **Threat analytics dataset:** Google BigQuery table `offerproof_analytics.job_postings` (about 17,880 records). `<ADD DATASET SOURCE / ATTRIBUTION>`
-- **Design assets:** `<ADD PATH TO DESIGN ASSETS>`
+- **Sample offers:** the MVP is validated against **20 fictional offers** covering text, screenshot, and PDF inputs, with a mix of legitimate and fraudulent examples. [Sample data](https://drive.google.com/drive/folders/1ykIK6lx0tlwseCikQxy8Vnl90B-ajc_L?usp=sharing)
+- **Threat analytics dataset:** Google BigQuery table `offerproof_analytics.job_postings` (about 17,880 records). [Dataset](https://drive.google.com/file/d/1Ns5uC_LKnB-rD4yXVZPzXSvJjpxnvXcm/view?usp=share_link)
 
 All sample offers are fictional. No real individual's or company's data is included in the repository.
 
@@ -444,7 +443,7 @@ Coverage areas include the fraud-detection rules (including negation handling), 
 - **Session isolation.** State is scoped per session so concurrent users never see or overwrite each other's data.
 - **Row Level Security.** Saved reports, offers, and comparisons are owner-only, enforced in PostgreSQL by `auth.uid()`.
 - **Secrets stay server-side.** NVIDIA and Google Cloud credentials live only in Edge Function secrets.
-- **AI transparency.** The AI advisory call sends offer text to NVIDIA's inference API through the Edge Function. `<CONFIRM AND DOCUMENT WHETHER TEXT IS REDACTED OR USER-CONSENTED BEFORE SENDING>`
+- **AI transparency.** The AI advisory call sends offer text to NVIDIA's inference API through the Edge Function. 
 - **Not a guarantee.** OfferProof flags risk signals; it cannot prove an offer is genuine. Users should always verify employers through official channels.
 - **Robots policy.** Private routes (`/history`, `/compare`, `/reports/`) are disallowed in [`public/robots.txt`](./public/robots.txt).
 
@@ -476,7 +475,7 @@ See [`docs/10-future-scope.md`](./docs/10-future-scope.md) and [`docs/roadmap.md
 
 | Member             | GitHub        | Track               | Individual contributions                                                               |
 | ------------------ | ------------- | ------------------- | -------------------------------------------------------------------------------------- |
-| **Dikshu Grover**  | [@Dikshu-Grover](https://github.com/Dikshu-Grover) | Cloud Engineering   | Delivery lead and product lead; developed the frontend and Supabase backend; integrated Google Cloud and NVIDIA technologies; implemented login/logout authentication and offer comparison functionality; led team coordination, meetings, task allocation, and documentation; prepared the OfferProof README; Tested offers on website; Made changes to the website after suggestions by team memebers; configured and managed the GitHub repository and uploaded the project codebase; recorded 5 minutes demo for OfferProof.     |
+| **Dikshu Grover**  | [@Dikshu-Grover](https://github.com/Dikshu-Grover) | Cloud Engineering   | Delivery lead and product lead; developed the frontend and Supabase backend; integrated Google Cloud and NVIDIA technologies; implemented login/logout authentication and offer comparison functionality; led team coordination, meetings, task allocation, and documentation; prepared the OfferProof README; Tested offers on website; Made changes to the website after suggestions by team members; configured and managed the GitHub repository and uploaded the project codebase; recorded 5 minutes demo for OfferProof.     |
 | **Janet Gichia** | [@Janet Gichia](https://github.com/janetgichia) | AI Cloud Leadership | Documentation and website testing; prepared and organised recruitment-offer samples; reviewed and tested the OfferProof website using fictional offers; captured and organised website screenshots; documented verification findings, concern signals and AI recommendations; evaluated downloadable PDF reports and identified improvement opportunities; contributed to project documentation and README updates. |
 | **Mehzad Muqadas** | [@Mehzad Muqadas](https://github.com/MehzadMuqadas) | Cloud Cybersecurity | Audited and validated fraud verification rules; developed the testing spreadsheet and 20 test scenarios (S01–S20); documented fraud indicators; conducted evidence and permissions testing; prepared supporting documentation and screenshots; collaborated on the PowerPoint presentation and product showcase. |        |
 | **Moses Otieno**   | [@Otieno27](https://github.com/Otieno27) | Cloud Cybersecurity | Evidence comparison module; permissions and evidence testing. Defined comparison fields, including company name, job title, salary, recruiter contact details, and joining date, to identify inconsistencies across submitted job offers. Developed five mismatch test scenarios covering discrepancies in key recruitment details and documented how these inconsistencies should be identified and presented. Evaluated the application's results against expected outcomes, documenting correctly identified warnings, unexpected results, and potential areas for improvement. |
