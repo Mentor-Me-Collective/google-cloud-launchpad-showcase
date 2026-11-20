@@ -1,0 +1,21 @@
+question_id,evidence_id,label,reviewer,notes
+Q01,E01,UNSUPPORTED,John Flack,No actual proof of enrollment is shown for production privileged accounts.
+Q01,E02,SUPPORTED,John Flack,"Shows 12 of 12 enrolled, with zero unenrolled."
+Q02,E03,UNSUPPORTED,John Flack,"Says 24 hours, but no operational results are shown."
+Q02,E04,SUPPORTED,John Flack,All 8 sampled identities disabled within 24 hours.
+Q03,E05,UNSUPPORTED,John Flack,"Quarterly review listed, but not demonstrated."
+Q03,E06,SUPPORTED,John Flack,"Completed, dated, with no open items."
+Q04,E07,UNSUPPORTED,John Flack,Standard defines requirement but does not prove production data is encrypted.
+Q04,E08,SUPPORTED,John Flack,Shows all encrypted stores enabled with no exceptions.
+Q05,E09,UNSUPPORTED,John Flack,"Standard shown, but no actual enpoint config or behavior listed."
+Q05,E10,SUPPORTED,John Flack,Shows TLS reject and accept cleanly.
+Q06,E11,UNSUPPORTED,John Flack,No operational evidence to support policy shown.
+Q06,E12,UNSUPPORTED,John Flack,"Shows Q3 2026, today is Nov 6, which is Q4 (current quarter)."
+Q07,E13,UNSUPPORTED,John Flack,30 day SLA defined but doesn't show remediation performance.
+Q07,E14,SUPPORTED,John Flack,"All closed in 30 days, none exceeded SLA."
+Q08,E15,UNSUPPORTED,John Flack,Does not show config or operation as policy states.
+Q08,E16,SUPPORTED,John Flack,"SIEM shows 120 day retnetion, prod sources, enabled alerts, and a recent alert creating a ticket."
+Q09,E17,UNSUPPORTED,John Flack,"Calls for exercise, but doesn't show that one has occurred."
+Q09,E18,SUPPORTED,John Flack,"Shows Ayg 19 exercise complete with partcipants, completion and improvement actions."
+Q10,E19,UNSUPPORTED,John Flack,Does not show that third party administrative access follows access requirements in policy.
+Q10,E20,SUPPORTED,John Flack,"Shows vendor-admin record, approval from owner, MFA enablement, start and expiration and the actual automatic expiration."

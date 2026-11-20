@@ -1,0 +1,39 @@
+{
+  "frozen_at_utc": "2026-11-06T19:17:07.450583+00:00",
+  "gold_labels_file": "data/gold_labels.csv",
+  "gold_labels_sha256": "1317a4c5cd1b0d02575d2e54d62d8cc03c7508805dd043cf44dc67e2503d6b74",
+  "code_commit_sha_at_freeze": "aeeb18653a7b5db982930c0e3677adb048b2d984",
+  "item_count": 20,
+  "label_counts": {
+    "SUPPORTED": 9,
+    "UNSUPPORTED": 11
+  },
+  "reviewers": [
+    "John Flack"
+  ],
+  "dataset_files": {
+    "data/questions.json": "bd4d4ff5280e28d85ccaa38ea059dc2f596af032b0307ff1aeb2b044fafac4de",
+    "data/evidence_manifest.csv": "83a0a4d81cc9e1dbea3e3e4d76f65748bb52d982572c4d82e57c0835f29f7e1c",
+    "data/evidence/E01.md": "0afd397e51674c31607ecd9abc353197fd13fbcc86b848f5c3170d1695d3d4ae",
+    "data/evidence/E02.md": "4678ae80123c41b588e8967e784e9d0335783a633d17a645840947d961613141",
+    "data/evidence/E03.md": "60d8154d1df144328c907deb62f2f8d1107447d31051c92289843a9fa15644e1",
+    "data/evidence/E04.md": "548711e8ed8a1d1909ae06dc08440a2db0a3e7bc94f7527c6e45b251ac8ef68f",
+    "data/evidence/E05.md": "af35f23616ec704da16a0a435b62c8c8ae42a0bc31cc039dd8a3225723f2925d",
+    "data/evidence/E06.md": "f6e1a182786afe96cc5c32db97a48d746411e631d5dd71a245ec8a2b7163f9d3",
+    "data/evidence/E07.md": "e8531940ed270dfaa9099c0f7383faeb2c1fce700f57dc32f45b15924e225766",
+    "data/evidence/E08.md": "e35c34a451ecd75098c10be4a08b05f6d804c3f216fed6950b672c9db6d8d431",
+    "data/evidence/E09.md": "4ebd41a20d527a358ecd6aae2d8192903874dc6e06d3739aaf3b7c49f825105a",
+    "data/evidence/E10.md": "61cafeaf3b2a77b550fe505884637c355b8e7b76531f4ed6738d0070b1d0c399",
+    "data/evidence/E11.md": "4fd3c8877e37c1b3348b97a313d96fdf6a816fbfe52834fc0db0879044a2eac9",
+    "data/evidence/E12.md": "4e0cd9b16b8e78f45041168cc1cb10e09b3b5df5f6b506bb417b6e7851ce9c33",
+    "data/evidence/E13.md": "54affb11d8172b354afc5865149ec4513483b3ffd593a5bfa5b72506364861e0",
+    "data/evidence/E14.md": "6c3d37d061ecea1e192a7fef9bfb42e8bc407b87baa3342a093b1eb03c3ecb3b",
+    "data/evidence/E15.md": "b60bcf8f99b7754fe7620c2c268a6c40e382d59d08f42145285ee7282d3d7dea",
+    "data/evidence/E16.md": "2fdc8f613441ec9a39b96b4c7cc4287ca157dc7e2c46b0d5fa92cf0439a3ce0b",
+    "data/evidence/E17.md": "b242412c7b30a3fc0a0e2379f160f71e228c09d0eadea5dbc4658bd76c1036fd",
+    "data/evidence/E18.md": "b6da0b298e955a86c8d4c70a3949e24de06a2b63de4b18509d24ac38a490e33b",
+    "data/evidence/E19.md": "083e95982265eca56d497179f6bd9bb02faa701d30413f64dcbc3f0b8c070afa",
+    "data/evidence/E20.md": "959f7a58b598b23677e6d7d78d6db8a9bd2fe6cb7966d9587a32ae2f53922a1e"
+  },
+  "integrity_rule": "Gold labels were completed without model predictions and must not be changed to improve evaluation results."
+}
