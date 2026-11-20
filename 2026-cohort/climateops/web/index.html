@@ -1562,6 +1562,281 @@ body {
   .infra-table td { font-size: 11px; word-break: break-word; }
   .dashboard-body { padding: 14px; gap: 16px; }
 }
+
+/* --- Newly Civic & Climate Hazard Simulator Tokens & Styles --- */
+:root {
+  --cobalt: #0B6DC4;
+  --cobalt-dark: #074E8C;
+  --cobalt-glow: rgba(11, 109, 196, 0.25);
+  --sky-ice: #E5F1FD;
+  --harbor-navy: #0E2A47;
+  --polar-cyan: #06B6D4;
+  --cold-border: #BAE6FD;
+}
+
+body.hazard-cold-theme {
+  --dark-card-border: rgba(6, 182, 212, 0.35);
+  --canvas-border-focus: var(--cobalt);
+}
+
+body.hazard-cold-theme .dark-kpi-card {
+  background: linear-gradient(135deg, #0A1926 0%, #0E2A47 100%);
+  border-color: rgba(6, 182, 212, 0.4);
+}
+
+.hazard-control-panel {
+  background: #FFFFFF;
+  border: 1px solid var(--canvas-border);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.hazard-control-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0284C7 0%, #10B981 50%, #EF4444 100%);
+}
+
+.hazard-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hazard-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.hazard-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--emerald);
+  animation: pulse-dot 2s infinite;
+}
+
+.hazard-demo-tag {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  background: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FDE68A;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.hazard-quick-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.hazard-feed-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 11.5px;
+  font-weight: 600;
+  border: 1px solid var(--canvas-border);
+  background: var(--canvas-surface-subtle);
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.hazard-feed-btn:hover {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+}
+
+.hazard-feed-btn.active-heat {
+  background: #FEE2E2;
+  color: #991B1B;
+  border-color: #F87171;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15);
+}
+
+.hazard-feed-btn.active-cold {
+  background: #E0F2FE;
+  color: #0369A1;
+  border-color: #38BDF8;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(11, 109, 196, 0.15);
+}
+
+.hazard-feed-btn.active-moderate {
+  background: #D1FAE5;
+  color: #065F46;
+  border-color: #34D399;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+}
+
+.hazard-slider-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: var(--canvas-surface-subtle);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--canvas-border);
+}
+
+.hazard-slider-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.slider-temp-badge {
+  font-size: 13px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 6px;
+  letter-spacing: -0.01em;
+}
+
+.slider-temp-badge.heat {
+  background: #FEE2E2;
+  color: #B91C1C;
+  border: 1px solid #FCA5A5;
+}
+
+.slider-temp-badge.cold {
+  background: #E0F2FE;
+  color: #0369A1;
+  border: 1px solid #7DD3FC;
+}
+
+.slider-temp-badge.moderate {
+  background: #E8F7F0;
+  color: #065F46;
+  border: 1px solid #A7F3D0;
+}
+
+.slider-hazard-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.hazard-slider-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 240px;
+}
+
+.hazard-slider-container input[type="range"] {
+  flex: 1;
+  height: 6px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #0284C7 0%, #10B981 50%, #EF4444 100%);
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+
+.hazard-slider-container input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid var(--text-dark);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.hazard-slider-container input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+/* Cold and Moderate forecast bar accents */
+.forecast-bar-fill.cold-peak {
+  background: linear-gradient(180deg, #0284C7 0%, #075985 100%) !important;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35) !important;
+}
+
+.forecast-bar-fill.moderate-peak {
+  background: linear-gradient(180deg, #10B981 0%, #059669 100%) !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25) !important;
+}
+
+/* Mobile Companion Status Card in Dashboard */
+.mobile-companion-banner {
+  background: linear-gradient(135deg, #0E2A47 0%, #0B6DC4 100%);
+  color: #FFFFFF;
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.mobile-companion-pill {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+}
+
+/* SVG Circular Risk Ring */
+.svg-risk-ring-box {
+  width: 38px;
+  height: 38px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.svg-risk-ring-box svg {
+  transform: rotate(-90deg);
+}
+
+.svg-risk-ring-val {
+  position: absolute;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text-dark);
+}
 </style>
 </head>
 <body>
@@ -1746,6 +2021,43 @@ body {
         </div>
       </section>
 
+      <!-- Interactive Climate Hazard Simulator & Controller (MMC Feature) -->
+      <section class="hazard-control-panel" id="hazard-control-panel" aria-label="Climate Hazard Simulation Engine">
+        <div class="hazard-panel-header">
+          <div class="hazard-panel-title">
+            <span class="hazard-pulse-dot" id="hazard-status-dot"></span>
+            <span>CLIMATE HAZARD SIMULATOR & ADAPTIVE OPERATIONAL ENGINE</span>
+            <span class="hazard-demo-tag">DEMO / SIMULATION MODE</span>
+          </div>
+          <div class="hazard-quick-actions">
+            <button type="button" class="hazard-feed-btn active-heat" id="btn-mode-heat" onclick="setHazardScenario('heat')">
+              <span>🔥 Extreme Heat Wave</span>
+            </button>
+            <button type="button" class="hazard-feed-btn" id="btn-mode-cold" onclick="setHazardScenario('cold')">
+              <span>❄️ Severe Winter Freeze</span>
+            </button>
+            <button type="button" class="hazard-feed-btn" id="btn-mode-moderate" onclick="setHazardScenario('moderate')">
+              <span>🍃 Moderate Baseline</span>
+            </button>
+            <button type="button" class="btn btn-outline" style="font-size:11px; padding:5px 10px;" id="btn-reset-nws" onclick="resetToLiveWeather()">
+              <span>↺ Reset to Live NWS Feed</span>
+            </button>
+          </div>
+        </div>
+        <div class="hazard-slider-row">
+          <div class="hazard-slider-label">
+            <span>Ambient / Hazard Temp:</span>
+            <span id="slider-temp-display" class="slider-temp-badge heat">104°F Heat Index</span>
+            <span id="slider-hazard-level" class="slider-hazard-badge">NWS Extreme Heat Warning (Zone NYZ073)</span>
+          </div>
+          <div class="hazard-slider-container">
+            <span style="font-size:11px; font-weight:700; color:#0284C7;">10°F Polar</span>
+            <input type="range" id="temp-slider" min="10" max="115" value="104" step="1" oninput="onTempSliderScrub(this.value)" aria-label="Simulated Temperature Slider">
+            <span style="font-size:11px; font-weight:700; color:#EF4444;">115°F Heat</span>
+          </div>
+        </div>
+      </section>
+
       <!-- Top Row: 4 Modern Metric Cards (Styled Directly from the Image) -->
       <section class="kpi-row">
         <!-- Card 1: Dark Obsidian Card (Heat Hazard) -->
@@ -1845,8 +2157,8 @@ body {
         <div class="chart-card">
           <div class="chart-header">
             <div>
-              <div class="chart-title">Hourly Heat Index Forecast Curve <span class="prov-badge DEMO_SYNTHETIC" style="margin-left:6px;">SIMULATED REPLAY</span></div>
-              <div style="font-size:12px; color:var(--text-muted);">NWS Station KNYC / OKX Grid (35,47) · Bronx County</div>
+              <div class="chart-title"><span id="forecast-hazard-title">Hourly Heat Index Forecast Curve</span> <span class="prov-badge DEMO_SYNTHETIC" id="forecast-hazard-pill" style="margin-left:6px;">SIMULATED REPLAY</span></div>
+              <div style="font-size:12px; color:var(--text-muted);" id="forecast-station-sub">NWS Station KNYC / OKX Grid (35,47) · Bronx County</div>
             </div>
             <div class="chart-pills" id="forecast-pills" role="tablist" aria-label="Forecast Horizon">
               <button type="button" class="chart-pill active" data-horizon="today" role="tab" aria-selected="true">Today</button>
@@ -1891,7 +2203,7 @@ body {
         <div class="spatial-map-card">
           <div class="map-header">
             <div>
-              <div class="map-title">South Bronx Spatial Heat Map</div>
+              <div class="map-title" id="spatial-map-title">South Bronx Spatial Heat Map</div>
               <div style="font-size:11px; color:var(--text-light-dim)">Mott Haven / Melrose · Community District 1</div>
             </div>
             <div id="map-fac-badge" class="status-badge live" style="font-size:10px;">8 FACILITIES</div>
@@ -1917,6 +2229,29 @@ body {
               <div id="map-tt-score" class="map-tt-score">HVI 5</div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- Mobile Field Companion App (Newly Mobile Integration) -->
+      <section class="mobile-companion-banner" aria-label="Field Companion App Telemetry">
+        <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+          <div style="font-size:26px; line-height:1;">📱</div>
+          <div>
+            <div style="font-weight:700; font-size:13px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <span>ClimateOps Mobile Companion (Field Check-In & Proof Upload App)</span>
+              <span class="mobile-companion-pill">EXPO / REACT NATIVE</span>
+              <span class="mobile-companion-pill" style="background:#059669;">ADR-001 ALIGNED</span>
+            </div>
+            <div style="font-size:11.5px; opacity:0.9; margin-top:3px;">
+              Empowers community facility managers to submit real-time AC/boiler status, occupancy count, and staff check-ins directly into Google Cloud Run backend.
+            </div>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; flex-shrink:0; flex-wrap:wrap;">
+          <span class="status-badge live" style="background:rgba(16,185,129,0.2); color:#A7F3D0; border-color:rgba(16,185,129,0.4);">
+            ● CLOUD RUN SYNCED
+          </span>
+          <a href="#facilities" style="font-size:11.5px; color:#E0F2FE; text-decoration:underline;">Inspect Sites ↓</a>
         </div>
       </section>
 
@@ -2023,6 +2358,30 @@ let cachedFacilities = [];
 let cachedRankings = [];
 let cachedTasks = [];
 let searchQuery = '';
+
+let currentHazardMode = 'heat'; // 'heat' | 'cold' | 'moderate' | 'live'
+let currentSimulatedTemp = 104;
+let baselineRankings = [];
+let baselineWeather = null;
+let currentHorizon = 'today';
+
+function makeRiskRing(score) {
+  const r = 14;
+  const c = 2 * Math.PI * r;
+  const s = Math.max(0, Math.min(100, Math.round(score || 0)));
+  const offset = c - (s / 100) * c;
+  const color = s >= 75 ? '#EF4444' : s >= 50 ? '#F59E0B' : s >= 30 ? '#0B6DC4' : '#10B981';
+  const box = el('div', { className: 'svg-risk-ring-box' });
+  box.innerHTML = `
+    <svg width="34" height="34" viewBox="0 0 34 34">
+      <circle cx="17" cy="17" r="${r}" fill="none" stroke="#E2E8F0" stroke-width="3"></circle>
+      <circle cx="17" cy="17" r="${r}" fill="none" stroke="${color}" stroke-width="3"
+        stroke-dasharray="${c.toFixed(2)}" stroke-dashoffset="${offset.toFixed(2)}" stroke-linecap="round"></circle>
+    </svg>
+    <span class="svg-risk-ring-val" style="color:${color}; font-size:10px;">${s}</span>
+  `;
+  return box;
+}
 
 function toast(text, isSuccess = false) {
   const m = $('msg');
@@ -2133,7 +2492,13 @@ function renderFacilitiesAndTasks() {
       $('rank-list').innerHTML = '<div style="color:var(--text-dim); padding:10px;">No facilities match "' + q + '".</div>';
     } else {
       const box = el('div');
-      const labels = { heat: 'Heat', vulnerable_users: 'Vulnerable', no_working_ac: 'AC Risk', people_on_site: 'Occupancy', low_staffing: 'Staffing' };
+      const hazardLabels = {
+        heat: { heat: 'Heat Index', vulnerable_users: 'Heat Vulnerable', no_working_ac: 'AC Failure', people_on_site: 'Occupancy', low_staffing: 'Staff Shortage' },
+        cold: { heat: 'Wind Chill / Freeze', vulnerable_users: 'Hypothermia Risk', no_working_ac: 'Boiler / Heat Outage', people_on_site: 'Code Blue Demand', low_staffing: 'Staff Shortage' },
+        moderate: { heat: 'Ambient Temp', vulnerable_users: 'Baseline Care', no_working_ac: 'HVAC Routine Maint.', people_on_site: 'Normal Load', low_staffing: 'Shift Coverage' },
+        live: { heat: 'Heat', vulnerable_users: 'Vulnerable', no_working_ac: 'AC Risk', people_on_site: 'Occupancy', low_staffing: 'Staffing' }
+      };
+      const labels = hazardLabels[currentHazardMode] || hazardLabels.heat;
       filtered.forEach(r => {
         const isTop = r.rank === 1;
         const f = facMap[r.facility_id] || {};
@@ -2165,9 +2530,12 @@ function renderFacilitiesAndTasks() {
               factorRow
             )
           ),
-          el('div', { className: 'fac-score-col' },
-            el('div', { className: 'fac-score-num', textContent: r.score + '/100' }),
-            el('div', { className: 'fac-score-conf', textContent: (r.confidence * 100).toFixed(0) + '% Confidence' })
+          el('div', { className: 'fac-score-col', style: 'display:flex; align-items:center; gap:10px;' },
+            makeRiskRing(r.score),
+            el('div', { style: 'text-align:right;' },
+              el('div', { className: 'fac-score-num', textContent: r.score + '/100' }),
+              el('div', { className: 'fac-score-conf', textContent: (r.confidence * 100).toFixed(0) + '% Confidence' })
+            )
           )
         );
         box.append(card);
@@ -2232,6 +2600,7 @@ async function load() {
 
     // 1. Weather (Truthful source + freshness labeling)
     const w = await api('/weather/status');
+    baselineWeather = w;
     const isFresh = w.freshness === 'FRESH';
     const badgeLabel = w.badge || w.source || 'UNKNOWN';
     $('kpi-freshness').textContent = `${badgeLabel} · ${w.freshness || 'UNKNOWN'}`;
@@ -2299,9 +2668,15 @@ async function load() {
     const facMap = Object.fromEntries(cachedFacilities.map(f => [f.facility_id, f]));
     if (mgr) {
       const p = await api('/priorities');
-      cachedRankings = p.ranking || [];
+      baselineRankings = JSON.parse(JSON.stringify(p.ranking || []));
+      if (currentHazardMode !== 'live' && currentHazardMode !== 'heat') {
+        recalculateHazardRankings(currentSimulatedTemp, currentHazardMode);
+      } else {
+        cachedRankings = JSON.parse(JSON.stringify(baselineRankings));
+      }
       renderMapPins(cachedRankings, facMap);
     } else {
+      baselineRankings = [];
       cachedRankings = [];
       renderMapPins(cachedFacilities, facMap);
     }
@@ -2321,6 +2696,7 @@ async function load() {
     cachedTasks = await api('/tasks');
     $('nav-task-count').textContent = cachedTasks.length ? String(cachedTasks.length) : '0';
     renderFacilitiesAndTasks();
+    renderForecastBars(currentHorizon);
     updateStepper(w, currentBrief, cachedTasks);
 
     // 6. Audit Events
@@ -2562,27 +2938,89 @@ function renderBrief() {
   box.append(card);
 }
 
-// Forecast Horizon Tabs
-const FORECAST_HORIZONS = {
-  today: [
-    { t: '08:00', v: '84°', h: 48, p: false }, { t: '10:00', v: '89°', h: 62, p: false },
-    { t: '12:00', v: '96°', h: 80, p: false }, { t: '14:00 PEAK', v: '104°', h: 100, p: true },
-    { t: '16:00', v: '102°', h: 95, p: true }, { t: '18:00', v: '94°', h: 76, p: false },
-    { t: '20:00', v: '88°', h: 58, p: false }
-  ],
-  '24h': [
-    { t: 'Now', v: '96°', h: 80, p: false }, { t: '+4h PEAK', v: '104°', h: 100, p: true },
-    { t: '+8h', v: '92°', h: 72, p: false }, { t: '+12h Night', v: '82°', h: 44, p: false },
-    { t: '+16h', v: '86°', h: 54, p: false }, { t: '+20h', v: '99°', h: 86, p: true },
-    { t: '+24h', v: '101°', h: 92, p: true }
-  ],
-  '48h': [
-    { t: 'Day 1 AM', v: '88°', h: 58, p: false }, { t: 'Day 1 PM', v: '104°', h: 100, p: true },
-    { t: 'Night 1', v: '81°', h: 42, p: false }, { t: 'Day 2 AM', v: '90°', h: 64, p: false },
-    { t: 'Day 2 PM', v: '101°', h: 92, p: true }, { t: 'Night 2', v: '78°', h: 36, p: false },
-    { t: 'Day 3 AM', v: '85°', h: 50, p: false }
-  ]
+// Forecast Horizons & Climate Hazard Simulation Engine
+const ALL_FORECASTS = {
+  heat: {
+    today: [
+      { t: '08:00', v: '84°', h: 48, p: false }, { t: '10:00', v: '89°', h: 62, p: false },
+      { t: '12:00', v: '96°', h: 80, p: false }, { t: '14:00 PEAK', v: '104°', h: 100, p: true },
+      { t: '16:00', v: '102°', h: 95, p: true }, { t: '18:00', v: '94°', h: 76, p: false },
+      { t: '20:00', v: '88°', h: 58, p: false }
+    ],
+    '24h': [
+      { t: 'Now', v: '96°', h: 80, p: false }, { t: '+4h PEAK', v: '104°', h: 100, p: true },
+      { t: '+8h', v: '92°', h: 72, p: false }, { t: '+12h Night', v: '82°', h: 44, p: false },
+      { t: '+16h', v: '86°', h: 54, p: false }, { t: '+20h', v: '99°', h: 86, p: true },
+      { t: '+24h', v: '101°', h: 92, p: true }
+    ],
+    '48h': [
+      { t: 'Day 1 AM', v: '88°', h: 58, p: false }, { t: 'Day 1 PM', v: '104°', h: 100, p: true },
+      { t: 'Night 1', v: '81°', h: 42, p: false }, { t: 'Day 2 AM', v: '90°', h: 64, p: false },
+      { t: 'Day 2 PM', v: '101°', h: 92, p: true }, { t: 'Night 2', v: '78°', h: 36, p: false },
+      { t: 'Day 3 AM', v: '85°', h: 50, p: false }
+    ]
+  },
+  cold: {
+    today: [
+      { t: '08:00', v: '22°', h: 42, p: false }, { t: '10:00', v: '20°', h: 52, p: false },
+      { t: '12:00', v: '18°', h: 68, p: false }, { t: '14:00', v: '16°', h: 82, p: false },
+      { t: '16:00 PEAK FREEZE', v: '14°', h: 95, p: true }, { t: '18:00 WIND CHILL', v: '11°', h: 100, p: true },
+      { t: '20:00', v: '15°', h: 86, p: true }
+    ],
+    '24h': [
+      { t: 'Now', v: '18°', h: 68, p: false }, { t: '+4h PEAK FREEZE', v: '14°', h: 95, p: true },
+      { t: '+8h', v: '12°', h: 100, p: true }, { t: '+12h Night', v: '10°', h: 100, p: true },
+      { t: '+16h', v: '16°', h: 82, p: false }, { t: '+20h', v: '22°', h: 42, p: false },
+      { t: '+24h', v: '20°', h: 52, p: false }
+    ],
+    '48h': [
+      { t: 'Day 1 AM', v: '22°', h: 42, p: false }, { t: 'Day 1 PM', v: '14°', h: 95, p: true },
+      { t: 'Night 1', v: '10°', h: 100, p: true }, { t: 'Day 2 AM', v: '18°', h: 68, p: false },
+      { t: 'Day 2 PM', v: '16°', h: 82, p: true }, { t: 'Night 2', v: '8°', h: 100, p: true },
+      { t: 'Day 3 AM', v: '24°', h: 36, p: false }
+    ]
+  },
+  moderate: {
+    today: [
+      { t: '08:00', v: '64°', h: 35, p: false }, { t: '10:00', v: '68°', h: 48, p: false },
+      { t: '12:00', v: '71°', h: 58, p: false }, { t: '14:00 PEAK', v: '74°', h: 66, p: true },
+      { t: '16:00', v: '73°', h: 62, p: false }, { t: '18:00', v: '69°', h: 50, p: false },
+      { t: '20:00', v: '66°', h: 40, p: false }
+    ],
+    '24h': [
+      { t: 'Now', v: '70°', h: 55, p: false }, { t: '+4h', v: '74°', h: 66, p: true },
+      { t: '+8h', v: '69°', h: 50, p: false }, { t: '+12h Night', v: '62°', h: 30, p: false },
+      { t: '+16h', v: '65°', h: 38, p: false }, { t: '+20h', v: '72°', h: 60, p: false },
+      { t: '+24h', v: '73°', h: 62, p: false }
+    ],
+    '48h': [
+      { t: 'Day 1 AM', v: '65°', h: 38, p: false }, { t: 'Day 1 PM', v: '74°', h: 66, p: true },
+      { t: 'Night 1', v: '60°', h: 25, p: false }, { t: 'Day 2 AM', v: '66°', h: 40, p: false },
+      { t: 'Day 2 PM', v: '72°', h: 60, p: false }, { t: 'Night 2', v: '61°', h: 28, p: false },
+      { t: 'Day 3 AM', v: '67°', h: 44, p: false }
+    ]
+  }
 };
+
+function renderForecastBars(horizon) {
+  currentHorizon = horizon || currentHorizon || 'today';
+  const modeKey = currentHazardMode === 'cold' ? 'cold' : currentHazardMode === 'moderate' ? 'moderate' : 'heat';
+  const pts = (ALL_FORECASTS[modeKey] && ALL_FORECASTS[modeKey][currentHorizon]) || ALL_FORECASTS.heat.today;
+  const container = $('forecast-bars-container');
+  if (!container) return;
+
+  const peakClass = currentHazardMode === 'cold' ? ' cold-peak' : currentHazardMode === 'moderate' ? ' moderate-peak' : ' danger-peak';
+  const peakTextColor = currentHazardMode === 'cold' ? '#0284C7' : currentHazardMode === 'moderate' ? '#059669' : 'var(--danger-dark)';
+
+  container.replaceChildren(...pts.map(pt =>
+    el('div', { className: 'forecast-col' },
+      el('div', { className: 'forecast-bar-fill' + (pt.p ? peakClass : ''), style: `height:${pt.h}%;` },
+        el('span', { className: 'bar-val-pop', textContent: pt.v })
+      ),
+      el('span', { className: 'forecast-time', style: pt.t.includes('PEAK') || pt.t.includes('WIND') || pt.t.includes('FREEZE') ? `color:${peakTextColor}; font-weight:800;` : '', textContent: pt.t })
+    )
+  ));
+}
 
 document.querySelectorAll('#forecast-pills .chart-pill').forEach(btn => {
   btn.onclick = () => {
@@ -2592,18 +3030,206 @@ document.querySelectorAll('#forecast-pills .chart-pill').forEach(btn => {
     });
     btn.classList.add('active');
     btn.setAttribute('aria-selected', 'true');
-    const pts = FORECAST_HORIZONS[btn.dataset.horizon] || FORECAST_HORIZONS.today;
-    const container = $('forecast-bars-container');
-    container.replaceChildren(...pts.map(pt =>
-      el('div', { className: 'forecast-col' },
-        el('div', { className: 'forecast-bar-fill' + (pt.p ? ' danger-peak' : ''), style: `height:${pt.h}%;` },
-          el('span', { className: 'bar-val-pop', textContent: pt.v })
-        ),
-        el('span', { className: 'forecast-time', style: pt.t.includes('PEAK') ? 'color:var(--danger-dark); font-weight:800;' : '', textContent: pt.t })
-      )
-    ));
+    renderForecastBars(btn.dataset.horizon);
   };
 });
+
+function recalculateHazardRankings(temp, mode) {
+  if (!baselineRankings || baselineRankings.length === 0) return;
+
+  if (mode === 'live') {
+    cachedRankings = JSON.parse(JSON.stringify(baselineRankings));
+    return;
+  }
+
+  const list = JSON.parse(JSON.stringify(baselineRankings));
+  list.forEach(r => {
+    let score = r.score;
+    const isMottHaven = (r.facility_id || '').includes('mott-haven') || (r.name || '').includes('Mott Haven');
+    const isSenior = (r.facility_id || '').includes('senior') || (r.name || '').includes('Senior');
+    const isLibrary = (r.facility_id || '').includes('lib') || (r.name || '').includes('Library');
+
+    if (mode === 'cold') {
+      let coldMultiplier = 1.0;
+      if (temp <= 15) coldMultiplier = 1.25;
+      else if (temp <= 25) coldMultiplier = 1.1;
+
+      if (isMottHaven) {
+        score = Math.min(98, Math.round(88 * coldMultiplier));
+      } else if (isSenior) {
+        score = Math.min(96, Math.round(82 * coldMultiplier));
+      } else if (isLibrary) {
+        score = Math.min(90, Math.round(74 * coldMultiplier));
+      } else {
+        score = Math.min(85, Math.round(score * 0.9 * coldMultiplier));
+      }
+
+      if (r.factors) {
+        if (r.factors.heat) {
+          r.factors.heat.value = temp <= 20 ? 1.0 : 0.8;
+          r.factors.heat.weight = 30;
+        }
+        if (r.factors.no_working_ac) {
+          r.factors.no_working_ac.value = isMottHaven ? 1.0 : (r.factors.no_working_ac.value || 0.5);
+          r.factors.no_working_ac.weight = 25;
+        }
+        if (r.factors.vulnerable_users) {
+          r.factors.vulnerable_users.value = isSenior || isMottHaven ? 1.0 : 0.7;
+          r.factors.vulnerable_users.weight = 25;
+        }
+      }
+    } else if (mode === 'moderate') {
+      score = Math.max(12, Math.round(r.score * 0.35));
+      if (r.factors) {
+        Object.values(r.factors).forEach(f => {
+          if (f.known) f.value = Math.max(0.1, Number((f.value * 0.3).toFixed(2)));
+        });
+      }
+    } else {
+      // heat mode
+      const heatFactor = Math.max(0.4, Math.min(1.2, (temp - 75) / 25));
+      score = Math.min(98, Math.max(25, Math.round(r.score * heatFactor)));
+      if (r.factors && r.factors.heat) {
+        r.factors.heat.value = temp >= 100 ? 1.0 : temp >= 90 ? 0.7 : 0.4;
+      }
+    }
+    r.score = score;
+  });
+
+  list.sort((a, b) => b.score - a.score);
+  list.forEach((item, idx) => {
+    item.rank = idx + 1;
+  });
+  cachedRankings = list;
+}
+
+function updateHazardUI(mode, temp) {
+  const btnHeat = $('btn-mode-heat');
+  const btnCold = $('btn-mode-cold');
+  const btnMod = $('btn-mode-moderate');
+
+  if (btnHeat) btnHeat.classList.toggle('active-heat', mode === 'heat');
+  if (btnCold) btnCold.classList.toggle('active-cold', mode === 'cold');
+  if (btnMod) btnMod.classList.toggle('active-moderate', mode === 'moderate');
+
+  const badge = $('slider-temp-display');
+  const level = $('slider-hazard-level');
+  const kpiWeather = $('kpi-weather');
+  const kpiSub = $('kpi-weather-sub');
+  const fcTitle = $('forecast-hazard-title');
+  const fcPill = $('forecast-hazard-pill');
+  const mapTitle = $('spatial-map-title');
+
+  if (mode === 'cold') {
+    document.body.classList.add('hazard-cold-theme');
+    if (badge) {
+      badge.textContent = `${temp}°F Wind Chill`;
+      badge.className = 'slider-temp-badge cold';
+    }
+    if (level) level.textContent = 'NWS Wind Chill Warning · Code Blue Warming Shelter Protocol [DEMO/SIMULATED]';
+    if (kpiWeather) kpiWeather.textContent = `${temp}°F Wind Chill (Severe Freeze)`;
+    if (kpiSub) kpiSub.textContent = 'Zone NYZ073 (Bronx County) · Code Blue Hypothermia Hazard [DEMO/SIMULATED]';
+    if (fcTitle) fcTitle.textContent = 'Hourly Wind Chill Forecast Curve';
+    if (fcPill) fcPill.textContent = 'SIMULATED WINTER FREEZE REPLAY';
+    if (mapTitle) mapTitle.textContent = 'South Bronx Spatial Freeze & Warming Shelter Map';
+  } else if (mode === 'moderate') {
+    document.body.classList.remove('hazard-cold-theme');
+    if (badge) {
+      badge.textContent = `${temp}°F Baseline`;
+      badge.className = 'slider-temp-badge moderate';
+    }
+    if (level) level.textContent = 'Normal Operating Baseline (No Active Watches or Warnings) [DEMO/SIMULATED]';
+    if (kpiWeather) kpiWeather.textContent = `${temp}°F Standard Baseline`;
+    if (kpiSub) kpiSub.textContent = 'Zone NYZ073 (Bronx County) · Normal Routine Operations [DEMO/SIMULATED]';
+    if (fcTitle) fcTitle.textContent = 'Hourly Temperature Operating Curve';
+    if (fcPill) fcPill.textContent = 'SIMULATED BASELINE REPLAY';
+    if (mapTitle) mapTitle.textContent = 'South Bronx Facilities Baseline Map';
+  } else {
+    document.body.classList.remove('hazard-cold-theme');
+    if (badge) {
+      badge.textContent = `${temp}°F Heat Index`;
+      badge.className = 'slider-temp-badge heat';
+    }
+    if (level) level.textContent = 'NWS Extreme Heat Warning (Zone NYZ073) [DEMO/SIMULATED]';
+    if (kpiWeather) kpiWeather.textContent = `${temp}°F Heat Index (Extreme Heat)`;
+    if (kpiSub) kpiSub.textContent = 'Zone NYZ073 (Bronx County) · Extreme Heat Warning [DEMO/SIMULATED]';
+    if (fcTitle) fcTitle.textContent = 'Hourly Heat Index Forecast Curve';
+    if (fcPill) fcPill.textContent = 'SIMULATED HEAT WAVE REPLAY';
+    if (mapTitle) mapTitle.textContent = 'South Bronx Spatial Heat Map';
+  }
+
+  recalculateHazardRankings(temp, mode);
+  renderForecastBars(currentHorizon);
+  renderFacilitiesAndTasks();
+
+  const facMap = Object.fromEntries(cachedFacilities.map(f => [f.facility_id, f]));
+  renderMapPins(cachedRankings, facMap);
+}
+
+function onTempSliderScrub(val) {
+  const temp = parseInt(val, 10);
+  currentSimulatedTemp = temp;
+  let mode = 'heat';
+  if (temp <= 32) {
+    mode = 'cold';
+  } else if (temp <= 82) {
+    mode = 'moderate';
+  } else {
+    mode = 'heat';
+  }
+  currentHazardMode = mode;
+  updateHazardUI(mode, temp);
+}
+
+function setHazardScenario(mode) {
+  currentHazardMode = mode;
+  const slider = $('temp-slider');
+
+  if (mode === 'heat') {
+    currentSimulatedTemp = 104;
+    if (slider) slider.value = 104;
+  } else if (mode === 'cold') {
+    currentSimulatedTemp = 16;
+    if (slider) slider.value = 16;
+  } else if (mode === 'moderate') {
+    currentSimulatedTemp = 72;
+    if (slider) slider.value = 72;
+  }
+
+  updateHazardUI(mode, currentSimulatedTemp);
+}
+
+function resetToLiveWeather() {
+  currentHazardMode = 'live';
+  currentSimulatedTemp = 104;
+  const slider = $('temp-slider');
+  if (slider) slider.value = 104;
+
+  document.body.classList.remove('hazard-cold-theme');
+  ['btn-mode-heat', 'btn-mode-cold', 'btn-mode-moderate'].forEach(id => {
+    const b = $(id);
+    if (b) b.classList.remove('active-heat', 'active-cold', 'active-moderate');
+  });
+
+  if (baselineWeather && baselineWeather.records && baselineWeather.records[0]) {
+    $('kpi-weather').textContent = baselineWeather.records[0].event;
+    $('kpi-weather-sub').textContent = `Source: ${baselineWeather.badge || 'LIVE_NWS'} · Fetched ${baselineWeather.fetched_at ? baselineWeather.fetched_at.slice(11, 19) : ''} UTC · Zone NYZ073`;
+  }
+  $('slider-temp-display').textContent = 'Live NWS Feed Active';
+  $('slider-temp-display').className = 'slider-temp-badge heat';
+  $('slider-hazard-level').textContent = 'Direct Telemetry from NWS Station KNYC (Live)';
+
+  $('forecast-hazard-title').textContent = 'Hourly Heat Index Forecast Curve';
+  $('forecast-hazard-pill').textContent = 'LIVE / SIMULATED FEED';
+  $('spatial-map-title').textContent = 'South Bronx Spatial Heat Map';
+
+  cachedRankings = JSON.parse(JSON.stringify(baselineRankings));
+  renderForecastBars('today');
+  renderFacilitiesAndTasks();
+
+  const facMap = Object.fromEntries(cachedFacilities.map(f => [f.facility_id, f]));
+  renderMapPins(cachedRankings, facMap);
+}
 
 // Mobile Drawer & Search Shortcuts
 function setDrawer(open) {

@@ -18,6 +18,22 @@ NWS alert -> match to sites -> **deterministic** priority score (draft: heat 30,
 
 **Hard rule:** no task can be created until an authorized manager approves the exact brief version. It is enforced by the API (`backend/app/services.py::create_tasks`) and covered by regression tests, not just by the UI. See [approval workflow](docs/02-product/approval-workflow.md).
 
+## Presentation & Client Interfaces
+
+ClimateOps offers dual synchronized interfaces tailored to different operational personas:
+
+1. **Web Operations Command Center (`web/`):**
+   - Desktop command console served directly by Cloud Run at `/`.
+   - **Interactive Climate Hazard Simulator:** Toggles between Extreme Heat Wave (🔥 102°F), Severe Winter Freeze / Code Blue (❄️ 14°F), and Moderate Baseline (🍃 72°F) alongside live NWS feed, with an interactive temperature scrubber (10°F to 115°F) that dynamically re-weights facility risk factors (e.g. Heat Vulnerability vs. Hypothermia Risk, Chiller Failure vs. Boiler Outage) using SVG circular risk rings.
+   - **NVIDIA NIM Integration:** Generates cited, grounded readiness briefs via `nvidia/nemotron-3.5-bolt-e4b` with one-click manager approval.
+   - **Multimodal Visual Proof:** Evidence drawer supporting photo verification of chiller pressure gauges and thermostat readings via `meta/llama-3.2-90b-vision-instruct`.
+
+2. **Mobile Field Companion App (`mobile/`):**
+   - Cross-platform mobile app (React Native / Expo SDK 52) designed for field technicians, inspectors, and mobile site supervisors in the South Bronx.
+   - Re-wired to consume Cloud Run REST API endpoints (`/api/v1/priorities`, `/api/v1/briefs/generate`, `/api/v1/weather/status`) with Bearer token authentication.
+   - Provides on-the-ground facility risk checklists, live weather advisories, and offline-resilient fallback fixtures for low-signal basements.
+   - Adheres strictly to **ADR-001** (view-only on pending drafts; task workflows remain locked until approved by a web console manager) and **ADR-004** (deterministic facility scoring parity). See [mobile/README.md](mobile/README.md) for setup and details.
+
 ## Google Cloud + NVIDIA integration
 Both must make a real feature work. Where each fits, how the demo shows it, and how to reproduce:
 

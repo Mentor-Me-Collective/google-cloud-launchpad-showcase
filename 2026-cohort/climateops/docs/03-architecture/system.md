@@ -51,3 +51,19 @@ Google Cloud Run hosts the API and management workflow. Cloud Scheduler performs
 - Approval race: compare-and-set version and append audit event atomically.
 - Upload failure: task remains open; retry with idempotency key.
 - Tenant auth failure: reject and emit security-safe audit event.
+
+## Presentation & Client Interfaces
+
+### 1. Operations Command Center (`web/index.html`)
+The central dashboard is served directly from Google Cloud Run (`/`) and connects via REST to `/api/v1`. It includes:
+- **Climate Hazard Simulator & Scenario Controller**: Allows operators and evaluators to test resilience across diverse weather regimes (Extreme Heat Wave 🔥 at 104°F, Severe Winter Freeze ❄️ at 16°F Code Blue, and Moderate Baseline 🍃 at 72°F, plus Live NWS Feed).
+- **Dynamic KPI & Forecast Replay**: Hourly forecast curve adjusts dynamically to hazard type, displaying peak danger thresholds and spatial risk mapping across South Bronx Community District 1.
+- **Human Approval Gate (ADR-001)**: Mandatory manager sign-off on AI-synthesized readiness briefs before task dispatch.
+- **Truthful Provenance & Data Freshness**: Clear visual badges (`PUBLIC_VERIFIED` vs `DEMO_SYNTHETIC`, `[DEMO/SIMULATED]` replay markers).
+
+### 2. Field Companion App (`mobile/`)
+A cross-platform React Native / Expo application built for facility managers, shelter coordinators, and field staff:
+- **Direct Cloud Run Backend Integration**: Communicates with `https://climateops-api-4twvqq3jta-uc.a.run.app/api/v1` via scoped Bearer authentication (`demo-manager-a`).
+- **On-Site Telemetry & Status Reporting**: Enables field staff to submit live HVAC/boiler operational status, real-time occupancy counts, and staffing coverage.
+- **Evidence & Proof Uploads**: Connects to the Cloud Run GCS signed-URL endpoint (`/tasks/{tid}/evidence/upload-url`) to capture and store tamper-evident timestamped photos for task verification.
+- **Offline Resilience**: Automatically falls back to localized South Bronx facility fixtures and cached rankings when cellular connectivity is degraded during extreme weather events.
