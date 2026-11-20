@@ -1,0 +1,72 @@
+[
+  {
+    "question_id": "Q01",
+    "question": "Do privileged user accounts require multi-factor authentication (MFA)?",
+    "reviewer_friendly_question": "Do all administrator and other high-access accounts use MFA when signing in to production systems?",
+    "claim": "All active privileged user accounts with interactive access to production systems have MFA enabled and enforced during sign-in, with no unauthorized exceptions.",
+    "reviewer_hint": "Compare the list of active privileged accounts with MFA configuration records. Confirm MFA is enforced for each applicable account. A written policy alone is not sufficient evidence."
+  },
+  {
+    "question_id": "Q02",
+    "question": "Are terminated user accounts disabled within 24 hours of termination?",
+    "reviewer_friendly_question": "When an employee leaves the company, is their system access disabled within 24 hours?",
+    "claim": "All employee accounts associated with recorded terminations during the past 90 days were disabled within 24 hours of their documented termination time.",
+    "reviewer_hint": "Compare HR termination records with identity and access management (IAM) records from the past 90 days. Verify that each account was disabled within the required 24-hour period."
+  },
+  {
+    "question_id": "Q03",
+    "question": "Are privileged access rights reviewed at least quarterly?",
+    "reviewer_friendly_question": "Does the company review administrator and other high-level access permissions at least once every three months?",
+    "claim": "A documented review of all active privileged user accounts and their assigned permissions was completed within the past three months. The review identifies the reviewer, completion date, accounts reviewed, and decisions to retain, modify, or remove access.",
+    "reviewer_hint": "Examine completed access review reports from the past three months. Confirm the review date, account coverage, responsible reviewer, and documented decisions about access permissions."
+  },
+  {
+    "question_id": "Q04",
+    "question": "Is sensitive production data encrypted at rest?",
+    "reviewer_friendly_question": "Does the company use approved encryption methods to protect sensitive information stored in its production systems?",
+    "claim": "All identified production databases and storage systems containing sensitive company information have encryption at rest enabled using encryption methods approved by the organization's security standards.",
+    "reviewer_hint": "Compare the inventory of systems containing sensitive production data with their encryption settings. Review system-generated configurations and the organization's approved encryption standards. A policy without evidence of active encryption is not sufficient."
+  },
+  {
+    "question_id": "Q05",
+    "question": "Is external application traffic protected with TLS 1.2 or higher?",
+    "reviewer_friendly_question": "Does the company's public-facing application use TLS 1.2 or higher and block older, less secure versions?",
+    "claim": "The public-facing application endpoint accepts encrypted connections using TLS 1.2 or higher and rejects connection attempts using TLS 1.0, TLS 1.1, or older protocol versions.",
+    "reviewer_hint": "Review current endpoint configuration records or TLS scan results. Confirm that TLS 1.2 or higher is supported and that connections using versions below TLS 1.2 are rejected."
+  },
+  {
+    "question_id": "Q06",
+    "question": "Are critical systems backed up daily and restore-tested at least quarterly?",
+    "reviewer_friendly_question": "Does the company back up its critical systems every day and successfully test restoring those backups at least once every three months?",
+    "claim": "All systems identified as critical in the company's system inventory have records showing successful daily backups for the past 30 days and at least one documented successful restore test within the past three months.",
+    "reviewer_hint": "Compare the critical system inventory with daily backup logs from the past 30 days and completed restore test reports from the past three months. Confirm that both requirements are met for each critical system."
+  },
+  {
+    "question_id": "Q07",
+    "question": "Are critical vulnerabilities remediated within the defined SLA?",
+    "reviewer_friendly_question": "Does the company fix critical security vulnerabilities within the 30-day deadline set by its Service-Level Agreement (SLA)?",
+    "claim": "All critical vulnerabilities identified during the past 90 days are documented in the company's vulnerability tracking system and are either resolved within 30 days of identification or remain open without exceeding the 30-day SLA deadline.",
+    "reviewer_hint": "Review the documented 30-day SLA, vulnerability scan results, and remediation tickets. Compare identification dates, severity ratings, resolution dates, and the age of unresolved critical vulnerabilities."
+  },
+  {
+    "question_id": "Q08",
+    "question": "Are security logs centrally retained and monitored?",
+    "reviewer_friendly_question": "Does the company centrally store security logs from production systems for at least 90 days and actively monitor alerts for suspicious activity?",
+    "claim": "Production systems send security event logs to a centralized logging platform configured to retain records for at least 90 days. Security alerts are enabled and have documented monitoring activity during the past 30 days.",
+    "reviewer_hint": "Review centralized logging configurations, production log sources, and retention settings. Examine alert records from the past 30 days to verify that monitoring is active and that suspicious events are being reviewed."
+  },
+  {
+    "question_id": "Q09",
+    "question": "Has the incident response process been exercised in the last 12 months?",
+    "reviewer_friendly_question": "Has the company tested its cybersecurity incident response procedures at least once within the past 12 months?",
+    "claim": "The organization completed at least one documented cybersecurity incident response tabletop exercise within the past 12 months. The exercise records include the date, participants, scenario tested, results, and identified areas for improvement.",
+    "reviewer_hint": "Review completed tabletop exercise reports from the past 12 months. Verify the exercise date, participants, scenario, findings, and improvement recommendations. An incident response plan alone does not prove an exercise occurred."
+  },
+  {
+    "question_id": "Q10",
+    "question": "Is third-party administrative access approved, MFA-protected, and time-bounded?",
+    "reviewer_friendly_question": "Does the company require outside vendors and contractors to receive approval, use MFA, and have an expiration time for administrative access?",
+    "claim": "Every active third-party administrative access grant has documented authorization from an approved company representative, enforced multi-factor authentication, and a recorded expiration date and time that limits the duration of access.",
+    "reviewer_hint": "Examine active third-party administrative access records. Verify documented approval, enforced MFA, and a specific access expiration date and time for each grant. All three security requirements must be supported by evidence."
+  }
+]

@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="720" viewBox="0 0 1600 720" role="img" aria-labelledby="title desc">
+<title id="title">ProofStack Architecture</title>
+<desc id="desc">ProofStack reviewer workflow from evidence intake through Vertex AI assessment, parsing, citation grounding, human decision, and Firestore persistence.</desc>
+<style>
+  .title{font:700 46px Arial,Helvetica,sans-serif;fill:#0f172a}
+  .label{font:700 22px Arial,Helvetica,sans-serif;fill:#0f172a}
+  .small{font:600 19px Arial,Helvetica,sans-serif;fill:#0f172a}
+  .cloudlabel{font:700 30px Arial,Helvetica,sans-serif;fill:#1e3a5f}
+  .box{fill:#ffffff;stroke:#1e3a5f;stroke-width:3}
+  .cloudbox{fill:#eff7ff;stroke:#5b9bd5;stroke-width:4}
+  .cloudnode{fill:#e8f3ff;stroke:#1e3a5f;stroke-width:3}
+  .arrow{stroke:#111827;stroke-width:4;fill:none;marker-end:url(#arrow)}
+  .accent{fill:#2563eb}
+</style>
+<defs>
+  <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+    <path d="M0,0 L12,6 L0,12 z" fill="#111827"/>
+  </marker>
+</defs>
+
+<rect width="1600" height="720" fill="#ffffff"/>
+<text x="800" y="74" text-anchor="middle" class="title">ProofStack Architecture</text>
+
+<rect x="260" y="150" width="1270" height="450" rx="28" class="cloudbox"/>
+<text x="895" y="195" text-anchor="middle" class="cloudlabel">Google Cloud</text>
+
+<rect x="30" y="230" width="190" height="110" rx="18" class="box"/>
+<circle cx="125" cy="262" r="15" fill="none" stroke="#1e3a5f" stroke-width="3"/>
+<path d="M98 306c4-22 16-32 27-32s23 10 27 32" fill="none" stroke="#1e3a5f" stroke-width="3"/>
+<text x="125" y="326" text-anchor="middle" class="label">Reviewer</text>
+
+<rect x="30" y="390" width="190" height="150" rx="18" class="box"/>
+<rect x="95" y="414" width="60" height="45" rx="6" fill="none" stroke="#1e3a5f" stroke-width="3"/>
+<line x1="107" y1="428" x2="143" y2="428" stroke="#1e3a5f" stroke-width="3"/>
+<line x1="107" y1="440" x2="143" y2="440" stroke="#1e3a5f" stroke-width="3"/>
+<text x="125" y="486" text-anchor="middle" class="small">Synthetic question +</text>
+<text x="125" y="512" text-anchor="middle" class="small">evidence set</text>
+
+<rect x="300" y="255" width="190" height="150" rx="18" class="cloudnode"/>
+<text x="395" y="318" text-anchor="middle" class="label">Streamlit</text>
+<text x="395" y="348" text-anchor="middle" class="label">reviewer UI</text>
+
+<rect x="530" y="255" width="210" height="150" rx="18" class="cloudnode"/>
+<circle cx="635" cy="295" r="8" class="accent"/>
+<circle cx="615" cy="315" r="8" class="accent"/>
+<circle cx="655" cy="315" r="8" class="accent"/>
+<text x="635" y="348" text-anchor="middle" class="small">Vertex AI /</text>
+<text x="635" y="375" text-anchor="middle" class="small">Gemini 3.8 Flash</text>
+
+<rect x="780" y="255" width="190" height="150" rx="18" class="box"/>
+<text x="875" y="315" text-anchor="middle" class="label">&lt;/&gt;</text>
+<text x="875" y="350" text-anchor="middle" class="small">Strict structured</text>
+<text x="875" y="377" text-anchor="middle" class="small">parser</text>
+
+<rect x="1010" y="255" width="190" height="150" rx="18" class="box"/>
+<circle cx="1105" cy="305" r="23" fill="none" stroke="#1e3a5f" stroke-width="4"/>
+<line x1="1122" y1="322" x2="1142" y2="342" stroke="#1e3a5f" stroke-width="4"/>
+<text x="1105" y="365" text-anchor="middle" class="small">Citation grounding</text>
+<text x="1105" y="392" text-anchor="middle" class="small">check</text>
+
+<rect x="1240" y="255" width="190" height="150" rx="18" class="box"/>
+<circle cx="1335" cy="300" r="14" fill="none" stroke="#1e3a5f" stroke-width="3"/>
+<path d="M1310 340c4-18 14-27 25-27s21 9 25 27" fill="none" stroke="#1e3a5f" stroke-width="3"/>
+<path d="M1365 315 l10 10 18-22" fill="none" stroke="#2563eb" stroke-width="4"/>
+<text x="1335" y="365" text-anchor="middle" class="small">Human final</text>
+<text x="1335" y="392" text-anchor="middle" class="small">decision</text>
+
+<rect x="1340" y="455" width="160" height="110" rx="18" class="cloudnode"/>
+<path d="M1420 477 l16 28 -16 12 -16-12 z" fill="#f59e0b"/>
+<text x="1420" y="535" text-anchor="middle" class="small">Firestore</text>
+<text x="1420" y="558" text-anchor="middle" class="small">decision record</text>
+
+<path d="M220 285 H300" class="arrow"/>
+<path d="M220 465 H250 V350 H300" class="arrow"/>
+<path d="M490 330 H530" class="arrow"/>
+<path d="M740 330 H780" class="arrow"/>
+<path d="M970 330 H1010" class="arrow"/>
+<path d="M1200 330 H1240" class="arrow"/>
+<path d="M1430 330 H1470 V455" class="arrow"/>
+</svg>

@@ -1,0 +1,97 @@
+run_started_utc,provider,model_id,question_id,evidence_id,title,artifact_type,predicted_label,parse_status,rationale,cited_excerpt,citation_valid,raw_output
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q01,E01,Privileged Access Standard,policy,UNSUPPORTED,json,"The evidence provides policy requirements stating that privileged accounts must use multi-factor authentication, which establishes intent rather than demonstrating actual implementation in the production environment.",All privileged accounts must use multi-factor authentication.,True,"{""label"":""UNSUPPORTED"",""rationale"":""The evidence provides policy requirements stating that privileged accounts must use multi-factor authentication, which establishes intent rather than demonstrating actual implementation in the production environment."",""cited_excerpt"":""All privileged accounts must use multi-factor authentication.""}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q01,E02,Privileged Account MFA Export,system_export,SUPPORTED,json,The export explicitly shows that all 12 privileged accounts in the production environment are enrolled in MFA.,"Privileged accounts in scope: 12
+MFA enrolled: 12
+MFA not enrolled: 0",True,"{""label"":""SUPPORTED"",""rationale"":""The export explicitly shows that all 12 privileged accounts in the production environment are enrolled in MFA."",""cited_excerpt"":""Privileged accounts in scope: 12\nMFA enrolled: 12\nMFA not enrolled: 0""}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q02,E03,Employee Offboarding Procedure,procedure,UNSUPPORTED,json,"The evidence outlines a procedure stating that Identity Operations should disable interactive accounts within 24 hours, which reflects policy intent rather than operating effectiveness or proof that accounts are actually disabled within that timeframe.",Identity Operations should disable interactive accounts within 24 hours of the recorded termination time.,True,"{
+  ""label"": ""UNSUPPORTED"",
+  ""rationale"": ""The evidence outlines a procedure stating that Identity Operations should disable interactive accounts within 24 hours, which reflects policy intent rather than operating effectiveness or proof that accounts are actually disabled within that timeframe."",
+  ""cited_excerpt"": ""Identity Operations should disable interactive accounts within 24 hours of the recorded termination time.""
+}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q02,E04,Termination-to-Disable Report,joined_report,SUPPORTED,json,"The report confirms that across the sampled terminated identities, the maximum time to disablement was 7 hours 42 minutes, and zero identities exceeded the 24-hour threshold.",Identities exceeding 24 hours: 0,True,"{
+  ""label"": ""SUPPORTED"",
+  ""rationale"": ""The report confirms that across the sampled terminated identities, the maximum time to disablement was 7 hours 42 minutes, and zero identities exceeded the 24-hour threshold."",
+  ""cited_excerpt"": ""Identities exceeding 24 hours: 0""
+}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q03,E05,Quarterly Access Review Procedure,procedure,UNSUPPORTED,json,"The evidence outlines a procedure/policy statement that privileged roles should be reviewed every quarter, but does not provide proof that a review was actually completed for the most recent quarter.",Privileged roles should be reviewed every quarter.,True,"{
+  ""label"": ""UNSUPPORTED"",
+  ""rationale"": ""The evidence outlines a procedure/policy statement that privileged roles should be reviewed every quarter, but does not provide proof that a review was actually completed for the most recent quarter."",
+  ""cited_excerpt"": ""Privileged roles should be reviewed every quarter.""
+}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q03,E06,Q3 Privileged Access Review,review_record,SUPPORTED,json,The evidence directly confirms that the Q3 privileged access review covering 34 privileged assignments was completed on 2026-09-28 with zero open items.,Review completed: 2026-09-28,True,"{
+  ""label"": ""SUPPORTED"",
+  ""rationale"": ""The evidence directly confirms that the Q3 privileged access review covering 34 privileged assignments was completed on 2026-09-28 with zero open items."",
+  ""cited_excerpt"": ""Review completed: 2026-09-28""
+}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q04,E07,Encryption Standard,standard,UNSUPPORTED,json,"The evidence outlines a policy requirement stating that data must use encryption at rest, but it does not demonstrate that encryption at rest is actually implemented or active for sensitive production data.",Sensitive production data must use approved encryption at rest.,True,"{
+  ""label"": ""UNSUPPORTED"",
+  ""rationale"": ""The evidence outlines a policy requirement stating that data must use encryption at rest, but it does not demonstrate that encryption at rest is actually implemented or active for sensitive production data."",
+  ""cited_excerpt"": ""Sensitive production data must use approved encryption at rest.""
+}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q04,E08,Production Storage Encryption Export,configuration_export,SUPPORTED,json,The configuration export confirms that encryption at rest is enabled across all production databases and object stores with no exceptions recorded.,"Encryption at rest: enabled on 4 of 4
+Production object stores: 3
+Encryption at rest: enabled on 3 of 3
+Exceptions: none recorded.",True,"{
+  ""label"": ""SUPPORTED"",
+  ""rationale"": ""The configuration export confirms that encryption at rest is enabled across all production databases and object stores with no exceptions recorded."",
+  ""cited_excerpt"": ""Encryption at rest: enabled on 4 of 4\nProduction object stores: 3\nEncryption at rest: enabled on 3 of 3\nExceptions: none recorded.""
+}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q05,E09,Network Encryption Standard,standard,UNSUPPORTED,json,The evidence outlines a policy standard requiring TLS 1.2 or later rather than technical evidence demonstrating that the public application endpoint actively rejects TLS versions below 1.2.,Externally accessible applications must use TLS 1.2 or later.,True,"{
+  ""label"": ""UNSUPPORTED"",
+  ""rationale"": ""The evidence outlines a policy standard requiring TLS 1.2 or later rather than technical evidence demonstrating that the public application endpoint actively rejects TLS versions below 1.2."",
+  ""cited_excerpt"": ""Externally accessible applications must use TLS 1.2 or later.""
+}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q05,E10,Public Endpoint TLS Scan,scanner_output,SUPPORTED,json,"The scan output directly shows that TLS 1.0 and TLS 1.1 are rejected, while TLS 1.2 and TLS 1.3 are accepted by the endpoint.","TLS 1.0: rejected
+TLS 1.1: rejected
+TLS 1.2: accepted
+TLS 1.3: accepted",True,"{
+  ""label"": ""SUPPORTED"",
+  ""rationale"": ""The scan output directly shows that TLS 1.0 and TLS 1.1 are rejected, while TLS 1.2 and TLS 1.3 are accepted by the endpoint."",
+  ""cited_excerpt"": ""TLS 1.0: rejected\nTLS 1.1: rejected\nTLS 1.2: accepted\nTLS 1.3: accepted""
+}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q06,E11,Backup and Recovery Policy,policy,UNSUPPORTED,json,The evidence outlines policy requirements rather than operational evidence demonstrating that successful daily backups and a quarterly restore test were actually completed.,Critical systems must be backed up daily. Restore testing should occur at least quarterly and results should be retained.,True,"{
+  ""label"": ""UNSUPPORTED"",
+  ""rationale"": ""The evidence outlines policy requirements rather than operational evidence demonstrating that successful daily backups and a quarterly restore test were actually completed."",
+  ""cited_excerpt"": ""Critical systems must be backed up daily. Restore testing should occur at least quarterly and results should be retained.""
+}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q06,E12,Backup Jobs and Restore Test,operations_report,SUPPORTED,json,The report confirms that all scheduled daily backups for critical systems were successful during the period and a restore test was completed successfully on 2026-09-16.,"Daily critical-system backup jobs: 92 scheduled / 92 successful
+Most recent restore test: 2026-09-16
+Restore test result: successful",True,"{
+  ""label"": ""SUPPORTED"",
+  ""rationale"": ""The report confirms that all scheduled daily backups for critical systems were successful during the period and a restore test was completed successfully on 2026-09-16."",
+  ""cited_excerpt"": ""Daily critical-system backup jobs: 92 scheduled / 92 successful\nMost recent restore test: 2026-09-16\nRestore test result: successful""
+}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q07,E13,Vulnerability Management Policy,policy,UNSUPPORTED,json,The submitted evidence is a policy document stating an expectation rather than demonstrating that critical vulnerabilities were actually remediated within the 30-day SLA.,Critical vulnerabilities should be remediated within 30 calendar days of confirmation.,True,"{
+  ""label"": ""UNSUPPORTED"",
+  ""rationale"": ""The submitted evidence is a policy document stating an expectation rather than demonstrating that critical vulnerabilities were actually remediated within the 30-day SLA."",
+  ""cited_excerpt"": ""Critical vulnerabilities should be remediated within 30 calendar days of confirmation.""
+}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q07,E14,Critical Vulnerability SLA Report,operations_report,SUPPORTED,json,"The report confirms that all seven critical findings in Q3 2026 were closed within 26 days, with zero findings exceeding the 30-day threshold.",Findings exceeding 30 days: 0,True,"{
+  ""label"": ""SUPPORTED"",
+  ""rationale"": ""The report confirms that all seven critical findings in Q3 2026 were closed within 26 days, with zero findings exceeding the 30-day threshold."",
+  ""cited_excerpt"": ""Findings exceeding 30 days: 0""
+}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q08,E15,Logging and Monitoring Policy,policy,UNSUPPORTED,json,"The evidence consists solely of a policy stating what must or should be done, which demonstrates intent rather than operational implementation.",Security-relevant production logs must be forwarded to the centralized monitoring platform. Logs should be retained for at least 90 days and monitored for events requiring investigation.,True,"{""label"":""UNSUPPORTED"",""rationale"":""The evidence consists solely of a policy stating what must or should be done, which demonstrates intent rather than operational implementation."",""cited_excerpt"":""Security-relevant production logs must be forwarded to the centralized monitoring platform. Logs should be retained for at least 90 days and monitored for events requiring investigation.""}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q08,E16,SIEM Retention and Alert Configuration,configuration_export,SUPPORTED,json,The configuration export confirms that production security logs in the production-security workspace have a retention period of 120 days (exceeding 90 days) and have active alert rules that generate investigation tickets.,"Workspace: production-security
+Retention: 120 days
+Connected production sources: 14
+Alert rules enabled: 23",True,"{""label"":""SUPPORTED"",""rationale"":""The configuration export confirms that production security logs in the production-security workspace have a retention period of 120 days (exceeding 90 days) and have active alert rules that generate investigation tickets."",""cited_excerpt"":""Workspace: production-security\nRetention: 120 days\nConnected production sources: 14\nAlert rules enabled: 23""}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q09,E17,Incident Response Plan,plan,UNSUPPORTED,json,"The evidence only describes an incident response plan calling for periodic exercises, but does not provide proof that an exercise was actually completed within the last 12 months.",The plan calls for periodic exercises.,True,"{""label"":""UNSUPPORTED"",""rationale"":""The evidence only describes an incident response plan calling for periodic exercises, but does not provide proof that an exercise was actually completed within the last 12 months."",""cited_excerpt"":""The plan calls for periodic exercises.""}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q09,E18,Incident Response Tabletop — After-Action Report,exercise_record,SUPPORTED,json,"The after-action report documents that an incident response tabletop exercise was completed on 2026-08-19, satisfying the claim that such an exercise was performed.",Exercise completed: yes,True,"{
+  ""label"": ""SUPPORTED"",
+  ""rationale"": ""The after-action report documents that an incident response tabletop exercise was completed on 2026-08-19, satisfying the claim that such an exercise was performed."",
+  ""cited_excerpt"": ""Exercise completed: yes""
+}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q10,E19,Third-Party Access Policy,policy,UNSUPPORTED,json,The submitted evidence is solely a policy statement and does not demonstrate operational implementation or verification of the controls.,"Administrative access for vendors must be approved by a system owner, protected with MFA, and configured to expire when the approved maintenance period ends.",True,"{
+  ""label"": ""UNSUPPORTED"",
+  ""rationale"": ""The submitted evidence is solely a policy statement and does not demonstrate operational implementation or verification of the controls."",
+  ""cited_excerpt"": ""Administrative access for vendors must be approved by a system owner, protected with MFA, and configured to expire when the approved maintenance period ends.""
+}"
+2026-11-06T19:21:57.384500+00:00,vertex,gemini-3.8-flash,Q10,E20,Temporary Vendor Admin Access Record,access_record,SUPPORTED,json,"The access record demonstrates that the vendor's administrative role request was approved by the System Owner, required MFA, and had an explicit expiration time that automatically expired.","Approved by: System Owner, 2026-10-21 13:14 UTC
+MFA: Enabled
+Access start: 2026-10-22 12:00 UTC
+Expires: 2026-10-22 20:00 UTC",True,"{
+  ""label"": ""SUPPORTED"",
+  ""rationale"": ""The access record demonstrates that the vendor's administrative role request was approved by the System Owner, required MFA, and had an explicit expiration time that automatically expired."",
+  ""cited_excerpt"": ""Approved by: System Owner, 2026-10-21 13:14 UTC\nMFA: Enabled\nAccess start: 2026-10-22 12:00 UTC\nExpires: 2026-10-22 20:00 UTC""
+}"

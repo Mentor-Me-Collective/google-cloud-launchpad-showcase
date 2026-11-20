@@ -1,0 +1,8 @@
+question_id,evidence_id,title,artifact_type,gold_label,predicted_label,label_correct,parse_status,citation_valid,rationale,cited_excerpt,raw_output
+Q06,E12,Backup Jobs and Restore Test,operations_report,UNSUPPORTED,SUPPORTED,False,json,True,The report confirms that all scheduled daily backups for critical systems were successful during the period and a restore test was completed successfully on 2026-09-16.,"Daily critical-system backup jobs: 92 scheduled / 92 successful
+Most recent restore test: 2026-09-16
+Restore test result: successful","{
+  ""label"": ""SUPPORTED"",
+  ""rationale"": ""The report confirms that all scheduled daily backups for critical systems were successful during the period and a restore test was completed successfully on 2026-09-16."",
+  ""cited_excerpt"": ""Daily critical-system backup jobs: 92 scheduled / 92 successful\nMost recent restore test: 2026-09-16\nRestore test result: successful""
+}"
