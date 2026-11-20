@@ -27,6 +27,7 @@ ProofStack addresses a bounded assurance problem: reviewers must decide whether 
 - Human authority and fail-closed control design: `src/proofstack/parser.py`, `src/proofstack/review_state.py`
 - Citation grounding: `src/proofstack/evidence.py`
 - Architecture: `docs/images/proofstack-architecture.svg`
+- Product screenshots: `docs/images/proofstack-reviewer-workflow.png`, `docs/images/proofstack-advisory-grounding.png`
 
 **Verified product evidence**
 - final Cloud Run revision: `proofstack-00002-p7s`
@@ -114,6 +115,7 @@ The repository contains the product code, sample data, test evidence, architectu
 - individual contribution record
 - polished PPTX/PDF artifacts uploaded to the MMC showcase branch
 - open MMC PR #5 to `main`, intentionally left unmerged
+- product screenshots showing the reviewer workflow and citation-grounding state
 
 **Remaining**
 - final recorded walkthrough, maximum 5 minutes

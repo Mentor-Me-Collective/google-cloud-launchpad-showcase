@@ -73,6 +73,7 @@
 - [x] Documentation & Presentation: final brief <=3 pages
 - [x] Documentation & Presentation: final deck <=8 slides
 - [x] Documentation & Presentation: team credits and individual contributions documented
+- [x] Documentation & Presentation: product screenshots included in README
 - [ ] Documentation & Presentation: final walkthrough <=5 minutes
 
 ## Submission consistency

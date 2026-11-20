@@ -45,6 +45,22 @@ That failure is the central ProofStack result: citation grounding improves trace
 
 ProofStack does **not** certify compliance, invent missing controls, or replace professional judgment.
 
+## Product screenshots
+
+### Reviewer workflow
+
+![ProofStack reviewer workflow](docs/images/proofstack-reviewer-workflow.png)
+
+The reviewer sees the claim, evidence guidance, submitted artifact, and advisory boundary before making a decision.
+
+### Advisory and citation grounding
+
+![ProofStack advisory and citation grounding](docs/images/proofstack-advisory-grounding.png)
+
+The advisory view shows the model recommendation, rationale, exact cited excerpt, and an independent citation-grounding check before the human decision.
+
+These screenshots were captured with ProofStack's deterministic local mock provider so the UI documentation is reproducible and contains no cloud credentials. Live Vertex AI/Gemini and NVIDIA NIM integration are verified separately below and in the deployment/evaluation records.
+
 ## Architecture
 
 ![ProofStack architecture](docs/images/proofstack-architecture.svg)
