@@ -30,7 +30,7 @@
 - [x] final hardened branch redeployed as `proofstack-00002-p7s`
 - [x] post-deploy smoke check completed
 
-## Security
+## Security and testing
 - [x] prompt-injection boundary implemented
 - [x] inert evidence/model rendering implemented
 - [x] structured output schema implemented
@@ -39,6 +39,9 @@
 - [x] bounded Vertex timeout/retry behavior implemented
 - [x] 4/4 live adversarial probes passed
 - [x] OWASP / NIST security mapping documented
+- [x] automated unit/regression suite included
+- [x] dataset validation included
+- [x] Firestore/Cloud Run smoke checks completed
 
 ## Evaluation
 - [x] predictions generated for all 20 cases
@@ -53,11 +56,24 @@
 - [x] no false rejection cases
 - [x] limitations documented
 
-## Contribution record
-- [x] John contribution recorded
-- [x] Hans contribution recorded based on delivered/documented work
-- [x] Kristan contribution recorded based on delivered/documented work
-- [x] Maimuna contribution recorded based on delivered/documented work
+## Rubric coverage
+- [x] Problem Grounding: user/problem clearly defined
+- [x] Problem Grounding: SDG 1 linkage stated without overclaiming impact
+- [x] Solution Quality: working human-in-the-loop product
+- [x] Solution Quality: meaningful Google Cloud feature
+- [x] Solution Quality: meaningful NVIDIA feature
+- [x] Solution Quality: measurable evidence of value
+- [x] Implementation Plan: four-week timeline explicit
+- [x] Implementation Plan: resources explicit
+- [x] Implementation Plan: risks/mitigations explicit
+- [x] Implementation Plan: testing strategy explicit
+- [x] Implementation Plan: next steps explicit
+- [x] Codebase: complete source, tests, scripts, sample data, CI, docs
+- [x] Documentation & Presentation: README complete
+- [x] Documentation & Presentation: final brief <=3 pages
+- [x] Documentation & Presentation: final deck <=8 slides
+- [x] Documentation & Presentation: team credits and individual contributions documented
+- [ ] Documentation & Presentation: final walkthrough <=5 minutes
 
 ## Submission consistency
 - [x] brief uses verified model ID and metrics
@@ -74,8 +90,12 @@
 ## MMC submission
 - [x] Showcase repository identified: `Mentor-Me-Collective/google-cloud-launchpad-showcase`
 - [x] Team GitHub usernames submitted in `#mmc-build`
-- [ ] Contributor access granted
-- [ ] `team/proofstack` branch pushed
-- [ ] PR to `main` opened and intentionally left unmerged
+- [x] Contributor access granted
+- [x] `team/proofstack` branch pushed
+- [x] PR #5 to `main` opened and intentionally left unmerged
+- [x] polished final slide deck uploaded
+- [x] polished final project brief uploaded
+- [x] polished final research paper uploaded
 - [ ] final walkthrough recorded/uploaded
+- [ ] final walkthrough link added to README/submission
 - [ ] final MMC submission completed

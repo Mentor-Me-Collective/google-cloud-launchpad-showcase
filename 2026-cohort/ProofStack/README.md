@@ -90,6 +90,25 @@ Four live synthetic adversarial probes passed against the final Vertex configura
 
 See [Security posture](docs/SECURITY.md) and [Security test matrix](docs/SECURITY_TEST_MATRIX.md).
 
+## Implementation plan
+
+ProofStack was executed as a bounded four-week BUILD delivery rather than an open-ended prototype.
+
+| Phase | Delivery focus | Evidence |
+|---|---|---|
+| Week 1 | problem framing, synthetic dataset, reviewer workflow, architecture | `docs/KICKOFF.md`, `docs/WEEK1_BACKLOG.md`, `data/` |
+| Week 2 | vertical slice, Cloud Run/Firestore path, provider abstraction, human-decision controls | `app.py`, `src/proofstack/`, `docs/ARCHITECTURE.md` |
+| Week 3 | Google Cloud + NVIDIA integration, reliability/security testing, evaluation preparation | `docs/GCP_DEPLOYMENT.md`, `scripts/check_nvidia.py`, `tests/` |
+| Week 4 | frozen evaluation, error analysis, polish, final brief/paper/deck/demo package | `results/`, `deliverables/` |
+
+**Resources:** Streamlit, Google Cloud Run, Firestore, Vertex AI / Gemini 3.8 Flash, NVIDIA NIM, GitHub Actions, pytest, gitleaks, and a synthetic 20-case evidence corpus.
+
+**Key risks and mitigations:** model misinterpretation → human final authority; prompt injection → explicit untrusted-evidence boundary; fabricated citations → independent grounding check; ambiguous output → fail closed; secret exposure → ADC/runtime-only secrets + full-history secret scan; stale case state → assessment binding and reset controls.
+
+**Testing:** automated unit/regression tests, dataset validation, Cloud Run/Firestore smoke tests, a frozen 20-case human gold evaluation, and four live adversarial provider probes.
+
+**Next steps if extended beyond the capstone:** independent labelers and inter-rater agreement, larger/less synthetic evidence sets, richer document formats, dedicated rate limiting, production privacy/security review, and broader temporal/scope adversarial testing.
+
 ## Frozen human reference set
 
 All 20 reference labels were completed before final model scoring. Each contains a human rationale.
@@ -106,14 +125,15 @@ See [gold_set_manifest.json](results/gold_set_manifest.json).
 
 | Artifact | Repository version |
 |---|---|
-| 3-page project brief | [FINAL_BRIEF.md](deliverables/FINAL_BRIEF.md) |
-| 4–6 page research paper | [RESEARCH_PAPER.md](deliverables/RESEARCH_PAPER.md) |
+| Final project brief | [FINAL_BRIEF.md](deliverables/FINAL_BRIEF.md) |
+| Research paper | [RESEARCH_PAPER.md](deliverables/RESEARCH_PAPER.md) |
 | 8-slide presentation content | [FINAL_DECK_CONTENT.md](deliverables/FINAL_DECK_CONTENT.md) |
 | 5-minute demo narration | [FINAL_DEMO_SCRIPT.md](deliverables/FINAL_DEMO_SCRIPT.md) |
 | Contribution record | [CONTRIBUTIONS.md](deliverables/CONTRIBUTIONS.md) |
 | Final results gate | [RESULTS_CHECKLIST.md](deliverables/RESULTS_CHECKLIST.md) |
+| Rubric crosswalk | [RUBRIC_MAPPING.md](deliverables/RUBRIC_MAPPING.md) |
 
-The polished PPTX, PDF, and DOCX exports are generated from the same final facts and can be attached to the formal submission package without changing the underlying project record.
+The polished PPTX/PDF exports are part of the MMC showcase submission branch. The recorded walkthrough is the only remaining media artifact.
 
 ## Evaluation record
 
@@ -202,9 +222,15 @@ Never commit API keys, service-account keys, real customer evidence, or personal
 
 ## Contributions
 
-ProofStack was developed as part of the MMC GCLP Fall 2026 BUILD. The repository reflects the implementation and project artifacts currently incorporated into the final build, with team contributions and acknowledgements documented separately.
+ProofStack was developed as part of the MMC GCLP Fall 2026 BUILD. The repository reflects work incorporated into the final build across the four-person team.
 
 See [CONTRIBUTIONS.md](deliverables/CONTRIBUTIONS.md).
+
+## Future ideas
+
+- Expand the reference set with independent human labelers and measure inter-rater agreement.
+- Support richer evidence formats while preserving strict trust boundaries and citation traceability.
+- Add production-grade privacy controls, rate limiting, and operational monitoring before any real organizational evidence is introduced.
 
 ## Verified vs. not claimed
 
@@ -214,6 +240,8 @@ See [CONTRIBUTIONS.md](deliverables/CONTRIBUTIONS.md).
 
 ## Project status
 
-The substantive build, security verification, frozen evaluation, and submission artifacts are complete. The only deployment housekeeping item is a final Cloud Run redeploy so the hosted revision matches the finished repository.
+The substantive build, final hardened Cloud Run deployment, post-deploy smoke test, security verification, frozen evaluation, polished deck, project brief, research paper, and MMC showcase PR are complete.
+
+**Remaining:** record/upload the <=5-minute walkthrough, add its link to the README/submission, and complete the final MMC submission step.
 
 See [STATUS.md](STATUS.md).
