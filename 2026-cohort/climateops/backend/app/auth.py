@@ -24,7 +24,16 @@ class Principal:
 
 def load_tokens(fixtures_dir: Path) -> dict[str, Principal]:
     raw = json.loads((fixtures_dir / "demo_auth.json").read_text())
-    return {t: Principal(**claims) for t, claims in raw["tokens"].items()}
+    out: dict[str, Principal] = {}
+    for t, claims in raw["tokens"].items():
+        p = Principal(**claims)
+        # Fail closed: a typo like "manger" or a made-up role must stop startup, not grant access.
+        if p.role not in ROLES:
+            raise ValueError(f"Unknown role '{p.role}' in demo_auth.json")
+        if not p.tenant_id or not p.actor_id:
+            raise ValueError("Every token needs a tenant_id and actor_id")
+        out[t] = p
+    return out
 
 
 _TOKENS: dict[str, Principal] | None = None
@@ -44,7 +53,10 @@ def err(status: int, code: str, message: str) -> HTTPException:
 def current_principal(authorization: str | None = Header(default=None)) -> Principal:
     if not authorization or not authorization.lower().startswith("bearer "):
         raise err(401, "unauthenticated", "Missing bearer token")
-    p = _tokens().get(authorization.split(" ", 1)[1].strip())
+    token = authorization.split(" ", 1)[1].strip()
+    if not token or len(token) > 200:
+        raise err(401, "unauthenticated", "Invalid or expired token")
+    p = _tokens().get(token)
     if p is None:
         raise err(401, "unauthenticated", "Invalid or expired token")
     return p

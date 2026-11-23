@@ -1,6 +1,7 @@
 """FastAPI entrypoint. Routes follow docs/03-architecture/interfaces/api-contract.md.
 Run:  uvicorn app.main:app --reload --port 8080   (from backend/)"""
 
+import hmac
 import logging
 import uuid
 from contextlib import asynccontextmanager
@@ -48,6 +49,19 @@ def create_app(service: Service | None = None) -> FastAPI:
 
     app = FastAPI(title="ClimateOps", version="0.1.0", lifespan=lifespan)
 
+    @app.middleware("http")
+    async def security_headers(request: Request, call_next):
+        # Browser hardening (docs/06-security/threat-model.md). frame-ancestors blocks clickjacking
+        # without breaking the console's inline script.
+        resp = await call_next(request)
+        resp.headers["X-Content-Type-Options"] = "nosniff"
+        resp.headers["X-Frame-Options"] = "DENY"
+        resp.headers["Referrer-Policy"] = "no-referrer"
+        resp.headers["Content-Security-Policy"] = "frame-ancestors 'none'"
+        if request.url.path.startswith("/api/"):
+            resp.headers["Cache-Control"] = "no-store"
+        return resp
+
     def svc_dep(request: Request) -> Service:
         return request.app.state.svc
 
@@ -81,7 +95,9 @@ def create_app(service: Service | None = None) -> FastAPI:
     # ---- internal ingest (Cloud Scheduler) ----
     @app.post("/internal/ingest")
     def ingest(x_ingest_token: str | None = Header(default=None), s: Service = Depends(svc_dep)):
-        if not s.cfg.ingest_token or x_ingest_token != s.cfg.ingest_token:
+        # Constant-time compare so response timing cannot reveal how much of the token was right.
+        if not s.cfg.ingest_token or not x_ingest_token or not hmac.compare_digest(
+                x_ingest_token.encode(), s.cfg.ingest_token.encode()):
             raise err(403, "forbidden", "Invalid ingest token")
         doc = s.ingest_weather()
         return {"status": doc["status"], "source": doc["source"], "records": len(doc["records"])}
