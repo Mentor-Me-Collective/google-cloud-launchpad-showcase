@@ -113,24 +113,32 @@ def create_app(service: Service | None = None) -> FastAPI:
         return s.weather_status()
 
     # ---- facilities ----
+    # Input validation (owner: Shiksha). IDs are plain characters only; names cannot carry HTML or
+    # control characters (the console renders some text as HTML); sources must be HTTPS links.
+    SAFE_ID = r"^[A-Za-z0-9_\-]+$"
+    SAFE_TEXT = r"^[^<>\x00-\x1f\x7f]+$"
+
     class FacilityIn(BaseModel):
-        facility_id: str = Field(min_length=2, max_length=40)
-        name: str = Field(min_length=2, max_length=120)
+        facility_id: str = Field(min_length=2, max_length=40, pattern=SAFE_ID)
+        name: str = Field(min_length=2, max_length=120, pattern=SAFE_TEXT)
         lat: float = Field(ge=-90, le=90)
         lon: float = Field(ge=-180, le=180)
         provenance: Literal["PUBLIC_VERIFIED", "DEMO_SYNTHETIC", "UNKNOWN"]
-        source_url: str | None = None
+        source_url: str | None = Field(default=None, max_length=500, pattern=r"^https://[^\s<>\"']+$")
 
     @app.post(f"{api}/facilities", status_code=201)
     def add_facility(body: FacilityIn, p: Principal = Depends(require_role("manager")),
                      s: Service = Depends(svc_dep), request_id: str = Depends(rid)):
         if body.provenance == "PUBLIC_VERIFIED" and not body.source_url:
             raise err(422, "source_required", "PUBLIC_VERIFIED facilities need source_url")
-        if s.s.get("facilities", body.facility_id):
-            raise err(409, "exists", "facility_id already exists")
+        # Facility data privacy: only check for duplicates inside the caller's own organization, and
+        # store under a tenant-scoped key. Before, a global check answered "already exists" for another
+        # organization's IDs, which let one tenant discover another tenant's facilities.
+        if any(f["facility_id"] == body.facility_id for f in s.s.list("facilities", tenant_id=p.tenant_id)):
+            raise err(409, "exists", "facility_id already exists in your organization")
         doc = {**body.model_dump(), "tenant_id": p.tenant_id, "status": None}
         with s.s.transaction():
-            s.s.put("facilities", body.facility_id, doc)
+            s.s.put("facilities", f"{p.tenant_id}__{body.facility_id}", doc)
             s.event(p, p.tenant_id, "facility.created", body.facility_id, None, "ACTIVE", request_id)
         return doc
 
@@ -156,7 +164,7 @@ def create_app(service: Service | None = None) -> FastAPI:
         return s.guard_tenant(p, s.s.get("briefs", bid), "Brief")
 
     class EditIn(BaseModel):
-        summary: str = Field(min_length=1, max_length=900)
+        summary: str = Field(min_length=1, max_length=900, pattern=r"^[^<>\x00-\x08\x0b\x0c\x0e-\x1f\x7f]+$")
 
     @app.patch(f"{api}/briefs/{{bid}}")
     def edit(bid: str, body: EditIn, p: Principal = Depends(require_role("manager")),
@@ -168,10 +176,10 @@ def create_app(service: Service | None = None) -> FastAPI:
         return s.submit(p, bid, r)
 
     class DecisionIn(BaseModel):
-        expected_version: int
-        expected_content_hash: str
-        idempotency_key: str = Field(min_length=6, max_length=100)
-        reason: str | None = None
+        expected_version: int = Field(ge=1)
+        expected_content_hash: str = Field(min_length=8, max_length=128, pattern=r"^[A-Za-z0-9:_\-]+$")
+        idempotency_key: str = Field(min_length=6, max_length=100, pattern=SAFE_ID)
+        reason: str | None = Field(default=None, max_length=500, pattern=SAFE_TEXT)
 
     @app.post(f"{api}/briefs/{{bid}}/approve")
     def approve(bid: str, body: DecisionIn, p: Principal = Depends(require_role("manager")),
@@ -187,8 +195,8 @@ def create_app(service: Service | None = None) -> FastAPI:
 
     # ---- tasks ----
     class TaskCreateIn(BaseModel):
-        brief_id: str
-        idempotency_key: str = Field(min_length=6, max_length=100)
+        brief_id: str = Field(min_length=3, max_length=40, pattern=SAFE_ID)
+        idempotency_key: str = Field(min_length=6, max_length=100, pattern=SAFE_ID)
 
     @app.post(f"{api}/tasks", status_code=201)
     def create_tasks(body: TaskCreateIn, p: Principal = Depends(require_role("manager")),
@@ -209,7 +217,7 @@ def create_app(service: Service | None = None) -> FastAPI:
         return s.start_task(p, tid, r)
 
     class UploadReq(BaseModel):
-        content_type: str = Field(default="image/jpeg", max_length=40)
+        content_type: str = Field(default="image/jpeg", max_length=40, pattern=r"^[a-z]+/[a-z0-9.+\-]+$")
 
     @app.post(f"{api}/tasks/{{tid}}/evidence/upload-url")
     def upload_url(tid: str, body: UploadReq, p: Principal = Depends(require_role("manager", "staff")),

@@ -126,3 +126,87 @@ def test_security_headers_present(client):
 def test_errors_do_not_leak_tokens(client):
     r = client.get(f"{API}/me", headers=H("secret-looking-token-123"))
     assert "secret-looking-token-123" not in r.text
+
+
+# ---- input validation ----
+GOOD_FAC = {"facility_id": "VAL-OK1", "name": "Valid Site", "lat": 40.81, "lon": -73.92,
+            "provenance": "PUBLIC_VERIFIED", "source_url": "https://www.nyc.gov/site"}
+
+
+@pytest.mark.parametrize("field,value", [
+    ("facility_id", "../../etc"),                 # path characters
+    ("facility_id", "a b"),                       # spaces
+    ("facility_id", "x" * 41),                    # too long
+    ("name", "<script>alert(1)</script>"),        # HTML injection into the console
+    ("name", "bad\x00name"),                      # control character
+    ("lat", 200),                                 # impossible coordinate
+    ("lon", -500),
+    ("provenance", "TRUST_ME"),                   # not an allowed label
+    ("source_url", "javascript:alert(1)"),        # not a web link
+    ("source_url", "http://insecure.example"),    # must be HTTPS
+])
+def test_bad_facility_input_rejected(client, field, value):
+    r = client.post(f"{API}/facilities", headers=MGR, json={**GOOD_FAC, field: value})
+    assert r.status_code == 422, (field, r.text)
+    assert r.json()["code"] == "validation_error"
+
+
+def test_good_facility_input_accepted(client):
+    assert client.post(f"{API}/facilities", headers=MGR, json=GOOD_FAC).status_code == 201
+
+
+def test_brief_edit_rejects_html_and_oversize(client):
+    b = draft(client)
+    url = f"{API}/briefs/{b['id']}"
+    assert client.patch(url, headers=MGR, json={"summary": "<img src=x onerror=alert(1)>"}).status_code == 422
+    assert client.patch(url, headers=MGR, json={"summary": "x" * 901}).status_code == 422
+    assert client.patch(url, headers=MGR, json={"summary": "Check AC first.\nThen water."}).status_code == 200
+
+
+def test_approval_inputs_validated(client):
+    b = pending(client)
+    url = f"{API}/briefs/{b['id']}/approve"
+    assert client.post(url, headers=MGR, json={**approve_body(b), "expected_version": 0}).status_code == 422
+    assert client.post(url, headers=MGR, json={**approve_body(b), "idempotency_key": "key with spaces"}).status_code == 422
+    assert client.post(url, headers=MGR, json={**approve_body(b), "reason": "r" * 501}).status_code == 422
+
+
+def test_task_and_upload_inputs_validated(client):
+    assert client.post(f"{API}/tasks", headers=MGR, json={"brief_id": "../x", "idempotency_key": "abcdef"}).status_code == 422
+    b = approved(client)
+    t = client.post(f"{API}/tasks", headers=MGR, json={"brief_id": b["id"], "idempotency_key": "tasks-val-1"}).json()[0]
+    client.patch(f"{API}/tasks/{t['id']}", headers=STAFF, json={"status": "IN_PROGRESS"})
+    url = f"{API}/tasks/{t['id']}/evidence/upload-url"
+    assert client.post(url, headers=STAFF, json={"content_type": "image/png; x=<y>"}).status_code == 422
+    assert client.post(url, headers=STAFF, json={"content_type": "text/html"}).status_code == 422
+    ev = {"object_path": "evidence/demo-a/../../secret", "sha256": "a" * 64}
+    assert client.post(f"{API}/tasks/{t['id']}/evidence", headers=STAFF, json=ev).status_code in (403, 422)
+    assert client.post(f"{API}/tasks/{t['id']}/evidence", headers=STAFF,
+                       json={"object_path": "evidence/x", "sha256": "not-a-hash"}).status_code == 422
+
+
+# ---- facility data privacy ----
+def test_cannot_discover_other_tenants_facility_ids(client):
+    a_id = client.get(f"{API}/facilities", headers=MGR).json()[0]["facility_id"]
+    # Tenant B using the same ID must NOT get "already exists" (that would reveal tenant A's data).
+    r = client.post(f"{API}/facilities", headers=MGR_B, json={**FAC, "facility_id": a_id})
+    assert r.status_code == 201 and r.json()["tenant_id"] == "demo-b"
+    # Tenant A's facility is untouched and still only visible to A.
+    a_list = client.get(f"{API}/facilities", headers=MGR).json()
+    assert [f for f in a_list if f["facility_id"] == a_id][0]["tenant_id"] == "demo-a"
+    assert all(f["tenant_id"] == "demo-a" for f in a_list)
+
+
+def test_duplicate_inside_own_tenant_still_409(client):
+    assert client.post(f"{API}/facilities", headers=MGR, json=FAC).status_code == 201
+    assert client.post(f"{API}/facilities", headers=MGR, json=FAC).status_code == 409
+
+
+def test_unauthenticated_cannot_see_any_facility_data(client):
+    r = client.get(f"{API}/facilities")
+    assert r.status_code == 401 and "DEMO" not in r.text
+
+
+def test_staff_cannot_see_priority_scores_or_audit(client):
+    assert client.get(f"{API}/priorities", headers=STAFF).status_code == 403
+    assert client.get(f"{API}/events", headers=STAFF_B).status_code == 403
