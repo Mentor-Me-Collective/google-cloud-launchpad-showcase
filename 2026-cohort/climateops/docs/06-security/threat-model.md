@@ -19,7 +19,7 @@ Assets: manager approval, tenant data, facility records, source and weather reco
 | **R**epudiation | "I never approved that" | Manager denies an approval | Append-only audit events with actor, time and request ID | `test_happy_path_approval_then_tasks_then_proof` | Done (logical, not tamper-proof against cloud admins) |
 | **I**nformation disclosure | Cross-tenant leak | Tenant B reads tenant A brief, tasks or events | Tenant filter on every query, `guard_tenant` | `test_other_tenant_cannot_read_brief`, `test_events_are_tenant_isolated`, `test_staff_sees_only_own_tasks_and_cross_tenant_task_blocked` | Done |
 | **I**nformation disclosure | Facility ID discovery | "Already exists" reveals another tenant's facility | Duplicate check scoped to caller's tenant | `test_cannot_discover_other_tenants_facility_ids` | Fixed |
-| **I**nformation disclosure | Secret exposure | API key in Git, browser or logs | Secret Manager, server-only use, secret scan | `scan_secrets.py` (clean) | Done |
+| **I**nformation disclosure | Secret exposure | API key in Git, browser or logs | Secret Manager, server-only use, secret scan | `scan_secrets.py` (clean); Cloud Run and IAM screenshots in [secrets.md](secrets.md) | Done (verified live) |
 | **D**enial of service | Cost or loop abuse | Repeated generation or polling | Poll interval, retries with backoff, budget alert | n/a | Partial: no per-user rate limit yet |
 | **E**levation of privilege | Staff acts as manager | Staff crafts approve or create-task request | Server-side `require_role` | `test_staff_cannot_approve_or_create_or_generate`, `test_only_manager_*`, `test_validator_*` | Done |
 | **E**levation of privilege | Self-verification | Staff verifies own proof | Verifier must differ from submitter | `test_evidence_before_start_and_self_verification_blocked` | Done |
@@ -29,6 +29,7 @@ Assets: manager approval, tenant data, facility records, source and weather reco
 
 - **Console (Justin, `web/index.html`):** the search "No facilities match" and "No tasks match" messages insert the typed search text with `innerHTML`. Typing HTML there runs in your own browser only (self-XSS, low risk), but it should use `textContent` or escape the text.
 - **Approval service (`services.py::guard_tenant`):** return 404 for both missing and wrong-tenant records so a caller cannot tell whether a record exists.
+- **Google Cloud (project owner):** remove the team member account's direct Secret Accessor role on `nvidia-api-key` after setup, and set a real contact in `NWS_USER_AGENT` on Cloud Run. Details in [secrets.md](secrets.md).
 
 ## Release gate
 

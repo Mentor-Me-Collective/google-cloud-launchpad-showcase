@@ -1,13 +1,13 @@
 # API keys and secrets (Secret Manager)
 
-**Owner:** Shiksha (`@Shiksha99`) · **Status:** design implemented; Google Cloud evidence screenshots to be added in `docs/assets/security/`.
+**Owner:** Shiksha (`@Shiksha99`) · **Status:** verified live in Google Cloud project `climateops-justin` on 22 Nov 2026 (screenshots below).
 
 ## What the secrets are
 
 | Secret | Used for | Where it lives | Who can read it |
 |---|---|---|---|
-| `nvidia-api-key` | Calls NVIDIA NIM to write briefs | Google Secret Manager | Cloud Run service account only (`roles/secretmanager.secretAccessor`) |
-| `ingest-token` | Lets Cloud Scheduler call `/internal/ingest` | Google Secret Manager | Cloud Run service account; value also set in the Scheduler job header |
+| `nvidia-api-key` | Calls NVIDIA NIM to write briefs | Google Secret Manager | Cloud Run service account `climateops-run@climateops-justin.iam.gserviceaccount.com`, plus one team member account used during setup (see findings) |
+| `ingest-token` | Lets Cloud Scheduler call `/internal/ingest` | Google Secret Manager | Cloud Run service account `climateops-run` only; value also set in the Scheduler job header |
 
 Nothing else in the app is secret. The demo sign-in tokens are public fixtures by design.
 
@@ -38,16 +38,23 @@ openssl rand -hex 24 | tr -d '\n' | gcloud secrets versions add ingest-token --d
 
 Rotate immediately if a key is ever pasted into chat, a screenshot, a commit or a log.
 
-## Recommended hardening (if time allows)
+## Verified in Google Cloud (22 Nov 2026)
 
-- Use a dedicated least-privilege service account for Cloud Run instead of the Compute Engine default account, and grant `secretAccessor` on the two secrets only, not the whole project.
-- Grant Cloud Storage access on the proof bucket only (`roles/storage.objectCreator` plus `objectViewer`), not `storage.objectAdmin` project-wide.
-- Have Cloud Scheduler authenticate with an OIDC token instead of a static header, so the token value is not stored in the job config.
-- Set a Billing budget alert so a polling or generation loop cannot run up costs.
+| Check | Result | Evidence |
+|---|---|---|
+| Both secrets exist in Secret Manager | `ingest-token`, `nvidia-api-key` (automatically replicated) | ![Secret list](../assets/security/secret-list.png) |
+| Cloud Run uses a dedicated service account, not the Compute Engine default | `climateops-run@climateops-justin.iam.gserviceaccount.com` | permissions screenshots below |
+| Who can read `ingest-token` | Only the `climateops-run` service account | ![ingest-token permissions](../assets/security/secret-ingest-permissions.png) |
+| Who can read `nvidia-api-key` | `climateops-run` service account and one team member account (hidden in screenshot) | ![nvidia-api-key permissions](../assets/security/secret-nvidia-permissions.png) |
+| Cloud Run references secrets instead of pasted values | `NVIDIA_API_KEY = Secret:nvidia-api-key:latest`, `INGEST_TOKEN = Secret:ingest-token:latest` on revision `climateops-api-00012-trh` | ![Cloud Run secrets](../assets/security/cloudrun-secrets.png) |
+| No keys in the repository | `secret scan: clean` | ![Secret scan](../assets/security/secret-scan-clean.png) |
 
-## Evidence checklist (add screenshots)
+Values were never opened or displayed while collecting this evidence.
 
-- [ ] Secret Manager list showing `nvidia-api-key` and `ingest-token` (values hidden)
-- [ ] Permissions tab of each secret showing only the Cloud Run service account
-- [ ] Cloud Run service "Variables & Secrets" tab showing the secrets referenced, not pasted
-- [ ] `python scripts/scan_secrets.py` output: `secret scan: clean`
+## Findings and recommendations
+
+1. **Remove the personal account's Secret Accessor role on `nvidia-api-key`** once setup is finished, so only the app's service account can read the key (least privilege). Requires a project owner; the security reviewer account has view-only access.
+2. **Set a real contact in `NWS_USER_AGENT`.** Cloud Run still has the placeholder `set-your-team-email`; the National Weather Service asks API users to include a contact.
+3. Grant Cloud Storage access on the proof bucket only (`roles/storage.objectCreator` plus `objectViewer`), not `storage.objectAdmin` project-wide.
+4. Have Cloud Scheduler authenticate with an OIDC token instead of a static header, so the token value is not stored in the job config.
+5. Set a Billing budget alert so a polling or generation loop cannot run up costs.
