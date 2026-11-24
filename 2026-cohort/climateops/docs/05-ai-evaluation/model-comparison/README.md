@@ -93,7 +93,28 @@ A quick check of whether a photo feature (reading a thermostat from a picture) i
 | `meta/llama-3.2-90b-vision-instruct` (the model named in the app's `config.py`) | **HTTP 410 "Gone":** NVIDIA retired this model on Nov 16, 2026 |
 | `nvidia/nemotron-3.5-super-vl-120b-a12b` | **Correct:** answered "78°F" in 6.9 s |
 
-**Finding:** the app's current vision setting points to a retired model, and no app code calls a vision model yet. A working replacement exists (Nemotron 3.5 Super VL). **Team decision needed:** cut the photo feature from the MVP, or switch `config.py` to the Super VL model and build the code that uses it before Nov 28. Either way, the retired model ID should be removed from `config.py`.
+**Finding:** the app's vision setting pointed to a retired model, and no app code called a vision model (the "Upload Proof" button sent a placeholder record, not a photo). A working replacement exists (Nemotron 3.5 Super VL), so I ran a photo-proof test before building anything.
+
+## Vision proof test: can the AI check staff photo proof? (Nov 24)
+
+- **Question:** given a staff member's photo for a heat task, does the model suggest the right answer and, above all, catch bad photos?
+- **Photos:** 13 labeled photos for three playbook tasks: HT-01 (thermostat or AC set to 78°F or below), HT-07 (drinking water available), HT-09 (blinds closed). 7 should pass, 5 should fail, and 1 deliberately blurred thermostat should get "unclear." Bad photos include a thermostat at 83°F, a microwave clock (a lookalike display), vending machines (drinks for sale, not free water), an empty cafeteria and uncovered windows. Stock or sample photos, no faces used.
+- **Prompt:** one rule per task; the model replies pass / fail / unclear with the reading it saw and a reason. It must never guess a number it cannot read.
+- **Model:** `nvidia/nemotron-3.5-super-vl-120b-a12b`, temperature 0.1, thinking off, one run per photo.
+- **Evidence:** [`ClimateOps_Vision_Proof_Test.ipynb`](ClimateOps_Vision_Proof_Test.ipynb), [`climateops_vision_test_results.csv`](climateops_vision_test_results.csv).
+
+| Measure | Result |
+|---|---|
+| Correct | **12 / 13 (92%)** |
+| Bad photos caught (fail or unclear) | **6 / 6:** it never accepted a wrong photo, including the microwave clock |
+| Good photos passed | 6 / 7 |
+| Blurry thermostat | "unclear," with no guessed number |
+| Median time | about 22 seconds |
+
+- **The one miss was cautious:** on the dial thermostat (set to 70°F, shown only by a small mark on the case), the model answered "unclear," which sends the photo to the manager rather than wrongly passing or failing it.
+- **Two calls first returned HTTP 503** ("content safety screening is temporarily unavailable") from NVIDIA's service; both passed on rerun. The app must treat an outage as "review by hand," not as an error.
+
+**Decision (DEC-09):** build the photo check as an **advisory** step (branch `blanca/vision-check`): staff upload a real photo, the server stores and hashes it, the model suggests pass / fail / unclear for HT-01, HT-07 and HT-09, and the **manager still decides**. Outages and other task types fall back to manual review. The retired model ID is replaced by Super VL.
 
 ## Limits
 
@@ -101,4 +122,5 @@ A quick check of whether a photo feature (reading a thermostat from a picture) i
 - The test prompt is not identical to the app's current prompt in `nim.py`; results should be rechecked after the change.
 - Auto-checks are pattern-based; manual reading covered the baseline and missing-data answers in detail.
 - Two models could not be tested because they were unavailable on our account.
+- Vision proof test: 13 stock or sample photos, one run each, three task types. It shows the check is feasible and cautious, not that it is reliable on real facility photos; it stays advisory.
 - These results describe the brief's rule-following on test data, not real-world safety or readiness outcomes.
