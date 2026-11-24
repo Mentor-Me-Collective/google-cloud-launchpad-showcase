@@ -36,6 +36,8 @@ S01 forecast extreme heat; S02 active advisory; S03 missing readiness; S04 stale
 
 ## Results table — blank until measured
 
+**Model and prompt comparison (Nov 15–24, 2026, Blanca):** measured on sample data; see [model-comparison/README.md](model-comparison/README.md). The table below (manual vs. rules-only vs. integrated) is a separate experiment and is still pending.
+
 | Metric | Manual | Rules-only | NVIDIA integrated | Method and sample size |
 |---|---|---|---|---|
 | Brief time | Not tested | Not tested | Not tested | TBD |

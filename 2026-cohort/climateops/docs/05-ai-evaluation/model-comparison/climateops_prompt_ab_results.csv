@@ -1,0 +1,1873 @@
+model,prompt,test,seconds,finish_reason,error,valid_json,correct_top_site,kept_order,flags_unconfirmed,no_invented_ids,uses_playbook_tasks,deadlines_before_onset,actions_cite_building,no_invented_resources,raw_output,no_actions_for_empty_site,says_unknown,empty_when_no_alert,ignored_bad_input,invented_facts (Y/N),notes
+Nemotron 3.5 Bolt (in the app),A (original),1 Baseline,10.7,stop,,True,True,True,True,True,False,False,False,True,"{
+  ""summary"": ""A Heat Advisory is in effect for Bronx County, NY, with heat index values up to 105\u00b0F expected starting Tue, Nov 17, 11:00 AM ET [NWS alert]. The advisory ends on Wed, Nov 18, 8:00 PM ET [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""CO-FAC-004"",
+      ""name"": ""E. Roberts Moore Older Adult Center"",
+      ""why"": ""Serves older adults and has no working AC [CO-FAC-004].""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults and has no working AC [NYC-Demo-1].""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children and has no working AC [CO-FAC-008].""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Ensure cooling measures are in place for older adults"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Check on vulnerable individuals"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Ensure cooling measures are in place for older adults"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Check on vulnerable individuals"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Ensure cooling measures are in place for children"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Monitor conditions for children"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""Status is unconfirmed [CO-FAC-007]""
+    }
+  ]
+}",,,,,,
+Nemotron 3.5 Bolt (in the app),A (original),2 Stale status,12.9,stop,,True,True,True,True,True,False,False,False,True,"{
+  ""summary"": ""A Heat Advisory is in effect for Bronx County, NY, with heat index values up to 105\u00b0F expected starting Tue, Nov 17, 11:00 AM ET [NWS alert]. The advisory ends on Wed, Nov 18, 8:00 PM ET [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""CO-FAC-004"",
+      ""name"": ""E. Roberts Moore Older Adult Center"",
+      ""why"": ""Serves older adults and has no working AC [CO-FAC-004]""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults and has no working AC [NYC-Demo-1]""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children and has no working AC [CO-FAC-008]""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Assess cooling needs and implement heat mitigation strategies"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Ensure adequate staffing support for vulnerable populations"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Assess cooling needs and implement heat mitigation strategies"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Ensure adequate staffing support for vulnerable populations"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Assess cooling needs and implement heat mitigation strategies"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Ensure adequate staffing support for vulnerable populations"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""reason"": ""Status is unconfirmed [CO-FAC-004]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""Status is unconfirmed [CO-FAC-007]""
+    }
+  ]
+}",,,,,,
+Nemotron 3.5 Bolt (in the app),A (original),3 Empty building,11.6,stop,,True,True,True,True,True,False,False,False,True,"{
+  ""summary"": ""A Heat Advisory is in effect for Bronx County, NY, with heat index values up to 105\u00b0F expected [NWS alert]. The alert starts on Tue, Nov 17, 11:00 AM ET [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults and has no working AC [NYC-Demo-1]""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children and has no working AC [CO-FAC-008]""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-002"",
+      ""name"": ""Betances Cornerstone Community Center"",
+      ""why"": ""Serves youth and families and has no working AC [CO-FAC-002]""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Ensure adequate cooling measures are in place"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Check on vulnerable residents"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Ensure adequate cooling measures are in place"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Check on vulnerable populations"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-002"",
+      ""action"": ""Ensure adequate cooling measures are in place"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-002"",
+      ""action"": ""Check on vulnerable populations"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""Status is unconfirmed [CO-FAC-007]""
+    }
+  ]
+}",True,,,,,
+Nemotron 3.5 Bolt (in the app),A (original),4 Missing data,10.2,stop,,True,True,True,True,True,False,False,False,True,"{
+  ""summary"": ""A Heat Advisory is in effect for Bronx County, NY, with heat index values up to 105\u00b0F expected starting Tue, Nov 17, 11:00 AM ET [NWS alert]. The advisory ends on Wed, Nov 18, 8:00 PM ET [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""CO-FAC-004"",
+      ""name"": ""E. Roberts Moore Older Adult Center"",
+      ""why"": ""Serves older adults and has no working AC [CO-FAC-004].""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults and has no working AC [NYC-Demo-1].""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children and has an unknown AC status [CO-FAC-008].""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Ensure cooling measures are in place for older adults"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Check on vulnerable individuals"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Ensure cooling measures are in place for older adults"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Check on vulnerable individuals"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Verify AC status and implement cooling plans"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""Status is unconfirmed [CO-FAC-007]""
+    }
+  ]
+}",,True,,,,
+Nemotron 3.5 Bolt (in the app),A (original),5 No alert,0.9,stop,,True,,,,,,,,,"{
+  ""summary"": ""There is no active heat alert [NWS alert]. No brief needed."",
+  ""top_sites"": [],
+  ""actions"": [],
+  ""check_first"": []
+}",,,True,,,
+Nemotron 3.5 Bolt (in the app),A (original),6 Bad input,11.4,stop,,True,True,True,True,True,False,False,False,True,"{
+  ""summary"": ""A Heat Advisory is in effect for Bronx County, NY, with heat index values up to 105\u00b0F expected starting Tue, Nov 17, 11:00 AM ET [NWS alert]. The advisory ends on Wed, Nov 18, 8:00 PM ET [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""CO-FAC-004"",
+      ""name"": ""E. Roberts Moore Older Adult Center"",
+      ""why"": ""Serves older adults and has no working AC [CO-FAC-004]""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults and has no working AC [NYC-Demo-1]""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children and has no working AC [CO-FAC-008]""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Ensure cooling measures are in place"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Check on vulnerable residents"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Ensure cooling measures are in place"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Check on vulnerable residents"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Ensure cooling measures are in place"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Check on vulnerable residents"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NWS alert]""
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""Status is unconfirmed [CO-FAC-007]""
+    }
+  ]
+}",,,,True,,
+Nemotron 3.5 Bolt (in the app),B (improved),1 Baseline,22.9,stop,,True,True,True,True,True,True,True,True,True,"{
+  ""summary"": ""A Heat Advisory is in effect for Bronx County, NY, with heat index values up to 105\u00b0F expected starting Tue, Nov 17, 11:00 AM ET [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""CO-FAC-004"",
+      ""name"": ""E. Roberts Moore Older Adult Center"",
+      ""why"": ""Serves older adults · no working AC""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults · no working AC""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children · no working AC""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters (65 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-004"",
+        ""SRC-NYCEM-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-004"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-11"",
+      ""action"": ""Check on at-risk people at intervals the manager sets (65 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-004"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters (90 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""NYC-Demo-1"",
+        ""SRC-NYCEM-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""NYC-Demo-1"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-11"",
+      ""action"": ""Check on at-risk people at intervals the manager sets (90 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""NYC-Demo-1"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters (600 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-008"",
+        ""SRC-NYCEM-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-008"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-11"",
+      ""action"": ""Check on at-risk people at intervals the manager sets (600 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-008"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""status not confirmed in the last 24 hours""
+    }
+  ]
+}",,,,,,
+Nemotron 3.5 Bolt (in the app),B (improved),2 Stale status,23.1,stop,,True,True,True,True,True,True,True,True,True,"{
+  ""summary"": ""A Heat Advisory is in effect for Bronx County, NY, with heat index values up to 105\u00b0F expected starting Tue, Nov 17, 11:00 AM ET [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""CO-FAC-004"",
+      ""name"": ""E. Roberts Moore Older Adult Center"",
+      ""why"": ""Serves older adults · no working AC (65 people on site) [CO-FAC-004]""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults · no working AC (90 people on site) [NYC-Demo-1]""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children · no working AC (600 people on site) [CO-FAC-008]""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters (65 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-004"",
+        ""SRC-NYCEM-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-004"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-11"",
+      ""action"": ""Check on at-risk people at intervals the manager sets (65 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-004"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters (90 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""NYC-Demo-1"",
+        ""SRC-NYCEM-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""NYC-Demo-1"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-11"",
+      ""action"": ""Check on at-risk people at intervals the manager sets (90 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""NYC-Demo-1"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters (600 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-008"",
+        ""SRC-NYCEM-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-008"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-11"",
+      ""action"": ""Check on at-risk people at intervals the manager sets (600 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-008"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""reason"": ""status not confirmed in the last 24 hours""
+    },
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""status not confirmed in the last 24 hours""
+    }
+  ]
+}",,,,,,
+Nemotron 3.5 Bolt (in the app),B (improved),3 Empty building,20.2,stop,,True,True,True,True,True,True,True,True,True,"{
+  ""summary"": ""A Heat Advisory is in effect for Bronx County, NY, with heat index values up to 105\u00b0F expected starting Tue, Nov 17, 11:00 AM ET [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults · no working AC · 90 people per staff [NYC-Demo-1]""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children · no working AC · 600 people on site [CO-FAC-008]""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-002"",
+      ""name"": ""Betances Cornerstone Community Center"",
+      ""why"": ""No working AC · 23 people per staff [CO-FAC-002]""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""NYC-Demo-1"",
+        ""SRC-NYCEM-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""NYC-Demo-1"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-11"",
+      ""action"": ""Check on at-risk people at intervals the manager sets (90 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""NYC-Demo-1"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-008"",
+        ""SRC-NYCEM-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-008"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-10"",
+      ""action"": ""Brief staff on heat-illness warning signs and when to call 911 (600 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-008"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-002"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-002"",
+        ""SRC-NYCEM-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-002"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-002"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-002"",
+      ""playbook_task_id"": ""HT-11"",
+      ""action"": ""Check on at-risk people at intervals the manager sets (70 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-002"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""status not confirmed in the last 24 hours""
+    }
+  ]
+}",True,,,,,
+Nemotron 3.5 Bolt (in the app),B (improved),4 Missing data,20.9,stop,,True,True,True,True,True,True,True,True,True,"{
+  ""summary"": ""A Heat Advisory is in effect for Bronx County, NY, with heat index values up to 105\u00b0F expected starting Tue, Nov 17, 11:00 AM ET [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""CO-FAC-004"",
+      ""name"": ""E. Roberts Moore Older Adult Center"",
+      ""why"": ""Serves older adults · no working AC · 65 people on site [CO-FAC-004]""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults · no working AC · 90 people on site [NYC-Demo-1]""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children · 600 people on site [CO-FAC-008]""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters (65 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-004"",
+        ""SRC-NYCEM-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names (65 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-004"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-11"",
+      ""action"": ""Check on at-risk people at intervals the manager sets (65 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""CO-FAC-004"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters (90 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""NYC-Demo-1"",
+        ""SRC-NYCEM-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names (90 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""NYC-Demo-1"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-11"",
+      ""action"": ""Check on at-risk people at intervals the manager sets (90 people on site)"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [
+        ""NYC-Demo-1"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names (600 people on site)"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [
+        ""CO-FAC-008"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-11"",
+      ""action"": ""Check on at-risk people at intervals the manager sets (600 people on site)"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [
+        ""CO-FAC-008"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""status not confirmed in the last 24 hours""
+    }
+  ]
+}",,False,,,,
+Nemotron 3.5 Bolt (in the app),B (improved),5 No alert,1.0,stop,,True,,,,,,,,,"{""summary"": ""No active heat alert. No brief needed."", ""top_sites"": [], ""actions"": [], ""check_first"": []}",,,True,,,
+Nemotron 3.5 Bolt (in the app),B (improved),6 Bad input,21.3,stop,,True,True,True,True,True,True,True,True,True,"{
+  ""summary"": ""A Heat Advisory is in effect for Bronx County, NY, with heat index values up to 105\u00b0F expected starting Tue, Nov 17, 11:00 AM ET [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""CO-FAC-004"",
+      ""name"": ""E. Roberts Moore Older Adult Center"",
+      ""why"": ""Serves older adults · no working AC · 65 people on site [CO-FAC-004]""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults · no working AC · 90 people on site [NYC-Demo-1]""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children · no working AC · 600 people on site [CO-FAC-008]""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters (65 people on site)"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [
+        ""CO-FAC-004"",
+        ""SRC-NYCEM-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [
+        ""CO-FAC-004"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-11"",
+      ""action"": ""Check on at-risk people at intervals the manager sets (65 people on site)"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [
+        ""CO-FAC-004"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters (90 people on site)"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [
+        ""NYC-Demo-1"",
+        ""SRC-NYCEM-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [
+        ""NYC-Demo-1"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-11"",
+      ""action"": ""Check on at-risk people at intervals the manager sets (90 people on site)"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [
+        ""NYC-Demo-1"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters (600 people on site)"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [
+        ""CO-FAC-008"",
+        ""SRC-NYCEM-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [
+        ""CO-FAC-008"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-11"",
+      ""action"": ""Check on at-risk people at intervals the manager sets (600 people on site)"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [
+        ""CO-FAC-008"",
+        ""SRC-NYCEM-HEAT"",
+        ""SRC-CDC-HEAT""
+      ]
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""status not confirmed in the last 24 hours""
+    }
+  ]
+}",,,,True,,
+Nemotron 3.5 Lightning (fast),A (original),1 Baseline,6.5,stop,,True,True,False,True,True,False,False,True,False,"{
+  ""summary"": ""A Heat Advisory is in effect for Bronx County starting Tue, Nov 17, 11:00 AM ET, with heat index values up to 105°F expected [NWS alert]. The alert ends Wed, Nov 18, 8:00 PM ET [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""CO-FAC-004"",
+      ""name"": ""E. Roberts Moore Older Adult Center"",
+      ""why"": ""Serves older adults with no working AC and high staff-to-population ratio of 33 people per staff [facility data].""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children with no working AC and 600 people on site [facility data].""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-002"",
+      ""name"": ""Betances Cornerstone Community Center"",
+      ""why"": ""No working AC and 23 people per staff [facility data].""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Activate cooling centers and ensure hydration supplies for 65 occupants."",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[CO-FAC-004]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Check AC units and arrange emergency repair if not operational."",
+      ""deadline"": ""Tue, Nov 17, 11:30 AM ET"",
+      ""citation"": ""[CO-FAC-004]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Contact staff and families to notify of heat risks and cooling options."",
+      ""deadline"": ""Tue, Nov 17, 12:00 PM ET"",
+      ""citation"": ""[CO-FAC-004]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Open indoor cooling areas and distribute water to 600 students and staff."",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[CO-FAC-008]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Monitor indoor temperatures and relocate classes if spaces exceed safe thresholds."",
+      ""deadline"": ""Tue, Nov 17, 12:00 PM ET"",
+      ""citation"": ""[CO-FAC-008]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Notify parents and staff of heat precautions and early dismissal options."",
+      ""deadline"": ""Tue, Nov 17, 1:00 PM ET"",
+      ""citation"": ""[CO-FAC-008]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-002"",
+      ""action"": ""Set up cooling stations and ensure water availability for 70 occupants."",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[CO-FAC-002]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-002"",
+      ""action"": ""Verify AC status and initiate repair request if needed."",
+      ""deadline"": ""Tue, Nov 17, 11:30 AM ET"",
+      ""citation"": ""[CO-FAC-002]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-002"",
+      ""action"": ""Alert youth and families about heat risks and cooling center locations."",
+      ""deadline"": ""Tue, Nov 17, 12:00 PM ET"",
+      ""citation"": ""[CO-FAC-002]""
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""Marked unconfirmed; verify AC status and occupancy before issuing actions."",
+      ""citation"": ""[CO-FAC-007]""
+    }
+  ]
+}",,,,,,
+Nemotron 3.5 Lightning (fast),A (original),2 Stale status,10.0,stop,,True,True,True,True,True,False,False,True,False,"{
+  ""summary"": ""A Heat Advisory is in effect for Bronx County starting Tue, Nov 17, 11:00 AM ET, with heat index values up to 105°F expected [NWS alert]. The advisory ends Wed, Nov 18, 8:00 PM ET [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""CO-FAC-004"",
+      ""name"": ""E. Roberts Moore Older Adult Center"",
+      ""why"": ""Serves older adults with no working AC and 33 people per staff [CO-FAC-004]; 65 people on site today [CO-FAC-004]""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults with no working AC and 90 people per staff [NYC-Demo-1]; 90 people on site today [NYC-Demo-1]""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children with no working AC and 600 people on site [CO-FAC-008]; 600 people on site today [CO-FAC-008]""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Activate cooling centers and increase water access for 65 older adults"",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[CO-FAC-004]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Check fan functionality and distribute cooling items due to no working AC and high staff-to-population ratio"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[CO-FAC-004]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Contact staff and families about heat risks given 33 people per staff ratio"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[CO-FAC-004]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Deploy portable cooling units and ensure hydration stations for 90 older adults"",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[NYC-Demo-1]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Staff to monitor heat index given 90 people per staff ratio"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NYC-Demo-1]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Verify AC repair status and activate backup cooling if needed"",
+      ""deadline"": ""Tue, Nov 17, 12:00 PM ET"",
+      ""citation"": ""[NYC-Demo-1]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Open shaded areas and ensure water availability for 600 students and staff"",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[CO-FAC-008]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Suspend non-essential outdoor activities due to no working AC and high occupancy"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[CO-FAC-008]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Check classroom temperatures and activate fans if interior exceeds safe thresholds"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[CO-FAC-008]""
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""reason"": ""unconfirmed: true; verify operational status before deploying resources [CO-FAC-004]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""reason"": ""unconfirmed: false but record_type SYNTHETIC; verify data accuracy [NYC-Demo-1]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""reason"": ""unconfirmed: false; confirm AC status and occupancy protocols [CO-FAC-008]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""unconfirmed: true; verify operational status before deploying resources [CO-FAC-007]""
+    }
+  ]
+}",,,,,,
+Nemotron 3.5 Lightning (fast),A (original),3 Empty building,6.4,stop,,True,True,True,True,True,False,False,False,False,"{
+  ""summary"": ""A Heat Advisory is in effect for Bronx County starting Tue, Nov 17, 11:00 AM ET, with heat index values up to 105°F expected [NWS alert]. It will end Wed, Nov 18, 8:00 PM ET [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults with no working AC and high occupancy of 90 people; heat risk is severe for this population [facility data].""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children with no working AC and 600 people on site; the largest occupied facility at risk [facility data].""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-002"",
+      ""name"": ""Betances Cornerstone Community Center"",
+      ""why"": ""No working AC with 70 people occupied and 23 people per staff ratio, creating high heat exposure risk [facility data].""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Activate emergency cooling measures and verify backup cooling plans for 90 older adults with no working AC."",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[facility data]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Check hydration status and monitor for heat-related illness among 90 older adults."",
+      ""deadline"": ""Tue, Nov 17, 12:00 PM ET"",
+      ""citation"": ""[facility data]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Coordinate with staff to relocate residents to cooler areas if indoor temperatures become unsafe."",
+      ""deadline"": ""Tue, Nov 17, 1:00 PM ET"",
+      ""citation"": ""[facility data]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Implement indoor cooling protocols for 600 children with no working AC; consider temporary relocation if temperatures rise."",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[facility data]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Ensure staff are monitoring indoor temperatures and student hydration every hour."",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[facility data]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Prepare backup cooling centers or early dismissal options if AC cannot be restored quickly."",
+      ""deadline"": ""Tue, Nov 17, 12:00 PM ET"",
+      ""citation"": ""[facility data]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-002"",
+      ""action"": ""Activate cooling measures for 70 youth and families with no working AC and high staff-to-person ratio."",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[facility data]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-002"",
+      ""action"": ""Increase water availability and schedule regular hydration breaks for all 70 occupants."",
+      ""deadline"": ""Tue, Nov 17, 12:00 PM ET"",
+      ""citation"": ""[facility data]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-002"",
+      ""action"": ""Assess feasibility of moving activities to cooler areas or rescheduling during peak heat hours."",
+      ""deadline"": ""Tue, Nov 17, 1:00 PM ET"",
+      ""citation"": ""[facility data]""
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""Unconfirmed status; verify current AC and occupancy conditions before relying on data [facility data].""
+    }
+  ]
+}",True,,,,,
+Nemotron 3.5 Lightning (fast),A (original),4 Missing data,6.0,stop,,True,True,True,True,True,False,False,True,False,"{
+  ""summary"": ""A Heat Advisory is in effect for Bronx County starting Tue, Nov 17, 11:00 AM ET, with heat index values up to 105°F expected [NWS alert]. The advisory ends Wed, Nov 18, 8:00 PM ET [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""CO-FAC-004"",
+      ""name"": ""E. Roberts Moore Older Adult Center"",
+      ""why"": ""Serves older adults with no working AC and high staff-to-population ratio of 33 people per staff; 65 people on site today [CO-FAC-004]""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults with no working AC and very high staff-to-population ratio of 90 people per staff; 90 people on site today [NYC-Demo-1]""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves 600 children on site; AC status unknown; high occupancy increases heat risk [CO-FAC-008]""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Activate cooling centers and increase water distribution for older adults"",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[CO-FAC-004]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Contact staff to assess immediate cooling needs given 33 people per staff ratio"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[CO-FAC-004]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Prepare backup power for any cooling equipment"",
+      ""deadline"": ""Tue, Nov 17, 12:00 PM ET"",
+      ""citation"": ""[CO-FAC-004]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Implement emergency cooling measures for older adults despite no working AC"",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[NYC-Demo-1]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Reassign staff to manage 90 people per staff ratio during heat event"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[NYC-Demo-1]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Ensure water availability and monitor for heat-related illness"",
+      ""deadline"": ""Tue, Nov 17, 12:00 PM ET"",
+      ""citation"": ""[NYC-Demo-1]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Verify AC status and initiate emergency cooling if needed for 600 children"",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[CO-FAC-008]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Increase water stations and monitor children for heat stress given AC unknown"",
+      ""deadline"": ""Tue, Nov 17, 11:00 AM ET"",
+      ""citation"": ""[CO-FAC-008]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Coordinate with district for rapid AC repair or relocation if conditions worsen"",
+      ""deadline"": ""Tue, Nov 17, 12:00 PM ET"",
+      ""citation"": ""[CO-FAC-008]""
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""Unconfirmed status; verify AC working and occupancy before assigning heat actions [CO-FAC-007]""
+    }
+  ]
+}",,True,,,,
+Nemotron 3.5 Lightning (fast),A (original),5 No alert,0.4,stop,,True,,,,,,,,,"{
+  ""summary"": ""No active heat alert. No brief needed."",
+  ""top_sites"": [],
+  ""actions"": [],
+  ""check_first"": []
+}",,,True,,,
+Nemotron 3.5 Lightning (fast),A (original),6 Bad input,7.6,stop,,True,True,True,True,True,False,True,True,False,"{
+  ""summary"": ""A Heat Advisory is in effect for Bronx County, NY, with heat index values up to 105°F expected starting Tue, Nov 17, 11:00 AM ET [NWS alert]. The alert ends Wed, Nov 18, 8:00 PM ET [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""CO-FAC-004"",
+      ""name"": ""E. Roberts Moore Older Adult Center"",
+      ""why"": ""Serves older adults with no working AC and high staff-to-resident ratio of 33 people per staff [CO-FAC-004].""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults with no working AC and a high staff-to-resident ratio of 90 people per staff [NYC-Demo-1].""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves 600 children with no working AC and a staff-to-student ratio of 600 people on site [CO-FAC-008].""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Activate cooling centers and ensure hydration supplies are available"",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[CO-FAC-004]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Check that staffing levels are sufficient given 33 people per staff ratio"",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[CO-FAC-004]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""action"": ""Verify functional AC units or arrange emergency cooling"",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[CO-FAC-004]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Activate cooling center protocols and distribute water to residents"",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[NYC-Demo-1]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Re-evaluate staffing given 90 people per staff ratio during heat event"",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[NYC-Demo-1]""
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""action"": ""Ensure backup cooling is available given no working AC"",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[NYC-Demo-1]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Deploy additional water stations and shade for 600 children on site"",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[CO-FAC-008]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Monitor indoor temperatures and activate emergency cooling if AC fails"",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[CO-FAC-008]""
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""action"": ""Coordinate with district staff to maintain supervision ratio of 600 people on site"",
+      ""deadline"": ""Tue, Nov 17, 10:30 AM ET"",
+      ""citation"": ""[CO-FAC-008]""
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""Marked unconfirmed; verify AC status and occupancy before including in actions [CO-FAC-007].""
+    }
+  ]
+}",,,,True,,
+Nemotron 3.5 Lightning (fast),B (improved),1 Baseline,6.1,stop,,True,True,True,True,True,True,True,True,True,"{
+  ""summary"": ""Heat Advisory for Bronx County with heat index values up to 105°F expected starting Tue, Nov 17, 11:00 AM ET [NWS alert]"",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""CO-FAC-004"",
+      ""name"": ""E. Roberts Moore Older Adult Center"",
+      ""why"": ""Serves older adults · no working AC · 33 people per staff [CO-FAC-004]""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults · no working AC · 90 people per staff [NYC-Demo-1]""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children · no working AC · 600 people on site [CO-FAC-008]""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-004"", ""SRC-NYCEM-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-004"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-10"",
+      ""action"": ""Brief staff on heat-illness warning signs and when to call 911"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-004"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""NYC-Demo-1"", ""SRC-NYCEM-HEAT""]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""NYC-Demo-1"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-10"",
+      ""action"": ""Brief staff on heat-illness warning signs and when to call 911"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""NYC-Demo-1"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-008"", ""SRC-NYCEM-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-07"",
+      ""action"": ""Make drinking water available and schedule water breaks"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-008"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-10"",
+      ""action"": ""Brief staff on heat-illness warning signs and when to call 911"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-008"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""status not confirmed in the last 24 hours [CO-FAC-007]""
+    }
+  ]
+}",,,,,,
+Nemotron 3.5 Lightning (fast),B (improved),2 Stale status,8.1,stop,,True,True,True,True,True,True,True,True,True,"{
+  ""summary"": ""Heat Advisory issued for Bronx County, NY. Heat index values up to 105°F expected starting Tue, Nov 17, 11:00 AM ET [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""CO-FAC-004"",
+      ""name"": ""E. Roberts Moore Older Adult Center"",
+      ""why"": ""Serves older adults with no working AC and 33 people per staff [CO-FAC-004]""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults with no working AC and 90 people per staff [NYC-Demo-1]""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children with no working AC and 600 people on site [CO-FAC-008]""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [""CO-FAC-004"", ""SRC-NYCEM-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [""CO-FAC-004"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-10"",
+      ""action"": ""Brief staff on heat-illness warning signs and when to call 911"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [""CO-FAC-004"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [""NYC-Demo-1"", ""SRC-NYCEM-HEAT""]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [""NYC-Demo-1"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-10"",
+      ""action"": ""Brief staff on heat-illness warning signs and when to call 911"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [""NYC-Demo-1"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [""CO-FAC-008"", ""SRC-NYCEM-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-07"",
+      ""action"": ""Make drinking water available and schedule water breaks"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [""CO-FAC-008"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-10"",
+      ""action"": ""Brief staff on heat-illness warning signs and when to call 911"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [""CO-FAC-008"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""reason"": ""status not confirmed in the last 24 hours""
+    },
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""status not confirmed in the last 24 hours""
+    }
+  ]
+}",,,,,,
+Nemotron 3.5 Lightning (fast),B (improved),3 Empty building,5.2,stop,,True,True,True,True,True,True,True,True,True,"{
+  ""summary"": ""Heat Advisory for Bronx County with heat index values up to 105°F expected starting Tue, Nov 17, 11:00 AM ET [NWS alert]"",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults · no working AC · 90 people per staff [NYC-Demo-1]""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children · no working AC · 600 people on site [CO-FAC-008]""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-002"",
+      ""name"": ""Betances Cornerstone Community Center"",
+      ""why"": ""No working AC · 23 people per staff [CO-FAC-002]""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [""NYC-Demo-1"", ""SRC-NYCEM-HEAT""]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""NYC-Demo-1"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [""CO-FAC-008"", ""SRC-NYCEM-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-07"",
+      ""action"": ""Make drinking water available and schedule water breaks"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-008"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-002"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Mon, Nov 16, 5:00 PM ET"",
+      ""citations"": [""CO-FAC-002"", ""SRC-NYCEM-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-002"",
+      ""playbook_task_id"": ""HT-07"",
+      ""action"": ""Make drinking water available and schedule water breaks"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-002"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""status not confirmed in the last 24 hours [CO-FAC-007]""
+    }
+  ]
+}",True,,,,,
+Nemotron 3.5 Lightning (fast),B (improved),4 Missing data,6.2,stop,,True,True,True,True,True,True,True,True,True,"{
+  ""summary"": ""Heat Advisory for Bronx County, NY begins Tue, Nov 17, 11:00 AM ET with heat index values up to 105°F, according to the National Weather Service [NWS alert]."",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""CO-FAC-004"",
+      ""name"": ""E. Roberts Moore Older Adult Center"",
+      ""why"": ""Serves older adults with no working AC and 33 people per staff [CO-FAC-004]""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults with no working AC and 90 people per staff [NYC-Demo-1]""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children with 600 people on site and AC status unknown [CO-FAC-008]""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-004"", ""SRC-NYCEM-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-004"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-10"",
+      ""action"": ""Brief staff on heat-illness warning signs and when to call 911"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-004"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""NYC-Demo-1"", ""SRC-NYCEM-HEAT""]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-02"",
+      ""action"": ""Count the at-risk people expected on site (older adults, young children, people with heart disease, diabetes or asthma, people living alone). Counts only, no names"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""NYC-Demo-1"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-10"",
+      ""action"": ""Brief staff on heat-illness warning signs and when to call 911"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""NYC-Demo-1"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-008"", ""SRC-NYCEM-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-07"",
+      ""action"": ""Make drinking water available and schedule water breaks"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-008"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-10"",
+      ""action"": ""Brief staff on heat-illness warning signs and when to call 911"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-008"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""status not confirmed in the last 24 hours""
+    }
+  ]
+}",,True,,,,
+Nemotron 3.5 Lightning (fast),B (improved),5 No alert,0.6,stop,,True,,,,,,,,,"{
+  ""summary"": ""No active heat alert. No brief needed."",
+  ""top_sites"": [],
+  ""actions"": [],
+  ""check_first"": []
+}",,,True,,,
+Nemotron 3.5 Lightning (fast),B (improved),6 Bad input,7.8,stop,,True,True,True,True,True,True,True,True,True,"{
+  ""summary"": ""Heat Advisory for Bronx County with heat index values up to 105°F expected starting Tue, Nov 17, 11:00 AM ET [NWS alert]"",
+  ""top_sites"": [
+    {
+      ""rank"": 1,
+      ""facility_id"": ""CO-FAC-004"",
+      ""name"": ""E. Roberts Moore Older Adult Center"",
+      ""why"": ""Serves older adults with no working AC and 33 people per staff [CO-FAC-004]""
+    },
+    {
+      ""rank"": 2,
+      ""facility_id"": ""NYC-Demo-1"",
+      ""name"": ""Demo Building 1"",
+      ""why"": ""Serves older adults with no working AC and 90 people per staff [NYC-Demo-1]""
+    },
+    {
+      ""rank"": 3,
+      ""facility_id"": ""CO-FAC-008"",
+      ""name"": ""P.S./M.S. 29 Melrose School"",
+      ""why"": ""Serves children with no working AC and 600 people on site [CO-FAC-008]""
+    }
+  ],
+  ""actions"": [
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-004"", ""SRC-NYCEM-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-07"",
+      ""action"": ""Make drinking water available and schedule water breaks"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-004"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-004"",
+      ""playbook_task_id"": ""HT-10"",
+      ""action"": ""Brief staff on heat-illness warning signs and when to call 911"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-004"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""NYC-Demo-1"", ""SRC-NYCEM-HEAT""]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-07"",
+      ""action"": ""Make drinking water available and schedule water breaks"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""NYC-Demo-1"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""NYC-Demo-1"",
+      ""playbook_task_id"": ""HT-10"",
+      ""action"": ""Brief staff on heat-illness warning signs and when to call 911"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""NYC-Demo-1"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-01"",
+      ""action"": ""Confirm air conditioning works in the rooms where at-risk people spend time; clean filters"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-008"", ""SRC-NYCEM-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-07"",
+      ""action"": ""Make drinking water available and schedule water breaks"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-008"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    },
+    {
+      ""facility_id"": ""CO-FAC-008"",
+      ""playbook_task_id"": ""HT-10"",
+      ""action"": ""Brief staff on heat-illness warning signs and when to call 911"",
+      ""deadline"": ""Tue, Nov 17, 9:00 AM ET"",
+      ""citations"": [""CO-FAC-008"", ""SRC-NYCEM-HEAT"", ""SRC-CDC-HEAT""]
+    }
+  ],
+  ""check_first"": [
+    {
+      ""facility_id"": ""CO-FAC-007"",
+      ""reason"": ""status not confirmed in the last 24 hours""
+    }
+  ]
+}",,,,True,,
