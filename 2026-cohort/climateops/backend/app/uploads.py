@@ -55,3 +55,29 @@ def object_prefix(tenant_id: str, task_id: str) -> str:
 
 def new_object_path(tenant_id: str, task_id: str, content_type: str) -> str:
     return f"{object_prefix(tenant_id, task_id)}{uuid.uuid4().hex}.{ALLOWED_TYPES[content_type]}"
+
+
+# ---------- direct photo upload (DEC-09 AI photo check) ----------
+# The browser sends the photo to the API (resized to <= 1280 px); the server stores it under the
+# tenant/task prefix and computes the SHA-256 itself, so the client cannot fake either.
+MAX_PHOTO_BYTES = 5 * 1024 * 1024
+PHOTO_TYPES = {"image/jpeg", "image/png"}
+
+
+def sniff_image_type(data: bytes) -> str | None:
+    """Trust the bytes, not the declared content type."""
+    if data[:3] == b"\xff\xd8\xff":
+        return "image/jpeg"
+    if data[:8] == b"\x89PNG\r\n\x1a\n":
+        return "image/png"
+    return None
+
+
+def store_object(bucket: str, object_path: str, data: bytes, content_type: str) -> str:  # pragma: no cover - real GCP
+    """Write the photo to the private bucket with the Cloud Run service account.
+    Returns the storage mode. Without STORAGE_BUCKET nothing leaves the app (demo mode)."""
+    if not bucket:
+        return "demo_no_bucket"
+    from google.cloud import storage  # lazy import
+    storage.Client().bucket(bucket).blob(object_path).upload_from_string(data, content_type=content_type)
+    return "gcs"

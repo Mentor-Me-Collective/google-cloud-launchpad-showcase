@@ -16,6 +16,7 @@ from pydantic import BaseModel, Field
 from .auth import Principal, current_principal, err, require_role
 from .config import ROOT, Settings, get_settings
 from .nim import NimClient
+from .vision import VisionClient
 from .services import Service
 from .store import make_store
 
@@ -23,12 +24,14 @@ log = logging.getLogger("climateops")
 PROVENANCE = {"PUBLIC_VERIFIED", "DEMO_SYNTHETIC", "UNKNOWN"}
 
 
-def build_service(settings: Settings | None = None, llm=None, store=None) -> Service:
+def build_service(settings: Settings | None = None, llm=None, store=None, vision=None) -> Service:
     cfg = settings or get_settings()
     store = store or make_store(cfg.store_backend, cfg.google_project)
     if llm is None and cfg.nvidia_ready:
         llm = NimClient(cfg.nvidia_api_key, cfg.nvidia_model_id, cfg.nvidia_base_url)
-    svc = Service(store, cfg, llm)
+    if vision is None and cfg.nvidia_ready and cfg.nvidia_vision_model_id:
+        vision = VisionClient(cfg.nvidia_api_key, cfg.nvidia_vision_model_id, cfg.nvidia_base_url)
+    svc = Service(store, cfg, llm, vision=vision)
     return svc
 
 
@@ -211,6 +214,17 @@ def create_app(service: Service | None = None) -> FastAPI:
     def evidence(tid: str, body: EvidenceIn, p: Principal = Depends(require_role("manager", "staff")),
                  s: Service = Depends(svc_dep), r: str = Depends(rid)):
         return s.submit_evidence(p, tid, body.object_path, body.sha256, body.note, r)
+
+    class PhotoIn(BaseModel):
+        image_base64: str = Field(min_length=8, max_length=7_200_000)
+        content_type: Literal["image/jpeg", "image/png"] = "image/jpeg"
+        note: str = Field(default="", max_length=500)
+
+    @app.post(f"{api}/tasks/{{tid}}/evidence/photo")
+    def evidence_photo(tid: str, body: PhotoIn, p: Principal = Depends(require_role("manager", "staff")),
+                       s: Service = Depends(svc_dep), r: str = Depends(rid)):
+        """Upload the proof photo itself; returns the task with an advisory AI check (DEC-09)."""
+        return s.submit_photo_evidence(p, tid, body.image_base64, body.content_type, body.note, r)
 
     class VerifyIn(BaseModel):
         decision: Literal["accept", "reject"]
