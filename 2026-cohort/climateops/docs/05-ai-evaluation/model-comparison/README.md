@@ -15,11 +15,15 @@ Which NVIDIA-hosted model and which prompt write the most accurate, rule-followi
 - **Settings:** temperature 0.2, one request at a time, model "thinking" turned off where supported, one run per test.
 - **Notebook:** [`ClimateOps_Prompt_AB_v5.ipynb`](ClimateOps_Prompt_AB_v5.ipynb) (needs your own `NVIDIA_API_KEY` in Colab or Kaggle secrets; no key is stored in this repo).
 
+## Smoke test (Nov 24)
+
+Ran the repo's `scripts/smoke_nim.py` with my own key and `NVIDIA_MODEL_ID=nvidia/nemotron-3.5-bolt-e4b`: **HTTP 200, "OK: ready."** The app's model ID and NVIDIA API access work. Evidence: [`ClimateOps_Smoke_Test.ipynb`](ClimateOps_Smoke_Test.ipynb).
+
 ## Round 1: which models can do the job? (Nov 15)
 
 | Model | Result |
 |---|---|
-| `nvidia/nemotron-3.5-bolt-e4b` (the model in the app) | 6/6 answered, about 10 s each. **Smoke test passed:** the key and model ID work. |
+| `nvidia/nemotron-3.5-bolt-e4b` (the model in the app) | 6/6 answered, about 10 s each, using my own key. |
 | `nvidia/nemotron-3.5-lightning-30b-a3b` | 6/6 answered, about 6 s each, once its long "thinking" step was turned off |
 | `mistralai/mistral-large-4-1t-a52b` | 0/3 usable: 4–10 minutes per test, ran out of output length while reasoning. Fails the under-30-second goal. |
 | `nvidia/nemotron-3-super-120b-a12b`, `nvidia/llama-3.1-nemotron-70b-instruct` | Listed in the catalog but returned HTTP 404 "not found for account," so not testable on our key |
@@ -77,6 +81,19 @@ Raw data: [`climateops_prompt_ab_summary.csv`](climateops_prompt_ab_summary.csv)
 
 1. **Adopt prompt B** for the app's brief (`backend/app/nim.py`). It raised the pass rate by about 30 points on both models.
 2. **Model:** on these tests, **Nemotron 3.5 Lightning with prompt B** was the most accurate (100%) and fastest (about 6 s). **Proposed:** make Lightning the primary model, with thinking turned off, and keep Bolt with prompt B as the fallback. If the team prefers not to change the app's model this close to submission, Bolt with prompt B passes 98% and stays under 30 seconds. Team decision recorded in `docs/00-governance/decision-log.md`.
+
+## Vision test (Nov 24)
+
+A quick check of whether a photo feature (reading a thermostat from a picture) is possible on our key. This does not commit the team to building it.
+
+- **Test:** a generated image of a thermostat showing 78°F (no real photos, people or places); the model was asked to read the temperature. One run per model. Evidence: [`ClimateOps_Vision_Test.ipynb`](ClimateOps_Vision_Test.ipynb).
+
+| Model | Result |
+|---|---|
+| `meta/llama-3.2-90b-vision-instruct` (the model named in the app's `config.py`) | **HTTP 410 "Gone":** NVIDIA retired this model on Nov 16, 2026 |
+| `nvidia/nemotron-3.5-super-vl-120b-a12b` | **Correct:** answered "78°F" in 6.9 s |
+
+**Finding:** the app's current vision setting points to a retired model, and no app code calls a vision model yet. A working replacement exists (Nemotron 3.5 Super VL). **Team decision needed:** cut the photo feature from the MVP, or switch `config.py` to the Super VL model and build the code that uses it before Nov 28. Either way, the retired model ID should be removed from `config.py`.
 
 ## Limits
 
