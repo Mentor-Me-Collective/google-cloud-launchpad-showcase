@@ -4,7 +4,7 @@
 
 const HELP_ARTICLES = [
   // Donors
-  { roles: ["donor"], q: "Will I get my pans and trays back?", a: "When posting, mark the food as bulk and choose \"Yes, please return them\". The kitchen must agree to return them before it can claim. You'll see them under \"Containers to get back\" and can tap \"Got them back\". Late returns alert support." },
+  { roles: ["donor"], q: "Will I get my pans and trays back?", a: "When posting, mark the food as bulk and choose \"Yes, please return them\". The kitchen must agree to return them before it can claim. You'll see them under \"Containers to get back\". When the kitchen says they dropped them off, tap \"Got them back\" to confirm, or \"Not received\" if they aren't there. Late returns alert support." },
   { roles: ["donor"], q: "The kitchen's PIN won't work", a: "After 3 wrong tries it locks. Ask the kitchen to tap \"Get a new PIN\" in their app and read it to you. If it locks again, support is alerted automatically." },
   { roles: ["donor"], q: "No kitchen can take my food", a: "Tap \"Offer fewer servings\", or call one of the kitchens listed under the donation. Their numbers are right there." },
   { roles: ["donor"], q: "The kitchen is late", a: "Their phone number is on the donation. If they cancel, the food goes to the next kitchen on its own." },
@@ -13,7 +13,7 @@ const HELP_ARTICLES = [
 
   // Kitchens
   { roles: ["kitchen"], q: "How do neighbors get bulk food?", a: "On the \"On hand\" tab, choose how neighbors get it: eat here only, bring their own container, either, or you provide containers. Neighbors see this before they reserve." },
-  { roles: ["kitchen"], q: "We have a donor's containers", a: "Wash them and tap \"Containers returned\" on the \"On hand\" tab once they're back with the donor. If they're late, support is alerted and you can't claim food that needs containers returned until they're back." },
+  { roles: ["kitchen"], q: "We have a donor's containers", a: "Wash them, drop them off, and tap \"We returned them\" on the \"On hand\" tab. The donor then confirms they got them. If they're late, support is alerted and you can't claim food that needs containers returned until they're back." },
   { roles: ["kitchen"], q: "We can't make a pickup", a: "Tap \"Cancel pickup\" and pick a reason. The food goes straight to the next kitchen that can take it." },
   { roles: ["kitchen"], q: "The food isn't safe or isn't as listed", a: "Don't take it. Tap \"Cancel pickup\" and choose \"The food isn't as listed\". It's pulled and the donor is told." },
   { roles: ["kitchen"], q: "The donor's PIN entry locked", a: "Tap \"Get a new PIN\" on the pickup and read it to the donor. You can do this once; after that, support steps in." },
@@ -34,6 +34,7 @@ const HELP_ARTICLES = [
   { roles: ["staff"], q: "Who handles what?", a: "Donors, kitchens and neighbors fix most things themselves. Staff only see items that need a person: second PIN lockouts, food no kitchen can take, food about to expire, and support messages." },
 
   // Everyone
+  { roles: ["all"], q: "How do notifications work?", a: "Tap the bell at the top of the app to see updates, like new food you can take, a kitchen on the way, or a reservation. New ones also pop up while WeAllEat is open. In the bell panel you can choose which kinds you get." },
   { roles: ["guest", "all"], q: "I can't sign in", a: "Check the email you signed up with, or send a message to support from the Help panel." },
   { roles: ["guest", "all"], q: "I'm hungry and don't have a phone or account", a: "Walk in to any partner kitchen during serving hours. You don't need WeAllEat to get a meal." },
   { roles: ["all"], q: "Someone got sick or is in danger", a: "Call 911. If someone may have food poisoning, call 911 or Poison Control at 1-800-222-1222." },

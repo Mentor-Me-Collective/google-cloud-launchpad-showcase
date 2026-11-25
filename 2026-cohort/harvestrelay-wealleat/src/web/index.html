@@ -316,6 +316,19 @@ details[open]>summary{border-bottom:1px solid var(--line)}
 html{scrollbar-gutter:stable;overflow-y:scroll}
 .ask-row{display:flex;gap:8px}.ask-row .input{flex:1;min-width:0}
 .ask-a{margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--blue-soft);font-size:15px;white-space:pre-wrap}
+/* in-app notifications */
+.bell-btn{position:relative;padding:6px 10px!important}
+.bell-btn svg{display:block}
+.bell-n{position:absolute;top:-6px;right:-6px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--tomato);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;box-sizing:border-box}
+.notes{display:flex;flex-direction:column;max-height:46vh;overflow-y:auto;border:1px solid var(--line);border-radius:14px}
+.note{display:flex;gap:10px;align-items:flex-start;text-align:left;padding:12px 14px;border:0;border-bottom:1px solid var(--line);background:var(--card);cursor:pointer;font:inherit;color:inherit;width:100%}
+.note:last-child{border-bottom:0}
+.note:hover{background:var(--tint)}
+.note.unread{background:var(--blue-soft)}
+.note .dot{width:9px;height:9px;border-radius:50%;margin-top:6px;flex:none;background:transparent}
+.note.unread .dot{background:var(--blue)}
+.note .t{font-size:14px;line-height:1.4}
+.note .when{font-size:12px;color:var(--ink-2);margin-top:2px}
 /* packing, containers and how neighbors get food */
 .pack{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--tint);color:var(--ink);white-space:nowrap}
 .pack.bulk{background:var(--butter-soft)}
@@ -521,6 +534,64 @@ const SERVE = {
   boxes:{label:"To go: containers provided", note:"The kitchen packs it to go for you.", how:["togo"]}
 };
 const HOW_LABEL = {dinein:"Eating at the kitchen", togo:"Taking it to go"};
+/* ---------- In-app notifications ----------
+   Each note goes to a person, an organization, or a whole role. People choose which kinds they get. */
+const NOTE_CATS = {
+  kitchen:[["food","New food you can take"],["pickup","Pickups and PINs"],["reserve","Neighbor reservations"],["return","Containers"]],
+  donor:[["pickup","Pickups and PINs"],["return","Containers"]],
+  community:[["meal","New meals near me"],["reserve","My reservations"]],
+  staff:[["alert","Things that need help"]]
+};
+let NOTE_QUIET = false;   /* true while the demo data loads */
+function notify(to, cat, text, ref){
+  if (NOTE_QUIET || !S) return;
+  S.notes = S.notes || []; S.nseq = S.nseq || 1;
+  S.notes.push({id:"N" + (S.nseq++), to, cat, text, ref: ref || null, at: simNow, readBy: []});
+  if (S.notes.length > 400) S.notes.splice(0, S.notes.length - 400);
+}
+const forMe = (n, u) => n.to.user ? n.to.user === u.id : n.to.role === u.role && (!n.to.org || n.to.org === u.orgId);
+function myNotes(){
+  const u = me(); if (!u) return [];
+  const mute = u.mute || [];
+  return (S.notes || []).filter(n => forMe(n, u) && !mute.includes(n.cat)).sort((a,b) => b.at - a.at);
+}
+const isUnread = (n, u) => !n.readBy.includes(u.id) && !n.readBy.includes("*");
+function updateBell(){
+  const u = me(), btn = $("#bellBtn");
+  const unread = u ? myNotes().filter(n => isUnread(n, u)) : [];
+  document.title = (unread.length ? `(${unread.length}) ` : "") + "WeAllEat";
+  if (btn){ btn.querySelector(".bell-n")?.remove(); if (unread.length) btn.insertAdjacentHTML("beforeend", `<span class="bell-n">${unread.length > 9 ? "9+" : unread.length}</span>`); btn.setAttribute("aria-label", `Notifications${unread.length ? `, ${unread.length} unread` : ""}`); }
+  /* pop up anything new that arrived since the last check, including from other devices */
+  if (!u){ ui.seenNotes = null; return; }
+  if (!ui.seenNotes || ui.seenFor !== u.id){ ui.seenNotes = new Set(myNotes().map(n => n.id)); ui.seenFor = u.id; return; }
+  const fresh = unread.filter(n => !ui.seenNotes.has(n.id));
+  fresh.forEach(n => ui.seenNotes.add(n.id));
+  if (fresh.length) toast("🔔 " + fresh[0].text + (fresh.length > 1 ? ` (+${fresh.length - 1} more)` : ""));
+}
+/* who should hear about a donation changing state */
+function notifyState(b, from, to){
+  const d = donor(b.donorId), k = b.kitchenId ? kitchen(b.kitchenId) : null, lastK = b.lastKitchen ? kitchen(b.lastKitchen) : null;
+  if (to === "AVAILABLE"){
+    b.notifiedK = b.notifiedK || [];
+    for (const {k: kk} of ranked(b)) if (!b.notifiedK.includes(kk.id)){ b.notifiedK.push(kk.id); notify({role:"kitchen", org:kk.id}, "food", `New food you can take: ${b.servings} servings of ${b.desc} from ${d.name}, cutoff ${fmtShort(b.cutoffAt)}.`, b.id); }
+    if (from === "RESERVED" && lastK) notify({role:"donor", org:d.id}, "pickup", `${lastK.name} didn't arrive in time for ${b.desc}. It's been offered to ${ranked(b)[0]?.k.name || "the next kitchen"}.`, b.id);
+    if (from === "CANCELED" && lastK) notify({role:"donor", org:d.id}, "pickup", `${lastK.name} canceled the pickup of ${b.desc}. It's been offered to ${ranked(b)[0]?.k.name || "the next kitchen"}.`, b.id);
+  } else if (to === "UNMATCHED"){
+    notify({role:"donor", org:d.id}, "pickup", `No kitchen can take ${b.desc} right now: ${whyNoMatch(b)}.`, b.id);
+    notify({role:"staff"}, "alert", `No kitchen can take ${b.desc} from ${d.name}.`, b.id);
+  } else if (to === "RESERVED" && k){
+    notify({role:"donor", org:d.id}, "pickup", `${k.name} claimed ${b.desc} and is on the way (about ${tripMin(milesBetween(d, k))} min).`, b.id);
+  } else if (to === "HANDOFF_CONFIRMED" && k){
+    notify({role:"kitchen", org:k.id}, "pickup", `Handoff confirmed: ${b.desc} is now on hand.`, b.id);
+    for (const a of S.accounts.filter(a => a.role === "community")){
+      if (milesBetween({x: a.x ?? 6, y: a.y ?? 6}, k) <= (a.radius || 3)) notify({user:a.id}, "meal", `Fresh food at ${k.name}: ${b.desc}. Reserve some before it's gone.`, b.id);
+    }
+  } else if (to === "EXPIRED"){
+    notify({role:"donor", org:d.id}, "pickup", `${b.desc} expired before any kitchen picked it up.`, b.id);
+  } else if (to === "CANCELED" && b.terminal === false && lastK === null && k){
+    /* handled by the re-offer above */
+  }
+}
 const serveOf = b => b.serve || (b.pack === "BULK" ? "dinein" : "packed");
 const ROLE = {
   donor:{name:"Donor",color:"var(--tomato)",soft:"var(--tomato-soft)",title:"Share your extra food",points:["Post a batch in under a minute","Get matched only with kitchens that can store it","Track meals donated, tax write-off and CO₂ saved"]},
@@ -561,7 +632,7 @@ const fmtShort = t => new Date(t).toLocaleTimeString([], {hour:"numeric",minute:
 const fmtDay = t => new Date(t).toLocaleString([], {weekday:"short",hour:"numeric",minute:"2-digit"});
 const returnDue = b => b.returnDueAt || (b.confirmedAt ? b.confirmedAt + (b.returnHours || 24)*60*MIN : null);
 const needsReturn = b => b.pack === "BULK" && b.returnDish && b.status === "HANDOFF_CONFIRMED" && !b.returnedAt;
-const isOverdue = b => needsReturn(b) && simNow > returnDue(b);
+const isOverdue = b => needsReturn(b) && !b.returnSentAt && simNow > returnDue(b);
 const overdueReturns = kId => S.batches.filter(b => b.kitchenId === kId && isOverdue(b));
 const whatBack = b => b.returnWhat ? esc(b.returnWhat) : "the containers";
 const packChip = b => b.pack === "BULK"
@@ -606,6 +677,7 @@ function transition(b, to, actor, reason){
   if (b.terminal || !(ALLOWED[from] || []).includes(to)) { log("SYSTEM", b.id, `Blocked illegal change ${from} → ${to}`, actor); return false; }
   b.status = to; b.updatedAt = simNow;
   log("STATE", b.id, `${from} → ${to}${reason ? " · " + reason : ""}`, actor);
+  notifyState(b, from, to);
   return true;
 }
 function committed(k){ return S.batches.filter(b => b.kitchenId === k.id && (b.status === "RESERVED" || b.status === "HANDOFF_CONFIRMED")).reduce((n,b) => n + b.servings, 0); }
@@ -649,11 +721,12 @@ const holdWindow = h => `${fmtShort(h.readyAt || h.createdAt)}–${fmtShort(h.ex
 
 /* ---------- Seed ---------- */
 async function seed(){
+  NOTE_QUIET = true;
   const T0 = Math.floor(Date.now()/MIN)*MIN + 8*1000;
   simNow = T0;
   const m = n => T0 + n*MIN;
   S = { donors: SEED_DONORS.map(({email,person,...d}) => d), kitchens: SEED_KITCHENS.map(({email,person,...k}) => k),
-        accounts: [], batches: [], holds: [], walkins: [], tickets: [], tseq: 1, wseq: 1, log: [], seq: 1021, hseq: 205, dseq: 6, kseq: 6, aseq: 1 };
+        accounts: [], batches: [], holds: [], walkins: [], tickets: [], notes: [], nseq: 1, tseq: 1, wseq: 1, log: [], seq: 1021, hseq: 205, dseq: 6, kseq: 6, aseq: 1 };
   const demoHash = {};
   const addAcct = async (role, name, email, orgId, phone) => {
     const a = {id:"U" + (S.aseq++), role, name, email, orgId, phone, pw: await pwHash(email, DEMO_PW), demo:true};
@@ -729,6 +802,14 @@ async function seed(){
   }
   S.log.sort((a,b) => a.t - b.t);
   log("SYSTEM", null, "Demo loaded: 5 donors, 5 kitchens, 20 donations");
+  NOTE_QUIET = false;
+  /* earlier notifications, already read, so the bell has some history */
+  const was = simNow;
+  for (const b of S.batches.filter(b => b.status === "AVAILABLE")){ simNow = b.createdAt; notifyState(b, "NEW", "AVAILABLE"); }
+  for (const b of S.batches.filter(b => b.status === "RESERVED")){ simNow = b.reservedAt; notifyState(b, "AVAILABLE", "RESERVED"); }
+  for (const h of S.holds.filter(h => h.status === "HELD")){ simNow = h.createdAt; notify({role:"kitchen", org:h.kitchenId}, "reserve", `${h.name} reserved ${plural(h.qty,"serving")} of ${batch(h.batchId).desc}, pickup ${holdWindow(h)}.`, h.batchId); }
+  simNow = was;
+  S.notes.forEach(n => n.readBy.push("*"));
 }
 
 /* ---------- Timers ---------- */
@@ -751,11 +832,22 @@ function runJobs(){
       if (b.status === "AVAILABLE" && !b.alerted && b.cutoffAt - simNow <= ALERT_MIN*MIN){
         b.alerted = true; changed = true;
         log("ALERT", b.id, `Still unclaimed with ${fmtLeft(b.cutoffAt - simNow)} left · coordinator notified`, "Timer");
+        notify({role:"staff"}, "alert", `${b.desc} from ${donor(b.donorId).name} is still unclaimed with ${fmtLeft(b.cutoffAt - simNow)} left.`, b.id);
       }
     }
   }
   for (const h of S.holds){
-    if (h.status === "HELD" && simNow >= h.expiresAt){ h.status = "EXPIRED"; changed = true; log("COMMUNITY", h.id, `${h.name}'s hold ran out · ${h.qty} servings back on offer`, "Timer"); }
+    if (h.status === "HELD" && simNow >= h.expiresAt){ h.status = "EXPIRED"; changed = true; log("COMMUNITY", h.id, `${h.name}'s hold ran out · ${h.qty} servings back on offer`, "Timer");
+      if (h.userId) notify({user:h.userId}, "reserve", `Your reservation for ${batch(h.batchId).desc} ran out, so it went back to others.`, h.batchId); }
+  }
+  for (const b of S.batches){
+    if (isOverdue(b) && !b.overdueNoted){
+      b.overdueNoted = true; changed = true;
+      const k = kitchen(b.kitchenId), d = donor(b.donorId);
+      notify({role:"kitchen", org:k.id}, "return", `Containers overdue: please return ${b.returnWhat || "the containers"} to ${d.name}.`, b.id);
+      notify({role:"donor", org:d.id}, "return", `${k.name} hasn't returned ${b.returnWhat || "your containers"} yet. Support has been told.`, b.id);
+      notify({role:"staff"}, "alert", `${k.name} is late returning ${b.returnWhat || "containers"} to ${d.name}.`, b.id);
+    }
   }
   return changed;
 }
@@ -789,7 +881,7 @@ function releaseReservation(b, actor, reason, terminal){
   const k = kitchen(b.kitchenId);
   if (!transition(b, "CANCELED", actor, reason)) return;
   b.excluded.push(k.id); b.lastKitchen = k.id; b.kitchenId = null; b.pin = null; b.pinHash = null; b.attempts = 0; b.locked = false;
-  if (terminal){ b.terminal = true; b.note = reason; return; }
+  if (terminal){ b.terminal = true; b.note = reason; notify({role:"donor", org:b.donorId}, "pickup", `${k.name} reported ${b.desc} wasn't as listed, so it was pulled. Call them if you have questions.`, b.id); notify({role:"staff"}, "alert", `${k.name} reported ${b.desc} from ${donor(b.donorId).name} wasn't as listed.`, b.id); return; }
   if (simNow >= b.cutoffAt){ transition(b, "EXPIRED", "Timer", "cutoff already passed"); return; }
   const r = ranked(b);
   r.length ? transition(b, "AVAILABLE", "Matcher", `offered to next kitchen: ${r[0].k.name}`) : transition(b, "UNMATCHED", "Matcher", whyNoMatch(b));
@@ -805,7 +897,9 @@ async function verifyPin(b, input, actor){
     transition(b, "HANDOFF_CONFIRMED", actor, `handed to ${kitchen(b.kitchenId).name}`); render(); return {ok:true};
   }
   b.attempts++; log("PIN", b.id, `Wrong PIN (${b.attempts} of 3)`, actor);
-  if (b.attempts >= MAX_PIN_ATTEMPTS){ b.locked = true; b.lockedAt = simNow; log("ALERT", b.id, "Locked after 3 wrong PINs · coordinator review needed", "System"); }
+  if (b.attempts >= MAX_PIN_ATTEMPTS){ b.locked = true; b.lockedAt = simNow; log("ALERT", b.id, "Locked after 3 wrong PINs · coordinator review needed", "System");
+    if (b.selfPinUsed) notify({role:"staff"}, "alert", `PIN locked twice on ${b.desc}. Call ${donor(b.donorId).name} and ${kitchen(b.kitchenId).name}.`, b.id);
+    else notify({role:"kitchen", org:b.kitchenId}, "pickup", `The donor's PIN entry locked on ${b.desc}. Tap “Get a new PIN” and read it to them.`, b.id); }
   render();
   const left = MAX_PIN_ATTEMPTS - b.attempts;
   return {ok:false, msg: b.locked ? lockMsg(b) : `That PIN doesn't match. ${plural(left,"try","tries")} left.`};
@@ -833,6 +927,7 @@ function createHold(b, qty, afterMin=0, how){
   const u = me();
   const h = {id:"R-" + (S.hseq++), batchId:b.id, kitchenId:b.kitchenId, name:u.name.split(" ")[0], phone:u.phone || "", qty, code:genPin(), createdAt:simNow, readyAt:simNow + afterMin*MIN, expiresAt:simNow + (afterMin + HOLD_MIN)*MIN, status:"HELD", userId:u.id, collectedAt:null, how: how || SERVE[serveOf(b)].how[0]};
   S.holds.push(h); ui.ctab = "mine";   /* show the new code under "Your reservations" */
+  notify({role:"kitchen", org:b.kitchenId}, "reserve", `${h.name} reserved ${plural(qty,"serving")} of ${b.desc} (${HOW_LABEL[h.how].toLowerCase()}), pickup ${holdWindow(h)}.`, b.id);
   log("COMMUNITY", h.id, `${h.name} reserved ${qty} of ${b.desc} at ${kitchen(b.kitchenId).name} · pickup ${holdWindow(h)} · ${HOW_LABEL[h.how].toLowerCase()}`, h.name);
   return h;
 }
@@ -1008,7 +1103,7 @@ function renderShell(){
   document.querySelectorAll("[data-app]").forEach(p => p.hidden = !(ui.screen === "app" && p.id === "app-" + me()?.role));
   const u = me();
   $("#topRight").innerHTML = u
-    ? `<span class="role-chip rc-${u.role}">${ROLE[u.role].name}</span><button class="btn sm help-btn" data-act="open-help" title="Get help or contact support"><span aria-hidden="true">?</span><span class="help-label">Help</span></button><button class="profile-btn" data-act="open-profile" title="Edit your profile"><span class="who">${esc(u.role === "donor" ? donor(u.orgId).name : u.role === "kitchen" ? kitchen(u.orgId).name : u.name)}</span>
+    ? `<span class="role-chip rc-${u.role}">${ROLE[u.role].name}</span><button class="btn sm bell-btn" id="bellBtn" data-act="open-notes" title="Notifications" aria-label="Notifications"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6v3.5L4.5 16h15L18 12.5V9a6 6 0 0 0-6-6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.5 19a2.5 2.5 0 0 0 5 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><button class="btn sm help-btn" data-act="open-help" title="Get help or contact support"><span aria-hidden="true">?</span><span class="help-label">Help</span></button><button class="profile-btn" data-act="open-profile" title="Edit your profile"><span class="who">${esc(u.role === "donor" ? donor(u.orgId).name : u.role === "kitchen" ? kitchen(u.orgId).name : u.name)}</span>
        <span class="avatar" style="background:${avatarColor(u.id)}" aria-hidden="true">${esc(initials(u.name))}</span><span class="profile-label">Profile</span></button><button class="btn sm" data-act="signout">Sign out</button>`
     : ui.screen === "home" ? `<button class="btn sm hide-sm" data-act="scroll-roles">Sign in</button><button class="btn sm primary" data-act="scroll-roles">Get started</button>` : `<button class="btn sm" data-act="home">← Home</button>`;
 }
@@ -1141,8 +1236,9 @@ function renderDonor(){
   $("#donorReturns").innerHTML = outs.length ? `<div class="card-head"><h2>Containers to get back</h2><span class="small muted">${plural(outs.length,"donation")}</span></div><div class="rows">${outs.map(b => { const k = kitchen(b.kitchenId), late = isOverdue(b);
     return `<div class="row ${late ? "urgent" : ""}"><div class="row-main"><div class="row-title">${whatBack(b)} ${late ? `<span class="badge b-LOCKED">Overdue</span>` : ""}</div>
       <div class="row-meta">From ${esc(b.desc)} · with ${esc(k.name)}</div>${contactLine("kitchen", k.id, late ? "Overdue. Call the kitchen:" : "Questions? Call:")}
-      ${late ? `<p class="row-note small">Support has been told. <button class="link" data-act="open-help">Report a problem</button></p>` : ""}</div>
-      <div class="row-side"><span class="label">${late ? "Was due" : "Due back by"}</span><b>${fmtDay(returnDue(b))}</b><button class="btn sm" data-act="ret-done" data-id="${b.id}">Got them back</button></div></div>`; }).join("")}</div>` : "";
+      ${b.returnSentAt ? `<p class="row-note small"><b>${esc(k.name)} says they dropped them off</b> ${fmtDay(b.returnSentAt)}. Please check and confirm.</p>` : late ? `<p class="row-note small">Support has been told. <button class="link" data-act="open-help">Report a problem</button></p>` : ""}</div>
+      <div class="row-side">${b.returnSentAt ? `<span class="label">Waiting on you</span><div class="btn-row" style="justify-content:flex-end"><button class="btn sm" data-act="ret-missing" data-id="${b.id}">Not received</button><button class="btn primary sm" data-act="ret-done" data-id="${b.id}">Got them back</button></div>`
+        : `<span class="label">${late ? "Was due" : "Due back by"}</span><b>${fmtDay(returnDue(b))}</b><button class="btn sm" data-act="ret-done" data-id="${b.id}">Got them back</button>`}</div></div>`; }).join("")}</div>` : "";
   $("#donorDone").innerHTML = done.length ? done.map(b => `<div class="row"><div class="row-main"><div class="row-title">${esc(b.desc)} ${badge(b.status)}</div>
     <div class="row-meta">${b.servings} servings · ${b.status === "HANDOFF_CONFIRMED" ? `to ${esc(kitchen(b.kitchenId).name)} at ${fmtShort(b.confirmedAt)} · receipt EE-${b.id.slice(2)}` : b.status === "EXPIRED" ? "no kitchen picked it up in time" : esc(b.note || "canceled")}</div></div></div>`).join("") : `<div class="empty">Nothing finished yet today.</div>`;
 }
@@ -1169,7 +1265,7 @@ function renderKitchen(){
   let html = "", foot = "";
   if (ui.ktab === "claim"){
     html = (feed.length > 1 ? `<div class="sortbar">Sort by <button class="chip" data-act="ksort" data-v="cutoff" aria-pressed="${ui.ksort !== "donor"}">Soonest cutoff</button><button class="chip" data-act="ksort" data-v="donor" aria-pressed="${ui.ksort === "donor"}">Donor A–Z</button></div>` : "") + (feed.length ? feed.map(b => `<div class="row ${urgent(b) ? "urgent" : ""}"><div class="row-main"><div class="row-title">${esc(b.desc)}</div>
-      ${donorLine(donor(b.donorId))}<div class="row-meta"><b style="color:var(--ink)">${fmtMi(milesBetween(donor(b.donorId), k))} away · about ${tripMin(milesBetween(donor(b.donorId), k))} min</b> · ${b.servings} servings · ${stor(b.tag)} · ${esc(contains(b))}</div><div class="row-meta">${packChip(b)}</div></div>
+      ${donorLine(donor(b.donorId), true)}<div class="row-meta"><b style="color:var(--ink)">${fmtMi(milesBetween(donor(b.donorId), k))} away · about ${tripMin(milesBetween(donor(b.donorId), k))} min</b> · ${b.servings} servings · ${stor(b.tag)} · ${esc(contains(b))}</div><div class="row-meta">${packChip(b)}</div></div>
       <div class="row-side"><span class="label">Cutoff in</span>${timer(b.cutoffAt)}<button class="btn primary sm" data-act="claim" data-id="${b.id}">Claim</button></div></div>`).join("")
       : `<div class="empty">Nothing you can take right now. New donations appear here automatically.</div>`);
     const h = [];
@@ -1184,7 +1280,7 @@ function renderKitchen(){
       <div class="row-title">${esc(b.desc)}</div>${donorLine(d, true)}${contactLine("donor", d.id)}<div class="row-meta">${fmtMi(milesBetween(d, k))} away · about ${tripMin(milesBetween(d, k))} min · ${b.servings} servings · ${stor(b.tag)}</div><div class="row-meta">${packChip(b)}</div>
       ${b.pack === "BULK" ? `<div class="callout soft">In bulk containers: bring carriers or insulated bags to keep it ${TAGS[b.tag].keep}.${b.returnDish ? ` You agreed to return ${whatBack(b)} ${RETURN_OPTS[b.returnHours] || "within 1 day"} of pickup.` : ""}</div>` : ""}
       ${b.locked ? `<div class="callout">${b.selfPinUsed ? "The donor's PIN entry locked again. Support has been alerted and will call you both." : `The donor's PIN entry locked after 3 wrong tries. Get a new PIN and read it to them. <button class="btn sm primary" data-act="self-newpin" data-id="${b.id}" style="margin-left:6px">Get a new PIN</button>`}</div>` : ""}
-      <div class="pinbox"><div><div class="label">Pickup PIN</div><div class="pin">${b.pin}</div></div><div class="small" style="flex:1;min-width:180px">Show this to the donor. They type it in to release the food.${b.attempts ? ` <b>${plural(b.attempts,"wrong try","wrong tries")} so far.</b>` : ""}</div></div>
+      <div class="pinbox"><div><div class="label">Pickup PIN</div><div class="pin">${b.pin}</div></div><div class="small" style="flex:1;min-width:180px">Show this to the donor. They type the PIN to release the food.${b.attempts ? ` <b>${plural(b.attempts,"wrong try","wrong tries")} so far.</b>` : ""}</div></div>
       <div class="btn-row" style="margin-top:10px"><button class="link danger" data-act="open-cancel" data-id="${b.id}">Cancel pickup</button></div></div>
       <div class="row-side"><span class="label">Pick up within</span>${timer(b.pickupDeadline)}</div></div>`; }).join("")
       : `<div class="empty">No pickups yet. Claim food on the first tab to get a PIN.</div>`;
@@ -1201,7 +1297,7 @@ function renderKitchen(){
     html = stock.length ? stock.map(b => { const held = S.holds.filter(h => h.batchId === b.id && h.status === "HELD").reduce((n,h)=>n+h.qty,0), got = S.holds.filter(h => h.batchId === b.id && h.status === "COLLECTED").reduce((n,h)=>n+h.qty,0);
       const opts = b.pack === "BULK" ? ["dinein","byo","both","boxes"] : ["packed","dinein"], late = isOverdue(b);
       const serveCtl = `<div class="serve-set"><span class="small muted">Neighbors get it:</span>${opts.map(v => `<button class="chip" data-act="set-serve" data-id="${b.id}" data-v="${v}" aria-pressed="${serveOf(b) === v}">${SERVE[v].label}</button>`).join("")}</div>`;
-      const ret = needsReturn(b) ? `<div class="callout ${late ? "" : "soft"} ret-row"><span>${late ? "<b>Overdue:</b> return" : "Return"} ${whatBack(b)} to ${esc(donor(b.donorId).name)} ${late ? "(was due" : "by"} ${fmtDay(returnDue(b))}${late ? ")" : ""}.</span><button class="btn sm" data-act="ret-done" data-id="${b.id}">Containers returned</button></div>`
+      const ret = needsReturn(b) ? `<div class="callout ${late ? "" : "soft"} ret-row"><span>${late ? "<b>Overdue:</b> return" : "Return"} ${whatBack(b)} to ${esc(donor(b.donorId).name)} ${late ? "(was due" : "by"} ${fmtDay(returnDue(b))}${late ? ")" : ""}.</span>${b.returnSentAt ? `<span class="small muted">Dropped off ${fmtDay(b.returnSentAt)}. Waiting for ${esc(donor(b.donorId).name)} to confirm.</span>` : `<button class="btn sm" data-act="ret-sent" data-id="${b.id}">We returned them</button>`}</div>`
         : b.returnDish && b.returnedAt ? `<p class="small muted" style="margin-top:6px">Containers returned ${fmtDay(b.returnedAt)}.</p>` : "";
       const portion = b.pack === "BULK" && b.allergens.length ? `<p class="small muted" style="margin-top:6px">When portioning, keep the allergen list with each serving: ${esc(contains(b).toLowerCase())}.</p>` : "";
       return `<div class="row"><div class="row-main"><div class="row-title">${esc(b.desc)}</div>${donorLine(donor(b.donorId))}<div class="row-meta">Received at ${fmtShort(b.confirmedAt)} · ${stor(b.tag)}</div><div class="row-meta">${packChip(b)}</div>${serveCtl}${portion}${ret}</div>
@@ -1366,13 +1462,14 @@ function render(){
     const r = me().role;
     if (r === "donor") renderDonor(); else if (r === "kitchen") renderKitchen(); else if (r === "community") renderCommunity(); else renderStaff();
   }
-  renderDock();
+  renderDock(); updateBell();
   document.querySelectorAll(".speedBtns").forEach(el => el.innerHTML = [["Pause",0],["1×",1],["10×",10],["60×",60]].map(([l,v]) => `<button class="chip" data-act="speed" data-v="${v}" aria-pressed="${speed === v}">${l}</button>`).join(""));
   updateTimers();
 }
 function renderLive(){ // refresh data views without touching forms
   if (ui.screen === "app") { const r = me().role; if (r === "donor") renderDonor(); else if (r === "kitchen") renderKitchen(); else if (r === "community") renderCommunity(); else renderStaff(); }
   if (ui.screen === "home") renderHome();
+  updateBell();
   updateTimers();
 }
 function updateTimers(){
@@ -1433,6 +1530,14 @@ function drawModal(done){
       <input id="m-code" class="code-input" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="••••" aria-label="4-digit PIN">
       <p class="small muted" id="mTries">${MAX_PIN_ATTEMPTS - b.attempts} of ${MAX_PIN_ATTEMPTS} tries left</p>
       <p class="err" id="mErr" hidden></p>${actions("Confirm handoff", `<button class="link" type="button" data-act="fill-code" style="margin-right:auto">Demo: fill in the PIN</button>`)}`;
+  } else if (m.kind === "notes"){
+    const u = me(), list = myNotes().slice(0, 40), cats = NOTE_CATS[u.role] || [];
+    f.innerHTML = `<h2>Notifications</h2>
+      ${list.length ? `<div class="notes">${list.map(n => `<button type="button" class="note ${m.unread.includes(n.id) ? "unread" : ""}" data-act="note-go" data-id="${n.id}"><span class="dot"></span><span><span class="t">${esc(n.text)}</span><span class="when" style="display:block">${fmtShort(n.at)}</span></span></button>`).join("")}</div>`
+        : `<div class="empty">No notifications yet. You'll see updates here as they happen.</div>`}
+      <fieldset class="field"><legend>Notify me about</legend><div class="opts">${cats.map(([c,l]) => `<label><input type="checkbox" data-notecat value="${c}" ${(u.mute || []).includes(c) ? "" : "checked"}> ${l}</label>`).join("")}</div>
+        <span class="help">Notifications show here and pop up while WeAllEat is open. Email and text alerts are planned.</span></fieldset>
+      ${actions("")}`;
   } else if (m.kind === "claimret"){
     const b = batch(m.id), d = donor(b.donorId);
     f.innerHTML = `<h2>Claim ${esc(b.desc)}?</h2><p class="small muted">${b.servings} servings · ${stor(b.tag)} · from ${esc(d.name)}</p>
@@ -1456,12 +1561,12 @@ function drawModal(done){
   } else if (m.kind === "help"){
     const u = me(), r = u?.role || "guest";
     const FAQ = {
-      donor: [["Will I get my pans and trays back?", "If you mark “Yes, please return them” when posting, the kitchen agrees to return them before it can claim. You'll see them under “Containers to get back”. Late returns alert support, and that kitchen can't claim more of that kind of food until they're back."],
+      donor: [              ["Will I get my pans and trays back?", "If you mark “Yes, please return them” when posting, the kitchen agrees to return them before it can claim. You'll see them under “Containers to get back”. Late returns alert support, and that kitchen can't claim more of that kind of food until they're back."],
               ["The kitchen's PIN won't work", "After 3 wrong tries it locks. Ask the kitchen to tap “Get a new PIN” in their app and read it to you. If it locks again, support is alerted automatically."],
               ["No kitchen can take my food", "Tap “Offer fewer servings”, or call one of the kitchens listed under the donation. Their numbers are right there."],
               ["The kitchen is late", "Their phone number is on the donation. If they cancel, the food goes to the next kitchen on its own."]],
       kitchen: [["How do neighbors get bulk food?", "On the “On hand” tab, choose how neighbors get it: eat here only, bring their own container, either, or you provide containers. Neighbors see this before they reserve."],
-                ["We have a donor's containers", "Wash them and tap “Containers returned” on the “On hand” tab once they're back with the donor. If they're late, you can't claim food that needs containers returned until they're back."],
+                ["We have a donor's containers", "Wash them, drop them off, and tap “We returned them” on the “On hand” tab. The donor then confirms they got them. If they're late, you can't claim food that needs containers returned until they're back."],
                 ["We can't make a pickup", "Tap “Cancel pickup” and pick a reason. The food goes straight to the next kitchen that can take it."],
                 ["The food isn't safe or isn't as listed", "Don't take it. Tap “Cancel pickup” and choose “The food isn't as listed”. It's pulled and the donor is told."],
                 ["The donor's PIN entry locked", "Tap “Get a new PIN” on the pickup and read it to the donor."],
@@ -1590,6 +1695,7 @@ $("#modalForm").addEventListener("submit", async e => {
       from: u ? (u.role === "donor" ? `${u.name}, ${donor(u.orgId).name}` : u.role === "kitchen" ? `${u.name}, ${kitchen(u.orgId).name}` : u.name) : ($("#t-name").value.trim() || "Someone"),
       phone: u ? u.phone : (normPhone(contact) || ""), email: u ? u.email : (validEmail(contact) ? contact : ""), resolved:false};
     S.tickets.push(t); log("ALERT", null, `${t.urgent ? "Urgent support" : "Support"} message: ${t.topic}`, t.from);
+    notify({role:"staff"}, "alert", `${t.urgent ? "Urgent support message" : "Support message"} from ${t.from}: ${t.topic}.`);
     closeModal(); render(); toast(`Sent. Support will reach you${t.phone ? " at " + t.phone : t.email ? " at " + t.email : ""}.`);
   } else if (m.kind === "cancel"){
     const b = batch(m.id), k = kitchen(b.kitchenId), bad = document.querySelector('input[name="c-why"]:checked').value === "bad";
@@ -1647,6 +1753,7 @@ $("#modalForm").addEventListener("submit", async e => {
   }
 });
 $("#modalForm").addEventListener("change", e => {
+  if (e.target.matches("[data-notecat]")){ const u = me(); u.mute = [...document.querySelectorAll("[data-notecat]")].filter(c => !c.checked).map(c => c.value); updateBell(); }
   if (e.target.id === "p-none" && e.target.checked){ document.querySelectorAll("[data-al]").forEach(c => c.checked = false); $("#p-other").checked = false; }
   if ((e.target.matches("[data-al]") || e.target.id === "p-other") && e.target.checked) $("#p-none").checked = false;
   if (e.target.id === "p-other" && e.target.checked) $("#p-other-text").focus();
@@ -1693,8 +1800,24 @@ document.addEventListener("click", async e => {
       }
       await claim(b, kitchen(myKitchenId())); break;
     }
+    case "open-notes": { const u = me(); const unread = myNotes().filter(n => isUnread(n, u)).map(n => n.id);
+      myNotes().forEach(n => { if (!n.readBy.includes(u.id)) n.readBy.push(u.id); });
+      ui.modal = {kind:"notes", unread}; drawModal(); $("#modal").hidden = false; updateBell(); break; }
+    case "note-go": { const n = (S.notes || []).find(x => x.id === el.dataset.id), r = me().role; closeModal();
+      if (n){ if (r === "kitchen") ui.ktab = {food:"claim", pickup:"pickups", reserve:"community", return:"stock"}[n.cat] || ui.ktab;
+        if (r === "donor") ui.dtab = "open"; if (r === "community") ui.ctab = n.cat === "meal" ? "near" : "mine"; }
+      ui.screen = "app"; window.scrollTo(0,0); render(); break; }
     case "set-serve": { b.serve = el.dataset.v; log("SYSTEM", b.id, `Serving set: ${SERVE[b.serve].label}`, kitchen(b.kitchenId).name); render(); toast(`Neighbors now see “${SERVE[b.serve].label}”.`); break; }
-    case "ret-done": { if (!b.returnedAt){ b.returnedAt = simNow; log("RETURN", b.id, `Containers returned to ${donor(b.donorId).name}`, me()?.name || "System"); } render(); toast("Marked as returned. Thanks!"); break; }
+    case "ret-sent": { if (!b.returnSentAt && !b.returnedAt){ b.returnSentAt = simNow; log("RETURN", b.id, `${kitchen(b.kitchenId).name} says containers were dropped off`, me()?.name || "Kitchen");
+      notify({role:"donor", org:b.donorId}, "return", `${kitchen(b.kitchenId).name} says they returned ${b.returnWhat || "your containers"}. Please confirm you got them.`, b.id); }
+      render(); toast(`Thanks! ${donor(b.donorId).name} will confirm they got them.`); break; }
+    case "ret-missing": { b.returnSentAt = null; b.overdueNoted = false; log("RETURN", b.id, `${donor(b.donorId).name} hasn't received the containers`, me()?.name || "Donor");
+      notify({role:"kitchen", org:b.kitchenId}, "return", `${donor(b.donorId).name} says they haven't received ${b.returnWhat || "their containers"}. Please call them.`, b.id);
+      notify({role:"staff"}, "alert", `${donor(b.donorId).name} says ${kitchen(b.kitchenId).name} hasn't returned ${b.returnWhat || "their containers"}.`, b.id);
+      render(); toast("Got it. The kitchen and support have been told."); break; }
+    case "ret-done": { if (!b.returnedAt){ b.returnedAt = simNow; log("RETURN", b.id, `Containers returned to ${donor(b.donorId).name}`, me()?.name || "System");
+      const by = me()?.role; if (by !== "donor") notify({role:"donor", org:b.donorId}, "return", `${kitchen(b.kitchenId).name} marked ${b.returnWhat || "your containers"} as returned.`, b.id); if (by !== "kitchen") notify({role:"kitchen", org:b.kitchenId}, "return", `${donor(b.donorId).name} got their containers back. Thanks!`, b.id); }
+      render(); toast("Marked as returned. Thanks!"); break; }
     case "test-return": { ui.dock = false; const t = S.batches.find(needsReturn); if (!t){ toast("No containers out to test."); break; } t.returnDueAt = simNow - MIN; log("SYSTEM", t.id, "Test: container return made overdue", "Demo"); render(); renderDock(); toast(`${kitchen(t.kitchenId).name}'s containers for ${t.desc} are now overdue.`); break; }
     case "open-cancel": openModal("cancel", b.id); break;
     case "withdraw": transition(b, "CANCELED", donor(b.donorId).name, "withdrawn by donor"); b.terminal = true; b.note = "Withdrawn"; render(); break;
@@ -1703,7 +1826,7 @@ document.addEventListener("click", async e => {
       if (n >= b.servings) { toast(`Enter fewer than ${b.servings} servings.`); break; }
       log("SYSTEM", b.id, `Donor lowered servings ${b.servings} → ${n}`, donor(b.donorId).name); b.servings = n; runJobs(); render();
       toast(b.status === "AVAILABLE" ? `Now ${n} servings. Offered to ${plural(ranked(b).length,"kitchen")}.` : `Now ${n} servings. Still no kitchen fits: ${whyNoMatch(b)}.`); break; }
-    case "cancel-hold": { const h = hold(el.dataset.id); h.status = "CANCELED"; log("COMMUNITY", h.id, `${h.name} canceled · ${h.qty} servings back on offer`, h.name); render(); break; }
+    case "cancel-hold": { const h = hold(el.dataset.id); h.status = "CANCELED"; log("COMMUNITY", h.id, `${h.name} canceled · ${h.qty} servings back on offer`, h.name); notify({role:"kitchen", org:h.kitchenId}, "reserve", `${h.name} canceled their reservation for ${batch(h.batchId).desc}.`, h.batchId); render(); break; }
     case "ktab": ui.ktab = el.dataset.v; render(); break;
     case "otab": ui.otab = el.dataset.v; render(); break;
     case "dtab": ui.dtab = el.dataset.v; render(); break;
