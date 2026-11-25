@@ -9,8 +9,10 @@
 | DEC-03 | Poll 5min alerts / 30min forecast (cache-aware) | Blanca/Kseniya | Proposed | 2026-11-04 |
 | DEC-04 | Deterministic weighted ranking | Justin/Kseniya | Proposed | 2026-11-06 |
 | DEC-05 | Public vs DEMO record labeling | Kseniya/Shiksha | Proposed | 2026-11-04 |
-| DEC-06 | NIM model / API access validated | Blanca/AI Research | Accepted (`nvidia/nemotron-3.5-bolt-e4b`) | 2026-11-07 |
+| DEC-06 | NIM model / API access validated | Blanca/AI Research | Accepted (`nvidia/nemotron-3.5-bolt-e4b`) | 2026-11-07 (smoke test passed 2026-11-24 with scripts/smoke_nim.py, Blanca: HTTP 200, "ready"; model comparison evidence: docs/05-ai-evaluation/model-comparison) |
 | DEC-07 | Deadline and team rules confirmed with organizer | Justin | Open | 2026-10-29 |
+| DEC-08 | Readiness brief prompt: adopt playbook-grounded prompt B; model Nemotron 3.5 Lightning (primary, thinking off) vs. Bolt (fallback). Evidence: docs/05-ai-evaluation/model-comparison | Blanca | Proposed | 2026-11-25 |
+| DEC-09 | Photo proof: build an advisory AI photo check with `nvidia/nemotron-3.5-super-vl-120b-a12b` for HT-01, HT-07, HT-09 (manager still decides; outages fall back to manual review). Configured `meta/llama-3.2-90b-vision-instruct` was retired 2026-11-16. Evidence: vision proof test 12/13 correct, 0 of 6 bad photos accepted (docs/05-ai-evaluation/model-comparison); code on branch blanca/vision-check | Blanca | Proposed | 2026-11-25 |
 
 ## Change-control template
 

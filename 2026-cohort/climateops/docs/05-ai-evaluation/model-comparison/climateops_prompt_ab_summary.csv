@@ -1,0 +1,5 @@
+model,prompt,checks passed (%),valid JSON,errors,median seconds
+Nemotron 3.5 Bolt (in the app),A (original),70,6/6,0,11.05
+Nemotron 3.5 Bolt (in the app),B (improved),98,6/6,0,21.1
+Nemotron 3.5 Lightning (fast),A (original),68,6/6,0,6.45
+Nemotron 3.5 Lightning (fast),B (improved),100,6/6,0,6.15
