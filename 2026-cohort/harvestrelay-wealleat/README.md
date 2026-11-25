@@ -97,7 +97,7 @@ API keys live in server-side secrets only. Never commit them.
 
 ## Team
 
-**Team HarvestRelay** is led by **Chad Kim**, who took over as Team Lead in November 2026.
+**Team HarvestRelay** is led by **Chad Kim** (Team Lead).
 
 | Name | GCLP track | Role |
 |---|---|---|
@@ -109,8 +109,8 @@ API keys live in server-side secrets only. Never commit them.
 ## Links
 
 - Demo video: *(add)*
-- Presentation deck: *(add)*
-- Written summary: *(add)*
+- Presentation deck: [WeAllEat Presentation](https://drive.google.com/file/d/11yZM170XWTLeeyYYZGpeCf2iEOPnv92S/view?usp=sharing)
+- Written summary: [WeAllEat Written Summary](https://drive.google.com/file/d/1Vwj2L6MKLdk9cMHh0vFGxW3a7kADFS70/view?usp=sharing)
 
 ## Future ideas
 
