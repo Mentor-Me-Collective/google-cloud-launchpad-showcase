@@ -38,6 +38,10 @@ class MemoryStore:
             ]
         return out
 
+    def delete(self, kind: str, id_: str) -> None:
+        with self._lock:
+            self._data.get(kind, {}).pop(id_, None)
+
 
 class FirestoreStore:  # pragma: no cover - needs real GCP; Blanca to validate
     """TODO(Blanca): test against a real Firestore project. transaction() below is a
@@ -68,6 +72,9 @@ class FirestoreStore:  # pragma: no cover - needs real GCP; Blanca to validate
         for k, v in filters.items():
             q = q.where(k, "==", v)
         return [s.to_dict() for s in q.stream()]
+
+    def delete(self, kind: str, id_: str) -> None:
+        self._db.collection(kind).document(id_).delete()
 
 
 def make_store(backend: str, project: str = ""):

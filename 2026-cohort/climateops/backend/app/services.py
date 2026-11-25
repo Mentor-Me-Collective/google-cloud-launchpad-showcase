@@ -28,6 +28,18 @@ def _iso() -> str:
     return _now().isoformat()
 
 
+LEGACY_FACILITY_IDS = [
+    "FAC-MOTT-LIB",
+    "FAC-BETANCES-CC",
+    "FAC-MILLPOND-REC",
+    "FAC-STMARYS-CC",
+    "FAC-MELROSE-LIB",
+    "FAC-MELROSE-REC",
+    "FAC-RAY-NYCHA",
+    "FAC-CLARK-HUB",
+]
+
+
 class Service:
     def __init__(self, store, settings: Settings, llm: LLM | None, signer: Signer | None = None) -> None:
         self.s, self.cfg, self.llm = store, settings, llm
@@ -39,6 +51,8 @@ class Service:
         raw = json.loads((self.cfg.fixtures_dir / "demo_orgs.json").read_text())
         for t in raw["tenants"]:
             self.s.put("tenants", t["tenant_id"], t)
+        for old_id in LEGACY_FACILITY_IDS:
+            self.s.delete("facilities", old_id)
         for f in raw["facilities"]:
             f = dict(f)
             st = dict(f["status"])
