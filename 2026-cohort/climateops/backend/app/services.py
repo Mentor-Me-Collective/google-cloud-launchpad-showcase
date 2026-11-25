@@ -13,7 +13,13 @@ from .config import Settings
 from .evidence import build_bundle, canonical_hash
 from .grounding import generate_brief
 from .nim import LLM
-from .uploads import ALLOWED_TYPES, Signer, make_signer, new_object_path, object_prefix
+import base64
+import binascii
+import hashlib
+
+from .uploads import (ALLOWED_TYPES, MAX_PHOTO_BYTES, PHOTO_TYPES, Signer, make_signer, new_object_path,
+                      object_prefix, sniff_image_type, store_object)
+from .vision import Vision, run_photo_check
 from .scoring import hazard_from_records, rank_facilities
 
 TIER_DEADLINE_H = {"watch": 24, "advisory_or_warning": 12, "day_of": 4}
@@ -41,8 +47,9 @@ LEGACY_FACILITY_IDS = [
 
 
 class Service:
-    def __init__(self, store, settings: Settings, llm: LLM | None, signer: Signer | None = None) -> None:
-        self.s, self.cfg, self.llm = store, settings, llm
+    def __init__(self, store, settings: Settings, llm: LLM | None, signer: Signer | None = None,
+                 vision: Vision | None = None) -> None:
+        self.s, self.cfg, self.llm, self.vision = store, settings, llm, vision
         self.signer = signer or make_signer(settings.storage_bucket)
         self.playbook = json.loads((settings.fixtures_dir / "heat_tasks.json").read_text())
 
@@ -301,6 +308,8 @@ class Service:
                 "cloud_storage": {"in_use": self.signer.mode == "gcs", "mode": self.signer.mode},
                 "secret_manager": {"note": "secrets arrive as env vars via Cloud Run --set-secrets", "nvidia_key_present": bool(self.cfg.nvidia_api_key and not self.cfg.nvidia_api_key.startswith("SET_VIA"))},
             },
+            "nvidia_vision": {"configured": self.vision is not None, "model_id": self.cfg.nvidia_vision_model_id or None,
+                              "use": "advisory photo-proof check (manager decides)"},
             "nvidia": {"configured": self.llm is not None, "model_id": self.cfg.nvidia_model_id or None,
                        "last_brief_used_fallback": meta.get("used_fallback"), "last_brief_fallback_reason": meta.get("fallback_reason"),
                        "last_latency_ms": meta.get("latency_ms")},
@@ -320,6 +329,43 @@ class Service:
             prev, t["status"] = t["status"], "COMPLETION_SUBMITTED"
             self.s.put("tasks", tid, t)
             self.event(p, p.tenant_id, "task.evidence_submitted", tid, prev, t["status"], request_id)
+        return t
+
+    def submit_photo_evidence(self, p: Principal, tid: str, image_base64: str, content_type: str, note: str,
+                              request_id: str) -> dict:
+        """Staff uploads the photo itself; the server stores it, hashes it and runs the advisory AI check."""
+        t = self._task_for(p, tid)
+        if t["status"] != "IN_PROGRESS":
+            raise err(409, "invalid_transition", "Evidence only accepted while IN_PROGRESS")
+        try:
+            data = base64.b64decode(image_base64, validate=True)
+        except (binascii.Error, ValueError):
+            raise err(422, "bad_image", "Photo must be base64-encoded")
+        if not data:
+            raise err(422, "bad_image", "Photo is empty")
+        if len(data) > MAX_PHOTO_BYTES:
+            raise err(413, "photo_too_large", f"Photo must be under {MAX_PHOTO_BYTES // (1024 * 1024)} MB")
+        real_type = sniff_image_type(data)
+        if real_type is None or real_type not in PHOTO_TYPES or real_type != content_type:
+            raise err(422, "unsupported_type", "Photo must be a JPEG or PNG")
+        path = new_object_path(p.tenant_id, tid, real_type)
+        sha = hashlib.sha256(data).hexdigest()
+        try:
+            storage_mode = store_object(self.cfg.storage_bucket, path, data, real_type)
+        except Exception as e:  # noqa: BLE001 - storage problems must not lose the submission
+            storage_mode = f"failed: {type(e).__name__}"
+        # slow call (~20 s) happens outside the transaction
+        ai = run_photo_check(self.vision, data, real_type, t["playbook_task_id"])
+        with self.s.transaction():
+            t = self._task_for(p, tid)
+            if t["status"] != "IN_PROGRESS":
+                raise err(409, "invalid_transition", "Evidence only accepted while IN_PROGRESS")
+            t["evidence"] = {"object_path": path, "sha256": sha, "note": note, "submitted_by": p.actor_id,
+                             "submitted_at": _iso(), "review": None, "storage": storage_mode, "ai_check": ai}
+            prev, t["status"] = t["status"], "COMPLETION_SUBMITTED"
+            self.s.put("tasks", tid, t)
+            self.event(p, p.tenant_id, "task.evidence_submitted", tid, prev, t["status"], request_id,
+                       ai_check_status=ai["status"], ai_verdict=ai.get("verdict"))
         return t
 
     def verify(self, p: Principal, tid: str, decision: str, note: str, request_id: str) -> dict:

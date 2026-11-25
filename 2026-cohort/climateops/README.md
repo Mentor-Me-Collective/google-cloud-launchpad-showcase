@@ -1,6 +1,6 @@
 # ClimateOps: SDG 13 Extreme Heat Readiness MVP
 
-> **Status (7 Nov 2026):** Verified live build (backend + web console + 44 passing automated tests) running on **Google Cloud Run** with **NVIDIA NIM** (`nvidia/nemotron-3.5-bolt-e4b` for cited briefings and `meta/llama-3.2-90b-vision-instruct` for multimodal evidence review), native **Firestore**, private **Google Cloud Storage** proof bucket, **Google Secret Manager**, and **Cloud Scheduler**. All automated gate, authorization, and grounding tests passing.
+> **Status (7 Nov 2026):** Verified live build (backend + web console + 44 passing automated tests) running on **Google Cloud Run** with **NVIDIA NIM** (`nvidia/nemotron-3.5-bolt-e4b` for cited briefings and `nvidia/nemotron-3.5-super-vl-120b-a12b` for an advisory photo-proof check (DEC-09, live after redeploy)), native **Firestore**, private **Google Cloud Storage** proof bucket, **Google Secret Manager**, and **Cloud Scheduler**. All automated gate, authorization, and grounding tests passing.
 
 ClimateOps helps a time-constrained facility manager in Mott Haven/Melrose, South Bronx, turn National Weather Service (NWS) heat alerts into a prioritized, evidence-cited readiness brief, obtain **human manager approval**, assign due-dated tasks, collect proof of completion, and review the event history.
 
@@ -40,7 +40,7 @@ Both must make a real feature work. Where each fits, how the demo shows it, and 
 | Technology | Feature it powers | Status | Show in demo | Reproduce |
 |---|---|---|---|---|
 | **NVIDIA NIM (Text / Briefing)** | Writes the cited readiness brief from a validated evidence bundle; cannot set scores or approve anything (`nvidia/nemotron-3.5-bolt-e4b`) | **Verified live** (`nvidia/nemotron-3.5-bolt-e4b`, ~10.6s latency, valid JSON citations, `fallback: False`) | Console "Integrations" panel shows model id, last-brief source (AI vs template) and latency; brief header says `AI DRAFT` | `python scripts/smoke_nim.py`, then `make run` and Generate |
-| **NVIDIA NIM (Vision / Inspection)** | Multimodal evidence verification (`meta/llama-3.2-90b-vision-instruct`); analyzes uploaded facility proof (HVAC inspection tags, cooling center thermostat gauges) | **Verified supported** (`meta/llama-3.2-90b-vision-instruct` via build.nvidia.com API catalog) | Visual proof review in evidence drawer; verified image inspection | configure `NVIDIA_VISION_MODEL_ID` |
+| **NVIDIA NIM (Vision / Photo proof)** | Advisory check of staff photo proof (`nvidia/nemotron-3.5-super-vl-120b-a12b`): suggests pass / fail / unclear for HT-01 (thermostat or AC at 78°F or below), HT-07 (drinking water available) and HT-09 (blinds closed). The manager still decides. | **Tested** on 13 labeled photos: 12/13 correct, 0 of 6 bad photos accepted, blurry photo marked unclear, ~22 s ([evidence](docs/05-ai-evaluation/model-comparison)). Live after the next redeploy. The previously configured `meta/llama-3.2-90b-vision-instruct` was retired by NVIDIA on 2026-11-16. | Task card shows "AI photo check (advisory)"; an outage shows "review by hand" | `NVIDIA_VISION_MODEL_ID` (default set) |
 | **Google Cloud Run** | Hosts the API + console | **Verified deployed** (`climateops-api` in `climateops-justin`) | Integrations panel shows "running on Cloud Run: climateops-api"; public URL `https://climateops-api-4twvqq3jta-uc.a.run.app` | `deploy/README.md` |
 | **Firestore** | Persists facilities, briefs, approvals, tasks, events | **Verified live** in Datastore/Firestore native mode | Integrations panel: Firestore "in use" | set `STORE_BACKEND=firestore` |
 | **Cloud Storage (private)** | Staff proof uploads via short-lived signed URLs, tenant-scoped paths | **Verified live** (`climateops-justin-climateops-proof`) | Upload mode shows `gcs` | set `STORAGE_BUCKET` |
@@ -96,7 +96,7 @@ Copy `.env.example` to `.env` (git-ignored) for real keys; see [TEAM-START.md](T
 ## 🔮 Future Ideas (for Future Cohorts & Contributors)
 - **Real-Time IoT HVAC Telemetry:** Connect MQTT/PubSub feeds from smart thermostats (e.g. Google Nest, BACnet building automation) to replace manual AC status reporting with live telemetry.
 - **Automated NYC 311 Cooling Center Sync:** Automatically ingest daily open cooling center locations from NYC Open Data / 311 API to display public refuge options on the map.
-- **Multimodal Visual Proof Verification with NVIDIA NIM:** Use NVIDIA Vision-Language NIMs (e.g., `meta/llama-3.2-90b-vision-instruct` or `nvidia/neva-22b`) to inspect uploaded photo proof (e.g., verifying chiller pressure gauges or hydration station stock) before manager review.
+- **Multimodal Visual Proof Verification with NVIDIA NIM:** Now built as an advisory check for three tasks (DEC-09). Next: more task types, real facility photos, and flags such as a water-filter warning light.
 - **Offline Progressive Web App (PWA) for Staff:** Allow facility maintenance workers in basements or low-signal areas to record checklist tasks offline and sync evidence upon reconnecting.
 
 ## Submission rules (from the organizer's brief, Nov 2)
