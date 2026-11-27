@@ -74,7 +74,7 @@
 - [x] Documentation & Presentation: final deck <=8 slides
 - [x] Documentation & Presentation: team credits and individual contributions documented
 - [x] Documentation & Presentation: product screenshots included in README
-- [ ] Documentation & Presentation: final walkthrough <=5 minutes
+- [x] Documentation & Presentation: final walkthrough <=5 minutes — https://drive.google.com/file/d/1Gosrkt3_wKbyLtygz-5LiWwbghcfr-gM/view?usp=sharing
 
 ## Submission consistency
 - [x] brief uses verified model ID and metrics
@@ -97,6 +97,6 @@
 - [x] polished final slide deck uploaded
 - [x] polished final project brief uploaded
 - [x] polished final research paper uploaded
-- [ ] final walkthrough recorded/uploaded
-- [ ] final walkthrough link added to README/submission
+- [x] final walkthrough recorded/uploaded — https://drive.google.com/file/d/1Gosrkt3_wKbyLtygz-5LiWwbghcfr-gM/view?usp=sharing
+- [x] final walkthrough link added to README/submission
 - [ ] final MMC submission completed
