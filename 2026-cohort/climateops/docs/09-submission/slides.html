@@ -559,10 +559,18 @@ function updateSlide() {
 }
 
 function nextSlide() {
-  if (currentSlide < TOTAL_SLIDES) { currentSlide++; updateSlide(); }
+  if (currentSlide < TOTAL_SLIDES) { currentSlide++; const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('slide')) {
+  currentSlide = parseInt(urlParams.get('slide'));
+}
+updateSlide(); }
 }
 function prevSlide() {
-  if (currentSlide > 1) { currentSlide--; updateSlide(); }
+  if (currentSlide > 1) { currentSlide--; const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('slide')) {
+  currentSlide = parseInt(urlParams.get('slide'));
+}
+updateSlide(); }
 }
 function toggleNotes() {
   document.getElementById('notes-drawer').classList.toggle('open');
@@ -574,6 +582,10 @@ document.addEventListener('keydown', e => {
   if (e.key.toLowerCase() === 'm') toggleNotes();
 });
 
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('slide')) {
+  currentSlide = parseInt(urlParams.get('slide'));
+}
 updateSlide();
 </script>
 </body>

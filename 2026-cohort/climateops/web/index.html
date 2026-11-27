@@ -3356,9 +3356,29 @@ $('reload').onclick = () => load();
 
 load();
 
-// ==========================================
-
-// ==========================================
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('who')) {
+  $('who').value = urlParams.get('who');
+  load();
+}
+if (urlParams.get('temp')) {
+  setTimeout(() => onTempSliderScrub(parseInt(urlParams.get('temp'))), 400);
+}
+if (urlParams.get('scroll')) {
+  setTimeout(() => {
+    const el = document.querySelector(urlParams.get('scroll'));
+    if (el) el.scrollIntoView({ behavior: 'instant', block: 'center' });
+  }, 500);
+}
+if (urlParams.get('highlight')) {
+  setTimeout(() => {
+    const el = document.querySelector(urlParams.get('highlight'));
+    if (el) {
+      el.style.outline = '3px solid #10B981';
+      el.style.boxShadow = '0 0 28px rgba(16,185,129,0.6)';
+    }
+  }, 500);
+}
 </script>
 
 

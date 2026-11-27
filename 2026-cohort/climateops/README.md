@@ -2,6 +2,11 @@
 
 > **Status (27 Nov 2026):** Verified live build (backend + web console + 108 passing automated tests) running on **Google Cloud Run** with **NVIDIA NIM** (`nvidia/nemotron-3.5-bolt-e4b` for cited briefings and `nvidia/nemotron-3.5-super-vl-120b-a12b` for an advisory photo-proof check (DEC-09, live after redeploy)), native **Firestore**, private **Google Cloud Storage** proof bucket, **Google Secret Manager**, and **Cloud Scheduler**. All automated gate, authorization, and grounding tests passing.
 
+## Demonstration Video & Presentation Deck
+- **Recorded Walkthrough Video (4:02):** [climateops_walkthrough.mp4](docs/09-submission/climateops_walkthrough.mp4) *(Full 1080p walkthrough covering user journey, 10 facilities, stress testing, NVIDIA NIM synthesis, ADR-001 approval gate, photo proof, and Firestore audit ledger)*
+- **8-Slide Presentation Deck:** [presentation.md](docs/09-submission/presentation.md) · [Interactive Slides](docs/09-submission/slides.html)
+- **Live Production URL:** [https://climateops-api-4twvqq3jta-uc.a.run.app](https://climateops-api-4twvqq3jta-uc.a.run.app)
+
 ClimateOps helps a time-constrained facility manager in Mott Haven/Melrose, South Bronx, turn National Weather Service (NWS) heat alerts into a prioritized, evidence-cited readiness brief, obtain **human manager approval**, assign due-dated tasks, collect proof of completion, and review the event history.
 
 ![Console on demo data](docs/assets/console-demo.png)
