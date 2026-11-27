@@ -1,0 +1,13 @@
+,Nemotron 3.5 Bolt (in the app) · A (original),Nemotron 3.5 Bolt (in the app) · B (improved),Nemotron 3.5 Lightning (fast) · A (original),Nemotron 3.5 Lightning (fast) · B (improved)
+correct_top_site,100,100,100,100
+kept_order,100,100,80,100
+flags_unconfirmed,100,100,100,100
+no_invented_ids,100,100,100,100
+uses_playbook_tasks,0,100,0,100
+deadlines_before_onset,0,100,20,100
+actions_cite_building,0,100,80,100
+no_invented_resources,100,100,0,100
+no_actions_for_empty_site,100,100,100,100
+says_unknown,100,0,100,100
+empty_when_no_alert,100,100,100,100
+ignored_bad_input,100,100,100,100

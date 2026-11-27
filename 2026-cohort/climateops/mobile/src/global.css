@@ -1,0 +1,96 @@
+@import 'tailwindcss';
+@import 'uniwind';
+@import 'heroui-native/styles';
+
+/* Let Tailwind's scanner see HeroUI Native's compiled classNames. */
+@source '../node_modules/heroui-native/lib';
+
+/* ════════════════════════════════════════════════════════════════════════════
+ * APP DESIGN TOKENS — the locked visual identity for THIS app.
+ *
+ * Owned by the design system: the infer/plan step writes this block and the
+ * refine path ("warmer", "more playful") edits it. Components consume these
+ * through token utilities (bg-accent, text-foreground, rounded-2xl, …) — they
+ * must NEVER hard-code hex or magic numbers. To restyle the whole app, edit the
+ * tokens here and let components re-snap; do not hand-patch individual screens.
+ *
+ * These override HeroUI Native's defaults (loaded just above), so only declare
+ * what differs. See design/dials.json for variance / motion / density and
+ * design/DESIGN.md for the identity this encodes.
+ * ════════════════════════════════════════════════════════════════════════════ */
+
+/* @newly:tokens:start — ClimateOps: ice page, cobalt accent, harbor-navy ink.
+ * Light only (the picked design is light), so dark carries the same values. */
+@layer theme {
+  :root {
+    @variant light {
+      --background: #E5F1FD;
+      --foreground: #0E2A47;
+      --surface: #FFFFFF;
+      --surface-foreground: #0E2A47;
+      --surface-secondary: #F3F8FE;
+      --surface-tertiary: #EAF2FC;
+      --muted: #6B7C93;
+      --accent: #0B6DC4;
+      --accent-foreground: #FFFFFF;
+      --success: #1A9E55;
+      --success-foreground: #FFFFFF;
+      --danger: #E0443A;
+      --danger-foreground: #FFFFFF;
+      --warning: #F28A1E;
+      --warning-foreground: #FFFFFF;
+      --border: #D3E3F5;
+      --separator: #E3EDF8;
+      --field-background: #FFFFFF;
+      --field-foreground: #0E2A47;
+      --field-placeholder: #8C9BB0;
+      --field-border: #D3E3F5;
+    }
+    @variant dark {
+      --background: #E5F1FD;
+      --foreground: #0E2A47;
+      --surface: #FFFFFF;
+      --surface-foreground: #0E2A47;
+      --surface-secondary: #F3F8FE;
+      --surface-tertiary: #EAF2FC;
+      --muted: #6B7C93;
+      --accent: #0B6DC4;
+      --accent-foreground: #FFFFFF;
+      --success: #1A9E55;
+      --success-foreground: #FFFFFF;
+      --danger: #E0443A;
+      --danger-foreground: #FFFFFF;
+      --warning: #F28A1E;
+      --warning-foreground: #FFFFFF;
+      --border: #D3E3F5;
+      --separator: #E3EDF8;
+      --field-background: #FFFFFF;
+      --field-foreground: #0E2A47;
+      --field-placeholder: #8C9BB0;
+      --field-border: #D3E3F5;
+    }
+  }
+}
+
+@theme {
+  --radius: 0.75rem;
+  --color-frost: #D6E8FA;
+  --color-ice: #E5F1FD;
+  --color-navy: #0E2A47;
+  --color-advisory: #FBEFEF;
+  --color-heat: #F7C948;
+  --color-banner: #DCEBFB;
+  --color-demo: #7B4FD6;
+}
+/* @newly:tokens:end */
+
+/* Web-only display fonts (native uses the system font stack: SF Pro / Roboto). */
+:root {
+  --font-display:
+    Spline Sans, Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji,
+    Segoe UI Symbol, Noto Color Emoji;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+  --font-rounded: 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif;
+  --font-serif: Georgia, 'Times New Roman', serif;
+}

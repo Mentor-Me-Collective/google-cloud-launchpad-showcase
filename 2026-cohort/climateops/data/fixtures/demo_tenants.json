@@ -1,0 +1,70 @@
+[
+  {
+    "_comment": "DEMO_SYNTHETIC: fictional organizations A and B. Not real entities.",
+    "fixture": true,
+    "tenants": [
+      {
+        "tenant_id": "tenant-demo-a",
+        "name": "DEMO: Bronx Community Asset Group (fictional)",
+        "demo_flag": true
+      },
+      {
+        "tenant_id": "tenant-demo-b",
+        "name": "DEMO: South Bronx Facilities Network (fictional)",
+        "demo_flag": true
+      }
+    ],
+    "demo_actors": [
+      {
+        "actor_id": "mgr-demo-a-001",
+        "tenant_id": "tenant-demo-a",
+        "role": "manager",
+        "display_name": "DEMO Manager A"
+      },
+      {
+        "actor_id": "staff-demo-a-001",
+        "tenant_id": "tenant-demo-a",
+        "role": "staff",
+        "display_name": "DEMO Staff A-1"
+      },
+      {
+        "actor_id": "mgr-demo-b-001",
+        "tenant_id": "tenant-demo-b",
+        "role": "manager",
+        "display_name": "DEMO Manager B"
+      }
+    ],
+    "scenario_sites": [
+      {
+        "scenario_site_id": "scenario-a-001",
+        "tenant_id": "tenant-demo-a",
+        "example_geography_reference": "NYC-LIB-MOTT-001",
+        "provenance_status": "DEMO_SYNTHETIC",
+        "banner": "SIMULATED workflow anchored to public location data; no real facility association claimed",
+        "demo_hvi_score": 4,
+        "demo_is_cooling_center": false,
+        "demo_high_population_density": true
+      },
+      {
+        "scenario_site_id": "scenario-a-002",
+        "tenant_id": "tenant-demo-a",
+        "example_geography_reference": "NYC-PARK-HUB-001",
+        "provenance_status": "DEMO_SYNTHETIC",
+        "banner": "SIMULATED workflow anchored to public location data; no real facility association claimed",
+        "demo_hvi_score": 5,
+        "demo_is_cooling_center": true,
+        "demo_high_population_density": true
+      },
+      {
+        "scenario_site_id": "scenario-b-001",
+        "tenant_id": "tenant-demo-b",
+        "example_geography_reference": "NYC-LIB-MEL-001",
+        "provenance_status": "DEMO_SYNTHETIC",
+        "banner": "SIMULATED workflow anchored to public location data; no real facility association claimed",
+        "demo_hvi_score": 3,
+        "demo_is_cooling_center": false,
+        "demo_high_population_density": false
+      }
+    ]
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "$defs": {
+    "ApprovalDecision": {
+      "enum": [
+        "approve",
+        "reject"
+      ],
+      "title": "ApprovalDecision",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "expected_version": {
+      "title": "Expected Version",
+      "type": "integer"
+    },
+    "expected_content_hash": {
+      "title": "Expected Content Hash",
+      "type": "string"
+    },
+    "decision": {
+      "$ref": "#/$defs/ApprovalDecision"
+    },
+    "reason": {
+      "default": "",
+      "title": "Reason",
+      "type": "string"
+    },
+    "idempotency_key": {
+      "title": "Idempotency Key",
+      "type": "string"
+    }
+  },
+  "required": [
+    "expected_version",
+    "expected_content_hash",
+    "decision",
+    "idempotency_key"
+  ],
+  "title": "ApprovalRequest",
+  "type": "object"
+}

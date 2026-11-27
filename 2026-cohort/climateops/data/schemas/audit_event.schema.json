@@ -1,0 +1,135 @@
+{
+  "$defs": {
+    "AuditEventType": {
+      "enum": [
+        "brief.created",
+        "brief.submitted",
+        "brief.approved",
+        "brief.rejected",
+        "brief.superseded",
+        "task.created",
+        "task.updated",
+        "evidence.submitted",
+        "evidence.verified",
+        "facility.onboarded",
+        "weather.ingested",
+        "auth.denied"
+      ],
+      "title": "AuditEventType",
+      "type": "string"
+    },
+    "Role": {
+      "enum": [
+        "manager",
+        "staff",
+        "validator"
+      ],
+      "title": "Role",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "tenant_id": {
+      "title": "Tenant Id",
+      "type": "string"
+    },
+    "event_type": {
+      "$ref": "#/$defs/AuditEventType"
+    },
+    "entity_id": {
+      "title": "Entity Id",
+      "type": "string"
+    },
+    "entity_type": {
+      "title": "Entity Type",
+      "type": "string"
+    },
+    "actor_id": {
+      "title": "Actor Id",
+      "type": "string"
+    },
+    "actor_role": {
+      "$ref": "#/$defs/Role"
+    },
+    "previous_state": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Previous State"
+    },
+    "new_state": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "New State"
+    },
+    "occurred_at": {
+      "format": "date-time",
+      "title": "Occurred At",
+      "type": "string"
+    },
+    "request_id": {
+      "title": "Request Id",
+      "type": "string"
+    },
+    "content_version": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Content Version"
+    },
+    "source_reference": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Reference"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    }
+  },
+  "required": [
+    "id",
+    "tenant_id",
+    "event_type",
+    "entity_id",
+    "entity_type",
+    "actor_id",
+    "actor_role",
+    "occurred_at",
+    "request_id"
+  ],
+  "title": "AuditEvent",
+  "type": "object"
+}

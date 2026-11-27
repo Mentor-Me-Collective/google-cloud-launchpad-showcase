@@ -1,0 +1,10 @@
+{
+  "_note": "PUBLIC DEMO tokens, not secrets. Replace with a real identity provider before any non-demo use.",
+  "tokens": {
+    "demo-manager-a": {"actor_id": "manager_demo_a1", "tenant_id": "demo-a", "role": "manager"},
+    "demo-staff-a": {"actor_id": "staff_demo_a1", "tenant_id": "demo-a", "role": "staff"},
+    "demo-validator-a": {"actor_id": "validator_demo_a1", "tenant_id": "demo-a", "role": "validator"},
+    "demo-manager-b": {"actor_id": "manager_demo_b1", "tenant_id": "demo-b", "role": "manager"},
+    "demo-staff-b": {"actor_id": "staff_demo_b1", "tenant_id": "demo-b", "role": "staff"}
+  }
+}

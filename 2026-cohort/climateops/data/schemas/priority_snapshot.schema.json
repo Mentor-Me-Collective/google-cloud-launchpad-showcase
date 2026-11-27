@@ -1,0 +1,90 @@
+{
+  "$defs": {
+    "PriorityFactor": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value"
+        },
+        "weight": {
+          "title": "Weight",
+          "type": "number"
+        },
+        "contribution": {
+          "title": "Contribution",
+          "type": "number"
+        },
+        "data_quality": {
+          "default": "verified",
+          "title": "Data Quality",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "value",
+        "weight",
+        "contribution"
+      ],
+      "title": "PriorityFactor",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "facility_id": {
+      "title": "Facility Id",
+      "type": "string"
+    },
+    "weather_record_id": {
+      "title": "Weather Record Id",
+      "type": "string"
+    },
+    "rule_version": {
+      "title": "Rule Version",
+      "type": "string"
+    },
+    "factors": {
+      "items": {
+        "$ref": "#/$defs/PriorityFactor"
+      },
+      "title": "Factors",
+      "type": "array"
+    },
+    "score": {
+      "title": "Score",
+      "type": "number"
+    },
+    "data_quality_flags": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Data Quality Flags",
+      "type": "array"
+    },
+    "computed_at": {
+      "format": "date-time",
+      "title": "Computed At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "facility_id",
+    "weather_record_id",
+    "rule_version",
+    "factors",
+    "score",
+    "computed_at"
+  ],
+  "title": "PrioritySnapshot",
+  "type": "object"
+}

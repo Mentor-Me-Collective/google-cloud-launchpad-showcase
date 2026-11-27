@@ -1,0 +1,42 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "brief_id": {
+      "title": "Brief Id",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "description": {
+      "title": "Description",
+      "type": "string"
+    },
+    "assignee_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Assignee Id"
+    },
+    "deadline": {
+      "format": "date-time",
+      "title": "Deadline",
+      "type": "string"
+    }
+  },
+  "required": [
+    "brief_id",
+    "title",
+    "description",
+    "deadline"
+  ],
+  "title": "TaskCreate",
+  "type": "object"
+}

@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ClimateOps — 8-Slide Presentation Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-color: #070B0A;
+  --card-bg: #0E1613;
+  --card-border: rgba(0, 223, 129, 0.18);
+  --emerald-primary: #00DF81;
+  --emerald-dark: #009959;
+  --emerald-glow: rgba(0, 223, 129, 0.12);
+  --text-main: #FFFFFF;
+  --text-dim: #94A3B8;
+  --text-muted: #64748B;
+  --danger: #EF4444;
+  --warn: #F59E0B;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg-color);
+  color: var(--text-main);
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+header {
+  height: 60px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: rgba(14, 22, 19, 0.85);
+  backdrop-filter: blur(12px);
+  z-index: 100;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+}
+
+.brand-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--emerald-primary);
+  box-shadow: 0 0 12px var(--emerald-primary);
+}
+
+.badge-sdg {
+  background: rgba(0, 223, 129, 0.12);
+  color: var(--emerald-primary);
+  border: 1px solid rgba(0, 223, 129, 0.25);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #FFF;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+.btn:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.25); }
+.btn-emerald {
+  background: var(--emerald-primary);
+  color: #070B0A;
+  border-color: var(--emerald-primary);
+}
+.btn-emerald:hover {
+  background: #22E794;
+  box-shadow: 0 0 16px rgba(0, 223, 129, 0.4);
+}
+
+.slide-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 40px;
+  position: relative;
+}
+
+.slide {
+  display: none;
+  width: 100%;
+  max-width: 1180px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 44px 52px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow-y: auto;
+  max-height: calc(100vh - 140px);
+}
+
+.slide.active { display: block; animation: fadeIn 0.25s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.slide-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--emerald-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+
+.slide-title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.slide-sub {
+  color: var(--text-dim);
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 28px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px;
+}
+.card h4 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--emerald-primary);
+}
+.card p {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.highlight-quote {
+  border-left: 3px solid var(--emerald-primary);
+  padding: 12px 18px;
+  background: var(--emerald-glow);
+  border-radius: 0 10px 10px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #FFF;
+  margin: 20px 0;
+}
+
+.speaker-notes-drawer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #0B110F;
+  border-top: 1px solid rgba(0, 223, 129, 0.3);
+  padding: 16px 32px;
+  transform: translateY(100%);
+  transition: transform 0.25s ease;
+  z-index: 200;
+  box-shadow: 0 -12px 32px rgba(0, 0, 0, 0.7);
+}
+.speaker-notes-drawer.open { transform: translateY(0); }
+
+.speaker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.speaker-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--emerald-primary);
+}
+.speaker-text {
+  font-size: 14px;
+  color: #E2E8F0;
+  line-height: 1.6;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.progress-bar {
+  position: fixed;
+  top: 59px;
+  left: 0;
+  height: 2px;
+  background: var(--emerald-primary);
+  transition: width 0.2s ease;
+  z-index: 150;
+}
+
+.badge-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-right: 6px;
+}
+.badge-verified { background: rgba(0, 223, 129, 0.15); color: var(--emerald-primary); }
+.badge-warning { background: rgba(245, 158, 11, 0.15); color: var(--warn); }
+.badge-danger { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+</style>
+</head>
+<body>
+
+<div id="progress" class="progress-bar" style="width: 12.5%;"></div>
+
+<header>
+  <div class="brand">
+    <div class="brand-dot"></div>
+    <span>ClimateOps</span>
+    <span class="badge-sdg">SDG 13 · Heat Action</span>
+  </div>
+
+  <div class="nav-controls">
+    <button class="btn" id="btn-notes" onclick="toggleNotes()">🎤 Speaker Notes</button>
+    <a href="http://localhost:8080" class="btn" target="_blank">🖥 Open Web App</a>
+    <span style="color:var(--text-muted); font-size:13px; margin: 0 4px;" id="slide-num">Slide 1 of 8</span>
+    <button class="btn" id="btn-prev" onclick="prevSlide()">◀ Prev</button>
+    <button class="btn btn-emerald" id="btn-next" onclick="nextSlide()">Next ▶</button>
+  </div>
+</header>
+
+<div class="slide-container">
+
+  <!-- SLIDE 1 -->
+  <div class="slide active" id="slide-1">
+    <div class="slide-tag">Slide 1 · Executive Cover & Mission</div>
+    <h1 class="slide-title">ClimateOps: Extreme Heat Readiness MVP</h1>
+    <div class="slide-sub">Closing the operational coordination gap between National Weather Service alerts and verified facility readiness in the South Bronx.</div>
+
+    <div class="highlight-quote">
+      "Turning raw weather alerts into accountable, human-approved readiness actions before extreme heat hits vulnerable urban communities."
+    </div>
+
+    <div class="grid-3" style="margin-top: 32px;">
+      <div class="card">
+        <h4>Target & Community</h4>
+        <p><strong>Bronx Community District 1</strong> (Mott Haven & Melrose). NYC Heat Vulnerability Index (HVI) 5 out of 5.</p>
+      </div>
+      <div class="card">
+        <h4>Cloud & AI Stack</h4>
+        <p>Google Cloud Run, Firestore, Secret Manager, GCS, paired with NVIDIA NIM Nemotron & Llama Vision.</p>
+      </div>
+      <div class="card">
+        <h4>Team Contributions</h4>
+        <p>Blanca (AI Research), Justin (AI Cloud Leader), Kseniya (Data Analytics), Shiksha (Cybersecurity).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 -->
+  <div class="slide" id="slide-2">
+    <div class="slide-tag">Slide 2 · Problem & Grounding</div>
+    <h1 class="slide-title">Extreme Heat Creates Fatal Coordination Friction</h1>
+    <div class="slide-sub">Why current weather alerts fail to protect vulnerable urban facility occupants.</div>
+
+    <div class="grid-3">
+      <div class="card">
+        <h4>1. Alert Lag</h4>
+        <p>National Weather Service alerts are broadcast as generic CAP text. They lack specific building context, equipment status, or physical capacity.</p>
+      </div>
+      <div class="card">
+        <h4>2. Priority Paralysis</h4>
+        <p>Operations teams balance senior centers, youth centers, and public libraries simultaneously without a transparent, explainable ranking of vulnerability.</p>
+      </div>
+      <div class="card">
+        <h4>3. Unaccountable Actions</h4>
+        <p>Preparation checklists dispatched over group texts or emails lack cryptographic proof, photo verification, or an immutable audit trail.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 16px;">
+      <h4>Grounded in South Bronx Reality (Bronx CD1)</h4>
+      <p style="margin-top: 6px;">
+        Mott Haven and Melrose suffer from $<7\%$ tree canopy, high impervious surface coverage, and up to $8.6^\circ\text{F}$ urban heat island excess. 
+        ClimateOps grounds 10 facilities (8 public verified via NYPL, NYC Parks, and BronxWorks + 2 synthetic test controls) across two distinct tenant workspaces.
+      </p>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 -->
+  <div class="slide" id="slide-3">
+    <div class="slide-tag">Slide 3 · Architecture</div>
+    <h1 class="slide-title">End-to-End Enterprise Architecture</h1>
+    <div class="slide-sub">Google Cloud Serverless Infrastructure orchestrated with NVIDIA NIM Microservices.</div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h4>Google Cloud Core Services</h4>
+        <ul style="padding-left: 20px; font-size: 13px; color: var(--text-dim); line-height: 1.8; margin-top: 8px;">
+          <li><strong>Cloud Run:</strong> Stateless auto-scaling FastAPI service with zero-cost cold starts.</li>
+          <li><strong>Cloud Firestore:</strong> Multi-tenant isolation with native-mode immutable event sourcing.</li>
+          <li><strong>Cloud Storage (GCS):</strong> Short-lived HMAC signed URLs for photo proof evidence.</li>
+          <li><strong>Secret Manager:</strong> Zero hardcoded secrets in git; runtime key injection.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>NVIDIA NIM AI Microservices</h4>
+        <ul style="padding-left: 20px; font-size: 13px; color: var(--text-dim); line-height: 1.8; margin-top: 8px;">
+          <li><strong>nvidia/nemotron-3.5-bolt-e4b:</strong> Formulates actionable building readiness action plans grounded strictly in verified building facts.</li>
+          <li><strong>meta/llama-3.2-90b-vision-instruct:</strong> Multimodal validation of uploaded chiller gauge and AC inspection photos.</li>
+          <li><strong>Deterministic Fallback:</strong> Zero-failover template engine guarantees 100% operational continuity if AI is offline.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 -->
+  <div class="slide" id="slide-4">
+    <div class="slide-tag">Slide 4 · Data & Explainability</div>
+    <h1 class="slide-title">Deterministic Scoring & Facility Data</h1>
+    <div class="slide-sub">Zero black-box decisions. Mathematical 5-factor vulnerability scoring (0–100).</div>
+
+    <div class="card" style="margin-bottom: 20px;">
+      <h4>The 5-Factor Scoring Formula</h4>
+      <p style="font-family:'JetBrains Mono', monospace; font-size: 14px; color: var(--emerald-primary); margin: 8px 0;">
+        Score = Heat Index (30%) + Vulnerable Users (25%) + AC Outage (20%) + Occupancy (15%) + Staff Ratio (10%)
+      </p>
+      <p style="font-size: 12px; color: var(--text-muted);">
+        Missing values are dynamically normalized across known weights. Real-time scores recalculate instantly when heat index changes.
+      </p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h4>Rank #1: E. Roberts Moore Older Adult Center</h4>
+        <p><span class="badge-tag badge-danger">Score: 93.3</span> Senior population, broken AC on record, Mott Haven high heat zone.</p>
+      </div>
+      <div class="card">
+        <h4>Rank #2: Betances Cornerstone Center</h4>
+        <p><span class="badge-tag badge-danger">Score: 92.5</span> High youth occupancy, broken HVAC compressor unit.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5 -->
+  <div class="slide" id="slide-5">
+    <div class="slide-tag">Slide 5 · Safety Governance</div>
+    <h1 class="slide-title">ADR-001: The Human-in-the-Loop Approval Gate</h1>
+    <div class="slide-sub">Mandatory human manager certification before physical building tasks are dispatched.</div>
+
+    <div class="highlight-quote">
+      "AI proposes structured recommendations, but an authorized human manager must certify every operational brief. The system cryptographically binds approval to the SHA-256 brief hash."
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <h4>Role-Based Access (RBAC)</h4>
+        <p>Field staff and validators are blocked from approving briefs. Attempted bypass returns strict <code>HTTP 403 Forbidden</code>.</p>
+      </div>
+      <div class="card">
+        <h4>Tamper Prevention</h4>
+        <p>Attempting to generate tasks on an unapproved draft returns <code>HTTP 409 Conflict</code>. Editing a draft revokes prior approval.</p>
+      </div>
+      <div class="card">
+        <h4>Strict Citation Anchors</h4>
+        <p>Every recommendation in the AI brief must link to a verified fact tag: <code>[FACT-1]</code>, <code>[FACT-2]</code>. Unanchored claims are rejected.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6 -->
+  <div class="slide" id="slide-6">
+    <div class="slide-tag">Slide 6 · Execution & Verification</div>
+    <h1 class="slide-title">Field Proof & Immutable Audit Ledger</h1>
+    <div class="slide-sub">Zero-trust task execution from mobile photo upload to cryptographic audit stream.</div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h4>Direct Cloud Storage Signed Uploads</h4>
+        <p style="font-size: 13px; color: var(--text-dim); line-height: 1.6;">
+          Staff technicians upload photo proof directly to Google Cloud Storage using 15-minute expiring HMAC signed PUT URLs.
+          Server memory remains lean and credentials never pass through the browser.
+        </p>
+      </div>
+      <div class="card">
+        <h4>Firestore Native Event Sourcing</h4>
+        <p style="font-size: 13px; color: var(--text-dim); line-height: 1.6;">
+          Every state change creates an append-only event record in Firestore with microsecond timestamps, actor IDs, content hashes, and GCS URIs.
+          Provides municipal agencies with a tamper-evident record of pre-event heat mitigation.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7 -->
+  <div class="slide" id="slide-7">
+    <div class="slide-tag">Slide 7 · Verification & Security</div>
+    <h1 class="slide-title">108 Automated Tests & Zero Secrets in Git</h1>
+    <div class="slide-sub">Engineering discipline backed by empirical automated test suites.</div>
+
+    <div class="grid-3">
+      <div class="card">
+        <h4>108 / 108 Passing Tests</h4>
+        <p>100% pass rate in 6.38s across security, ADR-001 gate invariants, deterministic scoring, grounding, and vision.</p>
+      </div>
+      <div class="card">
+        <h4>Zero Leaked Secrets</h4>
+        <p>Automated git scanner verifies zero hardcoded API keys. All credentials stored in Google Secret Manager.</p>
+      </div>
+      <div class="card">
+        <h4>10 Formal ADRs</h4>
+        <p>Documented Architectural Decision Records governing multi-tenancy, signed URLs, event sourcing, and fallback.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8 -->
+  <div class="slide" id="slide-8">
+    <div class="slide-tag">Slide 8 · Team & Roadmap</div>
+    <h1 class="slide-title">Interdisciplinary Team & Sustainable Roadmap</h1>
+    <div class="slide-sub">Built for the Mentor Me Collective × Google Cloud Launchpad Showcase.</div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h4>Four Domain Leaders</h4>
+        <ul style="padding-left: 20px; font-size: 13px; color: var(--text-dim); line-height: 1.8; margin-top: 6px;">
+          <li><strong>Blanca (@bcperez14):</strong> Team Lead · AI Research Foundations</li>
+          <li><strong>Justin (@creova-gif):</strong> AI Cloud Leader</li>
+          <li><strong>Kseniya (@ksen-nm):</strong> Cloud Data Analytics</li>
+          <li><strong>Shiksha (@Shiksha99):</strong> Cloud Cybersecurity</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Next Steps Roadmap</h4>
+        <ul style="padding-left: 20px; font-size: 13px; color: var(--text-dim); line-height: 1.8; margin-top: 6px;">
+          <li><strong>Phase 2:</strong> IoT thermostat and chiller telemetry streaming via Google Cloud Pub/Sub.</li>
+          <li><strong>Phase 3:</strong> Direct integration with NYC 311 Cooling Center directory & Mutual Aid SMS alerts.</li>
+          <li><strong>Phase 4:</strong> Multi-hazard expansion to Winter Freeze & Code Blue cold emergency readiness.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SPEAKER NOTES DRAWER -->
+<div id="notes-drawer" class="speaker-notes-drawer">
+  <div class="speaker-header">
+    <span class="speaker-name" id="notes-speaker">Speaker: Justin (@creova-gif)</span>
+    <button class="btn" style="padding: 4px 10px; font-size: 11px;" onclick="toggleNotes()">Close ✕</button>
+  </div>
+  <div class="speaker-text" id="notes-text">
+    "Judges and colleagues, welcome to ClimateOps. Extreme heat is the deadliest weather-related threat in America..."
+  </div>
+</div>
+
+<script>
+const TOTAL_SLIDES = 8;
+let currentSlide = 1;
+
+const speakerNotes = [
+  {
+    speaker: "Justin (@creova-gif) · 0:00 - 0:30",
+    text: "Judges and colleagues, welcome to ClimateOps. Extreme heat is the deadliest weather-related threat in America, but the breakdown isn't the weather forecast—it's operational coordination. ClimateOps is a human-centered, approval-first readiness platform built on Google Cloud and NVIDIA NIM that translates National Weather Service warnings into prioritized, verified physical building preparations in the South Bronx."
+  },
+  {
+    speaker: "Kseniya (@ksen-nm) · 0:30 - 1:05",
+    text: "In the South Bronx neighborhood of Mott Haven, the Heat Vulnerability Index is 5 out of 5—the highest in NYC. When the National Weather Service issues an Excessive Heat Warning, facility managers face three critical friction points: Alert Lag, Priority Paralysis across multiple aging buildings, and Unaccountable Execution where vital steps are coordinated over chaotic text chats without proof. ClimateOps bridges this exact gap."
+  },
+  {
+    speaker: "Justin & Blanca · 1:05 - 1:45",
+    text: "ClimateOps deploys a production-grade serverless architecture on Google Cloud Run with Firestore event sourcing, Secret Manager, and short-lived Cloud Storage signed URLs. For intelligence, we orchestrate NVIDIA NIM microservices using nemotron-3.5-bolt-e4b for structured readiness synthesis and llama-3.2-90b-vision for photo proof inspection. If external AI APIs become unavailable, an automated deterministic fallback guarantees 100% operational continuity."
+  },
+  {
+    speaker: "Kseniya (@ksen-nm) · 1:45 - 2:20",
+    text: "Unlike opaque AI scoring systems, our Priority Facility Ranking is 100% deterministic and explainable. The 5-factor formula weights heat index, vulnerable occupant profiles, active AC outages, occupancy, and staff ratios. For example, the E. Roberts Moore Older Adult Center scores 93.3 because it houses frail seniors with an active AC compressor failure, placing it at the absolute top of the city's readiness queue."
+  },
+  {
+    speaker: "Justin (@creova-gif) · 2:20 - 3:00",
+    text: "Our core architectural safety guarantee is ADR-001. We do not trust AI to command physical operations autonomously. If a staff member tries to approve a brief, the API returns HTTP 403 Forbidden. If anyone attempts to generate tasks before approval, the API returns HTTP 409 Conflict. When a manager approves, the system cryptographically binds the brief version, its SHA-256 content hash, and the manager's identity."
+  },
+  {
+    speaker: "Shiksha & Blanca · 3:00 - 3:45",
+    text: "For field task completion, we enforce a zero-trust model. Technicians must upload physical photo proof of chiller gauges and AC status directly to private Google Cloud Storage via 15-minute expiring HMAC signed URLs. Every state change is immutably logged into Google Cloud Firestore native mode event sourcing, giving municipal agencies a tamper-evident audit trail of pre-event mitigation."
+  },
+  {
+    speaker: "Shiksha (@Shiksha99) · 3:45 - 4:20",
+    text: "Every single feature in ClimateOps is backed by empirical verification. We have 108 automated tests running in CI that guard our security invariants, scoring math, and tenant isolation. Our secret scanner confirms zero leaked credentials. We conducted full STRIDE threat modeling and documented ten formal Architectural Decision Records. You can open our live Cloud Run endpoint right now, inspect our OpenAPI documentation, and run our test suite in 6 seconds."
+  },
+  {
+    speaker: "Justin & Team · 4:20 - 4:45",
+    text: "ClimateOps was built through tight interdisciplinary collaboration across our four team members: Blanca, Kseniya, Shiksha, and Justin. We are proud of our technical depth and equally proud of our honesty: our facilities are verified South Bronx public sites, and we make no exaggerated claims. Our roadmap expands into live IoT telemetry via Cloud Pub/Sub and direct NYC 311 cooling center integration. Thank you for evaluating ClimateOps!"
+  }
+];
+
+function updateSlide() {
+  document.querySelectorAll('.slide').forEach((el, idx) => {
+    el.classList.toggle('active', idx + 1 === currentSlide);
+  });
+  document.getElementById('slide-num').textContent = `Slide ${currentSlide} of ${TOTAL_SLIDES}`;
+  document.getElementById('progress').style.width = `${(currentSlide / TOTAL_SLIDES) * 100}%`;
+  document.getElementById('btn-prev').disabled = currentSlide === 1;
+  document.getElementById('btn-next').disabled = currentSlide === TOTAL_SLIDES;
+
+  const note = speakerNotes[currentSlide - 1];
+  if (note) {
+    document.getElementById('notes-speaker').textContent = `Speaker: ${note.speaker}`;
+    document.getElementById('notes-text').textContent = note.text;
+  }
+}
+
+function nextSlide() {
+  if (currentSlide < TOTAL_SLIDES) { currentSlide++; const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('slide')) {
+  currentSlide = parseInt(urlParams.get('slide'));
+}
+updateSlide(); }
+}
+function prevSlide() {
+  if (currentSlide > 1) { currentSlide--; const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('slide')) {
+  currentSlide = parseInt(urlParams.get('slide'));
+}
+updateSlide(); }
+}
+function toggleNotes() {
+  document.getElementById('notes-drawer').classList.toggle('open');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+  if (e.key === 'ArrowLeft') prevSlide();
+  if (e.key.toLowerCase() === 'm') toggleNotes();
+});
+
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('slide')) {
+  currentSlide = parseInt(urlParams.get('slide'));
+}
+updateSlide();
+</script>
+</body>
+</html>
