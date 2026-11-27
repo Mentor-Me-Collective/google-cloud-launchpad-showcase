@@ -1,0 +1,92 @@
+[
+  {
+    "site_id": "site-a-sidewalk-strip",
+    "name": "Compact Sidewalk Strip",
+    "archetype_label": "Sidewalk Strip",
+    "description": "Narrow São Paulo pedestrian sidewalk planting strip (< 1.5 m wide) beneath low-voltage overhead distribution wires, surrounded by concrete pavement and compacted urban subsoil.",
+    "typical_dimensions": "< 1.5 m width",
+    "sunlight_exposure": "full_sun",
+    "constraints": {
+      "max_width_meters": 1.5,
+      "min_area_m2": 1.5,
+      "max_area_m2": 6.0,
+      "overhead_power_lines": true,
+      "max_mature_height_meters": 5.0,
+      "impervious_surroundings": true,
+      "soil_compaction_level": "high"
+    },
+    "requirements": {
+      "sidewalk_wire_safe": true,
+      "non_invasive_roots": true,
+      "low_lux_tolerance": false,
+      "pioneer_priority": false,
+      "avifauna_support_priority": false,
+      "municipal_reference": "Portaria SVMA nº 26/2024 & Plano Municipal de Arborização Urbana (PMAU)"
+    },
+    "ecological_goals": [
+      "Pedestrian thermal comfort without Enel distribution wire conflicts",
+      "Permeable sidewalk micro-catchment stormwater infiltration",
+      "Urban pollinator stepping-stone corridor for native stingless bees"
+    ]
+  },
+  {
+    "site_id": "site-b-sunny-lot",
+    "name": "Sunny Degraded Lot",
+    "archetype_label": "Sunny Lot",
+    "description": "Open, sun-exposed degraded vacant parcel or pocket park (20–50 m²) without overhead utility wires, requiring rapid canopy closure, nitrogen/organic matter recovery, and soil stabilization.",
+    "typical_dimensions": "20–50 m²",
+    "sunlight_exposure": "full_sun",
+    "constraints": {
+      "max_width_meters": null,
+      "min_area_m2": 20.0,
+      "max_area_m2": 50.0,
+      "overhead_power_lines": false,
+      "max_mature_height_meters": 12.0,
+      "impervious_surroundings": false,
+      "soil_compaction_level": "high"
+    },
+    "requirements": {
+      "sidewalk_wire_safe": false,
+      "non_invasive_roots": false,
+      "low_lux_tolerance": false,
+      "pioneer_priority": true,
+      "avifauna_support_priority": true,
+      "municipal_reference": "Portaria SVMA nº 26/2024 & BioSampa (5ª Edição)"
+    },
+    "ecological_goals": [
+      "Rapid pioneer canopy nucleating microclimate cooling (urban heat island mitigation)",
+      "Topsoil decompaction, leaf-litter generation, and erosion control",
+      "High-nectar and zoochoric fruit production to attract urban birds and pollinators"
+    ]
+  },
+  {
+    "site_id": "site-c-shaded-courtyard",
+    "name": "Shaded Courtyard",
+    "archetype_label": "Shaded Courtyard",
+    "description": "Protected residential, school, or community courtyard (15–30 m²) framed by mid-rise buildings with filtered light to deep shade, moderate soil volume, and no overhead utility lines.",
+    "typical_dimensions": "15–30 m²",
+    "sunlight_exposure": "partial_to_full_shade",
+    "constraints": {
+      "max_width_meters": null,
+      "min_area_m2": 15.0,
+      "max_area_m2": 30.0,
+      "overhead_power_lines": false,
+      "max_mature_height_meters": 8.0,
+      "impervious_surroundings": true,
+      "soil_compaction_level": "moderate"
+    },
+    "requirements": {
+      "sidewalk_wire_safe": false,
+      "non_invasive_roots": true,
+      "low_lux_tolerance": true,
+      "pioneer_priority": false,
+      "avifauna_support_priority": true,
+      "municipal_reference": "Portaria SVMA nº 26/2024, BioSampa (5ª Edição) & PMAU"
+    },
+    "ecological_goals": [
+      "Multi-strata Atlantic Forest understory establishment under low-lux conditions",
+      "Year-round native berry and nectar resources for urban avifauna and hummingbirds",
+      "Quiet community biodiversity pocket aligned with UN SDG Target 11.7"
+    ]
+  }
+]
