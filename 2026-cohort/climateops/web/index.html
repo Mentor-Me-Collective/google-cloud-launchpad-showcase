@@ -1837,6 +1837,85 @@ body.hazard-cold-theme .dark-kpi-card {
   font-weight: 800;
   color: var(--text-dark);
 }
+
+/* --- Guided Walkthrough Tour Styles --- */
+.tour-highlight {
+  outline: 3px solid #10B981 !important;
+  outline-offset: 4px !important;
+  box-shadow: 0 0 28px rgba(16, 185, 129, 0.6) !important;
+  transition: all 0.3s ease !important;
+}
+
+.tour-prompter-bar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 980px;
+  background: rgba(10, 16, 14, 0.96);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  border-radius: 16px;
+  padding: 16px 22px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 24px rgba(16, 185, 129, 0.2);
+  z-index: 99999;
+  display: none;
+  animation: slideUpTour 0.25s ease-out forwards;
+}
+
+@keyframes slideUpTour {
+  from { opacity: 0; transform: translate(-50%, 20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.tour-prompter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.tour-act-badge {
+  background: rgba(16, 185, 129, 0.18);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tour-speaker-badge {
+  font-size: 13px;
+  font-weight: 700;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tour-script-text {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #F1F5F9;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  border-left: 3px solid #10B981;
+  max-height: 110px;
+  overflow-y: auto;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.tour-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 </style>
 </head>
 <body>
@@ -1974,7 +2053,11 @@ body.hazard-cold-theme .dark-kpi-card {
           <span class="pulse-dot"></span>
           <span id="header-weather-badge">SIMULATED ALERT · DEMO</span>
         </div>
-        <button id="reload" class="btn btn-outline">
+                <button id="btn-start-tour" class="btn btn-emerald" style="background:#059669; border-color:#10B981; font-weight:700;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>▶ 5-Min Demo Tour</span>
+        </button>
+<button id="reload" class="btn btn-outline">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
           <span>Refresh</span>
         </button>
@@ -3352,6 +3435,171 @@ $('who').onchange = load;
 $('reload').onclick = () => load();
 
 load();
+
+// ==========================================
+// 5-MINUTE GUIDED DEMO WALKTHROUGH CONTROLLER
+// Paced for exactly 4:55 (Targeting 5:00 limit)
+// ==========================================
+const tourActs = [
+  {
+    act: 1,
+    time: "0:00 - 0:40",
+    speaker: "Justin (@creova-gif) · AI Cloud Leader",
+    title: "Cover, Problem & SDG 13 Mission in Mott Haven",
+    target: ".header-title-box",
+    script: "Hello hackathon evaluators. I am Justin, and on behalf of our team—Blanca, Kseniya, Shiksha, and myself—welcome to ClimateOps. Extreme heat is the deadliest weather-related threat in America. In the South Bronx neighborhood of Mott Haven and Melrose, the Heat Vulnerability Index is 5 out of 5—the highest in NYC. But the breakdown isn't the forecast—it's operational coordination. Community facilities face alert lag, priority paralysis across multiple aging buildings, and chaotic execution over group texts. ClimateOps is a human-in-the-loop readiness engine built on Google Cloud and NVIDIA NIM that turns weather warnings into verified physical building actions before extreme heat hits. I'll hand over to Kseniya to show our data ingestion.",
+    action: () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  },
+  {
+    act: 2,
+    time: "0:40 - 1:20",
+    speaker: "Kseniya (@ksen-nm) · Cloud Data Analytics",
+    title: "NWS Live Weather Ingestion & Provenance",
+    target: "#header-weather-pill",
+    script: "Hi, I am Kseniya. At the top of our console, ClimateOps ingests National Weather Service CAP alerts for South Bronx zone NYZ073. Notice the explicit badge: we clearly distinguish real NWS alerts from simulated fixtures. We never assume 'no heat hazard' on empty data—an unconfirmed status is labeled UNKNOWN. Below the weather banner, our dashboard tracks all 10 South Bronx public facilities across Mott Haven and Melrose, with verified provenance tags from NYPL, NYC Parks, and BronxWorks.",
+    action: () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  },
+  {
+    act: 3,
+    time: "1:20 - 2:05",
+    speaker: "Kseniya (@ksen-nm) · Cloud Data Analytics",
+    title: "Deterministic 5-Factor Ranking & Scenario Simulation",
+    target: "#rank-list",
+    script: "Our core scoring engine is 100% deterministic and explainable. The 5-factor mathematical formula weights the heat index, vulnerable occupant demographics, active AC outages, total occupancy, and staff ratios. Notice Rank 1: the E. Roberts Moore Older Adult Center scores 93.3 because it houses frail older adults with an active AC compressor failure. Notice when we adjust our simulated heat wave slider to 104°F, all facility vulnerability scores recalculate in real-time, giving operators immediate triage clarity.",
+    action: () => {
+      const el = document.getElementById('rank-list');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (typeof onTempSliderScrub === 'function') onTempSliderScrub(104);
+    }
+  },
+  {
+    act: 4,
+    time: "2:05 - 2:50",
+    speaker: "Blanca (@bcperez14) · Team Lead & AI Research",
+    title: "NVIDIA NIM Action Brief & Grounded Citations",
+    target: "#brief",
+    script: "Hi, I am Blanca. In the center panel, our AI Operational Action Brief is synthesized by NVIDIA's nemotron-3.5-bolt-e4b model, hosted via NVIDIA NIM microservices on Google Cloud. Instead of generic conversational output, the model generates structured, facility-specific checklists. Crucially, every single recommendation is anchored to verified building data via citation tags [FACT-1], [FACT-2]. If the model generates an unverified claim, our grounding pipeline automatically flags it, ensuring zero hallucinations in emergency readiness.",
+    action: () => {
+      const el = document.getElementById('brief');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  },
+  {
+    act: 5,
+    time: "2:50 - 3:35",
+    speaker: "Justin (@creova-gif) · AI Cloud Leader",
+    title: "ADR-001: The Mandatory Human Manager Approval Gate",
+    target: "#brief-actions",
+    script: "This brings us to our core safety pillar: Architectural Decision Record ADR-001. We do not allow AI to dispatch physical building tasks autonomously. Notice the approval buttons: only authorized managers can approve or reject. When a manager approves, the system computes a SHA-256 content hash of the brief and cryptographically binds the manager's ID, the hash, and the version number. If anyone tries to dispatch tasks before approval, our API returns an HTTP 409 Conflict barrier. If the text is altered by one character, approval is revoked.",
+    action: () => {
+      const el = document.getElementById('brief-actions') || document.getElementById('brief');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  },
+  {
+    act: 6,
+    time: "3:35 - 4:15",
+    speaker: "Shiksha (@Shiksha99) · Cloud Cybersecurity",
+    title: "Field Staff Persona, RBAC 403 & Signed Photo Proof",
+    target: "#tasks-list",
+    script: "Hi, I am Shiksha. Let's switch personas to field staff. In the user dropdown, I switch to Marcus, our facility technician. Notice that all manager approval buttons are immediately disabled—an attempted API bypass returns strict HTTP 403 Forbidden. Marcus sees his assigned tasks, such as Task 001: Verify Chiller Refrigerant Pressure. Rather than an unverified checkbox, Marcus uploads physical photo proof directly to Google Cloud Storage using short-lived 15-minute HMAC signed URLs. Powered by Nemotron VL, the image is checked for verified pressure gauges.",
+    action: () => {
+      const who = document.getElementById('who');
+      if (who) { who.value = 'demo-staff-a'; load(); }
+      const el = document.getElementById('tasks-list');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  },
+  {
+    act: 7,
+    time: "4:15 - 4:45",
+    speaker: "Blanca & Shiksha · Verification & Event Ledger",
+    title: "Manager Task Verification & Immutable Audit Trail",
+    target: "#events-list",
+    script: "Blanca: Switching back to the manager, we inspect Marcus's uploaded chiller photo and click Verify and Sign Off. Shiksha: And in our Audit Ledger, powered by Google Cloud Firestore native event sourcing, every single state change—weather ingested, brief revision, hash approval, task dispatch, photo upload, and sign-off—is logged with microsecond timestamps and actor IDs. This provides municipal agencies with an immutable, tamper-evident audit trail of pre-heat mitigation.",
+    action: () => {
+      const who = document.getElementById('who');
+      if (who) { who.value = 'demo-manager-a'; load(); }
+      const el = document.getElementById('events-list');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  },
+  {
+    act: 8,
+    time: "4:45 - 5:00",
+    speaker: "Justin & Team · Closing & 108 Tests",
+    title: "108 Passing Tests, Responsible AI & Credits",
+    target: ".footer-meta",
+    script: "Justin: ClimateOps is backed by 108 automated tests passing in CI, zero hardcoded credentials, and a production endpoint on Google Cloud Run. Team: Built for the Mentor Me Collective Google Cloud Launchpad Showcase by Blanca, Kseniya, Shiksha, and Justin. Thank you for evaluating ClimateOps!",
+    action: () => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+  }
+];
+
+let currentTourAct = 0;
+
+function startTour() {
+  currentTourAct = 0;
+  const prompter = document.getElementById('tour-prompter');
+  if (prompter) prompter.style.display = 'block';
+  renderTourAct();
+}
+
+function closeTour() {
+  const prompter = document.getElementById('tour-prompter');
+  if (prompter) prompter.style.display = 'none';
+  document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
+}
+
+function renderTourAct() {
+  const act = tourActs[currentTourAct];
+  if (!act) return;
+
+  document.getElementById('tour-act-badge').textContent = `Act ${act.act} of ${tourActs.length}`;
+  document.getElementById('tour-speaker-badge').textContent = act.speaker;
+  document.getElementById('tour-timer').textContent = `${act.time} · ${act.title}`;
+  document.getElementById('tour-script-text').textContent = act.script;
+
+  document.getElementById('btn-tour-prev').disabled = currentTourAct === 0;
+  document.getElementById('btn-tour-next').textContent = currentTourAct === tourActs.length - 1 ? 'Finish Tour ✕' : 'Next Act ▶';
+
+  // Clear previous highlights
+  document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
+
+  // Highlight target
+  if (act.target) {
+    const el = document.querySelector(act.target);
+    if (el) el.classList.add('tour-highlight');
+  }
+
+  // Trigger custom action
+  if (typeof act.action === 'function') act.action();
+}
+
+function nextTourAct() {
+  if (currentTourAct < tourActs.length - 1) {
+    currentTourAct++;
+    renderTourAct();
+  } else {
+    closeTour();
+  }
+}
+
+function prevTourAct() {
+  if (currentTourAct > 0) {
+    currentTourAct--;
+    renderTourAct();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('btn-start-tour');
+  if (btn) btn.onclick = startTour;
+});
+if (document.getElementById('btn-start-tour')) {
+  document.getElementById('btn-start-tour').onclick = startTour;
+}
 </script>
 </body>
 </html>

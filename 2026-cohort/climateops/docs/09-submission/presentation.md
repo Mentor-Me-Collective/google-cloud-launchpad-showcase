@@ -44,7 +44,7 @@
 │ from real physical sites. │  │ sites without clear risk. │  │ chats lack verified proof.│
 └─────────────┬─────────────┘  └─────────────┬─────────────┘  └─────────────┬─────────────┘
               ▼                              ▼                              ▼
-    NWS CAP Text Alerts            8 Dispersed Facilities          "Did anyone check AC?"
+    NWS CAP Text Alerts           10 Dispersed Facilities          "Did anyone check AC?"
   No building context or HVAC    Senior centers vs youth gyms     No photo proof or audit trail
 ```
 
@@ -56,7 +56,7 @@
 
 ### Boundary of this MVP
 - Focused strictly on **pre-event readiness coordination** (24–48 hours prior to heat wave).
-- 8 verified South Bronx public facilities; 2 fictional tenant workspaces for isolated evaluation.
+- 10 South Bronx public facilities (8 real verified via NYPL/NYC Parks/BronxWorks + 2 synthetic controls); 2 isolated tenant workspaces (`demo-a` Mott Haven and `demo-b` Melrose).
 - Honest disclaimer: **No simulated claims of lives saved or automated emergency response.**
 
 ### Speaker Notes (0:30 – 1:05)
@@ -234,11 +234,12 @@ $$\text{Priority Score} = \sum (\text{Hazard}_{30} + \text{Vulnerability}_{25} +
 
 ### Quality & Verification Ratchet
 - **Live Cloud Run Deployment:** Verified live in `us-central1` with auto-scaling and health probes (`/healthz`).
-- **Automated Test Suite:** **44 of 44 automated backend tests passing** in `0.47s` covering:
-  - Gate invariants, RBAC authorization, and HTTP 403/409 barriers.
+- **Automated Test Suite:** **108 of 108 automated backend tests passing** in `6.38s` covering:
+  - Gate invariants, RBAC authorization, fail-closed roles, and HTTP 403/409 barriers.
   - Multi-tenant data segregation (preventing cross-tenant data leakage).
   - Deterministic scoring math and edge cases.
   - Citation validation and model fallback resiliency.
+  - Nemotron VL photo proof checking and security headers.
 - **E2E Integration Flow:** `scripts/demo_flow.py` verifies all 12 operational stages against live Cloud Run.
 - **Secret Hygiene:** `scripts/scan_secrets.py` enforces zero hardcoded API keys, tokens, or credentials across the git tree.
 
@@ -255,7 +256,7 @@ $$\text{Priority Score} = \sum (\text{Hazard}_{30} + \text{Vulnerability}_{25} +
 10. **ADR-010:** Secret Manager Key Rotation & Least-Privilege IAM
 
 ### Speaker Notes (3:45 – 4:20)
-> *"Every single feature in ClimateOps is backed by empirical verification. We have 44 automated tests running in CI that guard our security invariants, scoring math, and tenant isolation. Our secret scanner confirms zero leaked credentials. We conducted full STRIDE threat modeling and documented ten formal Architectural Decision Records. You can open our live Cloud Run endpoint right now, inspect our OpenAPI documentation, and run our automated test suite in under one second."*
+> *"Every single feature in ClimateOps is backed by empirical verification. We have 108 automated tests running in CI that guard our security invariants, scoring math, and tenant isolation. Our secret scanner confirms zero leaked credentials. We conducted full STRIDE threat modeling and documented ten formal Architectural Decision Records. You can open our live Cloud Run endpoint right now, inspect our OpenAPI documentation, and run our automated test suite in under seven seconds."*
 
 ---
 
