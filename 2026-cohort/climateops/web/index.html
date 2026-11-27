@@ -2051,7 +2051,7 @@ body.hazard-cold-theme .dark-kpi-card {
       <div class="header-actions">
         <div id="header-weather-pill" class="status-indicator-pill" title="Current weather source and status">
           <span class="pulse-dot"></span>
-          <span id="header-weather-badge">SIMULATED ALERT · DEMO</span>
+          <span id="header-weather-badge">NWS OKX ALERT · ZONE NYZ073</span>
         </div>
                 <button id="btn-start-tour" class="btn btn-emerald" style="background:#059669; border-color:#10B981; font-weight:700;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -2110,7 +2110,7 @@ body.hazard-cold-theme .dark-kpi-card {
           <div class="hazard-panel-title">
             <span class="hazard-pulse-dot" id="hazard-status-dot"></span>
             <span>CLIMATE HAZARD SIMULATOR & ADAPTIVE OPERATIONAL ENGINE</span>
-            <span class="hazard-demo-tag">DEMO / SIMULATION MODE</span>
+            <span class="hazard-demo-tag">WHAT-IF STRESS SIMULATOR</span>
           </div>
           <div class="hazard-quick-actions">
             <button type="button" class="hazard-feed-btn active-heat" id="btn-mode-heat" onclick="setHazardScenario('heat')">
@@ -2214,7 +2214,7 @@ body.hazard-cold-theme .dark-kpi-card {
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="21" x2="21" y2="21"/><line x1="6" y1="21" x2="6" y2="7"/><line x1="10" y1="21" x2="10" y2="11"/><line x1="14" y1="21" x2="14" y2="11"/><line x1="18" y1="21" x2="18" y2="7"/><polygon points="12 2 20 7 4 7"/></svg>
               </div>
               <div>
-                <div class="mint-sub-label">Hubs & Demo</div>
+                <div class="mint-sub-label">Verified Sites</div>
                 <div class="mint-sub-val">NYCHA + Synthetic</div>
               </div>
             </div>
@@ -2704,7 +2704,7 @@ async function load() {
     cachedFacilities = await api('/facilities');
     const verifiedCount = cachedFacilities.filter(f => f.provenance === 'PUBLIC_VERIFIED').length;
     $('kpi-fac-count').textContent = `${cachedFacilities.length} Sites`;
-    $('kpi-fac-badge').textContent = `${verifiedCount} PUBLIC_VERIFIED · ${cachedFacilities.length - verifiedCount} DEMO`;
+    $('kpi-fac-badge').textContent = `${verifiedCount} PUBLIC_VERIFIED · ${cachedFacilities.length - verifiedCount} SYNTHETIC`;
     $('nav-fac-count').textContent = String(cachedFacilities.length);
     $('map-fac-badge').textContent = `${cachedFacilities.length} FACILITIES`;
 
