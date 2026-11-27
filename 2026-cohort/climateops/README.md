@@ -1,6 +1,6 @@
 # ClimateOps: SDG 13 Extreme Heat Readiness MVP
 
-> **Status (7 Nov 2026):** Verified live build (backend + web console + 44 passing automated tests) running on **Google Cloud Run** with **NVIDIA NIM** (`nvidia/nemotron-3.5-bolt-e4b` for cited briefings and `nvidia/nemotron-3.5-super-vl-120b-a12b` for an advisory photo-proof check (DEC-09, live after redeploy)), native **Firestore**, private **Google Cloud Storage** proof bucket, **Google Secret Manager**, and **Cloud Scheduler**. All automated gate, authorization, and grounding tests passing.
+> **Status (27 Nov 2026):** Verified live build (backend + web console + 108 passing automated tests) running on **Google Cloud Run** with **NVIDIA NIM** (`nvidia/nemotron-3.5-bolt-e4b` for cited briefings and `nvidia/nemotron-3.5-super-vl-120b-a12b` for an advisory photo-proof check (DEC-09, live after redeploy)), native **Firestore**, private **Google Cloud Storage** proof bucket, **Google Secret Manager**, and **Cloud Scheduler**. All automated gate, authorization, and grounding tests passing.
 
 ClimateOps helps a time-constrained facility manager in Mott Haven/Melrose, South Bronx, turn National Weather Service (NWS) heat alerts into a prioritized, evidence-cited readiness brief, obtain **human manager approval**, assign due-dated tasks, collect proof of completion, and review the event history.
 
@@ -53,7 +53,7 @@ If an integration is not live during the recording, the console says so; do not 
 Requires Python 3.12+.
 ```bash
 make install      # venv + dependencies
-make test         # 44 tests, no network or keys needed
+make test         # 108 tests, no network or keys needed
 make run          # http://localhost:8080  (API docs at /docs)
 make demo         # in a second terminal: full approve-before-tasks walkthrough
 ```
