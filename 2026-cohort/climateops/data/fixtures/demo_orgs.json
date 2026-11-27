@@ -106,7 +106,7 @@
     },
     {
       "facility_id": "CO-FAC-006",
-      "tenant_id": "demo-b",
+      "tenant_id": "demo-a",
       "name": "Classic Cornerstone Community Center",
       "address": "286 East 156th Street, Bronx, NY 10451",
       "lat": 40.821721,
@@ -160,7 +160,7 @@
     },
     {
       "facility_id": "NYC-Demo-1",
-      "tenant_id": "demo-b",
+      "tenant_id": "demo-a",
       "name": "Demo Building 1",
       "address": "SYNTHETIC - no real address",
       "lat": 40.824,

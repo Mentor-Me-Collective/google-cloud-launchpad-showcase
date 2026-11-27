@@ -35,6 +35,14 @@ def _iso() -> str:
 
 
 LEGACY_FACILITY_IDS = [
+    "DEMO-A1",
+    "DEMO-A2",
+    "DEMO-A3",
+    "DEMO-A4",
+    "DEMO-B1",
+    "DEMO-B2",
+    "DEMO-B3",
+    "DEMO-B4",
     "FAC-MOTT-LIB",
     "FAC-BETANCES-CC",
     "FAC-MILLPOND-REC",

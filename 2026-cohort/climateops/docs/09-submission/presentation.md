@@ -280,6 +280,7 @@ $$\text{Priority Score} = \sum (\text{Hazard}_{30} + \text{Vulnerability}_{25} +
 ### Future Roadmap
 - **Phase 2 (Q1 2027):** Live IoT smart thermostat and chiller vibration telemetry ingestion via Google Cloud Pub/Sub.
 - **Phase 3 (Q2 2027):** Direct integration with NYC 311 Cooling Center directory and local Mutual Aid SMS networks.
+- **Phase 4 (Q3 2027):** Multi-hazard expansion to Winter Freeze & Code Blue cold emergency readiness (building upon our deterministic multi-factor vulnerability scoring foundation).
 
 ### Speaker Notes (4:20 – 4:55)
 > *"To conclude: ClimateOps was built through tight interdisciplinary collaboration across our four team members. We are proud of our technical depth and equally proud of our honesty: our facilities are currently simulated demo records, and we make no exaggerated claims. Our roadmap expands into live IoT telemetry via Cloud Pub/Sub and direct NYC 311 cooling center integration. Thank you for your time, and we look forward to your questions."*

@@ -2116,9 +2116,6 @@ body.hazard-cold-theme .dark-kpi-card {
             <button type="button" class="hazard-feed-btn active-heat" id="btn-mode-heat" onclick="setHazardScenario('heat')">
               <span>🔥 Extreme Heat Wave</span>
             </button>
-            <button type="button" class="hazard-feed-btn" id="btn-mode-cold" onclick="setHazardScenario('cold')">
-              <span>❄️ Severe Winter Freeze</span>
-            </button>
             <button type="button" class="hazard-feed-btn" id="btn-mode-moderate" onclick="setHazardScenario('moderate')">
               <span>🍃 Moderate Baseline</span>
             </button>
@@ -2135,7 +2132,7 @@ body.hazard-cold-theme .dark-kpi-card {
           </div>
           <div class="hazard-slider-container">
             <span style="font-size:11px; font-weight:700; color:#0284C7;">10°F Polar</span>
-            <input type="range" id="temp-slider" min="10" max="115" value="104" step="1" oninput="onTempSliderScrub(this.value)" aria-label="Simulated Temperature Slider">
+            <input type="range" id="temp-slider" min="80" max="115" value="104" step="1" oninput="onTempSliderScrub(this.value)" aria-label="Simulated Temperature Slider">
             <span style="font-size:11px; font-weight:700; color:#EF4444;">115°F Heat</span>
           </div>
         </div>
@@ -3252,7 +3249,7 @@ function updateHazardUI(mode, temp) {
   const mapTitle = $('spatial-map-title');
 
   if (mode === 'cold') {
-    document.body.classList.add('hazard-cold-theme');
+    
     if (badge) {
       badge.textContent = `${temp}°F Wind Chill`;
       badge.className = 'slider-temp-badge cold';
@@ -3264,7 +3261,7 @@ function updateHazardUI(mode, temp) {
     if (fcPill) fcPill.textContent = 'SIMULATED WINTER FREEZE REPLAY';
     if (mapTitle) mapTitle.textContent = 'South Bronx Spatial Freeze & Warming Shelter Map';
   } else if (mode === 'moderate') {
-    document.body.classList.remove('hazard-cold-theme');
+    
     if (badge) {
       badge.textContent = `${temp}°F Baseline`;
       badge.className = 'slider-temp-badge moderate';
@@ -3276,7 +3273,7 @@ function updateHazardUI(mode, temp) {
     if (fcPill) fcPill.textContent = 'SIMULATED BASELINE REPLAY';
     if (mapTitle) mapTitle.textContent = 'South Bronx Facilities Baseline Map';
   } else {
-    document.body.classList.remove('hazard-cold-theme');
+    
     if (badge) {
       badge.textContent = `${temp}°F Heat Index`;
       badge.className = 'slider-temp-badge heat';
@@ -3319,12 +3316,9 @@ function setHazardScenario(mode) {
   if (mode === 'heat') {
     currentSimulatedTemp = 104;
     if (slider) slider.value = 104;
-  } else if (mode === 'cold') {
-    currentSimulatedTemp = 16;
-    if (slider) slider.value = 16;
   } else if (mode === 'moderate') {
-    currentSimulatedTemp = 72;
-    if (slider) slider.value = 72;
+    currentSimulatedTemp = 86;
+    if (slider) slider.value = 86;
   }
 
   updateHazardUI(mode, currentSimulatedTemp);
@@ -3336,7 +3330,7 @@ function resetToLiveWeather() {
   const slider = $('temp-slider');
   if (slider) slider.value = 104;
 
-  document.body.classList.remove('hazard-cold-theme');
+  
   ['btn-mode-heat', 'btn-mode-cold', 'btn-mode-moderate'].forEach(id => {
     const b = $(id);
     if (b) b.classList.remove('active-heat', 'active-cold', 'active-moderate');
