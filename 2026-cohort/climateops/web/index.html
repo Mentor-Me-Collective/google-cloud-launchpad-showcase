@@ -2869,9 +2869,16 @@ function taskBtns(t, me) {
       toast('Photo submitted. The manager will review it.', true);
     });
   }
-  if (t.status === 'COMPLETION_SUBMITTED' && me.role === 'manager') {
-    b('Verify & Accept', 'btn-approve', () => post('/tasks/' + t.id + '/verify', { decision: 'accept' }));
-    b('Reject', 'btn-reject', () => post('/tasks/' + t.id + '/verify', { decision: 'reject' }));
+  if (t.status === 'COMPLETION_SUBMITTED') {
+    if (me.role === 'manager') {
+      b('Verify & Accept', 'btn-approve', () => post('/tasks/' + t.id + '/verify', { decision: 'accept' }));
+      b('Reject', 'btn-reject', () => post('/tasks/' + t.id + '/verify', { decision: 'reject' }));
+    } else {
+      w.append(el('span', {
+        style: 'background:rgba(245, 158, 11, 0.12); color:#F59E0B; font-size:11px; font-weight:700; padding:4px 8px; border-radius:6px; border:1px solid rgba(245, 158, 11, 0.3);',
+        textContent: '⏳ Awaiting Manager Sign-Off'
+      }));
+    }
   }
   return w;
 }
