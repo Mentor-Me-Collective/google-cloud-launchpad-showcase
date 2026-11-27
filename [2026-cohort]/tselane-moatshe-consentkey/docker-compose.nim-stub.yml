@@ -1,0 +1,79 @@
+# Optional overlay: a stand-in for NVIDIA NIM.
+#
+# It lets the team exercise the whole "write a message -> draft -> confirm"
+# path without an NVIDIA key, and proves the wiring end to end in Docker. It is
+# NOT a model: it does a crude keyword match and returns the same
+# OpenAI-compatible shape the real endpoint does.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.nim-stub.yml up --build
+#
+# For the real thing, leave this file out and set NVIDIA_API_KEY instead.
+# To point at a self-hosted NIM container, set NVIDIA_BASE_URL.
+
+services:
+  nim-stub:
+    image: node:22-alpine
+    working_dir: /srv
+    command:
+      - node
+      - -e
+      - |
+        const { createServer } = require('node:http');
+        const TYPES = [
+          ['photo', 'Photos'],
+          ['picture', 'Photos'],
+          ['image', 'Photos'],
+          ['trip', 'School Trips'],
+          ['outing', 'School Trips'],
+          ['excursion', 'School Trips'],
+          ['medical', 'Medical'],
+          ['health', 'Medical'],
+          ['contact', 'Contact Details'],
+          ['phone', 'Contact Details'],
+        ];
+        const WITHDRAW = ['stop', 'withdraw', 'remove', 'no longer', "don't", 'do not', 'opt out'];
+        const GRANT = ['allow', 'grant', 'give permission', 'happy for', 'yes to', 'opt in'];
+        createServer((req, res) => {
+          let body = '';
+          req.on('data', (c) => (body += c));
+          req.on('end', () => {
+            let text = '';
+            try {
+              // Only the parent's own message. The system prompt names every
+              // consent type, so matching against it would match everything.
+              text = (JSON.parse(body).messages || [])
+                .filter((m) => m.role === 'user')
+                .map((m) => m.content)
+                .join(' ')
+                .toLowerCase();
+            } catch {}
+            const hit = TYPES.find(([word]) => text.includes(word));
+            const withdraw = WITHDRAW.some((w) => text.includes(w));
+            const grant = GRANT.some((w) => text.includes(w));
+            // Ambiguous input returns {} — the contract that makes the app ask
+            // the parent instead of guessing.
+            let content = '{}';
+            if (hit && (withdraw || grant)) {
+              const type = hit[1];
+              const to = withdraw ? 'withdrawn' : 'granted';
+              const emergency = type === 'Contact Details' && text.includes('emergency');
+              content = JSON.stringify({
+                type,
+                to,
+                changeContext: emergency ? 'emergency_contact' : 'standard',
+                summary: (to === 'withdrawn' ? 'Withdraw ' : 'Grant ') + type + ' consent',
+              });
+            }
+            res.writeHead(200, { 'content-type': 'application/json' });
+            res.end(JSON.stringify({ choices: [{ message: { content } }] }));
+          });
+        }).listen(8000, '0.0.0.0', () => console.log('nim-stub listening on 8000'));
+    expose:
+      - "8000"
+
+  app:
+    environment:
+      NVIDIA_API_KEY: "stub-key-not-a-real-credential"
+      NVIDIA_BASE_URL: "http://nim-stub:8000/v1"
+    depends_on:
+      - nim-stub

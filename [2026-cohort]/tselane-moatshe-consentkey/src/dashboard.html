@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ConsentKey | Parent dashboard</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: "Segoe UI", Tahoma, Geneva, sans-serif;
+        color: #172b4d;
+        background: #f3f6fb;
+        font-synthesis: none;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; }
+      header { background: #112d4e; color: white; padding: 22px max(24px, calc((100% - 1040px) / 2)); }
+      header strong { font-size: 19px; letter-spacing: .02em; }
+      header span { display: block; margin-top: 5px; color: #c5d6e8; font-size: 13px; }
+      main { width: min(100% - 32px, 1040px); margin: 28px auto 60px; }
+      .banner { border: 1px solid #f1cf75; background: #fff8df; color: #654b08; border-radius: 10px; padding: 13px 16px; font-size: 13px; line-height: 1.5; margin-bottom: 20px; }
+      .topline { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin: 24px 0 16px; }
+      h1 { margin: 0; font-size: clamp(24px, 4vw, 32px); }
+      h2 { font-size: 17px; margin: 0 0 16px; }
+      .muted { color: #64748b; font-size: 14px; margin: 7px 0 0; }
+      .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+      .card { background: white; border: 1px solid #dce4ef; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px #0000000a; }
+      h1, h2 { font-family: Georgia, "Times New Roman", serif; }
+      .wide { grid-column: 1 / -1; }
+      .identity { display: flex; align-items: center; gap: 12px; }
+      .avatar { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: #e7f0ff; color: #1d4ed8; font-weight: 700; }
+      .identity p { margin: 3px 0 0; color: #64748b; font-size: 13px; }
+      .pill { border-radius: 999px; padding: 5px 10px; font-size: 12px; font-weight: 700; background: #e8f7ed; color: #19723b; white-space: nowrap; }
+      .pill.pending { background: #fff3d6; color: #8a5a00; }
+      .consent-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 0; border-top: 1px solid #e8edf4; }
+      .consent-row:first-of-type { border-top: 0; }
+      .consent-row small { display: block; color: #64748b; margin-top: 3px; }
+      button { appearance: none; border: 0; border-radius: 8px; padding: 11px 15px; background: #155eef; color: white; font: inherit; font-weight: 650; cursor: pointer; }
+      button:hover { background: #104bc5; }
+      button:disabled { background: #aab8ca; cursor: not-allowed; }
+      button.secondary { background: white; color: #34445a; border: 1px solid #cbd5e1; }
+      button.secondary:hover { background: #f8fafc; }
+      .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+      .hint { color: #64748b; font-size: 12px; line-height: 1.5; margin: 12px 0 0; }
+      .list { margin: 0; padding: 0; list-style: none; }
+      .list li { display: flex; gap: 10px; padding: 10px 0; border-top: 1px solid #e8edf4; font-size: 14px; }
+      .list li:first-child { border-top: 0; }
+      .stepmark { color: #16803c; font-weight: 800; }
+      .stepmark.failed { color: #c62828; }
+      .stepdetail { color: #64748b; margin-top: 4px; font-size: 12px; }
+      .photo-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+      .photo { height: 64px; display: grid; place-items: center; border: 1px solid #dce4ef; border-radius: 8px; background: #f7f9fc; color: #64748b; font-size: 12px; }
+      .photo.blocked { background: #fff0ef; border-color: #f3c3be; color: #a5281b; text-decoration: line-through; }
+      table { width: 100%; border-collapse: collapse; font-size: 13px; }
+      th, td { padding: 10px 8px; text-align: left; border-top: 1px solid #e8edf4; }
+      th { color: #64748b; font-weight: 600; }
+      code { overflow-wrap: anywhere; }
+      #message { min-height: 22px; color: #34445a; font-size: 13px; margin: 10px 0 0; }
+      #message.error { color: #b42318; }
+      footer { color: #64748b; font-size: 12px; margin-top: 22px; text-align: center; }
+      @media (max-width: 680px) {
+        .grid { grid-template-columns: 1fr; }
+        .wide { grid-column: auto; }
+        .topline { align-items: start; flex-direction: column; }
+        .photo-grid { grid-template-columns: repeat(3, 1fr); }
+        header { padding: 18px 20px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <strong>ConsentKey</strong>
+      <span>Parent consent dashboard · Jacaranda Heights Primary (fictional)</span>
+    </header>
+    <main>
+      <div class="banner"><strong>Demo only.</strong> This page uses fictional test data. Parent verification is simulated for P-001; no real PIN is collected or validated. Do not use for real learner information.</div>
+      <div class="topline">
+        <div>
+          <h1>Your consent settings</h1>
+          <p class="muted">Review permissions for learner L-101.</p>
+        </div>
+        <span id="verified-pill" class="pill pending">Not verified</span>
+      </div>
+      <div class="grid">
+        <section class="card">
+          <h2>Parent account</h2>
+          <div class="identity">
+            <div class="avatar">P</div>
+            <div><strong>Test Parent P-001</strong><p>Linked learner: L-101</p></div>
+          </div>
+          <div class="actions">
+            <button id="verify-button" type="button">Continue as verified test parent</button>
+          </div>
+          <p class="hint">For this prototype, this button simulates the successful parent-role and separate-PIN check.</p>
+          <p id="message" role="status" aria-live="polite"></p>
+        </section>
+        <section class="card">
+          <h2>Consent dashboard</h2>
+          <div class="consent-row">
+            <div><strong>Photos</strong><small>Newsletters and social media</small></div>
+            <span id="consent-pill" class="pill">Loading</span>
+          </div>
+          <div class="actions">
+            <button id="withdraw-button" type="button" disabled>Withdraw Photos consent</button>
+            <button id="reset-button" class="secondary" type="button">Reset demo</button>
+          </div>
+          <p class="hint">Withdrawing consent blocks the learner’s tagged photos in the simulated Photo and Media Library.</p>
+        </section>
+        <section class="card wide">
+          <h2>Photos in the simulated library</h2>
+          <div id="photos" class="photo-grid"></div>
+        </section>
+        <section class="card">
+          <h2>Completion history</h2>
+          <ol id="history" class="list"><li>No request submitted yet.</li></ol>
+        </section>
+        <section class="card">
+          <h2>Impact map</h2>
+          <p id="impact-summary" class="muted">No request submitted</p>
+          <ul id="impact" class="list"><li>The affected system will appear here.</li></ul>
+        </section>
+        <section class="card wide">
+          <h2>Append-only audit evidence</h2>
+          <div style="overflow-x:auto">
+            <table>
+              <thead><tr><th>Time</th><th>Event</th><th>Verification</th><th>Hash</th></tr></thead>
+              <tbody id="audit"><tr><td colspan="4">No audit entries yet.</td></tr></tbody>
+            </table>
+          </div>
+          <p id="audit-status" class="hint">The hash chain is checked after each change.</p>
+        </section>
+      </div>
+      <footer>Scenario 1 · Parent withdraws Photos consent · Local in-memory prototype</footer>
+    </main>
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const message = (text, error = false) => {
+        $("message").textContent = text;
+        $("message").classList.toggle("error", error);
+      };
+      async function api(path, method = "GET") {
+        const response = await fetch(path, { method, headers: { "content-type": "application/json" } });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Request failed");
+        return data;
+      }
+      function render(state) {
+        $("verified-pill").textContent = state.verified ? "Verified test parent" : "Not verified";
+        $("verified-pill").classList.toggle("pending", !state.verified);
+        $("verify-button").disabled = state.verified;
+        $("verify-button").textContent = state.verified ? "Test parent verified" : "Continue as verified test parent";
+        $("consent-pill").textContent = state.consentState.replace("_", " ");
+        $("withdraw-button").disabled = !state.verified || state.consentState !== "granted";
+        $("photos").replaceChildren(...state.photos.map((photo) => {
+          const item = document.createElement("div");
+          item.className = "photo" + (photo.blocked ? " blocked" : "");
+          item.textContent = photo.blocked ? "Blocked" : "Available";
+          item.title = photo.id;
+          return item;
+        }));
+        const history = $("history");
+        history.replaceChildren();
+        if (!state.history.length) {
+          const item = document.createElement("li");
+          item.textContent = "No request submitted yet.";
+          history.append(item);
+        } else {
+          for (const step of state.history) {
+            const item = document.createElement("li");
+            const mark = document.createElement("span");
+            mark.className = "stepmark" + (step.status === "failed" ? " failed" : "");
+            mark.textContent = step.status === "complete" ? "✓" : step.status === "failed" ? "!" : "•";
+            const text = document.createElement("div");
+            text.textContent = step.label;
+            if (step.detail) {
+              const detail = document.createElement("div");
+              detail.className = "stepdetail";
+              detail.textContent = step.detail;
+              text.append(detail);
+            }
+            item.append(mark, text);
+            history.append(item);
+          }
+        }
+        $("impact-summary").textContent = state.impactSummary;
+        const impact = $("impact");
+        impact.replaceChildren();
+        if (!state.impactMap.length) {
+          const item = document.createElement("li");
+          item.textContent = "The affected system will appear here.";
+          impact.append(item);
+        }
+        for (const entry of state.impactMap) {
+          const item = document.createElement("li");
+          item.textContent = entry.system + ": " + entry.status + (entry.detail ? " — " + entry.detail : "");
+          impact.append(item);
+        }
+        const audit = $("audit");
+        audit.replaceChildren();
+        if (!state.auditEntries.length) {
+          const row = document.createElement("tr");
+          const cell = document.createElement("td");
+          cell.colSpan = 4;
+          cell.textContent = "No audit entries yet.";
+          row.append(cell);
+          audit.append(row);
+        }
+        for (const entry of state.auditEntries) {
+          const row = document.createElement("tr");
+          for (const value of [
+            new Date(entry.timestamp).toLocaleTimeString(),
+            entry.event,
+            entry.details.verificationMethod || "—",
+            entry.hash.slice(0, 14) + "…",
+          ]) {
+            const cell = document.createElement("td");
+            cell.textContent = value;
+            row.append(cell);
+          }
+          audit.append(row);
+        }
+        $("audit-status").textContent = "Hash-chain verification: " + JSON.stringify(state.auditVerification);
+      }
+      async function refresh() {
+        render(await api("/api/state"));
+      }
+      $("verify-button").addEventListener("click", async () => {
+        try {
+          const result = await api("/api/verify", "POST");
+          message(result.message);
+          await refresh();
+        } catch (error) { message(error.message, true); }
+      });
+      $("withdraw-button").addEventListener("click", async () => {
+        $("withdraw-button").disabled = true;
+        try {
+          const result = await api("/api/withdraw-photos", "POST");
+          message("Request " + result.request.requestId + " completed: " + result.impactSummary.text + ".");
+          await refresh();
+        } catch (error) {
+          message(error.message, true);
+          await refresh();
+        }
+      });
+      $("reset-button").addEventListener("click", async () => {
+        try {
+          await api("/api/reset", "POST");
+          message("Demo reset to the Scenario 1 starting state.");
+          await refresh();
+        } catch (error) { message(error.message, true); }
+      });
+      refresh().catch((error) => message(error.message, true));
+    </script>
+  </body>
+</html>
