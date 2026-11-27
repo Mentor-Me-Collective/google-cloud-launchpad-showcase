@@ -52,11 +52,14 @@ Complete:
 - open PR #5 to `main` (intentionally unmerged)
 - polished deck/brief/paper uploaded to the MMC branch
 
+## Final walkthrough
+
+- Recorded and uploaded: [ProofStack 5-minute walkthrough](https://drive.google.com/file/d/1Gosrkt3_wKbyLtygz-5LiWwbghcfr-gM/view?usp=sharing)
+- Walkthrough link added to the README/submission materials
+
 ## Remaining action
 
-1. Record the final walkthrough (maximum 5 minutes).
-2. Upload/host the walkthrough and add its link to the README/submission.
-3. Complete the final MMC submission step by November 28, 2026 at 11:59 PM ET.
+1. Complete the final MMC submission step by November 28, 2026 at 11:59 PM ET.
 
 ## NVIDIA verification
 
