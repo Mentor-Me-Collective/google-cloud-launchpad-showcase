@@ -149,7 +149,7 @@ See [gold_set_manifest.json](results/gold_set_manifest.json).
 | Final results gate | [RESULTS_CHECKLIST.md](deliverables/RESULTS_CHECKLIST.md) |
 | Rubric crosswalk | [RUBRIC_MAPPING.md](deliverables/RUBRIC_MAPPING.md) |
 
-The polished PPTX/PDF exports are part of the MMC showcase submission branch. The recorded walkthrough is the only remaining media artifact.
+The polished PPTX/PDF exports are part of the MMC showcase submission branch. The final recorded walkthrough is available here: [ProofStack 5-minute walkthrough](https://drive.google.com/file/d/1Gosrkt3_wKbyLtygz-5LiWwbghcfr-gM/view?usp=sharing).
 
 ## Evaluation record
 
@@ -258,6 +258,6 @@ See [CONTRIBUTIONS.md](deliverables/CONTRIBUTIONS.md).
 
 The substantive build, final hardened Cloud Run deployment, post-deploy smoke test, security verification, frozen evaluation, polished deck, project brief, research paper, and MMC showcase PR are complete.
 
-**Remaining:** record/upload the <=5-minute walkthrough, add its link to the README/submission, and complete the final MMC submission step.
+**Remaining:** complete the final MMC submission step. The <=5-minute walkthrough has been recorded, uploaded, and linked in this README.
 
 See [STATUS.md](STATUS.md).
