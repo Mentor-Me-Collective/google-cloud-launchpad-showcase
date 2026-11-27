@@ -1,0 +1,12 @@
+# Core API & ASGI Server (Python 3.12.7 | Cross-OS: macOS, Windows, Linux/Cloud Run)
+fastapi==0.162.0
+uvicorn[standard]==0.54.0
+
+# Data Validation & Environment Settings (Zero Hardcoded Secrets)
+pydantic==2.14.2
+pydantic-settings==2.16.2
+python-dotenv==1.2.4
+
+# HTTP Client & Automated Testing
+httpx==0.28.1
+pytest==8.3.5

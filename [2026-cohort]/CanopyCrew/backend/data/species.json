@@ -1,0 +1,661 @@
+[
+  {
+    "species_id": "eugenia-uniflora",
+    "botanical": {
+      "scientific_name": "Eugenia uniflora",
+      "common_name_pt": "Pitangueira",
+      "common_name_en": "Surinam Cherry / Pitanga",
+      "family": "Myrtaceae",
+      "biome_origin": "Mata Atlântica (Native)",
+      "municipal_compliance": [
+        "Portaria SVMA nº 26/2024",
+        "BioSampa (5ª Edição)",
+        "PMAU — Porte Pequeno"
+      ],
+      "successional_group": "early_secondary"
+    },
+    "physical_profile": {
+      "growth_habit": "small_tree",
+      "mature_height_meters": 5.0,
+      "canopy_spread_meters": 3.5,
+      "root_system": "non_aggressive_pivoting",
+      "sidewalk_wire_safe": true
+    },
+    "site_tolerances": {
+      "sunlight": ["full_sun", "partial_shade", "partial_to_full_shade"],
+      "low_lux_tolerant": true,
+      "drought_tolerant": true,
+      "compacted_soil_tolerant": true,
+      "suitable_site_ids": [
+        "site-a-sidewalk-strip",
+        "site-b-sunny-lot",
+        "site-c-shaded-courtyard"
+      ]
+    },
+    "ecological_interactions": {
+      "pollinators": ["Jataí stingless bees (Tetragonisca angustula)", "Native solitary bees"],
+      "seed_dispersers_avifauna": ["Sabiá-laranjeira (Turdus rufiventris)", "Sanhaçu-cinzento (Thraupis sayaca)", "Bem-te-vi (Pitangus sulphuratus)"],
+      "ecological_role": "Compact fruiting small tree providing high-value zoochoric berries without sidewalk or utility-line conflict."
+    },
+    "estimates": {
+      "growth_rate_cm_per_year": 60,
+      "canopy_coverage_m2_at_year_3": 4.2,
+      "unit_cost_usd": 12.50
+    },
+    "volunteer_care_schedule": {
+      "initial_month": [
+        {
+          "task": "Deep establishment watering (10 L per seedling) and organic mulch ring check",
+          "frequency": "Twice weekly for first 4 weeks",
+          "notes": "Keep mulch 5 cm clear of the trunk collar to prevent rot."
+        },
+        {
+          "task": "Verify bamboo tutor stake and biodegradable figure-8 tie tension",
+          "frequency": "Biweekly in Month 1",
+          "notes": "Ensure sidewalk pedestrian clearance of at least 1.2 m."
+        }
+      ],
+      "maintenance_quarterly": [
+        {
+          "task": "Top-dress planting basin with 2 kg cured compost and remove invasive grasses",
+          "frequency": "Every 3 months",
+          "notes": "Hand-pull weeds inside the 60 cm permeable collar; never use herbicides."
+        }
+      ],
+      "annual": [
+        {
+          "task": "Light formative crown-lifting prune below 1.8 m pedestrian clearance",
+          "frequency": "Once yearly (late winter — August)",
+          "notes": "Follow PMAU pruning standards; never top the central leader."
+        }
+      ]
+    }
+  },
+  {
+    "species_id": "schinus-terebinthifolia",
+    "botanical": {
+      "scientific_name": "Schinus terebinthifolia",
+      "common_name_pt": "Aroeira-pimenteira",
+      "common_name_en": "Brazilian Peppertree (Native Ecotype)",
+      "family": "Anacardiaceae",
+      "biome_origin": "Mata Atlântica (Native)",
+      "municipal_compliance": [
+        "Portaria SVMA nº 26/2024",
+        "BioSampa (5ª Edição)"
+      ],
+      "successional_group": "pioneer"
+    },
+    "physical_profile": {
+      "growth_habit": "medium_tree",
+      "mature_height_meters": 7.0,
+      "canopy_spread_meters": 5.5,
+      "root_system": "extensive_structural",
+      "sidewalk_wire_safe": false
+    },
+    "site_tolerances": {
+      "sunlight": ["full_sun"],
+      "low_lux_tolerant": false,
+      "drought_tolerant": true,
+      "compacted_soil_tolerant": true,
+      "suitable_site_ids": [
+        "site-b-sunny-lot"
+      ]
+    },
+    "ecological_interactions": {
+      "pollinators": ["Mandaçaia bees (Melipona quadrifasciata)", "Native wasps", "Syrphid hoverflies"],
+      "seed_dispersers_avifauna": ["Saíra-sete-cores (Tangara seledon)", "Tiê-preto (Tachyphonus coronatus)", "Sabiá-do-campo (Mimus saturninus)"],
+      "ecological_role": "Resilient heliophilous pioneer tree that colonizes compacted, sun-baked urban soils and feeds frugivorous birds."
+    },
+    "estimates": {
+      "growth_rate_cm_per_year": 110,
+      "canopy_coverage_m2_at_year_3": 8.5,
+      "unit_cost_usd": 11.00
+    },
+    "volunteer_care_schedule": {
+      "initial_month": [
+        {
+          "task": "Establishment basin watering (12 L) and erosion berm inspection",
+          "frequency": "Twice weekly for first 4 weeks",
+          "notes": "Repair soil basin rims after heavy São Paulo summer convective rains."
+        }
+      ],
+      "maintenance_quarterly": [
+        {
+          "task": "Clear competing Brachiaria grass within a 1 m radius and replenish leaf-litter mulch",
+          "frequency": "Every 3 months",
+          "notes": "Wear gardening gloves when handling resinous twigs."
+        }
+      ],
+      "annual": [
+        {
+          "task": "Structural inspection of co-dominant stems and removal of dead lower branches",
+          "frequency": "Once yearly (dry season — July)",
+          "notes": "Do not plant beneath overhead wires; matures to 7.0 m."
+        }
+      ]
+    }
+  },
+  {
+    "species_id": "pleroma-mutabile",
+    "botanical": {
+      "scientific_name": "Pleroma mutabile",
+      "common_name_pt": "Manacá-da-serra",
+      "common_name_en": "Glory Bush / Serra Tibouchina",
+      "family": "Melastomataceae",
+      "biome_origin": "Mata Atlântica (Native)",
+      "municipal_compliance": [
+        "Portaria SVMA nº 26/2024",
+        "BioSampa (5ª Edição)"
+      ],
+      "successional_group": "pioneer"
+    },
+    "physical_profile": {
+      "growth_habit": "medium_tree",
+      "mature_height_meters": 6.0,
+      "canopy_spread_meters": 4.0,
+      "root_system": "non_aggressive_pivoting",
+      "sidewalk_wire_safe": false
+    },
+    "site_tolerances": {
+      "sunlight": ["full_sun", "partial_shade", "partial_to_full_shade"],
+      "low_lux_tolerant": true,
+      "drought_tolerant": false,
+      "compacted_soil_tolerant": true,
+      "suitable_site_ids": [
+        "site-b-sunny-lot",
+        "site-c-shaded-courtyard"
+      ]
+    },
+    "ecological_interactions": {
+      "pollinators": ["Mamangava carpenter bees (Xylocopa spp.) — buzz pollination", "Bumblebees (Bombus morio)"],
+      "seed_dispersers_avifauna": ["Wind-dispersed micro-seeds; canopy shelters insectivorous warblers"],
+      "ecological_role": "Signature Atlantic Forest pioneer tree whose white-to-magenta blooms sustain large native buzz-pollinating bees."
+    },
+    "estimates": {
+      "growth_rate_cm_per_year": 100,
+      "canopy_coverage_m2_at_year_3": 6.8,
+      "unit_cost_usd": 14.00
+    },
+    "volunteer_care_schedule": {
+      "initial_month": [
+        {
+          "task": "Deep root-zone irrigation (10 L) and dual-stake wind stabilization",
+          "frequency": "Twice weekly for first 4 weeks",
+          "notes": "Brittle young wood benefits from double-staking in open lots."
+        }
+      ],
+      "maintenance_quarterly": [
+        {
+          "task": "Apply organic humate/compost mulch and check soil moisture during dry winter spells",
+          "frequency": "Every 3 months",
+          "notes": "Maintain 8 cm wood-chip layer to buffer surface soil temperature."
+        }
+      ],
+      "annual": [
+        {
+          "task": "Remove dry post-flowering twigs and inspect branch unions",
+          "frequency": "Once yearly (post-bloom — August)",
+          "notes": "Excluded from wired sidewalks because mature height reaches 6.0 m."
+        }
+      ]
+    }
+  },
+  {
+    "species_id": "cecropia-pachystachya",
+    "botanical": {
+      "scientific_name": "Cecropia pachystachya",
+      "common_name_pt": "Embaúba-branca",
+      "common_name_en": "Silver Cecropia / Trumpet Tree",
+      "family": "Urticaceae",
+      "biome_origin": "Mata Atlântica (Native)",
+      "municipal_compliance": [
+        "Portaria SVMA nº 26/2024",
+        "BioSampa (5ª Edição)"
+      ],
+      "successional_group": "pioneer"
+    },
+    "physical_profile": {
+      "growth_habit": "large_pioneer_tree",
+      "mature_height_meters": 10.0,
+      "canopy_spread_meters": 6.5,
+      "root_system": "extensive_structural",
+      "sidewalk_wire_safe": false
+    },
+    "site_tolerances": {
+      "sunlight": ["full_sun"],
+      "low_lux_tolerant": false,
+      "drought_tolerant": true,
+      "compacted_soil_tolerant": true,
+      "suitable_site_ids": [
+        "site-b-sunny-lot"
+      ]
+    },
+    "ecological_interactions": {
+      "pollinators": ["Wind-pollinated (anemophilous)", "Small native trigonine bees"],
+      "seed_dispersers_avifauna": ["Tucano-toco (Ramphastos toco)", "Sanhaçu-do-coqueiro (Thraupis palmarum)", "Frugivorous bats (Artibeus lituratus)"],
+      "ecological_role": "Hyper-fast Atlantic Forest regeneration nucleator creating instant shade and abundant infructescences for vertebrate dispersers."
+    },
+    "estimates": {
+      "growth_rate_cm_per_year": 180,
+      "canopy_coverage_m2_at_year_3": 12.5,
+      "unit_cost_usd": 10.50
+    },
+    "volunteer_care_schedule": {
+      "initial_month": [
+        {
+          "task": "Water root ball (15 L) and establish 1 m weed-free mulched circle",
+          "frequency": "Twice weekly for first 4 weeks",
+          "notes": "Plant at least 4 m away from boundary walls and structures."
+        }
+      ],
+      "maintenance_quarterly": [
+        {
+          "task": "Leave fallen palmate leaves in situ as natural nutrient-cycling mulch",
+          "frequency": "Every 3 months",
+          "notes": "Mutualistic Azteca ants may colonize hollow stems — ecological indicator, do not apply pesticides."
+        }
+      ],
+      "annual": [
+        {
+          "task": "Monitor canopy spread and understory natural seedling recruitment",
+          "frequency": "Once yearly (September)",
+          "notes": "Strictly restricted to open wire-free lots (matures to 10.0 m)."
+        }
+      ]
+    }
+  },
+  {
+    "species_id": "calliandra-tweediei",
+    "botanical": {
+      "scientific_name": "Calliandra tweediei",
+      "common_name_pt": "Esponjinha-vermelha",
+      "common_name_en": "Mexican Flamebush / Brazilian Powderpuff",
+      "family": "Fabaceae",
+      "biome_origin": "Mata Atlântica (Native)",
+      "municipal_compliance": [
+        "Portaria SVMA nº 26/2024",
+        "BioSampa (5ª Edição)",
+        "PMAU — Arbusto Nativo"
+      ],
+      "successional_group": "pioneer"
+    },
+    "physical_profile": {
+      "growth_habit": "woody_shrub",
+      "mature_height_meters": 2.5,
+      "canopy_spread_meters": 2.2,
+      "root_system": "fibrous_contained",
+      "sidewalk_wire_safe": true
+    },
+    "site_tolerances": {
+      "sunlight": ["full_sun", "partial_shade"],
+      "low_lux_tolerant": false,
+      "drought_tolerant": true,
+      "compacted_soil_tolerant": true,
+      "suitable_site_ids": [
+        "site-a-sidewalk-strip",
+        "site-b-sunny-lot"
+      ]
+    },
+    "ecological_interactions": {
+      "pollinators": ["Beija-flor-tesoura (Eupetomena macroura)", "Native halictid and meliponine bees", "Skipper butterflies"],
+      "seed_dispersers_avifauna": ["Autochorous ballistic pods; dense branching provides safe nesting cover for Cambacica (Coereba flaveola)"],
+      "ecological_role": "Nitrogen-fixing leguminous shrub safe beneath power lines while supplying crimson nectar blooms across dry winter months."
+    },
+    "estimates": {
+      "growth_rate_cm_per_year": 55,
+      "canopy_coverage_m2_at_year_3": 2.6,
+      "unit_cost_usd": 8.50
+    },
+    "volunteer_care_schedule": {
+      "initial_month": [
+        {
+          "task": "Water planting pocket (6 L) and firm soil around fibrous root ball",
+          "frequency": "Twice weekly for first 4 weeks",
+          "notes": "Avoid synthetic high-nitrogen fertilizers; Fabaceae nodulates naturally."
+        }
+      ],
+      "maintenance_quarterly": [
+        {
+          "task": "Tip-pinch lateral shoots encroaching onto sidewalk curb or footpath",
+          "frequency": "Every 3 months",
+          "notes": "Maintains dense flowering habit while preserving pedestrian sightlines."
+        }
+      ],
+      "annual": [
+        {
+          "task": "Rejuvenation trim of oldest 20% woody stems after peak winter flowering",
+          "frequency": "Once yearly (October)",
+          "notes": "Fully wire-safe at 2.5 m mature height."
+        }
+      ]
+    }
+  },
+  {
+    "species_id": "campomanesia-phaea",
+    "botanical": {
+      "scientific_name": "Campomanesia phaea",
+      "common_name_pt": "Cambuci",
+      "common_name_en": "Cambuci Tree",
+      "family": "Myrtaceae",
+      "biome_origin": "Mata Atlântica (Endemic — Serra do Mar / Planalto Paulistano)",
+      "municipal_compliance": [
+        "Portaria SVMA nº 26/2024",
+        "BioSampa (5ª Edição)",
+        "PMAU — Patrimônio Histórico-Ambiental Paulistano"
+      ],
+      "successional_group": "late_secondary"
+    },
+    "physical_profile": {
+      "growth_habit": "small_tree",
+      "mature_height_meters": 4.5,
+      "canopy_spread_meters": 3.2,
+      "root_system": "non_aggressive_pivoting",
+      "sidewalk_wire_safe": true
+    },
+    "site_tolerances": {
+      "sunlight": ["full_sun", "partial_shade", "partial_to_full_shade"],
+      "low_lux_tolerant": true,
+      "drought_tolerant": false,
+      "compacted_soil_tolerant": false,
+      "suitable_site_ids": [
+        "site-b-sunny-lot",
+        "site-c-shaded-courtyard"
+      ]
+    },
+    "ecological_interactions": {
+      "pollinators": ["Nocturnal/crepuscular native bees (Megalopta spp.)", "Jataí and Iraí stingless bees"],
+      "seed_dispersers_avifauna": ["Sabiá-una (Turdus flavipes)", "Jacuaçu (Penelope obscura)", "Urban frugivorous thrushes"],
+      "ecological_role": "Threatened endemic namesake of São Paulo's Cambuci district, producing aromatic saucer-shaped fruits in sheltered courtyards and restored lots."
+    },
+    "estimates": {
+      "growth_rate_cm_per_year": 40,
+      "canopy_coverage_m2_at_year_3": 3.0,
+      "unit_cost_usd": 16.00
+    },
+    "volunteer_care_schedule": {
+      "initial_month": [
+        {
+          "task": "Consistent moisture watering (10 L) and deep organic leaf-mold mulching",
+          "frequency": "Every 3 days for first 4 weeks",
+          "notes": "Sensitive to root desiccation during establishment; amend pit with cured compost."
+        }
+      ],
+      "maintenance_quarterly": [
+        {
+          "task": "Replenish organic mulch and supplement irrigation during dry June–August weeks",
+          "frequency": "Every 3 months",
+          "notes": "Preserve peeling trunk bark — natural Myrtaceae characteristic, never scrape."
+        }
+      ],
+      "annual": [
+        {
+          "task": "Harvest fallen ripe fruits for community seed-sharing and remove crossing dead twigs",
+          "frequency": "Once yearly (autumn fruiting — March/April)",
+          "notes": "Slow-growing conservation flagship species (4.5 m mature height)."
+        }
+      ]
+    }
+  },
+  {
+    "species_id": "psidium-cattleianum",
+    "botanical": {
+      "scientific_name": "Psidium cattleianum",
+      "common_name_pt": "Araçá-amarelo",
+      "common_name_en": "Yellow Cattley Guava / Araçá",
+      "family": "Myrtaceae",
+      "biome_origin": "Mata Atlântica (Native)",
+      "municipal_compliance": [
+        "Portaria SVMA nº 26/2024",
+        "BioSampa (5ª Edição)",
+        "PMAU — Porte Pequeno"
+      ],
+      "successional_group": "early_secondary"
+    },
+    "physical_profile": {
+      "growth_habit": "small_tree",
+      "mature_height_meters": 4.0,
+      "canopy_spread_meters": 3.0,
+      "root_system": "non_aggressive_pivoting",
+      "sidewalk_wire_safe": true
+    },
+    "site_tolerances": {
+      "sunlight": ["full_sun", "partial_shade"],
+      "low_lux_tolerant": false,
+      "drought_tolerant": true,
+      "compacted_soil_tolerant": true,
+      "suitable_site_ids": [
+        "site-a-sidewalk-strip",
+        "site-b-sunny-lot"
+      ]
+    },
+    "ecological_interactions": {
+      "pollinators": ["Mandaguari stingless bees (Scaptotrigona postica)", "Mirim bees (Plebeia spp.)"],
+      "seed_dispersers_avifauna": ["Sanhaçu-cinzento (Thraupis sayaca)", "Saíra-amarela (Stilpnia cayana)", "Bem-te-vi (Pitangus sulphuratus)"],
+      "ecological_role": "Compact, smooth-barked native guava thriving in narrow sunny sidewalk strips and degraded lots while feeding urban tanagers."
+    },
+    "estimates": {
+      "growth_rate_cm_per_year": 65,
+      "canopy_coverage_m2_at_year_3": 3.8,
+      "unit_cost_usd": 11.50
+    },
+    "volunteer_care_schedule": {
+      "initial_month": [
+        {
+          "task": "Deep watering (8 L) and check tutor stake tie alignment",
+          "frequency": "Twice weekly for first 4 weeks",
+          "notes": "Position fruiting crown away from curb parking doors on narrow strips."
+        }
+      ],
+      "maintenance_quarterly": [
+        {
+          "task": "Sweep fallen overripe fruit from paved walkway and add to compost ring",
+          "frequency": "Every 3 months (weekly check during summer fruiting)",
+          "notes": "Keeps pedestrian pavement slip-free while recycling nutrients."
+        }
+      ],
+      "annual": [
+        {
+          "task": "Formative pruning of basal suckers to maintain clean single or multi-stem trunk",
+          "frequency": "Once yearly (August)",
+          "notes": "Wire-safe compact stature (4.0 m mature height)."
+        }
+      ]
+    }
+  },
+  {
+    "species_id": "myrcia-glabra",
+    "botanical": {
+      "scientific_name": "Myrcia glabra",
+      "common_name_pt": "Cabeludinha / Cambucá-mirim",
+      "common_name_en": "Velvet Jaboticaba / Shade Myrtle",
+      "family": "Myrtaceae",
+      "biome_origin": "Mata Atlântica (Native)",
+      "municipal_compliance": [
+        "Portaria SVMA nº 26/2024",
+        "BioSampa (5ª Edição)"
+      ],
+      "successional_group": "late_secondary"
+    },
+    "physical_profile": {
+      "growth_habit": "woody_shrub",
+      "mature_height_meters": 3.0,
+      "canopy_spread_meters": 2.4,
+      "root_system": "fibrous_contained",
+      "sidewalk_wire_safe": true
+    },
+    "site_tolerances": {
+      "sunlight": ["partial_shade", "full_shade", "partial_to_full_shade"],
+      "low_lux_tolerant": true,
+      "drought_tolerant": false,
+      "compacted_soil_tolerant": false,
+      "suitable_site_ids": [
+        "site-c-shaded-courtyard"
+      ]
+    },
+    "ecological_interactions": {
+      "pollinators": ["Jataí stingless bees (Tetragonisca angustula)", "Small understory meliponines"],
+      "seed_dispersers_avifauna": ["Choca-da-mata (Thamnophilus caerulescens)", "Sabiá-poca (Turdus amaurochalinus)", "Pula-pula (Basileuterus culicivorus)"],
+      "ecological_role": "Shade-adapted Atlantic Forest understory shrub delivering golden berries and dense foliar refuge inside low-lux urban courtyards."
+    },
+    "estimates": {
+      "growth_rate_cm_per_year": 35,
+      "canopy_coverage_m2_at_year_3": 2.2,
+      "unit_cost_usd": 14.50
+    },
+    "volunteer_care_schedule": {
+      "initial_month": [
+        {
+          "task": "Gentle root-zone watering (6 L) and 6 cm shredded leaf-litter mulch application",
+          "frequency": "Twice weekly for first 4 weeks",
+          "notes": "Avoid waterlogging courtyard planters; ensure free drainage."
+        }
+      ],
+      "maintenance_quarterly": [
+        {
+          "task": "Top-dress with worm castings (húmus de minhoca) and inspect shade foliage health",
+          "frequency": "Every 3 months",
+          "notes": "Thrives in filtered courtyard light without heavy pruning."
+        }
+      ],
+      "annual": [
+        {
+          "task": "Sanitary removal of interior deadwood only",
+          "frequency": "Once yearly (late winter — August)",
+          "notes": "Preserve natural rounded understory shrub architecture (3.0 m mature height)."
+        }
+      ]
+    }
+  },
+  {
+    "species_id": "bromelia-antiacantha",
+    "botanical": {
+      "scientific_name": "Bromelia antiacantha",
+      "common_name_pt": "Gravatá",
+      "common_name_en": "Caraguatá Terrestrial Bromeliad",
+      "family": "Bromeliaceae",
+      "biome_origin": "Mata Atlântica (Native)",
+      "municipal_compliance": [
+        "Portaria SVMA nº 26/2024",
+        "BioSampa (5ª Edição)"
+      ],
+      "successional_group": "understory_herbaceous"
+    },
+    "physical_profile": {
+      "growth_habit": "rosette_bromeliad",
+      "mature_height_meters": 0.9,
+      "canopy_spread_meters": 1.1,
+      "root_system": "fasciculate_shallow",
+      "sidewalk_wire_safe": true
+    },
+    "site_tolerances": {
+      "sunlight": ["full_sun", "partial_shade"],
+      "low_lux_tolerant": false,
+      "drought_tolerant": true,
+      "compacted_soil_tolerant": true,
+      "suitable_site_ids": [
+        "site-a-sidewalk-strip",
+        "site-b-sunny-lot"
+      ]
+    },
+    "ecological_interactions": {
+      "pollinators": ["Rabo-branco hummingbirds (Phaethornis eurynome)", "Beija-flor-de-fronte-violeta (Thalurania glaucopis)"],
+      "seed_dispersers_avifauna": ["Tiê-sangue (Ramphocelus bresilius)", "Sanhaçu-cinzento (Thraupis sayaca)"],
+      "ecological_role": "Hardy terrestrial rosette groundcover stabilizing sunny soil pockets with scarlet floral bracts and yellow berries, without phytotelmata water-pooling."
+    },
+    "estimates": {
+      "growth_rate_cm_per_year": 25,
+      "canopy_coverage_m2_at_year_3": 1.0,
+      "unit_cost_usd": 6.50
+    },
+    "volunteer_care_schedule": {
+      "initial_month": [
+        {
+          "task": "Soil-level watering (3 L) in coarse well-drained substrate setback 40 cm from curb walkways",
+          "frequency": "Once weekly for first 4 weeks",
+          "notes": "Set back from narrow pedestrian edges using thick leather gloves due to spiny leaf margins."
+        }
+      ],
+      "maintenance_quarterly": [
+        {
+          "task": "Clear wind-blown litter around rosette clump and thin excess offset pups near walkway edges",
+          "frequency": "Every 3 months",
+          "notes": "Non-tank terrestrial bromeliad (does not impound stagnant mosquito water)."
+        }
+      ],
+      "annual": [
+        {
+          "task": "Divide and transplant mature offset pups to bare patches in the planting bed",
+          "frequency": "Once yearly (spring — October)",
+          "notes": "Ultra-low profile (0.9 m) with zero overhead wire risk."
+        }
+      ]
+    }
+  },
+  {
+    "species_id": "salvia-splendens",
+    "botanical": {
+      "scientific_name": "Salvia splendens",
+      "common_name_pt": "Cardeal-do-brejo / Sálvia-vermelha",
+      "common_name_en": "Scarlet Sage (Native Atlantic Forest Ecotype)",
+      "family": "Lamiaceae",
+      "biome_origin": "Mata Atlântica (Native)",
+      "municipal_compliance": [
+        "Portaria SVMA nº 26/2024",
+        "BioSampa (5ª Edição)",
+        "PMAU — Forração e Subarbusto Nativo"
+      ],
+      "successional_group": "understory_herbaceous"
+    },
+    "physical_profile": {
+      "growth_habit": "perennial_subshrub",
+      "mature_height_meters": 1.2,
+      "canopy_spread_meters": 0.9,
+      "root_system": "fasciculate_shallow",
+      "sidewalk_wire_safe": true
+    },
+    "site_tolerances": {
+      "sunlight": ["full_sun", "partial_shade", "partial_to_full_shade"],
+      "low_lux_tolerant": true,
+      "drought_tolerant": false,
+      "compacted_soil_tolerant": true,
+      "suitable_site_ids": [
+        "site-a-sidewalk-strip",
+        "site-b-sunny-lot",
+        "site-c-shaded-courtyard"
+      ]
+    },
+    "ecological_interactions": {
+      "pollinators": ["Beija-flor-preto (Florisuga fusca)", "Beija-flor-tesoura (Eupetomena macroura)", "Native nectar-foraging butterflies"],
+      "seed_dispersers_avifauna": ["Coleirinho (Sporophila caerulescens) and granivorous songbirds feeding on nutlets"],
+      "ecological_role": "Versatile perennial Atlantic Forest subshrub providing nearly continuous tubular red flowers for urban hummingbirds across sun and courtyard shade."
+    },
+    "estimates": {
+      "growth_rate_cm_per_year": 45,
+      "canopy_coverage_m2_at_year_3": 0.8,
+      "unit_cost_usd": 4.50
+    },
+    "volunteer_care_schedule": {
+      "initial_month": [
+        {
+          "task": "Water root zone (4 L) and pinch terminal shoot tips to encourage bushy branching",
+          "frequency": "Twice weekly for first 4 weeks",
+          "notes": "Mulch lightly with fine compost to retain surface moisture."
+        }
+      ],
+      "maintenance_quarterly": [
+        {
+          "task": "Deadhead spent flower spikes to stimulate continuous hummingbird-friendly blooms",
+          "frequency": "Every 3 months",
+          "notes": "Leave 20% of dried spikes in autumn for native seed-eating finches."
+        }
+      ],
+      "annual": [
+        {
+          "task": "Cut back woody stems by one-third in early spring and propagate stem cuttings",
+          "frequency": "Once yearly (September)",
+          "notes": "Wire-safe subshrub (1.2 m) suitable for all 3 São Paulo site archetypes."
+        }
+      ]
+    }
+  }
+]
