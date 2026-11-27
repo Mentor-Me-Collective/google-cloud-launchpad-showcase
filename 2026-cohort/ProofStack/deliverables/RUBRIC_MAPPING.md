@@ -117,9 +117,11 @@ The repository contains the product code, sample data, test evidence, architectu
 - open MMC PR #5 to `main`, intentionally left unmerged
 - product screenshots showing the reviewer workflow and citation-grounding state
 
-**Remaining**
-- final recorded walkthrough, maximum 5 minutes
+**Complete**
+- final recorded walkthrough, maximum 5 minutes: [ProofStack walkthrough](https://drive.google.com/file/d/1Gosrkt3_wKbyLtygz-5LiWwbghcfr-gM/view?usp=sharing)
 - walkthrough link added to README/submission
+
+**Remaining**
 - final MMC submission action
 
 ## Final rubric posture
@@ -130,6 +132,6 @@ The repository contains the product code, sample data, test evidence, architectu
 | Solution Quality | 25% | Complete |
 | Implementation Plan | 20% | Complete and explicitly documented |
 | Codebase | 25% | Complete |
-| Documentation & Presentation | 10% | Complete except final video |
+| Documentation & Presentation | 10% | Complete, including recorded walkthrough |
 
-The remaining work is presentation media only; no additional product, architecture, evaluation, or security build work is required.
+All rubric-scored product, architecture, evaluation, codebase, documentation, and presentation evidence is complete. The only remaining action is the administrative final MMC submission step.
