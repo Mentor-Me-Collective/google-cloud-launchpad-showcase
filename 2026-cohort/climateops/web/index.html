@@ -3438,12 +3438,15 @@ $('reload').onclick = () => load();
 load();
 
 // ==========================================
+
+// ==========================================
 // 5-MINUTE GUIDED DEMO WALKTHROUGH CONTROLLER
-// Paced for exactly 4:55 (Targeting 5:00 limit)
+// Hands-free Auto-Play with Speech & Subtitles
 // ==========================================
 const tourActs = [
   {
     act: 1,
+    duration: 38,
     time: "0:00 - 0:40",
     speaker: "Justin (@creova-gif) · AI Cloud Leader",
     title: "Cover, Problem & SDG 13 Mission in Mott Haven",
@@ -3453,15 +3456,17 @@ const tourActs = [
   },
   {
     act: 2,
+    duration: 38,
     time: "0:40 - 1:20",
     speaker: "Kseniya (@ksen-nm) · Cloud Data Analytics",
     title: "NWS Live Weather Ingestion & Provenance",
     target: "#header-weather-pill",
-    script: "Hi, I am Kseniya. At the top of our console, ClimateOps ingests National Weather Service CAP alerts for South Bronx zone NYZ073. Notice the explicit badge: we clearly distinguish real NWS alerts from simulated fixtures. We never assume 'no heat hazard' on empty data—an unconfirmed status is labeled UNKNOWN. Below the weather banner, our dashboard tracks all 10 South Bronx public facilities across Mott Haven and Melrose, with verified provenance tags from NYPL, NYC Parks, and BronxWorks.",
+    script: "Hi, I am Kseniya. At the top of our console, ClimateOps ingests National Weather Service CAP alerts for South Bronx zone NYZ073. Notice the explicit badge: we clearly distinguish real NWS alerts from simulated fixtures. We never assume 'no heat hazard' on empty data—an unconfirmed status is labeled UNKNOWN. Below the weather banner, our dashboard tracks all verified South Bronx public facilities across Mott Haven and Melrose, with proven citations from NYPL, NYC Parks, and BronxWorks.",
     action: () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }
   },
   {
     act: 3,
+    duration: 45,
     time: "1:20 - 2:05",
     speaker: "Kseniya (@ksen-nm) · Cloud Data Analytics",
     title: "Deterministic 5-Factor Ranking & Scenario Simulation",
@@ -3475,6 +3480,7 @@ const tourActs = [
   },
   {
     act: 4,
+    duration: 45,
     time: "2:05 - 2:50",
     speaker: "Blanca (@bcperez14) · Team Lead & AI Research",
     title: "NVIDIA NIM Action Brief & Grounded Citations",
@@ -3487,6 +3493,7 @@ const tourActs = [
   },
   {
     act: 5,
+    duration: 45,
     time: "2:50 - 3:35",
     speaker: "Justin (@creova-gif) · AI Cloud Leader",
     title: "ADR-001: The Mandatory Human Manager Approval Gate",
@@ -3499,6 +3506,7 @@ const tourActs = [
   },
   {
     act: 6,
+    duration: 40,
     time: "3:35 - 4:15",
     speaker: "Shiksha (@Shiksha99) · Cloud Cybersecurity",
     title: "Field Staff Persona, RBAC 403 & Signed Photo Proof",
@@ -3513,6 +3521,7 @@ const tourActs = [
   },
   {
     act: 7,
+    duration: 30,
     time: "4:15 - 4:45",
     speaker: "Blanca & Shiksha · Verification & Event Ledger",
     title: "Manager Task Verification & Immutable Audit Trail",
@@ -3527,6 +3536,7 @@ const tourActs = [
   },
   {
     act: 8,
+    duration: 15,
     time: "4:45 - 5:00",
     speaker: "Justin & Team · Closing & 108 Tests",
     title: "108 Passing Tests, Responsible AI & Credits",
@@ -3539,6 +3549,10 @@ const tourActs = [
 ];
 
 let currentTourAct = 0;
+let isAutoPlaying = false;
+let autoPlayTimer = null;
+let countdownTimer = null;
+let voiceEnabled = true;
 
 function startTour() {
   currentTourAct = 0;
@@ -3548,9 +3562,30 @@ function startTour() {
 }
 
 function closeTour() {
+  stopAutoPlay();
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
   const prompter = document.getElementById('tour-prompter');
   if (prompter) prompter.style.display = 'none';
   document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
+}
+
+function toggleVoice() {
+  voiceEnabled = !voiceEnabled;
+  const btn = document.getElementById('btn-tour-voice');
+  if (btn) btn.textContent = voiceEnabled ? '🔊 Voice: ON' : '🔇 Voice: OFF';
+  if (!voiceEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
+}
+
+function speakText(text) {
+  if (!voiceEnabled || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.rate = 1.05;
+  u.pitch = 1.0;
+  const voices = window.speechSynthesis.getVoices();
+  const enVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel')));
+  if (enVoice) u.voice = enVoice;
+  window.speechSynthesis.speak(u);
 }
 
 function renderTourAct() {
@@ -3576,6 +3611,65 @@ function renderTourAct() {
 
   // Trigger custom action
   if (typeof act.action === 'function') act.action();
+
+  // Speak aloud if voice is enabled
+  speakText(act.script);
+
+  if (isAutoPlaying) {
+    startCountdown(act.duration || 35);
+  } else {
+    document.getElementById('tour-countdown').textContent = '';
+  }
+}
+
+function startCountdown(seconds) {
+  clearInterval(countdownTimer);
+  let remaining = seconds;
+  const badge = document.getElementById('tour-countdown');
+  badge.textContent = `⏱ Auto-advancing in ${remaining}s...`;
+
+  countdownTimer = setInterval(() => {
+    remaining--;
+    if (remaining > 0) {
+      badge.textContent = `⏱ Auto-advancing in ${remaining}s...`;
+    } else {
+      clearInterval(countdownTimer);
+      badge.textContent = '';
+      if (isAutoPlaying) nextTourAct();
+    }
+  }, 1000);
+}
+
+function toggleAutoPlay() {
+  if (isAutoPlaying) {
+    stopAutoPlay();
+  } else {
+    startAutoPlay();
+  }
+}
+
+function startAutoPlay() {
+  isAutoPlaying = true;
+  const btn = document.getElementById('btn-tour-autoplay');
+  if (btn) {
+    btn.textContent = '⏸ Pause Auto-Play';
+    btn.style.background = '#F59E0B';
+    btn.style.borderColor = '#D97706';
+  }
+  renderTourAct();
+}
+
+function stopAutoPlay() {
+  isAutoPlaying = false;
+  clearInterval(countdownTimer);
+  const btn = document.getElementById('btn-tour-autoplay');
+  if (btn) {
+    btn.textContent = '▶ Auto-Play (Hands-Free)';
+    btn.style.background = '#059669';
+    btn.style.borderColor = '#10B981';
+  }
+  const badge = document.getElementById('tour-countdown');
+  if (badge) badge.textContent = '';
 }
 
 function nextTourAct() {
@@ -3602,5 +3696,35 @@ if (document.getElementById('btn-start-tour')) {
   document.getElementById('btn-start-tour').onclick = startTour;
 }
 </script>
+
+<!-- GUIDED WALKTHROUGH PROMPTER BAR -->
+<div id="tour-prompter" class="tour-prompter-bar">
+  <div class="tour-prompter-header">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <span class="tour-act-badge" id="tour-act-badge">Act 1 of 8</span>
+      <span class="tour-speaker-badge" id="tour-speaker-badge">Justin (@creova-gif)</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <span style="font-size:12px; color:#10B981; font-weight:700; font-family:monospace;" id="tour-timer">0:00 - 0:40</span>
+      <span style="font-size:11px; color:#F59E0B; font-weight:700; font-family:monospace;" id="tour-countdown"></span>
+      <button class="btn" style="padding:3px 8px; font-size:11px; background:rgba(255,255,255,0.08);" onclick="closeTour()">✕ Close</button>
+    </div>
+  </div>
+  <div class="tour-script-text" id="tour-script-text">Loading script...</div>
+  <div class="tour-controls">
+    <div style="display:flex; align-items:center; gap:8px;">
+      <button class="btn btn-emerald" id="btn-tour-autoplay" onclick="toggleAutoPlay()" style="padding:5px 12px; font-size:12px; font-weight:700;">
+        ▶ Auto-Play (Hands-Free)
+      </button>
+      <button class="btn" id="btn-tour-voice" onclick="toggleVoice()" style="padding:5px 10px; font-size:12px;">
+        🔊 Voice: ON
+      </button>
+    </div>
+    <div style="display:flex; gap:8px;">
+      <button class="btn" id="btn-tour-prev" onclick="prevTourAct()" style="padding:5px 12px; font-size:12px;">◀ Prev Act</button>
+      <button class="btn btn-emerald" id="btn-tour-next" onclick="nextTourAct()" style="padding:5px 14px; font-size:12px; font-weight:700;">Next Act ▶</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
