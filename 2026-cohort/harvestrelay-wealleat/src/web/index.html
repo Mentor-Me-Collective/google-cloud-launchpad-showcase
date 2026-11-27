@@ -1,0 +1,1930 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="WeAllEat connects donors with surplus food to nearby kitchens and neighbors, using clear, rule-based matching.">
+<title>WeAllEat</title>
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font:14px system-ui,sans-serif}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2256 66 262 262%22%3E%3Cpath fill=%22%232F57D0%22 d=%22M241.0,324.7C239.3,324.2 237.8,323.2 236.4,321.7C234.3,319.6 234.1,319.2 229.5,307.9C228.7,305.9 227.6,303.5 227.1,302.4C226.5,301.3 225.7,299.4 225.2,298.1C224.7,296.9 223.8,294.9 223.1,293.8C222.0,291.7 220.7,289.0 217.1,280.8C216.1,278.5 215.0,276.1 214.7,275.4C214.4,274.7 213.5,272.7 212.8,271.0C212.1,269.3 210.9,266.5 210.2,264.8C209.4,263.2 208.3,260.4 207.8,258.6C204.4,248.2 200.6,242.0 196.6,240.0C194.9,239.1 194.9,239.1 189.8,239.0C185.5,238.8 183.7,238.7 179.3,237.9C173.9,237.0 173.9,237.0 154.5,237.0C136.4,237.0 134.9,237.0 132.0,236.5C129.5,236.1 127.6,236.0 122.5,236.0C118.1,236.0 115.4,235.9 113.9,235.6C112.6,235.4 110.4,235.1 108.9,235.0C107.4,234.9 105.2,234.5 104.0,234.2C102.8,233.9 99.5,233.2 96.6,232.6C89.2,231.1 83.5,228.8 75.1,224.0C69.1,220.6 64.0,214.9 62.6,210.1C62.1,208.2 61.8,197.7 62.2,195.0C63.5,187.6 73.0,178.6 82.9,175.4C90.9,172.8 91.5,172.8 95.3,177.2C99.9,182.4 103.5,185.6 109.8,189.8C114.5,193.0 115.7,193.4 122.0,193.4C127.6,193.4 128.9,193.1 133.9,190.5C141.5,186.7 142.9,186.6 147.3,189.0C157.2,194.6 173.7,194.9 181.6,189.6C186.0,186.7 189.9,181.7 193.6,174.1C197.3,166.7 196.6,167.1 205.2,167.1C212.0,167.1 213.4,167.4 217.7,169.6C221.0,171.3 225.4,175.5 228.2,179.6C229.2,181.0 230.7,183.0 231.5,184.0C233.4,186.3 237.7,192.7 240.2,197.0C244.7,204.6 248.5,210.8 252.2,216.4C253.7,218.6 255.4,221.2 256.0,222.2C259.7,228.8 262.0,232.3 265.1,236.5C268.3,240.8 269.6,242.7 276.6,253.5C277.9,255.6 279.4,257.8 279.7,258.4C280.5,259.4 283.8,264.8 286.4,269.2C288.5,272.8 291.9,278.3 295.0,283.1C296.4,285.2 298.6,288.8 300.0,290.9C301.4,293.1 303.3,295.9 304.1,297.1C306.9,301.1 310.8,307.6 311.7,309.5C314.3,315.5 312.6,320.8 307.7,321.7C305.2,322.2 298.4,323.0 297.4,323.0C296.8,323.0 294.7,323.2 292.7,323.5C290.7,323.8 287.3,324.2 285.3,324.5C280.8,325.1 243.2,325.3 241.0,324.7Z%22/%3E%3Cpath fill=%22%232E8C54%22 d=%22M126.0,115.2C120.8,114.2 118.6,109.7 120.2,103.4C120.9,101.0 121.0,100.0 121.0,97.7C121.0,94.9 121.9,88.8 122.6,86.7C122.8,86.1 123.5,84.0 124.0,82.1C125.3,77.7 125.7,77.0 129.1,73.6C133.4,69.2 136.1,68.2 139.5,69.9C142.5,71.4 142.8,72.4 143.0,82.0C143.2,86.3 143.3,90.8 143.4,92.0C143.6,94.4 143.6,94.3 141.0,101.5C139.3,106.3 138.6,107.6 136.0,110.3C132.0,114.6 129.4,115.9 126.0,115.2Z%22/%3E%3Cpath fill=%22%23D5463A%22 d=%22M118.1,194.8C109.4,193.6 92.4,178.3 85.0,165.0C84.3,163.7 82.7,161.1 81.5,159.2C76.9,152.2 77.1,153.2 77.1,138.0C77.1,123.9 77.0,124.9 79.4,119.0C82.7,111.0 87.0,106.5 93.1,104.6C95.6,103.8 116.4,103.9 117.9,104.7C119.4,105.5 120.1,106.4 121.1,108.7C123.8,115.0 128.6,115.6 134.0,110.3C137.0,107.5 137.5,106.6 139.4,101.4C142.2,93.6 143.4,91.8 146.9,89.9C150.2,88.2 150.5,88.2 160.0,88.1C175.6,87.9 178.1,88.8 188.5,99.1C195.9,106.4 198.5,111.4 200.2,121.5C201.2,127.0 201.4,144.6 200.6,149.1C200.4,150.4 200.1,153.4 200.0,155.9C199.5,167.6 193.8,180.0 185.1,188.2C181.0,192.2 178.9,193.2 172.4,194.3C163.3,195.8 155.3,194.6 147.8,190.8C142.7,188.1 142.0,188.2 135.0,191.5C128.1,194.8 123.9,195.6 118.1,194.8Z%22/%3E%3Cpath fill=%22%23F2CC58%22 d=%22M86.6,153.2C82.6,151.3 82.1,149.8 82.0,140.0C81.9,129.4 82.3,127.9 86.4,121.7C90.7,115.2 98.4,114.1 101.1,119.5C102.6,122.5 102.0,125.2 98.8,130.1C95.0,135.8 94.7,137.2 95.5,142.9C96.1,147.5 96.0,149.1 94.8,151.0C93.2,153.5 89.5,154.5 86.6,153.2Z%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&family=DM+Mono:wght@500&family=Londrina+Solid:wght@900&display=swap">
+<style>
+/* Layout: off-white paper ground with cut-paper color blocks; a public home → sign-in → one focused app per role. Light theme only for now (dark mode later). */
+:root{
+  color-scheme:light;
+  --paper:#FBF7EF; --card:#FFFFFF; --tint:#F4EEE2; --line:#EAE2D2;
+  --ink:#1E2640; --ink-2:#55607A;
+  --blue:#2F57D0; --blue-soft:#E4EAFB;
+  --green:#2E8C54; --green-soft:#DDF0E3;
+  --tomato:#D5463A; --tomato-soft:#FBE3DF;
+  --butter:#F2CC58; --butter-soft:#FBF0CB; --amber:#8A6500;
+  --table:#E2D9C8; --wood:#CDB98F;
+  --grey:#6B6960; --grey-soft:#EEEBE4;
+  --shadow:0 14px 36px rgba(30,38,64,.16);
+  --f-display:"Bricolage Grotesque",ui-rounded,"Avenir Next",system-ui,sans-serif;
+  --f-body:"Figtree",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"DM Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{--page-bg:var(--paper);background:var(--page-bg);color:var(--ink);font:16px/1.55 var(--f-body);transition:background-color .3s ease}
+body[data-role="donor"]{--page-bg:#FCF0ED}
+body[data-role="kitchen"]{--page-bg:#EEF7F1}
+body[data-role="community"]{--page-bg:#EFF3FC}
+@media (prefers-reduced-motion:reduce){body{transition:none}}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--page-bg)}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.015em;line-height:1.1}
+h1{font-size:clamp(30px,4.6vw,48px);font-weight:800}
+h2{font-size:20px;font-weight:700}
+h3{font-size:17px;font-weight:700}
+p{margin:0}
+a{color:var(--blue)}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--ink-2)}
+.small{font-size:14px}
+[hidden]{display:none!important}
+
+/* Top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:25;background:color-mix(in srgb,var(--page-bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:12px;padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:baseline;font-family:"Londrina Solid",var(--f-display);font-weight:900;font-size:34px;line-height:1;letter-spacing:0;border:0;background:none;cursor:pointer;padding:0;color:var(--ink)}
+.brand .ap{height:1.056em;width:0.755em;margin-right:0.004em;margin-bottom:-0.003em;flex:none;overflow:visible}
+.brand .k{color:var(--ink)}
+.top-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.role-chip{font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px}
+.rc-donor{background:var(--tomato-soft);color:var(--tomato)} .rc-kitchen{background:var(--green-soft);color:var(--green)}
+.rc-community{background:var(--blue-soft);color:var(--blue)} .rc-staff{background:var(--grey-soft);color:var(--ink)}
+.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff;font-size:15px;flex:none}
+.help-btn span[aria-hidden]{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--ink);color:#fff;font-size:12px}
+.emergency{background:var(--tomato-soft);border-radius:14px;padding:12px 14px;font-size:14px}
+.emergency b{color:var(--tomato)}
+.faq{display:flex;flex-direction:column;gap:8px}
+.faq details{border:1px solid var(--line);border-radius:12px}
+.faq summary{padding:10px 14px;font-weight:600;font-size:14px}
+.faq summary::after{content:"+"!important}
+.faq details[open] summary::after{content:"–"!important}
+.faq p{padding:0 14px 12px;font-size:14px;color:var(--ink-2)}
+textarea.input{min-height:90px;resize:vertical;font:inherit}
+.profile-btn{display:flex;align-items:center;gap:10px;border:1.5px solid transparent;background:none;border-radius:999px;padding:3px 12px 3px 3px;cursor:pointer}
+.profile-btn:hover{border-color:var(--line);background:var(--card)}
+.profile-btn .who{order:3}.profile-btn .avatar{order:1}.profile-label{order:2;font-weight:700;font-size:14px}
+.who{font-size:14px;font-weight:600;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:560px){.top-right{gap:6px}.top-right .btn.sm{padding:6px 10px}.help-btn{padding:6px 7px!important}.profile-btn{padding:0;border:0}.bar{gap:8px}}
+@media (max-width:400px){.brand{font-size:28px}}
+@media (max-width:560px){.help-label,.profile-label,.who,.top .role-chip,.top-right .hide-sm{display:none}.brand{font-size:30px}.dock-btn .dock-label{display:none}}
+.auth-side .role-chip{background:var(--card)}
+
+.wrap{padding-block:28px 96px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.page{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+.page.wide{max-width:1200px}
+
+/* Buttons */
+.btn{border:1.5px solid var(--line);background:var(--card);padding:10px 18px;border-radius:999px;font-weight:700;cursor:pointer;font-size:15px;white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn:hover{border-color:var(--ink-2)}
+.btn.primary{background:var(--ink);border-color:var(--ink);color:#fff}
+.btn.primary:hover{background:#2C3658}
+.btn.blue{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.sm{padding:6px 13px;font-size:14px}
+.btn.lg{padding:14px 24px;font-size:17px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.link{border:0;background:none;padding:0;color:var(--ink-2);font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.link:hover{color:var(--ink)}
+.link.danger{color:var(--tomato)}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* Home */
+.hero{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:28px;align-items:center}
+.hero h1 .hl{background:linear-gradient(transparent 62%,var(--butter) 62%);padding:0 .08em}
+.hero p.lede{font-size:19px;color:var(--ink-2);max-width:46ch;margin-top:16px}
+.hero .btn-row{margin-top:26px}
+.hero svg{width:100%;height:auto;max-width:560px;justify-self:center}
+@media (max-width:860px){.hero{grid-template-columns:minmax(0,1fr)}.hero svg{max-width:420px}}
+.section{max-width:1200px;margin:64px auto 0}
+.section>h2{font-size:clamp(24px,3vw,32px);margin-bottom:6px}
+.section>p{color:var(--ink-2);margin-bottom:22px}
+.roles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:860px){.roles{grid-template-columns:minmax(0,1fr)}}
+.role{position:relative;overflow:hidden;border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:10px;text-align:left;border:0;cursor:pointer;color:var(--ink);transition:transform .15s ease}
+.role:hover{transform:translateY(-3px)}
+.role .shape{position:absolute;right:-34px;bottom:-34px;width:120px;height:120px;border-radius:50%;opacity:.9}
+.role h3{font-size:24px;position:relative}
+.role p{position:relative;color:var(--ink);opacity:.82;max-width:30ch}
+.role .go{margin-top:auto;padding-top:12px;font-weight:700;display:flex;align-items:center;gap:6px;position:relative}
+.role-donor{background:var(--tomato-soft)} .role-donor .shape{background:var(--tomato)}
+.role-kitchen{background:var(--green-soft)} .role-kitchen .shape{background:var(--green);border-radius:30px;transform:rotate(18deg)}
+.role-community{background:var(--blue-soft)} .role-community .shape{background:var(--blue);border-radius:50% 50% 12px 50%}
+@media (prefers-reduced-motion:reduce){.role{transition:none}.role:hover{transform:none}}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;list-style:none;padding:0;margin:0;counter-reset:s}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;counter-increment:s;display:flex;flex-direction:column;gap:6px}
+.steps li::before{content:counter(s);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-weight:800;color:#fff;margin-bottom:6px}
+.steps li:nth-child(1)::before{background:var(--tomato)} .steps li:nth-child(2)::before{background:var(--green)} .steps li:nth-child(3)::before{background:var(--blue)}
+.steps p{color:var(--ink-2);font-size:15px}
+@media (max-width:860px){.steps{grid-template-columns:minmax(0,1fr)}}
+.stats{display:flex;flex-wrap:wrap;gap:12px 40px;margin-top:30px}
+.stats b{display:block;font-family:var(--f-display);font-size:30px;font-weight:800}
+.stats span{font-size:14px;color:var(--ink-2)}
+.foot{max-width:1200px;margin:72px auto 0;padding-top:20px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;font-size:14px;color:var(--ink-2)}
+
+/* Auth */
+.auth{max-width:980px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-radius:26px;overflow:hidden;background:var(--card);border:1px solid var(--line)}
+.auth-side{padding:34px;display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden;min-height:100%}
+.auth-side ul{margin:6px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.auth-side svg{margin:auto -34px -34px;width:calc(100% + 68px);max-width:none;height:auto;display:block}
+.auth-main{padding:34px;display:flex;flex-direction:column;gap:18px}
+@media (max-width:820px){.auth{grid-template-columns:minmax(0,1fr)}.auth-side svg{display:none}.auth-side,.auth-main{padding:24px}}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--tint);border-radius:999px;padding:4px}
+.seg button{border:0;background:none;border-radius:999px;padding:9px;font-weight:700;cursor:pointer;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.notice{background:var(--butter-soft);border-radius:12px;padding:10px 14px;font-size:14px}
+
+/* Forms */
+.form{display:flex;flex-direction:column;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field>label,.field>legend{font-weight:700;font-size:14px}
+.field .help{font-size:13px;color:var(--ink-2)}
+fieldset{border:0;padding:0;margin:0;min-width:0}
+.input{border:1.5px solid var(--line);background:var(--card);border-radius:12px;padding:10px 12px;width:100%}
+.input:focus{border-color:var(--blue);outline:none}
+select.input{width:auto;min-width:0;max-width:100%}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:480px){.two{grid-template-columns:1fr}}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts label{display:flex;align-items:center;gap:7px;border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;font-size:14px;cursor:pointer;background:var(--card)}
+.opts label:has(input:checked){border-color:var(--ink);background:var(--butter-soft)}
+.err{color:var(--tomato);font-size:14px;font-weight:600}
+
+/* App */
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px 20px;flex-wrap:wrap}
+.head h1{font-size:clamp(28px,4vw,38px)}
+.head p{color:var(--ink-2);margin-top:6px;max-width:58ch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;min-width:0;overflow:hidden}
+.card-head{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.card-body{padding:18px 20px}
+.rows>.row{padding:16px 20px;border-top:1px solid var(--line);display:flex;gap:16px;justify-content:space-between;align-items:flex-start}
+.rows>.row:first-child{border-top:0}
+.row-main{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}
+.row-title{font-weight:700;font-size:17px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.row-meta{font-size:14px;color:var(--ink-2)}
+.row-note{font-size:14px;margin-top:6px}
+.tel{color:var(--blue);font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.tel:hover{text-decoration:underline}
+.contact{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;font-size:14px;margin-top:2px}
+.callout{background:var(--tomato-soft);border-radius:10px;padding:6px 10px;font-size:13px;margin-top:6px}
+.maplink{color:inherit;text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 40%,transparent);text-underline-offset:3px;display:inline-flex;align-items:center;gap:4px;font-weight:inherit}
+.maplink:hover{color:var(--blue);text-decoration-color:currentColor}
+.maplink svg{color:var(--tomato);flex:none}
+.donor-line{display:flex;align-items:center;gap:7px;font-weight:700;font-size:16px;color:var(--ink)}
+.donor-line svg{flex:none}
+.donor-line .addr{font-weight:500;font-size:14px;color:var(--ink-2)}
+.sortbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:12px 20px;border-bottom:1px solid var(--line);font-size:14px;color:var(--ink-2)}
+.attn{border-color:var(--tomato)}
+@keyframes wob{0%{transform:rotate(-1.6deg)}100%{transform:rotate(1.6deg)}}
+@keyframes bob{0%{transform:translateY(0)}100%{transform:translateY(-5px)}}
+@keyframes sway{0%{transform:skewX(-1.2deg)}100%{transform:skewX(1.2deg)}}
+@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes rise{0%{transform:translateY(6px);opacity:0}30%{opacity:.55}100%{transform:translateY(-16px);opacity:0}}
+.wob,.bob,.sway{transform-box:view-box}
+.wob{animation:wob 1.7s ease-in-out infinite alternate}
+.bob{animation:bob 1.4s ease-in-out infinite alternate}
+.sway{animation:sway 3.2s ease-in-out infinite alternate}
+.steam{animation:rise 2.6s ease-in infinite}
+.hop{animation:hop 1.15s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.wob,.bob,.sway,.steam,.hop{animation:none}}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tile{border:2px solid transparent;border-radius:18px;padding:14px 16px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px;color:var(--ink)}
+.tile b{font-family:var(--f-display);font-size:30px;font-weight:800;line-height:1.1}
+.tile span{font-size:14px;color:var(--ink-2)}
+.tile[aria-pressed="true"]{border-color:var(--ink)}
+.t-wait{background:var(--blue-soft)} .t-way{background:var(--butter-soft)} .t-done{background:var(--green-soft)} .t-help{background:var(--tomato-soft)}
+@media (max-width:700px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.checks{display:flex;flex-direction:column;gap:6px}
+.check-row{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 12px;border-radius:10px;background:var(--tint);font-size:14px}
+.check-row.ok-row{background:var(--green-soft)}
+.check-row .why{color:var(--ink-2);font-size:13px}
+.timeline{display:flex;flex-direction:column;gap:6px;max-height:200px;overflow:auto;font-size:14px}
+.timeline div{display:grid;grid-template-columns:70px minmax(0,1fr);gap:8px}
+.attn .card-head{background:var(--tomato-soft)}
+.row-side{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex:none;text-align:right}
+.row.urgent{box-shadow:inset 4px 0 0 var(--tomato)}
+@media (max-width:560px){.rows>.row{flex-direction:column;gap:10px}.row-side{flex-direction:row;flex-wrap:wrap;align-items:center;text-align:left}}
+.empty{padding:28px 20px;color:var(--ink-2);text-align:center}
+.label{font-size:13px;color:var(--ink-2)}
+.timer{font-family:var(--f-mono);font-weight:500;font-size:18px;font-variant-numeric:tabular-nums}
+.timer.warn{color:var(--amber)} .timer.urgent{color:var(--tomato)}
+.badge{display:inline-flex;align-items:center;font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;white-space:nowrap}
+.b-AVAILABLE{color:var(--blue);background:var(--blue-soft)}
+.b-RESERVED{color:var(--amber);background:var(--butter-soft)}
+.b-HANDOFF_CONFIRMED{color:var(--green);background:var(--green-soft)}
+.b-EXPIRED{color:var(--grey);background:var(--grey-soft)}
+.b-CANCELED{color:var(--grey);background:var(--grey-soft)}
+.b-UNMATCHED{color:var(--tomato);background:var(--tomato-soft)}
+.b-LOCKED{color:var(--tomato);background:var(--tomato-soft)}
+.b-HELD{color:var(--amber);background:var(--butter-soft)}
+.b-COLLECTED{color:var(--green);background:var(--green-soft)}
+.stor{font-weight:700}
+.stor-COLD{color:var(--blue)} .stor-HOT{color:var(--tomato)} .stor-DRY{color:var(--amber)} .stor-FROZEN{color:var(--green)}
+
+.impact{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.impact div{border-radius:18px;padding:18px 20px}
+.impact div:nth-child(1){background:var(--tomato-soft)} .impact div:nth-child(2){background:var(--butter-soft)} .impact div:nth-child(3){background:var(--green-soft)}
+.impact b{display:block;font-family:var(--f-display);font-size:30px;font-weight:800;font-variant-numeric:tabular-nums}
+.impact span{font-size:14px;color:var(--ink-2)}
+@media (max-width:620px){.impact{grid-template-columns:1fr}}
+
+/* folder-style tabs: every tab looks like a tab you can click, the open one joins the panel below */
+.subtabs{display:flex;gap:6px;padding:12px 14px 0;background:var(--tint);box-shadow:inset 0 -1.5px 0 var(--line);overflow-x:auto;scrollbar-width:thin}
+.subtab{position:relative;border:1.5px solid var(--line);border-bottom:0;background:rgba(255,255,255,.5);padding:10px 16px 11px;font-weight:700;font-size:15px;color:var(--ink-2);cursor:pointer;border-radius:12px 12px 0 0;white-space:nowrap;display:flex;gap:7px;align-items:center;flex:none;transition:background .15s ease,color .15s ease}
+.subtab:hover{background:var(--card);color:var(--ink)}
+.subtab[aria-selected="true"]{background:var(--tabc,var(--ink));border-color:var(--tabc,var(--ink));color:#fff;z-index:1}
+.subtab[aria-selected="true"]:hover{background:var(--tabc,var(--ink));color:#fff}
+.subtab:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.subtab .n{font-size:12px;background:var(--line);color:var(--ink);border-radius:9px;padding:0 7px;min-width:22px;text-align:center}
+.subtab[aria-selected="true"] .n{background:#fff;color:var(--ink)}
+.subtabs{box-shadow:none;border-bottom:3px solid var(--tabc,var(--ink))}
+.subtab:not([aria-selected="true"]){background:var(--tabsoft,var(--tint));border-color:transparent;color:var(--ink-2)}
+.subtab:not([aria-selected="true"]):hover{background:var(--tabhover,var(--line));color:var(--ink)}
+.subtab:not([aria-selected="true"]) .n{background:rgba(255,255,255,.7)}
+.subtab .n:empty{display:none}
+.card>.subtabs:first-child{border-radius:inherit;border-bottom-left-radius:0;border-bottom-right-radius:0}
+#app-donor{--tabc:var(--tomato);--tabsoft:var(--tomato-soft);--tabhover:#F6CBC5} #app-kitchen{--tabc:var(--green);--tabsoft:var(--green-soft);--tabhover:#C2E4CD} #app-community{--tabc:var(--blue);--tabsoft:var(--blue-soft);--tabhover:#CCD7F7} #app-staff{--tabc:var(--ink);--tabsoft:#E4E6ED;--tabhover:#D3D6E0}
+@media (max-width:560px){.subtabs{padding:10px 10px 0;gap:4px}.subtab{padding:9px 12px 10px;font-size:14px}}
+@media (prefers-reduced-motion:reduce){.subtab{transition:none}}
+.ksum{display:flex;flex-wrap:wrap;gap:12px 32px;align-items:center;padding:16px 20px}
+.meter{height:10px;border-radius:5px;background:var(--tint);overflow:hidden;display:flex;width:180px}
+.meter i{display:block;height:100%}
+.pinbox{display:flex;align-items:center;gap:16px;margin-top:10px;padding:12px 16px;border-radius:14px;background:var(--butter-soft);flex-wrap:wrap}
+.pin{font-family:var(--f-mono);font-size:32px;letter-spacing:.16em;line-height:1}
+.comm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,400px),1fr));gap:18px}
+.kname{display:flex;gap:12px;align-items:center}
+.kdot{width:14px;height:14px;border-radius:5px;flex:none}
+.code{font-family:var(--f-mono);font-size:28px;letter-spacing:.14em;background:var(--blue-soft);color:var(--blue);padding:6px 14px;border-radius:12px}
+.row-main.code-card{flex-direction:row;gap:16px;align-items:center;flex-wrap:wrap}
+
+/* Staff */
+.ctrls{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center;padding:16px 20px}
+.ctrls .grp{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.ctrls .grp>span{font-size:13px;font-weight:700;color:var(--ink-2);margin-right:4px}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:4px 12px;cursor:pointer;font-weight:600;font-size:14px}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.filters{display:flex;flex-wrap:wrap;gap:6px;padding:14px 20px 4px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:13px;font-weight:700;color:var(--ink-2);padding:10px 12px;white-space:nowrap;border-bottom:1px solid var(--line)}
+td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:middle}
+tr:first-child td{border-top:0}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.sub{display:block;font-size:13px;color:var(--ink-2)}
+.ok{color:var(--green);font-weight:800} .no{color:var(--tomato);font-weight:800}
+.log{max-height:540px;overflow:auto}
+.log-row{display:grid;grid-template-columns:100px minmax(0,1fr);gap:10px;padding:9px 20px;border-top:1px solid var(--line);font-size:14px}
+.log-row:first-child{border-top:0}
+
+/* Modal, toast, demo dock */
+.modal{position:fixed;inset:0;z-index:50;background:rgba(30,38,64,.45);display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.dialog{background:var(--card);border-radius:22px;box-shadow:var(--shadow);width:min(480px,100%);padding:24px;display:flex;flex-direction:column;gap:16px;max-height:100%;overflow:auto}
+.code-input{font-family:var(--f-mono);font-size:32px;letter-spacing:.4em;text-align:center;padding:12px;border:2px solid var(--line);border-radius:14px;width:100%;background:var(--tint)}
+.code-input:focus{border-color:var(--blue);outline:none}
+.success{background:var(--green-soft);border-radius:14px;padding:14px 16px}
+.toasts{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:60;display:flex;flex-direction:column;gap:8px;width:min(360px,calc(100vw - 32px))}
+.toast{background:var(--ink);color:#fff;border-radius:14px;padding:12px 16px;font-size:15px;box-shadow:var(--shadow);animation:tin .2s ease-out}
+@keyframes tin{from{transform:translateY(8px);opacity:0}}
+.dock-btn{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:40;border:0;border-radius:999px;background:var(--butter);color:var(--ink);font-weight:800;padding:9px 16px;cursor:pointer;box-shadow:var(--shadow);display:flex;align-items:center;gap:8px;font-size:14px}
+.dock{position:fixed;left:max(16px,env(safe-area-inset-left,0px));bottom:calc(max(16px,env(safe-area-inset-bottom,0px)) + 52px);z-index:41;background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);width:min(340px,calc(100vw - 32px));padding:16px;display:flex;flex-direction:column;gap:12px;max-height:calc(100vh - 120px);overflow:auto}
+.dock h3{font-size:16px}
+.dock .grp{display:flex;flex-direction:column;gap:6px}
+.dock .grp>span{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2)}
+.dock .line{display:flex;gap:6px}
+.dock .line select{flex:1}
+@media (prefers-reduced-motion:reduce){.toast{animation:none}}
+details>summary{cursor:pointer;list-style:none;padding:16px 20px;font-weight:700;display:flex;justify-content:space-between}
+details>summary::-webkit-details-marker{display:none}
+details>summary::after{content:"Show";font-weight:600;font-size:14px;color:var(--ink-2)}
+details[open]>summary::after{content:"Hide"}
+details[open]>summary{border-bottom:1px solid var(--line)}
+
+/* always reserve room for the scrollbar so pages don't shift sideways when switching tabs */
+html{scrollbar-gutter:stable;overflow-y:scroll}
+.ask-row{display:flex;gap:8px}.ask-row .input{flex:1;min-width:0}
+.ask-a{margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--blue-soft);font-size:15px;white-space:pre-wrap}
+/* in-app notifications */
+.bell-btn{position:relative;padding:6px 10px!important}
+.bell-btn svg{display:block}
+.bell-n{position:absolute;top:-6px;right:-6px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--tomato);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;box-sizing:border-box}
+.notes{display:flex;flex-direction:column;max-height:46vh;overflow-y:auto;border:1px solid var(--line);border-radius:14px}
+.note{display:flex;gap:10px;align-items:flex-start;text-align:left;padding:12px 14px;border:0;border-bottom:1px solid var(--line);background:var(--card);cursor:pointer;font:inherit;color:inherit;width:100%}
+.note:last-child{border-bottom:0}
+.note:hover{background:var(--tint)}
+.note.unread{background:var(--blue-soft)}
+.note .dot{width:9px;height:9px;border-radius:50%;margin-top:6px;flex:none;background:transparent}
+.note.unread .dot{background:var(--blue)}
+.note .t{font-size:14px;line-height:1.4}
+.note .when{font-size:12px;color:var(--ink-2);margin-top:2px}
+/* packing, containers and how neighbors get food */
+.pack{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--tint);color:var(--ink);white-space:nowrap}
+.pack.bulk{background:var(--butter-soft)}
+.serve-badge{display:inline-flex;font-size:13px;font-weight:700;padding:2px 10px;border-radius:999px;background:var(--blue-soft);color:var(--blue);white-space:nowrap;margin-top:4px}
+.serve-set{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.serve-set .chip{font-size:13px;padding:3px 10px}
+.callout.soft{background:var(--butter-soft)}
+.callout.info{background:var(--blue-soft)}
+.ret-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.sub-opts{margin:6px 0 0 4px;padding:12px 14px;border-left:3px solid var(--line);display:flex;flex-direction:column;gap:10px}
+/* decorative shapes */
+:root{--tomato-l:#EE958C;--green-l:#86C49C;--blue-l:#90A8EC;--butter-l:#F7DE8E;--tomato-d:#A9352B;--green-d:#1F6A3E;--blue-d:#1F3E9E;--butter-d:#D9A62C}
+.decohost{position:relative}
+.deco{position:absolute;inset:0;pointer-events:none;z-index:0}
+.decohost>*:not(.deco){position:relative;z-index:1}
+.dz{position:absolute;display:block;overflow:visible;opacity:.32}
+.dz>g{transform-box:fill-box;transform-origin:center}
+.dz .dw,.dz .dh{transform-box:fill-box;transform-origin:center}
+.dz .dw{animation:dwob 7s ease-in-out infinite alternate}
+.dz .dh{animation:hop 5.6s ease-in-out infinite}
+@keyframes dwob{0%{transform:rotate(-5deg)}100%{transform:rotate(5deg)}}
+.dz.wide{display:none}
+@media (min-width:1600px){.dz.wide{display:block}}
+@media (max-width:860px){.dz.lg-only{display:none}}
+@media (prefers-reduced-motion:reduce){.dz .dw,.dz .dh{animation:none!important}}
+.confetti{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));justify-items:center;align-items:center;gap:16px 10px;max-width:1200px;margin:56px auto 0;padding:26px 10px;border-radius:28px;background:var(--card);border:1px solid var(--line)}
+.confetti svg{width:clamp(34px,5.5vw,60px);height:auto}
+@media (max-width:600px){.confetti{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.h-doodle{display:inline-block;width:.9em;height:.9em;vertical-align:-.08em;margin-left:.25em}
+.role .shape{display:none}
+.role .rshape{position:absolute;right:-30px;bottom:-38px;width:116px;height:116px;pointer-events:none}
+.role p{padding-right:40px}
+@media (max-width:860px){.role .rshape{width:84px;height:84px;right:-22px;bottom:-26px}}
+.role h3,.role p,.role .go{z-index:1}
+.wmark{display:inline-flex;align-items:baseline;font-family:"Londrina Solid",var(--f-display);font-weight:900;font-size:1.36em;line-height:1;letter-spacing:0;color:var(--ink);margin-left:.06em}
+.wmark .ap{height:1.056em;width:0.755em;margin-right:0.004em;margin-bottom:-0.003em;flex:none;overflow:visible}
+.wmark .k{color:var(--ink)}
+</style>
+
+<header class="top">
+  <div class="bar">
+    <button class="brand" data-act="home" aria-label="WeAllEat home">
+      <svg class="ap" viewBox="-294 -347 755 1056" aria-hidden="true"><path fill="var(--blue)" d="M80,230C77,229 74,222 69,209C60,182 50,166 39,163C33,161 16,161 17,163C17,164 18,170 18,176C19,186 19,187 17,183C13,172 5,164 -6,160C-9,158 -23,158 -62,157C-149,156 -166,154 -201,147C-236,139 -272,117 -281,97C-285,88 -286,65 -283,53C-278,33 -252,11 -228,7C-219,5 -215,6 -209,11C-196,21 -196,21 -102,21C-8,21 -6,21 5,11C8,8 8,8 9,15C10,21 10,21 15,21C25,21 31,18 36,9C40,3 40,3 33,4C27,5 27,5 30,3C36,1 41,-2 44,-6C52,-15 75,-16 83,-8C87,-5 95,-1 101,-0C107,1 106,1 97,1L88,1L87,114C87,176 86,227 86,228C85,231 82,232 80,230Z"/><path fill="var(--blue)" d="M429 344Q407 567 395 703Q382 707 358.5 707.5Q335 708 287 708Q275 693 267.5 670.5Q260 648 252 614Q242 573 237 561Q204 677 196 703Q164 709 134 709Q106 709 81 705L75 660Q49 505 31.5 334.5Q14 164 8 7Q47 0 88 0L133 1Q161 3 181 3Q185 48 185 165V184Q185 306 191 359Q195 345 201 315Q206 286 212.0 266.0Q218 246 231 231Q263 252 280 359L283 226Q287 68 292 10Q330 1 378 1Q417 1 454 5L461 10Q455 91 429 344Z"/><path fill="var(--green)" d="M-139,-195C-144,-197 -150,-201 -156,-207C-165,-217 -166,-225 -160,-234C-155,-240 -154,-245 -154,-256C-154,-269 -152,-284 -148,-293C-147,-297 -145,-304 -144,-308C-141,-319 -139,-322 -130,-332C-113,-349 -101,-352 -90,-341C-85,-336 -84,-331 -84,-307C-84,-288 -84,-286 -81,-278C-77,-267 -77,-267 -86,-244C-92,-227 -93,-224 -107,-210C-123,-196 -130,-192 -139,-195Z"/><path fill="var(--tomato)" d="M-167,53C-185,49 -207,33 -232,8C-260,-21 -290,-70 -293,-91C-295,-104 -294,-164 -291,-173C-281,-208 -262,-230 -237,-234C-227,-236 -179,-236 -171,-234C-164,-232 -158,-227 -150,-216C-136,-194 -110,-207 -96,-244C-80,-282 -72,-287 -19,-286C17,-285 25,-282 44,-267C76,-240 90,-219 97,-187C102,-167 101,-93 97,-57C92,-22 65,25 40,42C17,57 -28,58 -59,45C-85,34 -88,34 -109,43C-132,54 -150,57 -167,53Z"/><path fill="var(--butter)" d="M-262,-79C-275,-83 -278,-91 -279,-120C-279,-146 -278,-153 -272,-166C-259,-193 -236,-204 -222,-190C-213,-180 -214,-170 -226,-151C-236,-135 -237,-132 -236,-112C-235,-95 -235,-93 -237,-89C-242,-79 -252,-75 -262,-79Z"/></svg><span class="wm"><span style="color:var(--blue)">e</span><span class="k">All</span><span style="color:var(--tomato)">E</span><span style="color:#E0A800">a</span><span style="color:var(--green)">t</span></span>
+    </button>
+    <div class="top-right" id="topRight"></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- HOME -->
+<section id="scr-home" hidden>
+  <div class="hero">
+    <div>
+      <h1>Nobody deserves to go hungry. <span class="hl">That's our WAE.</span></h1>
+      <p class="lede">Restaurants, grocers and caterers post their extra food. Nearby shelters and community kitchens claim it within two hours. Neighbors reserve a free meal close to home.</p>
+      <div class="btn-row">
+        <button class="btn primary lg" data-act="scroll-roles">Get started</button>
+        <button class="btn lg" data-act="goto-auth" data-role="community">Find a free meal</button>
+      </div>
+      <div class="stats" id="homeStats"></div>
+    </div>
+    <svg id="heroArt" viewBox="0 120 560 300" role="img" aria-label="Four people of different colors gathered around a round table sharing a bowl of food"></svg>
+  </div>
+
+  <div class="section" id="roles">
+    <h2>How will you use <span class="wmark" role="img" aria-label="WeAllEat"><svg class="ap" viewBox="-294 -347 755 1056" aria-hidden="true"><path fill="var(--blue)" d="M80,230C77,229 74,222 69,209C60,182 50,166 39,163C33,161 16,161 17,163C17,164 18,170 18,176C19,186 19,187 17,183C13,172 5,164 -6,160C-9,158 -23,158 -62,157C-149,156 -166,154 -201,147C-236,139 -272,117 -281,97C-285,88 -286,65 -283,53C-278,33 -252,11 -228,7C-219,5 -215,6 -209,11C-196,21 -196,21 -102,21C-8,21 -6,21 5,11C8,8 8,8 9,15C10,21 10,21 15,21C25,21 31,18 36,9C40,3 40,3 33,4C27,5 27,5 30,3C36,1 41,-2 44,-6C52,-15 75,-16 83,-8C87,-5 95,-1 101,-0C107,1 106,1 97,1L88,1L87,114C87,176 86,227 86,228C85,231 82,232 80,230Z"/><path fill="var(--blue)" d="M429 344Q407 567 395 703Q382 707 358.5 707.5Q335 708 287 708Q275 693 267.5 670.5Q260 648 252 614Q242 573 237 561Q204 677 196 703Q164 709 134 709Q106 709 81 705L75 660Q49 505 31.5 334.5Q14 164 8 7Q47 0 88 0L133 1Q161 3 181 3Q185 48 185 165V184Q185 306 191 359Q195 345 201 315Q206 286 212.0 266.0Q218 246 231 231Q263 252 280 359L283 226Q287 68 292 10Q330 1 378 1Q417 1 454 5L461 10Q455 91 429 344Z"/><path fill="var(--green)" d="M-139,-195C-144,-197 -150,-201 -156,-207C-165,-217 -166,-225 -160,-234C-155,-240 -154,-245 -154,-256C-154,-269 -152,-284 -148,-293C-147,-297 -145,-304 -144,-308C-141,-319 -139,-322 -130,-332C-113,-349 -101,-352 -90,-341C-85,-336 -84,-331 -84,-307C-84,-288 -84,-286 -81,-278C-77,-267 -77,-267 -86,-244C-92,-227 -93,-224 -107,-210C-123,-196 -130,-192 -139,-195Z"/><path fill="var(--tomato)" d="M-167,53C-185,49 -207,33 -232,8C-260,-21 -290,-70 -293,-91C-295,-104 -294,-164 -291,-173C-281,-208 -262,-230 -237,-234C-227,-236 -179,-236 -171,-234C-164,-232 -158,-227 -150,-216C-136,-194 -110,-207 -96,-244C-80,-282 -72,-287 -19,-286C17,-285 25,-282 44,-267C76,-240 90,-219 97,-187C102,-167 101,-93 97,-57C92,-22 65,25 40,42C17,57 -28,58 -59,45C-85,34 -88,34 -109,43C-132,54 -150,57 -167,53Z"/><path fill="var(--butter)" d="M-262,-79C-275,-83 -278,-91 -279,-120C-279,-146 -278,-153 -272,-166C-259,-193 -236,-204 -222,-190C-213,-180 -214,-170 -226,-151C-236,-135 -237,-132 -236,-112C-235,-95 -235,-93 -237,-89C-242,-79 -252,-75 -262,-79Z"/></svg><span class="wm"><span style="color:var(--blue)">e</span><span class="k">All</span><span style="color:var(--tomato)">E</span><span style="color:#E0A800">a</span><span style="color:var(--green)">t</span></span></span>?</h2>
+    <p>Choose one to sign in or create a free account.</p>
+    <div class="roles">
+      <button class="role role-donor" data-act="goto-auth" data-role="donor"><span class="shape"></span><h3>I have extra food</h3><p>For restaurants, grocers, caterers, bakeries and campus dining.</p><span class="go">Donor sign in →</span></button>
+      <button class="role role-kitchen" data-act="goto-auth" data-role="kitchen"><span class="shape"></span><h3>I run a kitchen or shelter</h3><p>Claim food that fits your storage and space, and pick it up with your own team.</p><span class="go">Kitchen sign in →</span></button>
+      <button class="role role-community" data-act="goto-auth" data-role="community"><span class="shape"></span><h3>I'm looking for a meal</h3><p>See what's being served nearby today and hold a few servings for yourself.</p><span class="go">Community sign in →</span></button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>How it works<svg class="h-doodle" viewBox="0 0 100 100" aria-hidden="true"><path fill="var(--butter)" d="M50,4Q56,44 96,50Q56,56 50,96Q44,56 4,50Q44,44 50,4Z"/></svg></h2>
+    <p>Every handoff is confirmed in person, so nothing gets lost along the way.</p>
+    <ol class="steps">
+      <li><h3>A donor posts extra food</h3><p>They choose how it's stored (cold, hot, dry or frozen), list allergens, and set a pickup cutoff of up to two hours.</p></li>
+      <li><h3>A kitchen claims and collects it</h3><p>Only kitchens that can store it, have room, and can arrive in time see it. The donor checks the kitchen's PIN at pickup.</p></li>
+      <li><h3>Neighbors reserve a meal</h3><p>People reserve a few servings and show a code at the kitchen. Unclaimed holds go back to others after 45 minutes.</p></li>
+    </ol>
+  </div>
+
+  <footer class="foot">
+    <span>WeAllEat (WAE) · Working toward UN Sustainable Development Goal 1: No Poverty · <button class="link" data-act="open-help">Contact support</button></span>
+    <span><button class="link" data-act="goto-auth" data-role="staff">Staff sign in</button></span>
+  </footer>
+</section>
+
+<!-- AUTH -->
+<section id="scr-auth" hidden><div class="auth" id="authBox"></div></section>
+
+<!-- DONOR -->
+<section id="app-donor" class="page" data-app hidden>
+  <div class="head">
+    <div><h1 id="donorTitle">Today</h1><p>Post extra food. When a kitchen arrives, type in their PIN to finish the handoff.</p></div>
+    <button class="btn primary" data-act="open-post">+ Post extra food</button>
+  </div>
+  <div class="impact" id="impact"></div>
+  <div class="card" id="donorReturns" hidden></div>
+  <div class="card">
+    <div class="subtabs" role="tablist">
+      <button class="subtab" role="tab" data-act="dtab" data-v="open">Open donations <span class="n" id="n-dopen"></span></button>
+      <button class="subtab" role="tab" data-act="dtab" data-v="done">Finished today <span class="n" id="n-ddone"></span></button>
+    </div>
+    <div class="rows" id="donorOpen"></div>
+    <div class="rows" id="donorDone" hidden></div>
+  </div>
+</section>
+
+<!-- KITCHEN -->
+<section id="app-kitchen" class="page" data-app hidden>
+  <div class="head">
+    <div><h1 id="kitchenTitle">Kitchen</h1><p>Claim food you can store, pick it up with your PIN, and hand meals to people who reserved them.</p></div>
+  </div>
+  <div class="card">
+    <div class="ksum" id="kitchenSum"></div>
+    <div class="subtabs" role="tablist">
+      <button class="subtab" role="tab" data-act="ktab" data-v="claim">Claim food <span class="n" id="n-claim">0</span></button>
+      <button class="subtab" role="tab" data-act="ktab" data-v="pickups">Your pickups <span class="n" id="n-pickups">0</span></button>
+      <button class="subtab" role="tab" data-act="ktab" data-v="community">Community pickups <span class="n" id="n-community">0</span></button>
+      <button class="subtab" role="tab" data-act="ktab" data-v="stock">On hand</button>
+    </div>
+    <div class="rows" id="kitchenBody"></div>
+    <p class="small muted" id="kitchenFoot" style="padding:0 20px 16px"></p>
+  </div>
+</section>
+
+<!-- COMMUNITY -->
+<section id="app-community" class="page" data-app hidden>
+  <div class="head">
+    <div><h1 id="commTitle">Free meals near you</h1><p>Everyone is welcome. Reserve a few servings and pick a time that works for you.</p></div>
+  </div>
+  <div class="card">
+    <div class="subtabs" role="tablist">
+      <button class="subtab" role="tab" data-act="ctab" data-v="near">Meals near you <span class="n" id="n-cnear"></span></button>
+      <button class="subtab" role="tab" data-act="ctab" data-v="mine">Your reservations <span class="n" id="n-cmine"></span></button>
+    </div>
+    <div class="sortbar" id="commRadius" style="border-bottom:0"></div>
+    <div id="myHoldsCard" hidden>
+      <p class="small muted" style="padding:12px 20px 0">Show your code at the kitchen.</p>
+      <div class="rows" id="myHolds"></div>
+    </div>
+  </div>
+  <div class="comm-grid" id="commGrid"></div>
+</section>
+
+<!-- STAFF -->
+<section id="app-staff" class="page" data-app hidden>
+  <div class="head">
+    <div><h1>Today at a glance</h1><p>Every donation and community hold in one place. Anything that needs you shows up first.</p></div>
+  </div>
+  <div class="tiles" id="staffTiles"></div>
+  <div class="card attn" id="attnCard" hidden>
+    <div class="card-head"><h2>Needs your help</h2><span class="small muted" id="attnCount"></span></div>
+    <div class="rows" id="attn"></div>
+  </div>
+  <div class="card">
+    <div class="subtabs" role="tablist">
+      <button class="subtab" role="tab" data-act="otab" data-v="donations">Donations</button>
+      <button class="subtab" role="tab" data-act="otab" data-v="holds">Community meals</button>
+      <button class="subtab" role="tab" data-act="otab" data-v="log">Activity</button>
+    </div>
+    <div id="opsBody"></div>
+  </div>
+</section>
+</main>
+
+<button class="dock-btn" id="dockBtn" data-act="dock" aria-expanded="false">
+  <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 4.5V8l2.5 1.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <span class="dock-label">Demo ·</span> <span class="mono" id="clockTime">--:--</span>
+</button>
+<div class="dock" id="dock" hidden></div>
+
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true"><form class="dialog" id="modalForm" novalidate></form></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* ---------- Constants ---------- */
+const MIN = 60000;
+const RESERVATION_MIN = 30, MAX_WINDOW_MIN = 120, MAX_PIN_ATTEMPTS = 3, ALERT_MIN = 30, URGENT_MIN = 15;
+const HOLD_MIN = 45, HOLD_MAX = 5, CO2_PER_MEAL = 2.5, FMV_PER_MEAL = 3.00, DEMO_PW = "demo1234";
+const TAGS = {
+  COLD:{label:"Cold Hold <40°F",short:"Cold <40°F",keep:"cold, under 40°F"},
+  HOT:{label:"Hot Hold >140°F",short:"Hot >140°F",keep:"hot, above 140°F"},
+  DRY:{label:"Dry / Ambient",short:"Dry / room temp",keep:"dry at room temperature"},
+  FROZEN:{label:"Frozen",short:"Frozen",keep:"frozen"}
+};
+const ALLERGENS = ["Wheat/Gluten","Milk","Egg","Peanut","Tree nuts","Soy","Fish","Shellfish","Sesame"];
+const STATUS = ["AVAILABLE","RESERVED","HANDOFF_CONFIRMED","EXPIRED","CANCELED","UNMATCHED"];
+const FRIENDLY = {AVAILABLE:"Waiting for a kitchen",RESERVED:"Kitchen on the way",HANDOFF_CONFIRMED:"Picked up",EXPIRED:"Expired",CANCELED:"Canceled",UNMATCHED:"No kitchen fits"};
+const HOLD_LABEL = {HELD:"Held",COLLECTED:"Picked up",EXPIRED:"Expired",CANCELED:"Canceled"};
+/* How food is packed, whether the donor needs containers back, and how neighbors get it. */
+const RETURN_OPTS = {24:"within 1 day", 48:"within 2 days", 168:"within a week"};
+const SERVE = {
+  packed:{label:"Packed to go", note:"Grab and go. Each serving is already packed.", how:["togo"]},
+  dinein:{label:"Eat here only", note:"Served on the kitchen's dishes. It can't be taken home.", how:["dinein"]},
+  byo:{label:"To go: bring a container", note:"Bring your own container with a lid. The kitchen fills it for you.", how:["togo"]},
+  both:{label:"Eat here or bring a container", note:"Eat at the kitchen, or bring a container with a lid to take it home.", how:["dinein","togo"]},
+  boxes:{label:"To go: containers provided", note:"The kitchen packs it to go for you.", how:["togo"]}
+};
+const HOW_LABEL = {dinein:"Eating at the kitchen", togo:"Taking it to go"};
+/* ---------- In-app notifications ----------
+   Each note goes to a person, an organization, or a whole role. People choose which kinds they get. */
+const NOTE_CATS = {
+  kitchen:[["food","New food you can take"],["pickup","Pickups and PINs"],["reserve","Neighbor reservations"],["return","Containers"]],
+  donor:[["pickup","Pickups and PINs"],["return","Containers"]],
+  community:[["meal","New meals near me"],["reserve","My reservations"]],
+  staff:[["alert","Things that need help"]]
+};
+let NOTE_QUIET = false;   /* true while the demo data loads */
+function notify(to, cat, text, ref){
+  if (NOTE_QUIET || !S) return;
+  S.notes = S.notes || []; S.nseq = S.nseq || 1;
+  S.notes.push({id:"N" + (S.nseq++), to, cat, text, ref: ref || null, at: simNow, readBy: []});
+  if (S.notes.length > 400) S.notes.splice(0, S.notes.length - 400);
+}
+const forMe = (n, u) => n.to.user ? n.to.user === u.id : n.to.role === u.role && (!n.to.org || n.to.org === u.orgId);
+function myNotes(){
+  const u = me(); if (!u) return [];
+  const mute = u.mute || [];
+  return (S.notes || []).filter(n => forMe(n, u) && !mute.includes(n.cat)).sort((a,b) => b.at - a.at);
+}
+const isUnread = (n, u) => !n.readBy.includes(u.id) && !n.readBy.includes("*");
+function updateBell(){
+  const u = me(), btn = $("#bellBtn");
+  const unread = u ? myNotes().filter(n => isUnread(n, u)) : [];
+  document.title = (unread.length ? `(${unread.length}) ` : "") + "WeAllEat";
+  if (btn){ btn.querySelector(".bell-n")?.remove(); if (unread.length) btn.insertAdjacentHTML("beforeend", `<span class="bell-n">${unread.length > 9 ? "9+" : unread.length}</span>`); btn.setAttribute("aria-label", `Notifications${unread.length ? `, ${unread.length} unread` : ""}`); }
+  /* pop up anything new that arrived since the last check, including from other devices */
+  if (!u){ ui.seenNotes = null; return; }
+  if (!ui.seenNotes || ui.seenFor !== u.id){ ui.seenNotes = new Set(myNotes().map(n => n.id)); ui.seenFor = u.id; return; }
+  const fresh = unread.filter(n => !ui.seenNotes.has(n.id));
+  fresh.forEach(n => ui.seenNotes.add(n.id));
+  if (fresh.length) toast("🔔 " + fresh[0].text + (fresh.length > 1 ? ` (+${fresh.length - 1} more)` : ""));
+}
+/* who should hear about a donation changing state */
+function notifyState(b, from, to){
+  const d = donor(b.donorId), k = b.kitchenId ? kitchen(b.kitchenId) : null, lastK = b.lastKitchen ? kitchen(b.lastKitchen) : null;
+  if (to === "AVAILABLE"){
+    b.notifiedK = b.notifiedK || [];
+    for (const {k: kk} of ranked(b)) if (!b.notifiedK.includes(kk.id)){ b.notifiedK.push(kk.id); notify({role:"kitchen", org:kk.id}, "food", `New food you can take: ${b.servings} servings of ${b.desc} from ${d.name}, cutoff ${fmtShort(b.cutoffAt)}.`, b.id); }
+    if (from === "RESERVED" && lastK) notify({role:"donor", org:d.id}, "pickup", `${lastK.name} didn't arrive in time for ${b.desc}. It's been offered to ${ranked(b)[0]?.k.name || "the next kitchen"}.`, b.id);
+    if (from === "CANCELED" && lastK) notify({role:"donor", org:d.id}, "pickup", `${lastK.name} canceled the pickup of ${b.desc}. It's been offered to ${ranked(b)[0]?.k.name || "the next kitchen"}.`, b.id);
+  } else if (to === "UNMATCHED"){
+    notify({role:"donor", org:d.id}, "pickup", `No kitchen can take ${b.desc} right now: ${whyNoMatch(b)}.`, b.id);
+    notify({role:"staff"}, "alert", `No kitchen can take ${b.desc} from ${d.name}.`, b.id);
+  } else if (to === "RESERVED" && k){
+    notify({role:"donor", org:d.id}, "pickup", `${k.name} claimed ${b.desc} and is on the way (about ${tripMin(milesBetween(d, k))} min).`, b.id);
+  } else if (to === "HANDOFF_CONFIRMED" && k){
+    notify({role:"kitchen", org:k.id}, "pickup", `Handoff confirmed: ${b.desc} is now on hand.`, b.id);
+    for (const a of S.accounts.filter(a => a.role === "community")){
+      if (milesBetween({x: a.x ?? 6, y: a.y ?? 6}, k) <= (a.radius || 3)) notify({user:a.id}, "meal", `Fresh food at ${k.name}: ${b.desc}. Reserve some before it's gone.`, b.id);
+    }
+  } else if (to === "EXPIRED"){
+    notify({role:"donor", org:d.id}, "pickup", `${b.desc} expired before any kitchen picked it up.`, b.id);
+  } else if (to === "CANCELED" && b.terminal === false && lastK === null && k){
+    /* handled by the re-offer above */
+  }
+}
+const serveOf = b => b.serve || (b.pack === "BULK" ? "dinein" : "packed");
+const ROLE = {
+  donor:{name:"Donor",color:"var(--tomato)",soft:"var(--tomato-soft)",title:"Share your extra food",points:["Post a batch in under a minute","Get matched only with kitchens that can store it","Track meals donated, tax write-off and CO₂ saved"]},
+  kitchen:{name:"Kitchen",color:"var(--green)",soft:"var(--green-soft)",title:"Bring more food to your table",points:["See only food you can store and reach in time","Pick up with your own team using a PIN","Hand reserved meals to neighbors with a code"]},
+  community:{name:"Community",color:"var(--blue)",soft:"var(--blue-soft)",title:"Find a free meal nearby",points:["See what partner kitchens are serving today","Reserve up to 5 servings, held for 45 minutes","No questions asked. Everyone is welcome."]},
+  staff:{name:"Staff",color:"var(--ink)",soft:"var(--grey-soft)",title:"Coordinator sign in",points:["Monitor every donation and hold","Unlock pickups after PIN problems","Test edge cases before going live"]}
+};
+const ALLOWED = {
+  NEW:["AVAILABLE","UNMATCHED"], AVAILABLE:["RESERVED","UNMATCHED","EXPIRED","CANCELED"], UNMATCHED:["AVAILABLE","EXPIRED","CANCELED"],
+  RESERVED:["HANDOFF_CONFIRMED","CANCELED","AVAILABLE","UNMATCHED","EXPIRED"], CANCELED:["AVAILABLE","UNMATCHED","EXPIRED"], HANDOFF_CONFIRMED:[], EXPIRED:[]
+};
+const RADII = [1,2,3,5,8,10,15,20,25];
+const SEED_DONORS = [
+  {id:"D1",x:5,y:5,name:"Downtown Bistro",addr:"214 Main St",email:"hello@downtownbistro.test",person:"Alex Rivera"},
+  {id:"D2",x:7,y:3.5,name:"FreshMart Grocers",addr:"1900 Market Ave",email:"store@freshmart.test",person:"Priya Shah"},
+  {id:"D3",x:5.5,y:6,name:"Metro Convention Center",addr:"1 Convention Plaza",email:"events@metrocc.test",person:"Marcus Lee"},
+  {id:"D4",x:4,y:4.5,name:"City Bakery",addr:"77 Elm St",email:"bake@citybakery.test",person:"Rosa Nguyen"},
+  {id:"D5",x:9,y:8,name:"Campus Canteen",addr:"Student Union, 400 College Rd",email:"dining@campus.test",person:"Sam Okafor"}
+];
+const SEED_KITCHENS = [
+  {id:"K1",name:"Hope Harbor Shelter",max:300,radius:8,x:3,y:6,tags:["COLD","HOT","DRY"],addr:"880 Harbor Ave",hours:"Breakfast 7–8:30 AM · Dinner 5:30–7 PM daily",email:"intake@hopeharbor.test",person:"Dana Brooks",color:"var(--tomato)"},
+  {id:"K2",name:"Grace Community Table",max:150,radius:6,x:6,y:7.5,tags:["HOT","DRY"],addr:"312 Grace St",hours:"Lunch 11:30 AM–1 PM, Mon–Sat",email:"team@gracetable.test",person:"Luis Ortega",color:"var(--green)"},
+  {id:"K3",name:"St. Jude Food Mission",max:200,radius:10,x:8,y:2,tags:["COLD","FROZEN","DRY"],addr:"45 Mission Rd",hours:"Lunch 12–1:30 PM daily · Pantry Tue & Thu 2–5 PM",email:"kitchen@stjude.test",person:"Ann Walsh",color:"var(--blue)"},
+  {id:"K4",name:"River Valley Pantry",max:160,radius:15,x:12,y:11,tags:["DRY","FROZEN"],addr:"9 River Valley Pkwy",hours:"Groceries 10 AM–4 PM, Wed–Sat",email:"pantry@rivervalley.test",person:"Kim Tran",color:"var(--blue)"},
+  {id:"K5",name:"Unity Relief Kitchen",max:50,radius:3,x:5.5,y:5.5,tags:["COLD","HOT"],addr:"128 Unity Ln",hours:"Hot dinner 5–6:30 PM daily",email:"unity@relief.test",person:"Joe Park",color:"var(--butter)"}
+];
+const AVATAR_COLORS = ["var(--tomato)","var(--blue)","var(--green)","var(--amber)","var(--ink)"];
+
+/* ---------- Utilities ---------- */
+const $ = (s, el=document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const donor = id => S.donors.find(d => d.id === id);
+const kitchen = id => S.kitchens.find(k => k.id === id);
+const batch = id => S.batches.find(b => b.id === id);
+const hold = id => S.holds.find(h => h.id === id);
+const fmtClock = t => new Date(t).toLocaleTimeString([], {hour:"numeric",minute:"2-digit",second:"2-digit"});
+const fmtShort = t => new Date(t).toLocaleTimeString([], {hour:"numeric",minute:"2-digit"});
+const fmtDay = t => new Date(t).toLocaleString([], {weekday:"short",hour:"numeric",minute:"2-digit"});
+const returnDue = b => b.returnDueAt || (b.confirmedAt ? b.confirmedAt + (b.returnHours || 24)*60*MIN : null);
+const needsReturn = b => b.pack === "BULK" && b.returnDish && b.status === "HANDOFF_CONFIRMED" && !b.returnedAt;
+const isOverdue = b => needsReturn(b) && !b.returnSentAt && simNow > returnDue(b);
+const overdueReturns = kId => S.batches.filter(b => b.kitchenId === kId && isOverdue(b));
+const whatBack = b => b.returnWhat ? esc(b.returnWhat) : "the containers";
+const packChip = b => b.pack === "BULK"
+  ? `<span class="pack bulk">Bulk (trays/pans)${b.returnDish ? ` · containers back ${RETURN_OPTS[b.returnHours] || "within 1 day"}` : " · disposable containers"}</span>`
+  : `<span class="pack">Individually packed</span>`;
+function fmtLeft(ms){
+  if (ms <= 0) return "0:00";
+  const s = Math.floor(ms/1000), h = Math.floor(s/3600), m = Math.floor((s%3600)/60), ss = s%60;
+  return h ? `${h}:${String(m).padStart(2,"0")}:${String(ss).padStart(2,"0")}` : `${m}:${String(ss).padStart(2,"0")}`;
+}
+const money = n => n.toLocaleString(undefined,{style:"currency",currency:"USD",maximumFractionDigits:0});
+const plural = (n, one, many) => `${n} ${n === 1 ? one : (many || one + "s")}`;
+function genPin(){
+  try { const a = new Uint32Array(1); crypto.getRandomValues(a); return String(a[0] % 10000).padStart(4,"0"); }
+  catch (e) { return String(Math.floor(Math.random()*10000)).padStart(4,"0"); }
+}
+async function sha256(str){
+  try {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
+    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2,"0")).join("");
+  } catch (e) {
+    let h = 0x811c9dc5; for (const c of str) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619) >>> 0; }
+    return "fnv1a-" + h.toString(16).padStart(8,"0");
+  }
+}
+const pinMaterial = (b, pin) => `EE|${b.id}|${b.reservedAt}|${pin}`;
+const pwHash = (email, pw) => sha256(`EE-ACCT|${email.toLowerCase()}|${pw}`);
+const validEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+const initials = n => n.replace(/\(.*?\)/g, "").trim().split(/\s+/).filter(w => /^[A-Za-z]/.test(w)).slice(0,2).map(w => w[0]).join("").toUpperCase() || "?";
+const avatarColor = id => AVATAR_COLORS[[...id].reduce((n,c) => n + c.charCodeAt(0), 0) % AVATAR_COLORS.length];
+
+/* ---------- State ---------- */
+let S, simNow, speed = 1;
+const ui = { screen:"home", authRole:"donor", authMode:"signin", session:null, ktab:"claim", otab:"donations", dtab:"open", ctab:"near", opsFilter:"active", inspectId:null, modal:null, dock:false };
+const me = () => ui.session;
+const myDonorId = () => me()?.orgId;
+const myKitchenId = () => me()?.orgId;
+
+function log(kind, ref, msg, actor="System", t=simNow){ S.log.push({t, kind, ref, msg, actor}); }
+function transition(b, to, actor, reason){
+  const from = b.status;
+  if (b.terminal || !(ALLOWED[from] || []).includes(to)) { log("SYSTEM", b.id, `Blocked illegal change ${from} → ${to}`, actor); return false; }
+  b.status = to; b.updatedAt = simNow;
+  log("STATE", b.id, `${from} → ${to}${reason ? " · " + reason : ""}`, actor);
+  notifyState(b, from, to);
+  return true;
+}
+function committed(k){ return S.batches.filter(b => b.kitchenId === k.id && (b.status === "RESERVED" || b.status === "HANDOFF_CONFIRMED")).reduce((n,b) => n + b.servings, 0); }
+function reservedLoad(k){ return S.batches.filter(b => b.kitchenId === k.id && b.status === "RESERVED").reduce((n,b) => n + b.servings, 0); }
+const MIN_PER_MILE = 2.5, LOAD_MIN = 8;
+const milesBetween = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+const tripMin = mi => Math.round(mi * MIN_PER_MILE + LOAD_MIN);
+const fmtMi = mi => (mi < 10 ? mi.toFixed(1) : String(Math.round(mi))) + " mi";
+function placeFor(text){ /* prototype stand-in for real address lookup: a fixed spot in the pretend town */
+  let h = 2166136261; for (const c of String(text || "").toLowerCase()) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619) >>> 0; }
+  return text ? {x: 1 + (h % 1000) / 100, y: 1 + ((h >>> 10) % 1000) / 100} : {x: 6, y: 6};
+}
+const openCap = k => Math.max(0, k.max - committed(k));
+
+/* Deterministic matcher: storage tag, open capacity, travel time vs cutoff, not previously released */
+function evaluate(b){
+  const leftMin = (b.cutoffAt - simNow) / MIN;
+  return S.kitchens.map(k => {
+    const open = openCap(k);
+    const mi = milesBetween(donor(b.donorId), k), mins = tripMin(mi);
+    const tagOk = k.tags.includes(b.tag), capOk = open >= b.servings, radiusOk = mi <= k.radius, transitOk = mins <= leftMin, fresh = !b.excluded.includes(k.id);
+    return { k, open, mi, mins, tagOk, capOk, radiusOk, transitOk, fresh, eligible: tagOk && capOk && radiusOk && transitOk && fresh };
+  }).sort((a,c) => (c.eligible - a.eligible) || (a.mi - c.mi) || (c.open - a.open) || a.k.id.localeCompare(c.k.id));
+}
+const ranked = b => evaluate(b).filter(e => e.eligible);
+function whyNoMatch(b){
+  const all = evaluate(b), ev = all.filter(e => e.fresh);
+  if (!ev.length) return "every kitchen has already passed on it";
+  if (ev.every(e => !e.tagOk)) return `no kitchen can store food ${TAGS[b.tag].keep}`;
+  const withTag = ev.filter(e => e.tagOk);
+  if (withTag.every(e => !e.capOk)) return `no kitchen that stores it has room for ${b.servings} servings`;
+  const roomy = withTag.filter(e => e.capOk);
+  if (roomy.every(e => !e.radiusOk)) return "it's farther than any kitchen with room will travel";
+  if (roomy.filter(e => e.radiusOk).every(e => !e.transitOk)) return "no kitchen can get there before the cutoff";
+  return "no kitchen fits right now";
+}
+const heldOrCollected = b => S.holds.filter(h => h.batchId === b.id && (h.status === "HELD" || h.status === "COLLECTED")).reduce((n,h) => n + h.qty, 0);
+const walkedIn = b => S.walkins.filter(w => w.batchId === b.id).reduce((n,w) => n + w.qty, 0);
+const servingsLeft = b => Math.max(0, b.servings - heldOrCollected(b) - walkedIn(b));
+const holdWindow = h => `${fmtShort(h.readyAt || h.createdAt)}–${fmtShort(h.expiresAt)}`;
+
+/* ---------- Seed ---------- */
+async function seed(){
+  NOTE_QUIET = true;
+  const T0 = Math.floor(Date.now()/MIN)*MIN + 8*1000;
+  simNow = T0;
+  const m = n => T0 + n*MIN;
+  S = { donors: SEED_DONORS.map(({email,person,...d}) => d), kitchens: SEED_KITCHENS.map(({email,person,...k}) => k),
+        accounts: [], batches: [], holds: [], walkins: [], tickets: [], notes: [], nseq: 1, tseq: 1, wseq: 1, log: [], seq: 1021, hseq: 205, dseq: 6, kseq: 6, aseq: 1 };
+  const demoHash = {};
+  const addAcct = async (role, name, email, orgId, phone) => {
+    const a = {id:"U" + (S.aseq++), role, name, email, orgId, phone, pw: await pwHash(email, DEMO_PW), demo:true};
+    S.accounts.push(a); return a;
+  };
+  for (const [i,d] of SEED_DONORS.entries()) await addAcct("donor", d.person, d.email, d.id, FAKE_PHONE);
+  for (const [i,k] of SEED_KITCHENS.entries()) await addAcct("kitchen", k.person, k.email, k.id, FAKE_PHONE);
+  const jordan = await addAcct("community", "Jordan", "jordan@example.test", null, FAKE_PHONE);
+  Object.assign(jordan, {start:"Near 5th St & Oak Ave", x:4, y:6, radius:3});
+  await addAcct("staff", "Casey (Coordinator)", "coordinator@wealleat.test", null, FAKE_PHONE);
+
+  const rows = [
+    ["B-1001","D1","Roasted chicken & rice trays",40,"HOT",[],20,100,"AVAILABLE"],
+    ["B-1002","D2","Bagged salad greens",60,"COLD",[],48,16,"AVAILABLE"],
+    ["B-1003","D3","Boxed deli sandwiches",110,"COLD",["Wheat/Gluten","Milk","Egg"],15,75,"AVAILABLE"],
+    ["B-1004","D4","Day-old bread & rolls",80,"DRY",["Wheat/Gluten","Sesame"],100,14,"AVAILABLE"],
+    ["B-1005","D5","Vegetable chana curry",35,"HOT",[],30,55,"AVAILABLE"],
+    ["B-1006","D2","Frozen mixed vegetables",90,"FROZEN",[],5,110,"AVAILABLE"],
+    ["B-1007","D3","Pasta primavera",120,"HOT",["Wheat/Gluten","Milk"],40,80,"RESERVED","K1",10],
+    ["B-1008","D1","Red lentil soup",30,"HOT",[],60,50,"RESERVED","K5",24],
+    ["B-1009","D4","Assorted muffins",48,"DRY",["Wheat/Gluten","Milk","Egg","Tree nuts"],25,90,"RESERVED","K2",5],
+    ["B-1010","D2","Greek yogurt cups",72,"COLD",["Milk"],50,65,"RESERVED","K3",15,null,2],
+    ["B-1011","D5","Rice & black beans",60,"HOT",[],150,-30,"HANDOFF_CONFIRMED","K2",70,45],
+    ["B-1012","D3","Fresh fruit platters",100,"COLD",[],130,-10,"HANDOFF_CONFIRMED","K1",60,35],
+    ["B-1013","D1","Grilled vegetable wraps",15,"COLD",["Wheat/Gluten"],100,20,"HANDOFF_CONFIRMED","K5",50,30],
+    ["B-1014","D2","Canned goods & dry pasta",70,"DRY",["Wheat/Gluten"],180,-60,"HANDOFF_CONFIRMED","K4",140,95],
+    ["B-1015","D4","Plain bagels",40,"DRY",["Wheat/Gluten","Sesame"],170,-50,"EXPIRED"],
+    ["B-1016","D5","Mashed potatoes",30,"HOT",["Milk"],135,-15,"EXPIRED"],
+    ["B-1017","D3","Shrimp cocktail trays",45,"COLD",["Shellfish"],90,30,"CANCELED","K1",40,null,0,"Kitchen said it wasn't as listed (no temperature log)"],
+    ["B-1018","D3","Banquet chicken entrées",350,"HOT",["Milk"],10,95,"UNMATCHED"],
+    ["B-1019","D2","Fresh sushi rolls",60,"COLD",["Fish","Soy","Wheat/Gluten","Sesame"],112,8,"UNMATCHED"],
+    ["B-1020","D5","Breakfast burritos",55,"HOT",["Wheat/Gluten","Milk","Egg"],70,40,"AVAILABLE"]
+  ];
+  for (const r of rows){
+    const [id,d,desc,servings,tag,allergens,age,left,status,kid,resAgo,confAgo,attempts,note] = r;
+    const b = { id, donorId:d, desc, servings, tag, allergens, createdAt:m(-age), cutoffAt:m(left), status,
+      kitchenId:null, reservedAt:null, pickupDeadline:null, pin:null, pinHash:null, attempts:attempts||0, locked:false,
+      confirmedAt:null, excluded:[], alerted:false, terminal:false, note:note||"", lastKitchen:null, updatedAt:m(-age) };
+    log("STATE", id, `NEW → ${status === "UNMATCHED" ? "UNMATCHED" : "AVAILABLE"} · posted`, donor(d).name, b.createdAt);
+    if (status === "RESERVED" || status === "HANDOFF_CONFIRMED"){
+      b.kitchenId = kid; b.reservedAt = m(-resAgo); b.pickupDeadline = Math.min(b.reservedAt + RESERVATION_MIN*MIN, b.cutoffAt);
+      log("STATE", id, "AVAILABLE → RESERVED · claimed", kitchen(kid).name, b.reservedAt);
+      for (let i = 0; i < (attempts||0); i++) log("PIN", id, `Wrong PIN (${i+1} of 3)`, donor(d).name, b.reservedAt + (i+3)*MIN);
+    }
+    if (status === "HANDOFF_CONFIRMED"){ b.confirmedAt = m(-confAgo); b.updatedAt = b.confirmedAt; log("STATE", id, "RESERVED → HANDOFF_CONFIRMED · PIN matched", donor(d).name, b.confirmedAt); }
+    if (status === "EXPIRED"){ b.updatedAt = b.cutoffAt; log("STATE", id, "AVAILABLE → EXPIRED · no kitchen claimed it in time", "Timer", b.cutoffAt); }
+    if (status === "CANCELED"){ b.terminal = true; b.lastKitchen = kid; b.excluded = [kid]; b.updatedAt = m(-resAgo+18); log("STATE", id, `RESERVED → CANCELED · ${note}`, kitchen(kid).name, b.updatedAt); }
+    S.batches.push(b);
+  }
+  /* packing: [pack, needs containers back, return within hours, what to return, how neighbors get it] */
+  const PACKING = {"B-1001":["BULK",1,24,"2 full-size hotel pans"],"B-1005":["BULK",1,24,"3 half-size pans"],"B-1007":["BULK",1,48,"4 aluminum trays"],
+    "B-1008":["BULK",0],"B-1011":["BULK",1,24,"2 stock pots","byo"],"B-1012":["BULK",1,48,"5 serving platters","both"],"B-1014":["PACKED",0,0,"","packed"],
+    "B-1016":["BULK",0],"B-1017":["BULK",0],"B-1018":["BULK",1,24,"6 hotel pans"],"B-1020":["BULK",0]};
+  for (const b of S.batches){
+    const [pack, ret, hrs, what, serve] = PACKING[b.id] || ["PACKED",0];
+    Object.assign(b, {pack, returnDish: !!ret, returnHours: hrs || 24, returnWhat: what || "", returnedAt: null});
+    if (serve) b.serve = serve;
+    if (b.status === "HANDOFF_CONFIRMED" && b.returnDish) b.returnDueAt = b.confirmedAt + b.returnHours*60*MIN;
+  }
+  for (const b of S.batches.filter(b => b.status === "RESERVED")){ b.pin = genPin(); b.pinHash = await sha256(pinMaterial(b, b.pin)); }
+  const holds = [
+    ["R-201","B-1012","Maria",3,-25,12,"HELD",null,FAKE_PHONE],
+    ["R-202","B-1011","Dev",2,-40,5,"COLLECTED",null,""],
+    ["R-203","B-1014","Sam",4,-10,35,"HELD",null,""],
+    ["R-204","B-1012","Jordan",2,-5,40,"HELD",jordan.id,jordan.phone]
+  ];
+  for (const [id,bid,name,qty,ago,left,status,userId,phone] of holds){
+    const b = batch(bid);
+    const h = {id, batchId:bid, kitchenId:b.kitchenId, name, phone, qty, code:genPin(), createdAt:m(ago), expiresAt:m(left), status, userId, collectedAt: status === "COLLECTED" ? m(-15) : null, how: SERVE[serveOf(b)].how[id === "R-204" ? 1 : 0] || SERVE[serveOf(b)].how[0]};
+    S.holds.push(h);
+    log("COMMUNITY", id, `${name} reserved ${qty} of ${b.desc} at ${kitchen(b.kitchenId).name}`, name, h.createdAt);
+    if (status === "COLLECTED") log("COMMUNITY", id, "Picked up · code matched", kitchen(b.kitchenId).name, h.collectedAt);
+  }
+  S.log.sort((a,b) => a.t - b.t);
+  log("SYSTEM", null, "Demo loaded: 5 donors, 5 kitchens, 20 donations");
+  NOTE_QUIET = false;
+  /* earlier notifications, already read, so the bell has some history */
+  const was = simNow;
+  for (const b of S.batches.filter(b => b.status === "AVAILABLE")){ simNow = b.createdAt; notifyState(b, "NEW", "AVAILABLE"); }
+  for (const b of S.batches.filter(b => b.status === "RESERVED")){ simNow = b.reservedAt; notifyState(b, "AVAILABLE", "RESERVED"); }
+  for (const h of S.holds.filter(h => h.status === "HELD")){ simNow = h.createdAt; notify({role:"kitchen", org:h.kitchenId}, "reserve", `${h.name} reserved ${plural(h.qty,"serving")} of ${batch(h.batchId).desc}, pickup ${holdWindow(h)}.`, h.batchId); }
+  simNow = was;
+  S.notes.forEach(n => n.readBy.push("*"));
+}
+
+/* ---------- Timers ---------- */
+function runJobs(){
+  let changed = false;
+  for (const b of S.batches){
+    if (b.status === "RESERVED" && simNow >= b.pickupDeadline){
+      const k = kitchen(b.kitchenId);
+      log("ALERT", b.id, `${k.name} didn't pick up within 30 min · ${b.servings} servings of room given back`, "Timer");
+      b.excluded.push(k.id); b.lastKitchen = k.id; b.kitchenId = null; b.pin = null; b.pinHash = null; b.attempts = 0; b.locked = false;
+      if (simNow >= b.cutoffAt) transition(b, "EXPIRED", "Timer", "pickup missed at cutoff");
+      else { const r = ranked(b); r.length ? transition(b, "AVAILABLE", "Matcher", `offered to next kitchen: ${r[0].k.name}`) : transition(b, "UNMATCHED", "Matcher", whyNoMatch(b)); }
+      changed = true;
+    }
+    if (b.status === "AVAILABLE" || b.status === "UNMATCHED"){
+      if (simNow >= b.cutoffAt){ transition(b, "EXPIRED", "Timer", "2-hour cutoff passed"); changed = true; continue; }
+      const r = ranked(b);
+      if (b.status === "AVAILABLE" && !r.length){ transition(b, "UNMATCHED", "Matcher", whyNoMatch(b)); changed = true; }
+      else if (b.status === "UNMATCHED" && r.length){ transition(b, "AVAILABLE", "Matcher", `room opened at ${r[0].k.name}`); changed = true; }
+      if (b.status === "AVAILABLE" && !b.alerted && b.cutoffAt - simNow <= ALERT_MIN*MIN){
+        b.alerted = true; changed = true;
+        log("ALERT", b.id, `Still unclaimed with ${fmtLeft(b.cutoffAt - simNow)} left · coordinator notified`, "Timer");
+        notify({role:"staff"}, "alert", `${b.desc} from ${donor(b.donorId).name} is still unclaimed with ${fmtLeft(b.cutoffAt - simNow)} left.`, b.id);
+      }
+    }
+  }
+  for (const h of S.holds){
+    if (h.status === "HELD" && simNow >= h.expiresAt){ h.status = "EXPIRED"; changed = true; log("COMMUNITY", h.id, `${h.name}'s hold ran out · ${h.qty} servings back on offer`, "Timer");
+      if (h.userId) notify({user:h.userId}, "reserve", `Your reservation for ${batch(h.batchId).desc} ran out, so it went back to others.`, h.batchId); }
+  }
+  for (const b of S.batches){
+    if (isOverdue(b) && !b.overdueNoted){
+      b.overdueNoted = true; changed = true;
+      const k = kitchen(b.kitchenId), d = donor(b.donorId);
+      notify({role:"kitchen", org:k.id}, "return", `Containers overdue: please return ${b.returnWhat || "the containers"} to ${d.name}.`, b.id);
+      notify({role:"donor", org:d.id}, "return", `${k.name} hasn't returned ${b.returnWhat || "your containers"} yet. Support has been told.`, b.id);
+      notify({role:"staff"}, "alert", `${k.name} is late returning ${b.returnWhat || "containers"} to ${d.name}.`, b.id);
+    }
+  }
+  return changed;
+}
+
+/* ---------- Donation actions ---------- */
+function createBatch(f, actor){
+  const b = { id:"B-" + (S.seq++), donorId:f.donorId, desc:f.desc, servings:f.servings, tag:f.tag, allergens:f.allergens,
+    createdAt:simNow, cutoffAt:simNow + f.windowMin*MIN, status:"NEW", kitchenId:null, reservedAt:null, pickupDeadline:null,
+    pin:null, pinHash:null, attempts:0, locked:false, confirmedAt:null, excluded:[], alerted:false, terminal:false, note:"", lastKitchen:null, updatedAt:simNow,
+    pack:f.pack || "PACKED", returnDish:!!f.returnDish, returnHours:f.returnHours || 24, returnWhat:f.returnWhat || "", returnedAt:null };
+  S.batches.push(b);
+  const r = ranked(b);
+  if (r.length){ transition(b, "AVAILABLE", actor, "posted"); log("MATCH", b.id, `${plural(r.length,"kitchen")} fit: ${r.map(e => e.k.name).join(", ")}`, "Matcher"); }
+  else { transition(b, "UNMATCHED", actor, "posted"); log("MATCH", b.id, `No kitchen fits: ${whyNoMatch(b)}`, "Matcher"); }
+  return b;
+}
+async function claim(b, k){
+  const ev = evaluate(b).find(e => e.k.id === k.id);
+  if (b.status !== "AVAILABLE" || !ev.eligible){ toast("This donation is no longer available to your kitchen."); render(); return; }
+  const late = overdueReturns(k.id);
+  if (b.returnDish && late.length){ toast(`Return ${donor(late[0].donorId).name}'s containers first. They were due ${fmtDay(returnDue(late[0]))}.`); render(); return; }
+  b.kitchenId = k.id; b.reservedAt = simNow; b.attempts = 0; b.locked = false;
+  b.pickupDeadline = Math.min(simNow + RESERVATION_MIN*MIN, b.cutoffAt);
+  transition(b, "RESERVED", k.name, `claimed · ${b.servings} servings held`);
+  if (b.returnDish) log("RETURN", b.id, `${k.name} agreed to return ${b.returnWhat || "the containers"} ${RETURN_OPTS[b.returnHours] || "within 1 day"} of pickup`, k.name);
+  b.pin = genPin(); b.pinHash = await sha256(pinMaterial(b, b.pin));
+  log("PIN", b.id, `Pickup PIN issued (stored as hash ${b.pinHash.slice(0,10)}…)`, "System");
+  ui.ktab = "pickups"; render(); toast(`Claimed. Your pickup PIN is ${b.pin}.`);
+}
+function releaseReservation(b, actor, reason, terminal){
+  const k = kitchen(b.kitchenId);
+  if (!transition(b, "CANCELED", actor, reason)) return;
+  b.excluded.push(k.id); b.lastKitchen = k.id; b.kitchenId = null; b.pin = null; b.pinHash = null; b.attempts = 0; b.locked = false;
+  if (terminal){ b.terminal = true; b.note = reason; notify({role:"donor", org:b.donorId}, "pickup", `${k.name} reported ${b.desc} wasn't as listed, so it was pulled. Call them if you have questions.`, b.id); notify({role:"staff"}, "alert", `${k.name} reported ${b.desc} from ${donor(b.donorId).name} wasn't as listed.`, b.id); return; }
+  if (simNow >= b.cutoffAt){ transition(b, "EXPIRED", "Timer", "cutoff already passed"); return; }
+  const r = ranked(b);
+  r.length ? transition(b, "AVAILABLE", "Matcher", `offered to next kitchen: ${r[0].k.name}`) : transition(b, "UNMATCHED", "Matcher", whyNoMatch(b));
+}
+async function verifyPin(b, input, actor){
+  if (b.status !== "RESERVED") return {ok:false, msg:"This donation isn't waiting for pickup anymore."};
+  if (b.locked) return {ok:false, msg: lockMsg(b)};
+  if (!/^\d{4}$/.test(input)) return {ok:false, msg:"Enter all 4 digits."};
+  const h = await sha256(pinMaterial(b, input));
+  if (h === b.pinHash){
+    b.confirmedAt = simNow; log("PIN", b.id, `PIN matched (hash ${h.slice(0,10)}…)`, actor);
+    if (b.returnDish){ b.returnDueAt = simNow + b.returnHours*60*MIN; log("RETURN", b.id, `Containers due back to ${donor(b.donorId).name} by ${fmtDay(b.returnDueAt)}`, "System"); }
+    transition(b, "HANDOFF_CONFIRMED", actor, `handed to ${kitchen(b.kitchenId).name}`); render(); return {ok:true};
+  }
+  b.attempts++; log("PIN", b.id, `Wrong PIN (${b.attempts} of 3)`, actor);
+  if (b.attempts >= MAX_PIN_ATTEMPTS){ b.locked = true; b.lockedAt = simNow; log("ALERT", b.id, "Locked after 3 wrong PINs · coordinator review needed", "System");
+    if (b.selfPinUsed) notify({role:"staff"}, "alert", `PIN locked twice on ${b.desc}. Call ${donor(b.donorId).name} and ${kitchen(b.kitchenId).name}.`, b.id);
+    else notify({role:"kitchen", org:b.kitchenId}, "pickup", `The donor's PIN entry locked on ${b.desc}. Tap “Get a new PIN” and read it to them.`, b.id); }
+  render();
+  const left = MAX_PIN_ATTEMPTS - b.attempts;
+  return {ok:false, msg: b.locked ? lockMsg(b) : `That PIN doesn't match. ${plural(left,"try","tries")} left.`};
+}
+const lockMsg = b => b.selfPinUsed ? "Locked again after 3 wrong PINs. Support has been alerted and will call you both." : "Locked after 3 wrong PINs. Ask the kitchen to tap “Get a new PIN” in their app, then type the new one.";
+function wrongPinFor(b){ let p; do { p = genPin(); } while (p === b.pin); return p; }
+function maxTakeable(b){
+  const left = (b.cutoffAt - simNow) / MIN;
+  const dn = donor(b.donorId), fits = S.kitchens.filter(k => { const mi = milesBetween(dn, k); return k.tags.includes(b.tag) && mi <= k.radius && tripMin(mi) <= left && !b.excluded.includes(k.id); }).map(openCap);
+  const m = fits.length ? Math.max(...fits) : 0;
+  return m > 0 && m < b.servings ? m : 0;
+}
+function whoGetsItNext(b){
+  const saved = {k:b.kitchenId, st:b.status};
+  b.excluded.push(b.kitchenId); b.kitchenId = null; b.status = "AVAILABLE";
+  const r = ranked(b);
+  b.excluded.pop(); b.kitchenId = saved.k; b.status = saved.st;
+  return r[0]?.k || null;
+}
+function nextReason(b){
+  const saved = b.kitchenId; b.excluded.push(saved); b.kitchenId = null;
+  const why = whyNoMatch(b); b.excluded.pop(); b.kitchenId = saved; return why;
+}
+function createHold(b, qty, afterMin=0, how){
+  const u = me();
+  const h = {id:"R-" + (S.hseq++), batchId:b.id, kitchenId:b.kitchenId, name:u.name.split(" ")[0], phone:u.phone || "", qty, code:genPin(), createdAt:simNow, readyAt:simNow + afterMin*MIN, expiresAt:simNow + (afterMin + HOLD_MIN)*MIN, status:"HELD", userId:u.id, collectedAt:null, how: how || SERVE[serveOf(b)].how[0]};
+  S.holds.push(h); ui.ctab = "mine";   /* show the new code under "Your reservations" */
+  notify({role:"kitchen", org:b.kitchenId}, "reserve", `${h.name} reserved ${plural(qty,"serving")} of ${b.desc} (${HOW_LABEL[h.how].toLowerCase()}), pickup ${holdWindow(h)}.`, b.id);
+  log("COMMUNITY", h.id, `${h.name} reserved ${qty} of ${b.desc} at ${kitchen(b.kitchenId).name} · pickup ${holdWindow(h)} · ${HOW_LABEL[h.how].toLowerCase()}`, h.name);
+  return h;
+}
+
+/* ---------- Accounts ---------- */
+async function signIn(email, pw){
+  const a = S.accounts.find(x => x.email.toLowerCase() === email.trim().toLowerCase());
+  if (!a || a.pw !== await pwHash(a.email, pw)) return null;
+  return a;
+}
+function startSession(a){
+  ui.session = a; ui.screen = "app"; ui.ktab = "claim"; ui.otab = "donations"; ui.opsFilter = "active";
+  log("SYSTEM", null, `${a.name} signed in as ${ROLE[a.role].name.toLowerCase()}`, a.name);
+  window.scrollTo(0,0); render();
+}
+function signOut(){ if (me()) log("SYSTEM", null, `${me().name} signed out`, me().name); ui.session = null; ui.screen = "home"; ui.ktab = "claim"; ui.otab = "donations"; ui.dtab = "open"; ui.ctab = "near"; window.scrollTo(0,0); render(); }
+
+/* ---------- Illustration (original cut-paper figures, generated) ---------- */
+/* Abstract shared meal: each person is a head over an arch-shaped body, gathered around one round table and one bowl. */
+/* Figures sway gently from their base and food bobs; each piece runs slightly out of step so the scene feels alive. */
+const anim = (cls, ox, oy, delay) => `class="${cls}" style="transform-origin:${ox}px ${oy}px;animation-delay:${delay}s"`;
+function pebble(x, y, s, tilt, c, len=90, extra=""){
+  const base = y + Math.min(len, 90) * s * .7;
+  return `<g ${anim("wob", x, base, -((x * 7) % 13) / 10)}><g class="hop" style="animation-delay:${-((x * 11) % 9) / 10}s"><g transform="translate(${x} ${y}) rotate(${tilt}) scale(${s})" fill="${c}"><path d="M-50,${len} V-10 A50,50 0 0 1 50,-10 V${len} Z"/><circle cy="-92" r="29"/></g>${extra}</g></g>`;
+}
+const steam = (d, delay) => `<path d="${d}" fill="none" stroke="var(--tomato)" stroke-width="7" stroke-linecap="round" opacity=".5" class="steam" style="animation-delay:${delay}s"/>`;
+function mealScene(colors){
+  const [a, b, c, d] = colors;
+  return `${pebble(212, 236, .82, -6, b)}${pebble(348, 236, .82, 6, c)}
+    <ellipse cx="280" cy="292" rx="196" ry="58" fill="var(--table)"/>
+    ${steam("M266 236c-6-10 6-14 0-24", 0)}${steam("M292 232c-6-10 6-14 0-24", -1.2)}
+    <g ${anim("bob", 280, 280, -.3)}><circle cx="262" cy="270" r="17" fill="var(--green)"/><circle cx="292" cy="266" r="19" fill="var(--butter)"/>
+    <path d="M232 274H328A48 34 0 0 1 232 274Z" fill="var(--tomato)"/></g>
+    ${pebble(92, 318, 1.05, 6, a, 200)}${pebble(468, 318, 1.05, -6, d, 200)}`;
+}
+
+/* ---------- decorative shape library (viewBox 0 0 100 100) ---------- */
+function starPts(n, ro, ri, cx=50, cy=50, rot=-90){
+  const pts=[]; for(let i=0;i<n*2;i++){const r=i%2?ri:ro, a=(rot+i*180/n)*Math.PI/180; pts.push(`${(cx+r*Math.cos(a)).toFixed(1)},${(cy+r*Math.sin(a)).toFixed(1)}`)} return pts.join(" ");
+}
+function petals(n, rr, pr, c){ let o=""; for(let i=0;i<n;i++){const a=(i*360/n-90)*Math.PI/180; o+=`<circle cx="${(50+rr*Math.cos(a)).toFixed(1)}" cy="${(50+rr*Math.sin(a)).toFixed(1)}" r="${pr}" fill="${c}"/>`} return o+`<circle cx="50" cy="50" r="${rr+2}" fill="${c}"/>`; }
+const SHAPE = {
+  blob:   c => `<path fill="${c}" d="M30,14C44,2 66,10 72,24C80,22 94,30 92,46C90,60 78,62 74,74C68,92 44,96 34,84C26,94 8,86 10,70C12,58 20,56 18,46C8,40 16,22 30,14Z"/>`,
+  bean:   c => `<path fill="${c}" d="M14,58C6,38 22,20 40,26C52,30 58,22 70,20C88,18 96,36 88,52C80,68 62,66 50,74C34,86 20,76 14,58Z"/>`,
+  peanut: c => `<path fill="${c}" d="M50,6C70,6 78,22 70,36C66,44 66,56 70,64C78,78 70,94 50,94C30,94 22,78 30,64C34,56 34,44 30,36C22,22 30,6 50,6Z"/>`,
+  flower: c => petals(6, 26, 20, c),
+  clover: c => petals(4, 22, 22, c),
+  burst:  c => `<polygon fill="${c}" stroke="${c}" stroke-width="3" stroke-linejoin="round" points="${starPts(12,48,32)}"/>`,
+  star:   c => `<polygon fill="${c}" stroke="${c}" stroke-width="4" stroke-linejoin="round" points="${starPts(8,46,20)}"/>`,
+  spark:  c => `<path fill="${c}" d="M50,4Q56,44 96,50Q56,56 50,96Q44,56 4,50Q44,44 50,4Z"/>`,
+  pillow: c => `<path fill="${c}" stroke="${c}" stroke-width="6" stroke-linejoin="round" d="M12,12Q50,30 88,12Q70,50 88,88Q50,70 12,88Q30,50 12,12Z"/>`,
+  tri:    c => `<polygon fill="${c}" stroke="${c}" stroke-width="14" stroke-linejoin="round" points="50,14 88,82 12,82"/>`,
+  arch:   c => `<path fill="none" stroke="${c}" stroke-width="22" d="M20,96V52A30,30 0 0 1 80,52V96"/>`,
+  half:   c => `<path fill="${c}" d="M4,78A46,46 0 0 1 96,78Z"/>`,
+  pill:   c => `<rect fill="${c}" x="6" y="32" width="88" height="36" rx="18" transform="rotate(-35 50 50)"/>`,
+  squig:  c => `<path fill="none" stroke="${c}" stroke-width="11" stroke-linecap="round" d="M6,56C16,36 26,36 34,52S50,68 58,50S76,32 84,48S94,60 96,52"/>`,
+  sq:     c => `<rect fill="${c}" x="8" y="8" width="84" height="84" rx="20"/>`,
+  dot:    c => `<circle cx="50" cy="50" r="40" fill="${c}"/>`,
+  ring:   c => `<circle cx="50" cy="50" r="34" fill="none" stroke="${c}" stroke-width="13"/>`,
+};
+/* one placed shape: [kind, color, css position, size(px), rotate(deg), extra classes] */
+function dz([k, c, pos, size, rot=0, cls=""], i=0){
+  /* same motion as the characters: a gentle side-to-side wobble plus a little hop, offset per shape */
+  const d1 = -((i * 7) % 17) / 4, d2 = -((i * 11) % 9) / 3;
+  return `<svg class="dz ${cls}" viewBox="0 0 100 100" aria-hidden="true" style="${pos.replace("SIZE", size)};width:${size}px;height:${size}px"><g transform="rotate(${rot} 50 50)"><g class="dw" style="animation-delay:${d1}s"><g class="dh" style="animation-delay:${d2}s">${SHAPE[k](c)}</g></g></g></svg>`;
+}
+function decoLayer(list){ return `<div class="deco" aria-hidden="true">${list.map((x,i) => dz(x,i)).join("")}</div>`; }
+const GUT_L = "left:calc(50% - 600px - ", GUT_R = "left:calc(50% + 600px + ";
+/* gutter positions: spread by fraction f across the side space, but never closer than 14px to the content */
+const GL = f => `left:min(calc((50% - 600px) * ${f} - 50px), calc(50% - 600px - SIZEpx - 14px))`, GR = f => `left:max(calc(50% + 600px + 14px), calc(50% + 600px + (50% - 600px) * ${f} - 50px))`;
+const HOME_DECO = [
+  /* wide-screen gutters: a few shapes per side, evenly spaced */
+  ["blob",   "var(--tomato)",   GL(.55)+";top:40px",   110, -10, "wide"],
+  ["burst",  "var(--butter)",   GL(.25)+";top:300px",   76, 0, "wide"],
+  ["squig",  "var(--blue)",     GL(.60)+";top:560px",  104, -8, "wide"],
+  ["clover", "var(--green)",    GL(.28)+";top:820px",   66, 10, "wide"],
+  ["arch",   "var(--tomato-l)", GL(.62)+";top:1080px",  80, 0, "wide"],
+  ["pillow", "var(--blue)",     GR(.42)+";top:60px",    92, 8, "wide"],
+  ["flower", "var(--butter)",   GR(.72)+";top:330px",   84, 0, "wide"],
+  ["tri",    "var(--green)",    GR(.38)+";top:590px",   74, 14, "wide"],
+  ["bean",   "var(--tomato)",   GR(.70)+";top:970px",   96, -20, "wide"],
+  ["spark",  "var(--butter-d)", GR(.40)+";top:1100px",  58, 0, "wide"],
+  ["dot",    "var(--green)",    GL(.80)+";top:190px",   30, 0, "wide"],
+  ["spark",  "var(--blue-l)",   GL(.15)+";top:700px",   46, 0, "wide"],
+  ["ring",   "var(--butter)",   GL(.20)+";top:960px",   44, 0, "wide"],
+  ["dot",    "var(--tomato)",   GR(.15)+";top:220px",   28, 0, "wide"],
+  ["squig",  "var(--tomato)",   GR(.20)+";top:740px",   70, 6, "wide"],
+  ["clover", "var(--blue-l)",   GR(.78)+";top:870px",   50, 0, "wide"],
+  /* inside the page, in open space */
+  ["dot",    "var(--blue-l)",   "right:42%;top:40px",       18, 0, "lg-only"],
+];
+const AUTH_DECO = [
+  ["flower", "var(--butter)",   "left:calc(50% - 490px - 54px);top:-26px", 96, 0, "sp lg-only"],
+  ["blob",   "var(--blue-l)",   "left:calc(50% + 490px - 64px);top:-34px", 110, 20, "fl lg-only"],
+  ["burst",  "var(--tomato)",   "left:calc(50% + 490px - 40px);bottom:-40px", 84, 0, "sp lg-only"],
+  ["squig",  "var(--green)",    "left:calc(50% - 490px - 70px);bottom:30px", 100, -10, "fl lg-only"],
+  ["peanut", "var(--tomato-l)", GUT_L.replace("600","490")+"190px);top:200px", 70, 30, "wide fl"],
+  ["star",   "var(--green-l)",  GUT_R.replace("600","490")+"120px);top:240px", 64, 0, "wide sp"],
+];
+const CONFETTI = [["blob","var(--tomato)"],["tri","var(--blue)"],["dot","var(--butter-d)"],["burst","var(--butter)"],["peanut","var(--green)"],
+  ["arch","var(--tomato)"],["bean","var(--blue-l)"],["clover","var(--tomato-l)"],["squig","var(--blue)"],["flower","var(--green)"],
+  ["pillow","var(--blue-d)"],["star","var(--tomato)"],["half","var(--butter)"],["spark","var(--green-l)"],["pill","var(--butter-d)"],["ring","var(--blue)"]];
+function confettiRow(){ return CONFETTI.map(([k,c],i) => `<svg viewBox="0 0 100 100" aria-hidden="true"><g transform="rotate(${[-8,6,0,12,-14,0,20,8,-6,0,10,0,0,0,0,0][i]} 50 50)">${SHAPE[k](c)}</g></svg>`).join(""); }
+function roleShape(kind, c, rot=0){ return `<svg class="rshape" viewBox="0 0 100 100" aria-hidden="true"><g transform="rotate(${rot} 50 50)">${SHAPE[kind](c)}</g></svg>`; }
+function initDeco(){
+  const home = $("#scr-home");
+  if (home && !home.querySelector(":scope>.deco")){
+    home.classList.add("decohost"); home.insertAdjacentHTML("afterbegin", decoLayer(HOME_DECO));
+    [["donor","flower","var(--tomato)"],["kitchen","burst","var(--green)"],["community","sq","var(--blue)",-10]].forEach(([r,k,c,rot]) =>
+      $(`.role-${r}`).insertAdjacentHTML("afterbegin", roleShape(k,c,rot)));
+  }
+  const auth = $("#scr-auth");
+  if (auth && !auth.querySelector(":scope>.deco")){ auth.classList.add("decohost"); auth.insertAdjacentHTML("afterbegin", decoLayer(AUTH_DECO)); }
+}
+
+function heroArt(){ return mealScene(["var(--tomato)","var(--blue)","var(--butter)","var(--green)"]); }
+/* Donor: a shopkeeper behind a counter under a striped awning, food ready to hand off, a kitchen worker arriving. */
+function donorArt(){
+  let stripes = "";
+  for (let i = 0; i < 8; i++){ const x = 100 + i*40, c = i % 2 ? "var(--card)" : "var(--tomato)"; stripes += `<path d="M${x},130 h40 v44 a20,16 0 0 1 -40,0 Z" fill="${c}"/>`; }
+  return `<g ${anim("sway", 260, 126, 0)}><rect x="100" y="122" width="320" height="10" rx="5" fill="var(--ink)"/>${stripes}</g>
+    ${pebble(260, 286, .9, 0, "var(--blue)")}
+    <rect x="70" y="300" width="380" height="140" fill="var(--table)"/>
+    <g ${anim("bob", 160, 300, -.6)}><rect x="136" y="214" width="48" height="40" fill="var(--butter)" opacity=".75"/></g><rect x="128" y="250" width="64" height="50" fill="var(--butter)"/>
+    <g ${anim("bob", 340, 300, -1.1)}><rect x="330" y="214" width="13" height="48" rx="6.5" transform="rotate(14 336 238)" fill="var(--butter)"/><circle cx="352" cy="252" r="14" fill="var(--tomato)"/></g>
+    <path d="M310 300 L316 250 H364 L370 300Z" fill="var(--green)"/>
+    ${pebble(484, 316, 1.2, -8, "var(--green)", 220)}`;
+}
+/* Kitchen: a cook in a chef's hat at a big steaming pot, a crate of vegetables, a helper in front. */
+function kitchenArt(){
+  const hat = `<g fill="var(--card)"><circle cx="352" cy="146" r="18"/><circle cx="370" cy="136" r="22"/><circle cx="388" cy="146" r="18"/><rect x="348" y="146" width="44" height="16"/></g>
+    <rect x="340" y="158" width="60" height="17" rx="4" fill="var(--card)"/>`;
+  return `${pebble(370, 262, .9, 0, "var(--butter)", 90, hat)}
+    <rect x="120" y="318" width="420" height="120" fill="var(--table)"/>
+    ${steam("M240 222c-8-14 8-20 0-34", 0)}${steam("M268 222c-8-14 8-20 0-34", -1.2)}
+    <rect x="198" y="244" width="112" height="76" rx="10" fill="var(--tomato)"/><rect x="188" y="236" width="132" height="14" rx="7" fill="var(--tomato)"/>
+    <rect x="174" y="262" width="28" height="12" rx="6" fill="var(--tomato)"/><rect x="306" y="262" width="28" height="12" rx="6" fill="var(--tomato)"/>
+    <g ${anim("bob", 452, 300, -.8)}><circle cx="430" cy="300" r="15" fill="var(--green)"/><circle cx="452" cy="298" r="14" fill="var(--butter)"/><circle cx="474" cy="302" r="15" fill="var(--tomato)"/></g>
+    <rect x="412" y="298" width="80" height="24" fill="var(--wood)"/>
+    ${pebble(96, 316, 1.2, 8, "var(--blue)", 220)}`;
+}
+function sideArt(role){
+  if (role === "donor") return `<svg viewBox="70 110 410 320" aria-hidden="true">${donorArt()}</svg>`;
+  if (role === "kitchen") return `<svg viewBox="100 110 410 320" aria-hidden="true">${kitchenArt()}</svg>`;
+  return `<svg viewBox="0 120 560 300" aria-hidden="true">${mealScene(["var(--tomato)","var(--blue)","var(--butter)","var(--green)"])}</svg>`;
+}
+
+/* ---------- Render helpers ---------- */
+const stor = t => `<span class="stor stor-${t}">${TAGS[t].short}</span>`;
+const badge = st => `<span class="badge b-${st}">${FRIENDLY[st]}</span>`;
+const rawBadge = st => `<span class="badge b-${st}">${st}</span>`;
+const contains = b => b.allergens.length ? "Contains " + b.allergens.map(a => a.toLowerCase()).join(", ") : "No allergens listed";
+const FAKE_PHONE = "(###) ###-####";
+const normPhone = p => { const d = String(p || "").replace(/\D/g, "").replace(/^1(?=\d{10}$)/, ""); return d.length === 10 ? `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}` : null; };
+const orgContact = (role, orgId) => S.accounts.find(a => a.role === role && a.orgId === orgId);
+const telLink = (p, label) => p === FAKE_PHONE ? `<span class="tel" style="color:var(--ink-2);cursor:default" title="Placeholder number">${label ? esc(label) + " " : ""}${FAKE_PHONE}</span>` : p ? `<a class="tel" href="tel:+1${p.replace(/\D/g, "")}" title="Call">${label ? esc(label) + " " : ""}<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3.2 1.2l1.6 2.2-1 1.2a6.6 6.6 0 0 0 3.6 3.6l1.2-1 2.2 1.6-.8 1.8C6 11 1 6 .4 2z" fill="currentColor"/></svg>${esc(p)}</a>` : `<span class="muted">No phone on file</span>`;
+const mailLink = e => e ? `<a class="tel" href="mailto:${esc(e)}">${esc(e)}</a>` : "";
+const contactLine = (role, orgId, label) => { const a = orgContact(role, orgId); return a ? `<div class="contact">${label ? `<span class="muted">${esc(label)}</span>` : ""}${telLink(a.phone)}${a.email ? `<span class="muted">·</span>${mailLink(a.email)}` : ""}</div>` : ""; };
+const mapLink = addr => `<a class="maplink" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}" target="_blank" rel="noopener" title="Open in maps">${esc(addr)}<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 11.5S1.5 7.3 1.5 4.6a4.5 4.5 0 0 1 9 0C10.5 7.3 6 11.5 6 11.5z" fill="currentColor"/><circle cx="6" cy="4.6" r="1.6" fill="var(--card)"/></svg></a>`;
+const donorLine = (d, withAddr) => `<div class="donor-line"><svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 7h14v9H2z" fill="var(--tomato-soft)"/><path d="M1 3h16l-1 4H2z" fill="var(--tomato)"/><rect x="7" y="10" width="4" height="6" fill="var(--tomato)"/></svg>${esc(d.name)}${withAddr ? `<span class="addr">· ${mapLink(d.addr)}</span>` : ""}</div>`;
+const timer = until => `<span class="timer" data-until="${until}">${fmtLeft(until - simNow)}</span>`;
+function urgent(b){
+  if (b.status === "AVAILABLE" || b.status === "UNMATCHED") return b.cutoffAt - simNow <= URGENT_MIN*MIN;
+  if (b.status === "RESERVED") return b.pickupDeadline - simNow <= URGENT_MIN*MIN;
+  return false;
+}
+
+/* ---------- Screens ---------- */
+function renderShell(){
+  document.body.dataset.role = ui.screen === "app" && me() ? me().role : "";
+  $("#scr-home").hidden = ui.screen !== "home";
+  $("#scr-auth").hidden = ui.screen !== "auth";
+  document.querySelectorAll("[data-app]").forEach(p => p.hidden = !(ui.screen === "app" && p.id === "app-" + me()?.role));
+  const u = me();
+  $("#topRight").innerHTML = u
+    ? `<span class="role-chip rc-${u.role}">${ROLE[u.role].name}</span><button class="btn sm bell-btn" id="bellBtn" data-act="open-notes" title="Notifications" aria-label="Notifications"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6v3.5L4.5 16h15L18 12.5V9a6 6 0 0 0-6-6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.5 19a2.5 2.5 0 0 0 5 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><button class="btn sm help-btn" data-act="open-help" title="Get help or contact support"><span aria-hidden="true">?</span><span class="help-label">Help</span></button><button class="profile-btn" data-act="open-profile" title="Edit your profile"><span class="who">${esc(u.role === "donor" ? donor(u.orgId).name : u.role === "kitchen" ? kitchen(u.orgId).name : u.name)}</span>
+       <span class="avatar" style="background:${avatarColor(u.id)}" aria-hidden="true">${esc(initials(u.name))}</span><span class="profile-label">Profile</span></button><button class="btn sm" data-act="signout">Sign out</button>`
+    : ui.screen === "home" ? `<button class="btn sm hide-sm" data-act="scroll-roles">Sign in</button><button class="btn sm primary" data-act="scroll-roles">Get started</button>` : `<button class="btn sm" data-act="home">← Home</button>`;
+}
+
+function renderHome(){
+  initDeco();
+  if (!$("#heroArt").childElementCount) $("#heroArt").innerHTML = heroArt();
+  const meals = S.batches.filter(b => b.status === "HANDOFF_CONFIRMED").reduce((n,b) => n + b.servings, 0);
+  $("#homeStats").innerHTML = `<div><b>${meals}</b><span>meals rescued today</span></div><div><b>${S.kitchens.length}</b><span>partner kitchens</span></div><div><b>${(meals*CO2_PER_MEAL).toFixed(0)} kg</b><span>CO₂ kept from landfill</span></div>`;
+}
+
+function renderAuth(){
+  initDeco();
+  const r = ui.authRole, R = ROLE[r], signup = ui.authMode === "signup" && r !== "staff";
+  let fields = "";
+  if (!signup){
+    fields = `<div class="field"><label for="a-email">Email</label><input class="input" id="a-email" type="email" autocomplete="username"></div>
+      <div class="field"><label for="a-pw">Password</label><input class="input" id="a-pw" type="password" autocomplete="current-password"></div>`;
+  } else if (r === "donor"){
+    fields = `<div class="field"><label for="a-org">Business name</label><input class="input" id="a-org" maxlength="60" placeholder="e.g. Corner Café"></div>
+      <div class="two"><div class="field"><label for="a-name">Your name</label><input class="input" id="a-name" maxlength="40" autocomplete="name"></div>
+      <div class="field"><label for="a-addr">Pickup address</label><input class="input" id="a-addr" maxlength="80" autocomplete="street-address"></div></div>`;
+  } else if (r === "kitchen"){
+    fields = `<div class="field"><label for="a-org">Kitchen or shelter name</label><input class="input" id="a-org" maxlength="60"></div>
+      <div class="two"><div class="field"><label for="a-name">Your name</label><input class="input" id="a-name" maxlength="40" autocomplete="name"></div>
+      <div class="field"><label for="a-addr">Address</label><input class="input" id="a-addr" maxlength="80" autocomplete="street-address"></div></div>
+      <fieldset class="field"><legend>Storage you have</legend><div class="opts">${Object.entries(TAGS).map(([k,v]) => `<label><input type="checkbox" data-tag value="${k}"> ${v.label}</label>`).join("")}</div></fieldset>
+      <div class="two"><div class="field"><label for="a-cap">Servings you can take a day</label><input class="input" id="a-cap" type="number" min="10" max="1000" placeholder="100"></div>
+      <div class="field"><label for="a-radius">How far can you travel for pickups?</label><select class="input" id="a-radius" style="width:100%">${RADII.map(v => `<option value="${v}" ${v === 5 ? "selected" : ""}>Up to ${v} miles</option>`).join("")}</select><span class="help">We measure the distance to each donor for you.</span></div></div>`;
+  } else {
+    fields = `<div class="field"><label for="a-name">First name or nickname</label><input class="input" id="a-name" maxlength="30" autocomplete="given-name"><span class="help">Kitchens see this when you pick up.</span></div>
+      <div class="two"><div class="field"><label for="a-start">Where do you usually start from?</label><input class="input" id="a-start" maxlength="60" placeholder="Neighborhood, cross streets or ZIP"><span class="help">Optional. Only used to sort kitchens by distance.</span></div>
+      <div class="field"><label for="a-radius">How far will you go for a meal?</label><select class="input" id="a-radius" style="width:100%">${[1,2,3,5,10].map(v => `<option value="${v}" ${v === 3 ? "selected" : ""}>Up to ${v} miles</option>`).join("")}</select></div></div>`;
+  }
+  if (signup) fields += `<div class="field"><label for="a-phone">Phone${r === "community" ? " (optional)" : ""}</label><input class="input" id="a-phone" type="tel" autocomplete="tel" placeholder="(###) ###-####"><span class="help">${r === "community" ? "Only the kitchen holding your meal can see it, in case you're running late." : r === "kitchen" ? "Donors and neighbors call this when something's urgent." : "Kitchens call this when they're on the way or running late."}</span></div><div class="field"><label for="a-email">Email</label><input class="input" id="a-email" type="email" autocomplete="email"></div>
+    <div class="field"><label for="a-pw">Create a password</label><input class="input" id="a-pw" type="password" autocomplete="new-password"><span class="help">At least 8 characters.</span></div>`;
+  const demo = S.accounts.find(a => a.role === r && a.demo);
+  $("#authBox").innerHTML = `
+    <div class="auth-side" style="background:${R.soft}">
+      <span class="role-chip rc-${r}" style="align-self:flex-start">${R.name}</span>
+      <h2 style="font-size:30px">${R.title}</h2>
+      <ul>${R.points.map(p => `<li>${p}</li>`).join("")}</ul>
+      ${sideArt(r)}
+    </div>
+    <form class="auth-main form" id="authForm" novalidate>
+      ${r !== "staff" ? `<div class="seg" role="group" aria-label="Sign in or create account"><button type="button" data-act="auth-mode" data-v="signin" aria-pressed="${!signup}">Sign in</button><button type="button" data-act="auth-mode" data-v="signup" aria-pressed="${signup}">Create account</button></div>` : ""}
+      <div><h2>${signup ? "Create your account" : "Welcome back"}</h2>
+        <p class="small muted" style="margin-top:4px">${signup ? (r === "kitchen" ? "We use this to match you only with food you can store and reach in time." : r === "donor" ? "Free for businesses of every size." : "Free, always. We only use this to hold your meals.") : r === "staff" ? "Staff accounts are set up by an administrator." : "Sign in to continue."}</p></div>
+      ${fields}
+      <p class="err" id="authErr" hidden></p>
+      <button class="btn primary lg" type="submit">${signup ? "Create account" : "Sign in"}</button>
+      ${!signup && demo ? `<button type="button" class="btn" data-act="demo-login" data-id="${demo.id}">Use demo account (${esc(demo.name.split(" (")[0])})</button>` : ""}
+      <p class="notice">This is a prototype. Accounts only last until the page reloads, so please don't use a real password.</p>
+      <p class="small muted">Trouble signing in? <button type="button" class="link" data-act="open-help">Contact support</button></p>
+    </form>`;
+}
+
+$("#scr-auth").addEventListener("submit", async e => {
+  e.preventDefault();
+  const r = ui.authRole, signup = ui.authMode === "signup" && r !== "staff";
+  const err = msg => { const el = $("#authErr"); el.textContent = msg; el.hidden = false; };
+  const email = $("#a-email").value.trim(), pw = $("#a-pw").value;
+  if (!signup){
+    if (!email || !pw) return err("Enter your email and password.");
+    const a = await signIn(email, pw);
+    if (!a) return err("That email and password don't match an account. Check them, or create an account.");
+    if (a.role !== r) toast(`That's a ${ROLE[a.role].name.toLowerCase()} account, so we opened that view.`);
+    return startSession(a);
+  }
+  const name = ($("#a-name")?.value || "").trim();
+  if (r !== "community" && !$("#a-org").value.trim()) return err("Add your organization's name.");
+  if (!name) return err(r === "community" ? "Add a first name or nickname." : "Add your name.");
+  if (r !== "community" && !$("#a-addr").value.trim()) return err("Add an address so kitchens know where to go.");
+  let tags = [], cap = 0;
+  if (r === "kitchen"){
+    tags = [...document.querySelectorAll("[data-tag]:checked")].map(c => c.value);
+    cap = Number($("#a-cap").value);
+    if (!tags.length) return err("Pick at least one kind of storage you have.");
+    if (!Number.isInteger(cap) || cap < 10 || cap > 1000) return err("Servings per day must be a whole number from 10 to 1000.");
+  }
+  const phoneRaw = $("#a-phone").value.trim(), phone = phoneRaw ? normPhone(phoneRaw) : "";
+  if (phone === null || (!phone && r !== "community")) return err(r === "community" ? "Enter a 10-digit phone number, or leave it blank." : "Add a 10-digit phone number so people can reach you quickly.");
+  if (!validEmail(email)) return err("Enter a valid email address.");
+  if (pw.length < 8) return err("Use at least 8 characters for your password.");
+  if (S.accounts.some(a => a.email.toLowerCase() === email.toLowerCase())) return err("An account with that email already exists. Sign in instead.");
+  let orgId = null;
+  if (r === "donor"){ orgId = "D" + (S.dseq++); S.donors.push({id:orgId, name:$("#a-org").value.trim(), addr:$("#a-addr").value.trim(), ...placeFor($("#a-addr").value.trim())}); }
+  if (r === "kitchen"){
+    orgId = "K" + (S.kseq++);
+    S.kitchens.push({id:orgId, name:$("#a-org").value.trim(), addr:$("#a-addr").value.trim(), max:cap, radius:Number($("#a-radius").value), ...placeFor($("#a-addr").value.trim()), tags, hours:"Hours not posted yet", color:AVATAR_COLORS[S.kitchens.length % AVATAR_COLORS.length]});
+  }
+  const a = {id:"U" + (S.aseq++), role:r, name, email, phone, orgId, ...(r === "community" ? {start:$("#a-start").value.trim(), radius:Number($("#a-radius").value), ...placeFor($("#a-start").value.trim())} : {}), pw: await pwHash(email, pw), demo:false};
+  S.accounts.push(a);
+  log("SYSTEM", null, `New ${ROLE[r].name.toLowerCase()} account: ${r === "community" ? name : (r === "donor" ? donor(orgId).name : kitchen(orgId).name)}`, name);
+  toast("Account created. Welcome to WeAllEat!");
+  runJobs(); startSession(a);
+});
+
+function renderDonor(){
+  const d = donor(myDonorId());
+  $("#donorTitle").textContent = `Hi, ${me().name.split(" ")[0]}`;
+  const mine = S.batches.filter(b => b.donorId === d.id);
+  const open = mine.filter(b => ["AVAILABLE","RESERVED","UNMATCHED"].includes(b.status))
+    .sort((a,b) => (b.status === "RESERVED") - (a.status === "RESERVED") || ((a.status === "RESERVED" ? a.pickupDeadline : a.cutoffAt) - (b.status === "RESERVED" ? b.pickupDeadline : b.cutoffAt)));
+  const done = mine.filter(b => !open.includes(b)).sort((a,b) => b.updatedAt - a.updatedAt);
+  const meals = mine.filter(b => b.status === "HANDOFF_CONFIRMED").reduce((n,b) => n + b.servings, 0);
+  $("#impact").innerHTML = `<div><b>${meals}</b><span>meals donated today</span></div><div><b>${money(meals*FMV_PER_MEAL)}</b><span>estimated tax write-off</span></div><div><b>${(meals*CO2_PER_MEAL).toFixed(1)} kg</b><span>CO₂ kept out of landfill</span></div>`;
+  $("#n-dopen").textContent = open.length || ""; $("#n-ddone").textContent = done.length || "";
+  const dtab = ui.dtab || "open";
+  document.querySelectorAll('[data-act="dtab"]').forEach(t => t.setAttribute("aria-selected", String(t.dataset.v === dtab)));
+  $("#donorOpen").hidden = dtab !== "open"; $("#donorDone").hidden = dtab !== "done";
+  $("#donorOpen").innerHTML = open.length ? open.map(b => {
+    let side = "", note = "";
+    if (b.status === "RESERVED"){
+      const k = kitchen(b.kitchenId);
+      side = `<span class="label">Pickup within</span>${timer(b.pickupDeadline)}<button class="btn blue sm" data-act="open-pin" data-id="${b.id}" ${b.locked ? "disabled" : ""}>Enter pickup PIN</button>`;
+      note = b.locked ? `<p class="row-note" style="color:var(--tomato)">${lockMsg(b)}</p>${contactLine("kitchen", k.id, "Call the kitchen:")}` : `<p class="row-note"><b>${esc(k.name)}</b> is coming (${fmtMi(milesBetween(donor(b.donorId), k))} away, about ${tripMin(milesBetween(donor(b.donorId), k))} min). Keep it ${TAGS[b.tag].keep}.</p>${contactLine("kitchen", k.id, "Call the kitchen:")}`;
+    } else if (b.status === "AVAILABLE"){
+      side = `<span class="label">Cutoff in</span>${timer(b.cutoffAt)}`;
+      note = `<p class="row-note muted">Offered to ${plural(ranked(b).length,"kitchen")} that can store it.</p>`;
+    } else {
+      side = `<span class="label">Cutoff in</span>${timer(b.cutoffAt)}`;
+      note = `<p class="row-note">No kitchen fits: ${esc(whyNoMatch(b))}.</p>${S.kitchens.filter(k => k.tags.includes(b.tag)).slice(0,3).map(k => contactLine("kitchen", k.id, k.name + ":")).join("")}<p class="row-note"><span class="small muted">Call one of these kitchens to arrange it directly, or </span><span class="btn-row" style="margin-top:6px"><label class="small" for="sv-${b.id}" style="font-weight:600">Offer fewer servings:</label><input class="input" id="sv-${b.id}" type="number" min="1" max="${b.servings - 1}" value="${maxTakeable(b) || Math.max(1, Math.floor(b.servings/2))}" style="width:90px;padding:6px 10px"><button class="btn sm" data-act="set-servings" data-id="${b.id}">Update</button><button class="link danger" data-act="withdraw" data-id="${b.id}">Withdraw</button></span>${maxTakeable(b) ? `<span class="small muted" style="display:block;margin-top:4px">The most any kitchen can take right now is ${maxTakeable(b)} servings.</span>` : ""}</p>`;
+    }
+    return `<div class="row ${urgent(b) ? "urgent" : ""}"><div class="row-main"><div class="row-title">${esc(b.desc)} ${badge(b.status)}</div>
+      <div class="row-meta">${b.servings} servings · ${stor(b.tag)} · ${esc(contains(b))}</div><div class="row-meta">${packChip(b)}</div>${note}</div><div class="row-side">${side}</div></div>`;
+  }).join("") : `<div class="empty">Nothing open right now. Press “Post extra food” when you have something to share.</div>`;
+  const outs = mine.filter(needsReturn).sort((a,b) => returnDue(a) - returnDue(b));
+  $("#donorReturns").hidden = !outs.length;
+  $("#donorReturns").innerHTML = outs.length ? `<div class="card-head"><h2>Containers to get back</h2><span class="small muted">${plural(outs.length,"donation")}</span></div><div class="rows">${outs.map(b => { const k = kitchen(b.kitchenId), late = isOverdue(b);
+    return `<div class="row ${late ? "urgent" : ""}"><div class="row-main"><div class="row-title">${whatBack(b)} ${late ? `<span class="badge b-LOCKED">Overdue</span>` : ""}</div>
+      <div class="row-meta">From ${esc(b.desc)} · with ${esc(k.name)}</div>${contactLine("kitchen", k.id, late ? "Overdue. Call the kitchen:" : "Questions? Call:")}
+      ${b.returnSentAt ? `<p class="row-note small"><b>${esc(k.name)} says they dropped them off</b> ${fmtDay(b.returnSentAt)}. Please check and confirm.</p>` : late ? `<p class="row-note small">Support has been told. <button class="link" data-act="open-help">Report a problem</button></p>` : ""}</div>
+      <div class="row-side">${b.returnSentAt ? `<span class="label">Waiting on you</span><div class="btn-row" style="justify-content:flex-end"><button class="btn sm" data-act="ret-missing" data-id="${b.id}">Not received</button><button class="btn primary sm" data-act="ret-done" data-id="${b.id}">Got them back</button></div>`
+        : `<span class="label">${late ? "Was due" : "Due back by"}</span><b>${fmtDay(returnDue(b))}</b><button class="btn sm" data-act="ret-done" data-id="${b.id}">Got them back</button>`}</div></div>`; }).join("")}</div>` : "";
+  $("#donorDone").innerHTML = done.length ? done.map(b => `<div class="row"><div class="row-main"><div class="row-title">${esc(b.desc)} ${badge(b.status)}</div>
+    <div class="row-meta">${b.servings} servings · ${b.status === "HANDOFF_CONFIRMED" ? `to ${esc(kitchen(b.kitchenId).name)} at ${fmtShort(b.confirmedAt)} · receipt EE-${b.id.slice(2)}` : b.status === "EXPIRED" ? "no kitchen picked it up in time" : esc(b.note || "canceled")}</div></div></div>`).join("") : `<div class="empty">Nothing finished yet today.</div>`;
+}
+
+function renderKitchen(){
+  const k = kitchen(myKitchenId()), res = reservedLoad(k), conf = committed(k) - res, open = openCap(k);
+  $("#kitchenTitle").textContent = k.name;
+  $("#kitchenSum").innerHTML = `
+    <div><div class="label">Room left today</div><div style="display:flex;align-items:center;gap:10px"><b>${open} of ${k.max}</b>
+      <span class="meter" aria-hidden="true"><i style="width:${conf/k.max*100}%;background:var(--green)"></i><i style="width:${res/k.max*100}%;background:var(--butter)"></i></span></div></div>
+    <div><div class="label">Can store</div>${k.tags.map(stor).join(" · ")}</div>
+    <div><div class="label">Travels up to</div>${k.radius} miles</div>${(() => { const late = overdueReturns(k.id); return late.length ? `<div class="callout" style="flex-basis:100%;font-size:14px"><b>Containers overdue:</b> ${late.map(b => `${whatBack(b)} to ${esc(donor(b.donorId).name)}`).join("; ")}. Return them to claim more food that needs containers back. See “On hand”.</div>` : ""; })()}`;
+  const feed = [], hidden = {tag:0,cap:0,time:0,passed:0,far:0};
+  for (const b of S.batches.filter(b => b.status === "AVAILABLE")){
+    const mine = evaluate(b).find(e => e.k.id === k.id);
+    if (mine.eligible) feed.push(b); else if (!mine.tagOk) hidden.tag++; else if (!mine.fresh) hidden.passed++; else if (!mine.radiusOk) hidden.far++; else if (!mine.capOk) hidden.cap++; else hidden.time++;
+  }
+  feed.sort(ui.ksort === "donor" ? (a,b) => donor(a.donorId).name.localeCompare(donor(b.donorId).name) || a.cutoffAt - b.cutoffAt : (a,b) => a.cutoffAt - b.cutoffAt);
+  const pickups = S.batches.filter(b => b.status === "RESERVED" && b.kitchenId === k.id).sort((a,b) => a.pickupDeadline - b.pickupDeadline);
+  const comm = S.holds.filter(h => h.kitchenId === k.id && h.status === "HELD").sort((a,b) => a.expiresAt - b.expiresAt);
+  const stock = S.batches.filter(b => b.status === "HANDOFF_CONFIRMED" && b.kitchenId === k.id).sort((a,b) => b.confirmedAt - a.confirmedAt);
+  $("#n-claim").textContent = feed.length; $("#n-pickups").textContent = pickups.length; $("#n-community").textContent = comm.length;
+  document.querySelectorAll('[data-act="ktab"]').forEach(t => t.setAttribute("aria-selected", String(t.dataset.v === ui.ktab)));
+  let html = "", foot = "";
+  if (ui.ktab === "claim"){
+    html = (feed.length > 1 ? `<div class="sortbar">Sort by <button class="chip" data-act="ksort" data-v="cutoff" aria-pressed="${ui.ksort !== "donor"}">Soonest cutoff</button><button class="chip" data-act="ksort" data-v="donor" aria-pressed="${ui.ksort === "donor"}">Donor A–Z</button></div>` : "") + (feed.length ? feed.map(b => `<div class="row ${urgent(b) ? "urgent" : ""}"><div class="row-main"><div class="row-title">${esc(b.desc)}</div>
+      ${donorLine(donor(b.donorId), true)}<div class="row-meta"><b style="color:var(--ink)">${fmtMi(milesBetween(donor(b.donorId), k))} away · about ${tripMin(milesBetween(donor(b.donorId), k))} min</b> · ${b.servings} servings · ${stor(b.tag)} · ${esc(contains(b))}</div><div class="row-meta">${packChip(b)}</div></div>
+      <div class="row-side"><span class="label">Cutoff in</span>${timer(b.cutoffAt)}<button class="btn primary sm" data-act="claim" data-id="${b.id}">Claim</button></div></div>`).join("")
+      : `<div class="empty">Nothing you can take right now. New donations appear here automatically.</div>`);
+    const h = [];
+    if (hidden.tag) h.push(`${hidden.tag} need storage you don't have`);
+    if (hidden.cap) h.push(`${hidden.cap} too big for your room left`);
+    if (hidden.time) h.push(`${hidden.time} close before you could get there`);
+    if (hidden.passed) h.push(`${hidden.passed} you canceled earlier`);
+    if (hidden.far) h.push(`${hidden.far} outside your ${k.radius}-mile radius`);
+    foot = h.length ? `Not shown: ${h.join(", ")}.` : "";
+  } else if (ui.ktab === "pickups"){
+    html = pickups.length ? pickups.map(b => { const d = donor(b.donorId); return `<div class="row ${urgent(b) ? "urgent" : ""}"><div class="row-main">
+      <div class="row-title">${esc(b.desc)}</div>${donorLine(d, true)}${contactLine("donor", d.id)}<div class="row-meta">${fmtMi(milesBetween(d, k))} away · about ${tripMin(milesBetween(d, k))} min · ${b.servings} servings · ${stor(b.tag)}</div><div class="row-meta">${packChip(b)}</div>
+      ${b.pack === "BULK" ? `<div class="callout soft">In bulk containers: bring carriers or insulated bags to keep it ${TAGS[b.tag].keep}.${b.returnDish ? ` You agreed to return ${whatBack(b)} ${RETURN_OPTS[b.returnHours] || "within 1 day"} of pickup.` : ""}</div>` : ""}
+      ${b.locked ? `<div class="callout">${b.selfPinUsed ? "The donor's PIN entry locked again. Support has been alerted and will call you both." : `The donor's PIN entry locked after 3 wrong tries. Get a new PIN and read it to them. <button class="btn sm primary" data-act="self-newpin" data-id="${b.id}" style="margin-left:6px">Get a new PIN</button>`}</div>` : ""}
+      <div class="pinbox"><div><div class="label">Pickup PIN</div><div class="pin">${b.pin}</div></div><div class="small" style="flex:1;min-width:180px">Show this to the donor. They type the PIN to release the food.${b.attempts ? ` <b>${plural(b.attempts,"wrong try","wrong tries")} so far.</b>` : ""}</div></div>
+      <div class="btn-row" style="margin-top:10px"><button class="link danger" data-act="open-cancel" data-id="${b.id}">Cancel pickup</button></div></div>
+      <div class="row-side"><span class="label">Pick up within</span>${timer(b.pickupDeadline)}</div></div>`; }).join("")
+      : `<div class="empty">No pickups yet. Claim food on the first tab to get a PIN.</div>`;
+  } else if (ui.ktab === "community"){
+    const served = S.walkins.filter(w => w.kitchenId === k.id).reduce((n,w) => n + w.qty, 0);
+    html = `<div class="sortbar" style="justify-content:space-between"><span>Someone came in without a reservation? ${served ? `<b style="color:var(--ink)">${served} walk-in ${served === 1 ? "meal" : "meals"} served today.</b>` : ""}</span><button class="btn primary sm" data-act="open-walkin" ${stock.some(b => servingsLeft(b) > 0) ? "" : "disabled"}>Serve walk-in</button></div>`
+      + (comm.length ? comm.map(h => `<div class="row"><div class="row-main"><div class="row-title">${esc(h.name)} · ${plural(h.qty,"serving")}</div>
+      <div class="row-meta">${esc(batch(h.batchId).desc)} · pickup ${holdWindow(h)} · <b style="color:var(--ink)">${HOW_LABEL[h.how || "togo"]}</b>${h.how === "togo" && serveOf(batch(h.batchId)) === "byo" ? " (bringing a container)" : ""}</div><div class="contact">${telLink(h.phone)}</div>
+      ${(h.readyAt || 0) <= simNow && h.expiresAt - simNow <= URGENT_MIN*MIN ? `<div class="callout">${h.phone ? `Their hold ends at ${fmtShort(h.expiresAt)}. Give them a call to check they're still coming.` : `Their hold ends at ${fmtShort(h.expiresAt)}. They didn't leave a phone number.`}</div>` : ""}</div>
+      <div class="row-side">${h.readyAt > simNow ? `<span class="label">Coming at</span><b>${fmtShort(h.readyAt)}</b>` : `<span class="label">Held for</span>${timer(h.expiresAt)}`}<button class="btn blue sm" data-act="open-hold" data-id="${h.id}">Confirm pickup</button></div></div>`).join("")
+      : `<div class="empty">Nobody has a reservation waiting right now.</div>`);
+    foot = "For reservations, ask for the person's 4-digit code, then confirm. For walk-ins, just record how many meals you handed out. Reserved servings are never used for walk-ins.";
+  } else {
+    html = stock.length ? stock.map(b => { const held = S.holds.filter(h => h.batchId === b.id && h.status === "HELD").reduce((n,h)=>n+h.qty,0), got = S.holds.filter(h => h.batchId === b.id && h.status === "COLLECTED").reduce((n,h)=>n+h.qty,0);
+      const opts = b.pack === "BULK" ? ["dinein","byo","both","boxes"] : ["packed","dinein"], late = isOverdue(b);
+      const serveCtl = `<div class="serve-set"><span class="small muted">Neighbors get it:</span>${opts.map(v => `<button class="chip" data-act="set-serve" data-id="${b.id}" data-v="${v}" aria-pressed="${serveOf(b) === v}">${SERVE[v].label}</button>`).join("")}</div>`;
+      const ret = needsReturn(b) ? `<div class="callout ${late ? "" : "soft"} ret-row"><span>${late ? "<b>Overdue:</b> return" : "Return"} ${whatBack(b)} to ${esc(donor(b.donorId).name)} ${late ? "(was due" : "by"} ${fmtDay(returnDue(b))}${late ? ")" : ""}.</span>${b.returnSentAt ? `<span class="small muted">Dropped off ${fmtDay(b.returnSentAt)}. Waiting for ${esc(donor(b.donorId).name)} to confirm.</span>` : `<button class="btn sm" data-act="ret-sent" data-id="${b.id}">We returned them</button>`}</div>`
+        : b.returnDish && b.returnedAt ? `<p class="small muted" style="margin-top:6px">Containers returned ${fmtDay(b.returnedAt)}.</p>` : "";
+      const portion = b.pack === "BULK" && b.allergens.length ? `<p class="small muted" style="margin-top:6px">When portioning, keep the allergen list with each serving: ${esc(contains(b).toLowerCase())}.</p>` : "";
+      return `<div class="row"><div class="row-main"><div class="row-title">${esc(b.desc)}</div>${donorLine(donor(b.donorId))}<div class="row-meta">Received at ${fmtShort(b.confirmedAt)} · ${stor(b.tag)}</div><div class="row-meta">${packChip(b)}</div>${serveCtl}${portion}${ret}</div>
+      <div class="row-side"><b>${servingsLeft(b)} of ${b.servings} left</b><span class="label">${held} on hold · ${got} reserved & picked up · ${walkedIn(b)} walk-in</span><button class="btn sm" data-act="open-walkin" data-id="${b.id}" ${servingsLeft(b) ? "" : "disabled"}>Serve walk-in</button></div></div>`; }).join("")
+      : `<div class="empty">No food received yet today.</div>`;
+  }
+  $("#kitchenBody").innerHTML = html;
+  $("#kitchenFoot").textContent = foot; $("#kitchenFoot").hidden = !foot;
+}
+
+function renderCommunity(){
+  $("#commTitle").textContent = `Hi ${me().name.split(" ")[0]}, here's what's free today`;
+  const mine = S.holds.filter(h => h.userId === me().id && (h.status === "HELD" || simNow - (h.collectedAt || h.expiresAt) < 60*MIN)).sort((a,b) => a.expiresAt - b.expiresAt);
+  const ctab = ui.ctab || "near";
+  document.querySelectorAll('[data-act="ctab"]').forEach(t => t.setAttribute("aria-selected", String(t.dataset.v === ctab)));
+  $("#n-cmine").textContent = mine.filter(h => h.status === "HELD").length || "";
+  $("#myHoldsCard").hidden = ctab !== "mine"; $("#commRadius").hidden = ctab !== "near"; $("#commGrid").hidden = ctab !== "near";
+  $("#myHolds").innerHTML = mine.length ? "" : `<div class="empty">No reservations yet. Pick a meal under “Meals near you” and press Reserve.</div>`;
+  if (mine.length) $("#myHolds").innerHTML = mine.map(h => { const b = batch(h.batchId), k = kitchen(h.kitchenId);
+    return `<div class="row"><div class="row-main code-card">${h.status === "HELD" ? `<span class="code">${h.code}</span>` : ""}
+      <div style="min-width:0"><div class="row-title">${plural(h.qty,"serving")} of ${esc(b.desc)} ${h.status !== "HELD" ? `<span class="badge b-${h.status}">${HOLD_LABEL[h.status]}</span>` : ""}</div>
+      <div class="row-meta">${esc(k.name)}, ${mapLink(k.addr)}</div><div class="row-meta"><b style="color:var(--ink)">${HOW_LABEL[h.how || "togo"]}</b>${h.how === "togo" && serveOf(b) === "byo" ? " · bring a container with a lid" : h.how === "dinein" ? " · eat during serving hours" : ""}</div>${contactLine("kitchen", k.id, "Running late? Call:")}</div></div>
+      <div class="row-side">${h.status === "HELD" ? `<span class="label">Pick up ${holdWindow(h)}</span>${h.readyAt > simNow ? "" : timer(h.expiresAt)}<button class="link danger" data-act="cancel-hold" data-id="${h.id}">Cancel</button>` : ""}</div></div>`; }).join("");
+  const u = me(), here = {x: u.x ?? 6, y: u.y ?? 6}, radius = u.radius || 3;
+  const byDist = S.kitchens.map(k => ({k, mi: milesBetween(here, k)})).sort((a,b) => a.mi - b.mi);
+  const near = byDist.filter(x => x.mi <= radius), far = byDist.filter(x => x.mi > radius);
+  $("#n-cnear").textContent = near.reduce((n, {k}) => n + S.batches.filter(b => b.status === "HANDOFF_CONFIRMED" && b.kitchenId === k.id && servingsLeft(b) > 0).length, 0) || "";
+  $("#commRadius").innerHTML = `<span>Show kitchens within</span>${[1,3,5,10].map(v => `<button class="chip" data-act="comm-radius" data-v="${v}" aria-pressed="${radius === v}">${v} mi</button>`).join("")}
+    <span class="small">of ${esc(u.start || "the middle of town")} · <button class="link" data-act="open-profile">change</button></span>`;
+  const card = ({k, mi}) => {
+    const meals = S.batches.filter(b => b.status === "HANDOFF_CONFIRMED" && b.kitchenId === k.id).sort((a,b) => b.confirmedAt - a.confirmedAt);
+    return `<article class="card"><div class="card-head" style="display:block"><div class="kname"><span class="kdot" style="background:${k.color}"></span><h2>${esc(k.name)}</h2><span class="badge b-AVAILABLE" style="margin-left:auto">${fmtMi(mi)}</span></div>
+      <p class="small muted" style="margin-top:4px">${mapLink(k.addr)} · ${esc(k.hours)}</p>${contactLine("kitchen", k.id)}</div>
+      <div class="rows">${meals.length ? meals.map(b => { const left = servingsLeft(b); return `<div class="row"><div class="row-main"><div class="row-title">${esc(b.desc)}</div><div class="row-meta">${esc(contains(b))}</div><span class="serve-badge">${SERVE[serveOf(b)].label}</span></div>
+        <div class="row-side"><span class="label">${left ? left + " left" : "All reserved"}</span><button class="btn sm ${left ? "blue" : ""}" data-act="open-reserve" data-id="${b.id}" ${left ? "" : "disabled"}>Reserve</button></div></div>`; }).join("")
+        : `<div class="empty">Regular menu today. Nothing extra has arrived yet.</div>`}</div></article>`;
+  };
+  $("#commGrid").innerHTML = (near.length ? near.map(card).join("") : `<div class="card empty" style="grid-column:1/-1">No partner kitchens within ${radius} miles yet. Try a wider distance.</div>`)
+    + (far.length ? `<details class="card" style="grid-column:1/-1"${ui.showFar ? " open" : ""} id="farWrap"><summary>${plural(far.length,"kitchen")} farther than ${radius} miles</summary><div class="comm-grid" style="padding:16px">${far.map(card).join("")}</div></details>` : "");
+}
+
+/* Plain-language story of a donation, used by the staff list and details. */
+function storyOf(b){
+  if (b.status === "AVAILABLE"){ const r = ranked(b); return `Offered to ${plural(r.length,"kitchen")}. First in line: ${r[0] ? esc(r[0].k.name) : "none"}.`; }
+  if (b.status === "UNMATCHED") return `No kitchen fits: ${esc(whyNoMatch(b))}.`;
+  if (b.status === "RESERVED") return `${esc(kitchen(b.kitchenId).name)} is on the way.${b.attempts && !b.locked ? ` ${plural(b.attempts,"wrong PIN")} so far.` : ""}`;
+  if (b.status === "HANDOFF_CONFIRMED") return `Picked up by ${esc(kitchen(b.kitchenId).name)} at ${fmtShort(b.confirmedAt)}.${b.returnDish ? (b.returnedAt ? " Containers returned." : isOverdue(b) ? ` Containers overdue (due ${fmtDay(returnDue(b))}).` : ` Containers due back ${fmtDay(returnDue(b))}.`) : ""}`;
+  if (b.status === "EXPIRED") return "Nobody picked it up before the cutoff.";
+  return esc(b.note || "Canceled.");
+}
+function needsHelp(){
+  const items = [];
+  for (const b of S.batches){
+    if (b.status === "RESERVED" && b.locked && b.selfPinUsed) items.push({b, kind:"locked"});
+    else if (b.status === "UNMATCHED") items.push({b, kind:"nomatch"});
+    else if (b.status === "AVAILABLE" && b.cutoffAt - simNow <= URGENT_MIN*MIN) items.push({b, kind:"expiring"});
+    else if (isOverdue(b)) items.push({b, kind:"return"});
+  }
+  return items;
+}
+const openTickets = () => S.tickets.filter(t => !t.resolved);
+const FILTERS = {
+  active: b => ["AVAILABLE","RESERVED","UNMATCHED"].includes(b.status),
+  waiting: b => b.status === "AVAILABLE" || b.status === "UNMATCHED",
+  way: b => b.status === "RESERVED",
+  done: b => b.status === "HANDOFF_CONFIRMED",
+  failed: b => b.status === "EXPIRED" || b.status === "CANCELED",
+  all: () => true
+};
+function renderStaff(){
+  const help = needsHelp();
+  const n = k => S.batches.filter(FILTERS[k]).length;
+  const meals = S.batches.filter(FILTERS.done).reduce((t,b) => t + b.servings, 0);
+  $("#staffTiles").innerHTML = `
+    <button class="tile t-wait" data-act="filter" data-v="waiting" aria-pressed="${ui.opsFilter === "waiting"}"><b>${n("waiting")}</b><span>Waiting for a kitchen</span></button>
+    <button class="tile t-way" data-act="filter" data-v="way" aria-pressed="${ui.opsFilter === "way"}"><b>${n("way")}</b><span>Kitchen on the way</span></button>
+    <button class="tile t-done" data-act="filter" data-v="done" aria-pressed="${ui.opsFilter === "done"}"><b>${n("done")}</b><span>Picked up · ${meals} meals</span></button>
+    <button class="tile t-help" data-act="scroll-help"><b>${help.length + openTickets().length}</b><span>Need your help</span></button>`;
+  const tix = openTickets().sort((a,b) => (b.urgent - a.urgent) || a.at - b.at);
+  $("#attnCard").hidden = !help.length && !tix.length;
+  $("#attnCount").textContent = help.length + tix.length ? plural(help.length + tix.length, "item") : "";
+  $("#attn").innerHTML = tix.map(t => { const a = S.accounts.find(x => x.id === t.userId);
+    return `<div class="row"><div class="row-main"><div class="row-title">${esc(t.topic)} <span class="badge ${t.urgent ? "b-LOCKED" : "b-HELD"}">${t.urgent ? "Urgent message" : "Support message"}</span></div>
+      <div class="row-meta">From ${esc(t.from)}${a ? " · " + ROLE[a.role].name : ""} · ${fmtShort(t.at)}</div><p class="row-note">“${esc(t.msg)}”</p>
+      <div class="contact">${telLink(t.phone)}${t.email ? `<span class="muted">·</span>${mailLink(t.email)}` : ""}</div></div>
+      <div class="row-side"><button class="btn primary sm" data-act="resolve-ticket" data-id="${t.id}">Mark resolved</button></div></div>`; }).join("") + help.map(({b, kind}) => {
+    const head = `<div class="row-title">${esc(b.desc)} ${kind === "locked" ? `<span class="badge b-LOCKED">PIN locked</span>` : kind === "nomatch" ? badge("UNMATCHED") : kind === "return" ? `<span class="badge b-LOCKED">Containers overdue</span>` : `<span class="badge b-CANCELED">Expiring soon</span>`}</div>${donorLine(donor(b.donorId))}`;
+    let note, side;
+    if (kind === "locked"){
+      note = `The PIN locked a second time, after the kitchen already got a new one, while ${esc(kitchen(b.kitchenId).name)} was picking up. Call both to confirm they're together, then let the donor try again or send the kitchen a new PIN.</p>${contactLine("donor", b.donorId, "Donor:")}${contactLine("kitchen", b.kitchenId, "Kitchen:")}<p class="row-note" hidden>`;
+      side = `<span class="label">Pickup window</span>${timer(b.pickupDeadline)}<div class="btn-row" style="justify-content:flex-end"><button class="btn sm" data-act="ops-newpin" data-id="${b.id}">Send new PIN</button><button class="btn primary sm" data-act="ops-unlock" data-id="${b.id}">Reset PIN tries</button></div>`;
+    } else if (kind === "return"){
+      note = `${esc(kitchen(b.kitchenId).name)} hasn't returned ${whatBack(b)}. They were due ${fmtDay(returnDue(b))}. Call the kitchen to set a drop-off time. Until they're back, this kitchen can't claim food that needs containers returned.</p>${contactLine("kitchen", b.kitchenId, "Kitchen:")}${contactLine("donor", b.donorId, "Donor:")}<p class="row-note" hidden>`;
+      side = `<span class="label">Was due</span><b>${fmtDay(returnDue(b))}</b><button class="btn primary sm" data-act="ret-done" data-id="${b.id}">Mark returned</button>`;
+    } else if (kind === "nomatch"){
+      note = `No kitchen fits: ${esc(whyNoMatch(b))}. You could ask the donor to split it into smaller batches, or call a partner directly.`;
+      side = `<span class="label">Cutoff in</span>${timer(b.cutoffAt)}<button class="btn sm" data-act="inspect" data-id="${b.id}">See details</button>`;
+    } else {
+      note = `Still unclaimed with little time left. Call the first kitchen in line: ${esc(ranked(b)[0]?.k.name || "none")}.`;
+      side = `<span class="label">Cutoff in</span>${timer(b.cutoffAt)}<button class="btn sm" data-act="inspect" data-id="${b.id}">See details</button>`;
+    }
+    return `<div class="row"><div class="row-main">${head}<p class="row-note">${note}</p></div><div class="row-side">${side}</div></div>`;
+  }).join("");
+
+  document.querySelectorAll('[data-act="otab"]').forEach(t => t.setAttribute("aria-selected", String(t.dataset.v === ui.otab)));
+  let html = "";
+  if (ui.otab === "donations"){
+    const labels = [["active","Active"],["done","Picked up"],["failed","Didn't happen"],["all","All"]];
+    const helpIds = new Set(help.map(x => x.b.id));
+    const rows = S.batches.filter(FILTERS[ui.opsFilter] || FILTERS.active).filter(b => ui.opsFilter !== "active" || !helpIds.has(b.id)).sort((a,b) => (deadlineOf(a) || 0) - (deadlineOf(b) || 0));
+    html = `<div class="sortbar">Show ${labels.map(([k,l]) => `<button class="chip" data-act="filter" data-v="${k}" aria-pressed="${ui.opsFilter === k || (k === "active" && ["waiting","way"].includes(ui.opsFilter) && false)}">${l}</button>`).join("")}
+      ${ui.opsFilter === "active" && help.length ? `<span class="small">· not counting the ${plural(help.length,"item")} above</span>` : ""}${["waiting","way"].includes(ui.opsFilter) ? `<span class="small">· ${ui.opsFilter === "waiting" ? "Waiting for a kitchen" : "Kitchen on the way"}</span>` : ""}</div>
+      <div class="rows">${rows.map(b => {
+        const live = ["AVAILABLE","UNMATCHED","RESERVED"].includes(b.status);
+        return `<div class="row ${urgent(b) ? "urgent" : ""}"><div class="row-main"><div class="row-title">${esc(b.desc)} ${b.locked ? `<span class="badge b-LOCKED">PIN locked</span>` : badge(b.status)}</div>
+          ${donorLine(donor(b.donorId))}<div class="row-meta">${b.servings} servings · ${stor(b.tag)}</div><p class="row-note">${storyOf(b)}</p></div>
+          <div class="row-side">${live ? `<span class="label">${b.status === "RESERVED" ? "Pickup within" : "Cutoff in"}</span>${timer(deadlineOf(b))}` : ""}<button class="btn sm" data-act="inspect" data-id="${b.id}">Details</button></div></div>`;
+      }).join("") || `<div class="empty">Nothing here right now.</div>`}</div>`;
+  } else if (ui.otab === "holds"){
+    const rows = [...S.holds].sort((a,b) => (a.status !== "HELD") - (b.status !== "HELD") || a.expiresAt - b.expiresAt);
+    html = `<div class="rows">${rows.map(h => `<div class="row"><div class="row-main"><div class="row-title">${esc(h.name)} · ${plural(h.qty,"serving")} <span class="badge b-${h.status}">${HOLD_LABEL[h.status]}</span></div>
+      <div class="row-meta">${esc(batch(h.batchId).desc)} at ${esc(kitchen(h.kitchenId).name)}</div><div class="contact">${telLink(h.phone)}</div></div>
+      <div class="row-side">${h.status === "HELD" ? `<span class="label">${h.readyAt > simNow ? "Coming at " + fmtShort(h.readyAt) : "Held for"}</span>${timer(h.expiresAt)}` : `<span class="label">${h.status === "COLLECTED" ? "at " + fmtShort(h.collectedAt) : ""}</span>`}</div></div>`).join("")}${[...S.walkins].reverse().map(w => `<div class="row"><div class="row-main"><div class="row-title">Walk-in · ${plural(w.qty,"serving")} <span class="badge b-COLLECTED">Served</span></div>
+      <div class="row-meta">${esc(batch(w.batchId).desc)} at ${esc(kitchen(w.kitchenId).name)} · no reservation</div></div><div class="row-side"><span class="label">at ${fmtShort(w.at)}</span></div></div>`).join("")}${!rows.length && !S.walkins.length ? `<div class="empty">No community meals yet.</div>` : ""}</div>`;
+  } else {
+    html = `<div class="log">${S.log.slice(-300).reverse().map(e => `<div class="log-row"><span class="small muted">${fmtShort(e.t)}</span>
+      <span>${e.ref && batch(e.ref) ? `<b>${esc(batch(e.ref).desc)}</b> · ` : ""}${esc(friendlyLog(e.msg))} <span class="muted small">· ${esc(e.actor)}</span></span></div>`).join("")}</div>`;
+  }
+  $("#opsBody").innerHTML = html;
+}
+function deadlineOf(b){ return b.status === "RESERVED" ? b.pickupDeadline : (b.status === "AVAILABLE" || b.status === "UNMATCHED") ? b.cutoffAt : b.updatedAt; }
+function friendlyLog(m){
+  return m.replace(/NEW → AVAILABLE/g,"Posted").replace(/NEW → UNMATCHED/g,"Posted, no kitchen fit").replace(/AVAILABLE → RESERVED/g,"Claimed")
+    .replace(/RESERVED → HANDOFF_CONFIRMED/g,"Picked up").replace(/[A-Z_]+ → EXPIRED/g,"Expired").replace(/[A-Z_]+ → CANCELED/g,"Canceled")
+    .replace(/[A-Z_]+ → UNMATCHED/g,"No kitchen fits").replace(/[A-Z_]+ → AVAILABLE/g,"Back on offer").replace(/^(\w+) · \1\b/i,"$1");
+}
+function renderDock(){
+  $("#dockBtn").setAttribute("aria-expanded", String(ui.dock));
+  $("#dock").hidden = !ui.dock;
+  if (!ui.dock) return;
+  const opt = role => S.accounts.filter(a => a.role === role).map(a => `<option value="${a.id}">${esc(role === "donor" ? donor(a.orgId).name : role === "kitchen" ? kitchen(a.orgId).name : a.name)}</option>`).join("");
+  $("#dock").innerHTML = `<h3>Demo controls</h3>
+    <p class="small muted">For presenting and testing. Not part of the real app.</p>
+    <div class="grp"><span>Jump into an account</span>
+      <div class="line"><select class="input" id="dk-donor" aria-label="Donor account">${opt("donor")}</select><button class="btn sm" data-act="dock-login" data-sel="dk-donor">Donor</button></div>
+      <div class="line"><select class="input" id="dk-kitchen" aria-label="Kitchen account">${opt("kitchen")}</select><button class="btn sm" data-act="dock-login" data-sel="dk-kitchen">Kitchen</button></div>
+      <div class="line"><select class="input" id="dk-community" aria-label="Community account">${opt("community")}</select><button class="btn sm" data-act="dock-login" data-sel="dk-community">Community</button></div>
+      <div class="line"><select class="input" id="dk-staff" aria-label="Staff account">${opt("staff")}</select><button class="btn sm" data-act="dock-login" data-sel="dk-staff">Staff</button></div></div>
+    <div class="grp"><span>Clock</span><div class="btn-row speedBtns" style="gap:6px"></div>
+      <div class="btn-row" style="gap:6px"><button class="btn sm" data-act="jump" data-min="5">+5 min</button><button class="btn sm" data-act="jump" data-min="30">+30 min</button><button class="btn sm" data-act="jump" data-min="120">+2 h</button></div></div>
+    <div class="grp"><span>Cause a problem</span><div class="btn-row" style="gap:6px">
+      <button class="btn sm" data-act="lockdemo">3 wrong PINs</button><button class="btn sm" data-act="lockdemo2">PIN locks twice</button><button class="btn sm" data-act="test-miss">Kitchen misses pickup</button>
+      <button class="btn sm" data-act="test-expire">Donation expires</button><button class="btn sm" data-act="overflow">Batch too big</button><button class="btn sm" data-act="test-return">Containers overdue</button></div></div>
+    <button class="btn sm" data-act="reset">Reset all demo data</button>`;
+}
+
+function render(){
+  renderShell();
+  if (ui.screen === "home") renderHome();
+  if (ui.screen === "auth") renderAuth();
+  if (ui.screen === "app"){
+    const r = me().role;
+    if (r === "donor") renderDonor(); else if (r === "kitchen") renderKitchen(); else if (r === "community") renderCommunity(); else renderStaff();
+  }
+  renderDock(); updateBell();
+  document.querySelectorAll(".speedBtns").forEach(el => el.innerHTML = [["Pause",0],["1×",1],["10×",10],["60×",60]].map(([l,v]) => `<button class="chip" data-act="speed" data-v="${v}" aria-pressed="${speed === v}">${l}</button>`).join(""));
+  updateTimers();
+}
+function renderLive(){ // refresh data views without touching forms
+  if (ui.screen === "app") { const r = me().role; if (r === "donor") renderDonor(); else if (r === "kitchen") renderKitchen(); else if (r === "community") renderCommunity(); else renderStaff(); }
+  if (ui.screen === "home") renderHome();
+  updateBell();
+  updateTimers();
+}
+function updateTimers(){
+  $("#clockTime").textContent = fmtShort(simNow) + (speed === 1 ? "" : speed ? ` · ${speed}×` : " · paused");
+  document.querySelectorAll("[data-until]").forEach(el => {
+    const left = +el.dataset.until - simNow;
+    el.textContent = fmtLeft(left);
+    el.classList.toggle("urgent", left <= URGENT_MIN*MIN);
+    el.classList.toggle("warn", left > URGENT_MIN*MIN && left <= ALERT_MIN*MIN);
+  });
+}
+function toast(msg){ const t = document.createElement("div"); t.className = "toast"; t.textContent = msg; $("#toasts").appendChild(t); setTimeout(() => t.remove(), 4200); }
+
+/* ---------- Modals ---------- */
+/* NVIDIA help assistant: the question goes to our Cloud Run server, which asks the model
+   to answer using only WeAllEat's help articles. */
+async function askHelp(){
+  const q = $("#ask-q")?.value.trim(), out = $("#ask-a"), btn = $("#ask-btn");
+  if (!q || !out) return;
+  out.hidden = false; out.textContent = "Thinking…"; btn.disabled = true;
+  try {
+    const r = await api("/api/help", {method:"POST", body: JSON.stringify({question: q, role: me()?.role || "guest"}), timeout: 25000});
+    out.textContent = r.ok ? r.body.answer : (r.body.error || "Something went wrong. Try the common issues below.");
+  } catch (err){ out.textContent = "The assistant didn't respond. Try the common issues below."; }
+  btn.disabled = false;
+}
+document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.id === "ask-q"){ e.preventDefault(); askHelp(); } });
+
+function openModal(kind, id){ ui.modal = {kind, id}; drawModal(); $("#modal").hidden = false; setTimeout(() => { const f = $("#modalForm input:not([type=checkbox]):not([type=radio]), #modalForm select"); if (f) f.focus(); }, 30); }
+function closeModal(){ ui.modal = null; $("#modal").hidden = true; }
+const actions = (label, extra="") => `<div class="btn-row" style="justify-content:flex-end">${extra}<button class="btn" type="button" data-act="close">${label ? "Cancel" : "Done"}</button>${label ? `<button class="btn primary" type="submit">${label}</button>` : ""}</div>`;
+function drawModal(done){
+  const m = ui.modal, f = $("#modalForm");
+  if (m.kind === "post"){
+    f.innerHTML = `<h2>Post extra food</h2>
+      <div class="field"><label for="p-desc">What is it?</label><input class="input" id="p-desc" maxlength="80" placeholder="e.g. Vegetable lasagna"></div>
+      <div class="two"><div class="field"><label for="p-serv">Servings</label><input class="input" id="p-serv" type="number" min="1" max="1000" placeholder="40"></div>
+        <div class="field"><label for="p-win">Must be picked up within</label><select class="input" id="p-win" style="width:100%"><option value="30">30 min</option><option value="60">1 hour</option><option value="90">1.5 hours</option><option value="120" selected>2 hours</option></select></div></div>
+      <fieldset class="field"><legend>How is it stored?</legend><div class="opts">${Object.entries(TAGS).map(([k,v]) => `<label><input type="radio" name="p-tag" value="${k}"> ${v.label}</label>`).join("")}</div></fieldset>
+      <fieldset class="field"><legend>How is it packed?</legend><div class="opts" style="flex-direction:column;align-items:flex-start">
+        <label><input type="radio" name="p-pack" value="PACKED"> Ready to hand out (each serving in its own container)</label>
+        <label><input type="radio" name="p-pack" value="BULK"> In bulk (trays, pans or pots the kitchen portions out)</label></div>
+        <div class="sub-opts" id="p-bulk" hidden>
+          <div class="opts" style="flex-direction:column;align-items:flex-start"><span class="small" style="font-weight:600">Do you need the containers back?</span>
+            <label><input type="radio" name="p-ret" value="0" checked> No, they're disposable or the kitchen can keep them</label>
+            <label><input type="radio" name="p-ret" value="1"> Yes, please return them</label></div>
+          <div class="two" id="p-ret-more" hidden><div class="field"><label for="p-ret-hrs">Return after pickup</label><select class="input" id="p-ret-hrs" style="width:100%">${Object.entries(RETURN_OPTS).map(([v,l]) => `<option value="${v}">${l[0].toUpperCase() + l.slice(1)}</option>`).join("")}</select></div>
+            <div class="field"><label for="p-ret-what">What to return</label><input class="input" id="p-ret-what" maxlength="60" placeholder="e.g. 3 full-size hotel pans"></div></div>
+          <p class="small muted" id="p-ret-tip" hidden>Kitchens agree to the return when they claim it, and support is alerted if it's late. Label your containers with your business name.</p>
+        </div></fieldset>
+      <fieldset class="field"><legend>Allergens</legend><div class="opts"><label><input type="checkbox" id="p-none"> None</label>${ALLERGENS.map(a => `<label><input type="checkbox" data-al value="${a}"> ${a}</label>`).join("")}<label><input type="checkbox" id="p-other"> Other:</label><input class="input" id="p-other-text" maxlength="60" placeholder="e.g. mustard, celery" aria-label="Other allergens" style="flex:1;min-width:160px;width:auto;padding:6px 12px;font-size:14px;border-radius:999px"></div></fieldset>
+      <label class="small" style="display:flex;gap:8px"><input type="checkbox" id="p-safe"> It has been kept at that temperature and handled safely.</label>
+      <p class="err" id="mErr" hidden></p>${actions("Post")}`;
+  } else if (m.kind === "pin"){
+    const b = batch(m.id), k = b.kitchenId ? kitchen(b.kitchenId) : null;
+    f.innerHTML = done ? `<h2>Handoff confirmed 🎉</h2><div class="success"><b>${esc(b.desc)}</b> went to ${esc(kitchen(b.kitchenId).name)} at ${fmtShort(b.confirmedAt)}.<br>Receipt EE-${b.id.slice(2)}: ${b.servings} meals, about ${money(b.servings*FMV_PER_MEAL)} write-off, ${(b.servings*CO2_PER_MEAL).toFixed(1)} kg CO₂ saved.</div>${actions("")}`
+      : `<h2>Enter the kitchen's PIN</h2><p class="small muted">${esc(b.desc)} · ${b.servings} servings${k ? " · " + esc(k.name) : ""}</p>
+      <input id="m-code" class="code-input" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="••••" aria-label="4-digit PIN">
+      <p class="small muted" id="mTries">${MAX_PIN_ATTEMPTS - b.attempts} of ${MAX_PIN_ATTEMPTS} tries left</p>
+      <p class="err" id="mErr" hidden></p>${actions("Confirm handoff", `<button class="link" type="button" data-act="fill-code" style="margin-right:auto">Demo: fill in the PIN</button>`)}`;
+  } else if (m.kind === "notes"){
+    const u = me(), list = myNotes().slice(0, 40), cats = NOTE_CATS[u.role] || [];
+    f.innerHTML = `<h2>Notifications</h2>
+      ${list.length ? `<div class="notes">${list.map(n => `<button type="button" class="note ${m.unread.includes(n.id) ? "unread" : ""}" data-act="note-go" data-id="${n.id}"><span class="dot"></span><span><span class="t">${esc(n.text)}</span><span class="when" style="display:block">${fmtShort(n.at)}</span></span></button>`).join("")}</div>`
+        : `<div class="empty">No notifications yet. You'll see updates here as they happen.</div>`}
+      <fieldset class="field"><legend>Notify me about</legend><div class="opts">${cats.map(([c,l]) => `<label><input type="checkbox" data-notecat value="${c}" ${(u.mute || []).includes(c) ? "" : "checked"}> ${l}</label>`).join("")}</div>
+        <span class="help">Notifications show here and pop up while WeAllEat is open. Email and text alerts are planned.</span></fieldset>
+      ${actions("")}`;
+  } else if (m.kind === "claimret"){
+    const b = batch(m.id), d = donor(b.donorId);
+    f.innerHTML = `<h2>Claim ${esc(b.desc)}?</h2><p class="small muted">${b.servings} servings · ${stor(b.tag)} · from ${esc(d.name)}</p>
+      <div class="callout soft" style="font-size:14px;padding:12px 14px">This comes in the donor's own containers: <b>${whatBack(b)}</b>. They need them back <b>${RETURN_OPTS[b.returnHours] || "within 1 day"}</b> of pickup.</div>
+      <p class="small muted">If containers are late, support is alerted and your kitchen can't claim food that needs containers returned until they're back.</p>
+      <label class="small" style="display:flex;gap:8px"><input type="checkbox" id="cr-ok"> We'll wash and return the containers on time.</label>
+      <p class="err" id="mErr" hidden></p>${actions("Claim")}`;
+  } else if (m.kind === "reserve"){
+    const b = batch(m.id), k = kitchen(b.kitchenId), max = Math.min(HOLD_MAX, servingsLeft(b));
+    f.innerHTML = done ? `<h2>You're all set</h2><div class="success">Show code <span class="code" style="font-size:20px">${hold(done).code}</span> at <b>${esc(k.name)}</b>, ${mapLink(k.addr)}.<br><br>Pick up ${plural(hold(done).qty,"serving")} between <b>${holdWindow(hold(done))}</b>. We hold them until then. After that they go back to others.${hold(done).how === "togo" && serveOf(b) === "byo" ? "<br><br><b>Remember to bring a container with a lid.</b>" : hold(done).how === "dinein" ? "<br><br>You'll eat at the kitchen. They'll have plates and utensils." : ""}</div>${actions("")}`
+      : `<h2>Reserve ${esc(b.desc)}</h2><p class="small muted">${esc(k.name)} · ${mapLink(k.addr)}<br>${esc(contains(b))}</p>
+      <div class="callout info" style="font-size:14px;padding:10px 14px"><b>${SERVE[serveOf(b)].label}.</b> ${SERVE[serveOf(b)].note}${serveOf(b) === "dinein" ? ` Serving hours: ${esc(k.hours)}.` : ""}</div>
+      ${SERVE[serveOf(b)].how.length > 1 ? `<fieldset class="field"><legend>How will you have it?</legend><div class="opts"><label><input type="radio" name="r-how" value="dinein" checked> Eat at the kitchen</label><label><input type="radio" name="r-how" value="togo"> Take it home (I'll bring a container)</label></div></fieldset>` : ""}
+      ${SERVE[serveOf(b)].how.includes("togo") ? `<p class="small muted" id="r-togo-tip" ${SERVE[serveOf(b)].how[0] === "togo" ? "" : "hidden"}>Taking it home? Eat it soon, or refrigerate it within 2 hours.</p>` : ""}
+      <div class="field"><label for="r-qty">How many servings?</label><select class="input" id="r-qty">${Array.from({length:max},(_,i) => `<option>${i+1}</option>`).join("")}</select></div>
+      <div class="field"><label for="r-when">When will you pick up?</label><select class="input" id="r-when">
+        ${[[0,"As soon as I can"],[60,"In about 1 hour"],[120,"In about 2 hours"],[180,"In about 3 hours"]].map(([v,l]) => `<option value="${v}">${l} (${fmtShort(simNow + v*MIN)}–${fmtShort(simNow + (v + HOLD_MIN)*MIN)})</option>`).join("")}</select>
+        <span class="help">Running late from work? Pick a later time and we'll keep your food until then.</span></div>
+      <p class="small muted">You'll get a 4-digit code to show the kitchen. Up to ${HOLD_MAX} servings per reservation.</p>
+      <p class="err" id="mErr" hidden></p>${actions("Reserve")}`;
+  } else if (m.kind === "help"){
+    const u = me(), r = u?.role || "guest";
+    const FAQ = {
+      donor: [              ["Will I get my pans and trays back?", "If you mark “Yes, please return them” when posting, the kitchen agrees to return them before it can claim. You'll see them under “Containers to get back”. Late returns alert support, and that kitchen can't claim more of that kind of food until they're back."],
+              ["The kitchen's PIN won't work", "After 3 wrong tries it locks. Ask the kitchen to tap “Get a new PIN” in their app and read it to you. If it locks again, support is alerted automatically."],
+              ["No kitchen can take my food", "Tap “Offer fewer servings”, or call one of the kitchens listed under the donation. Their numbers are right there."],
+              ["The kitchen is late", "Their phone number is on the donation. If they cancel, the food goes to the next kitchen on its own."]],
+      kitchen: [["How do neighbors get bulk food?", "On the “On hand” tab, choose how neighbors get it: eat here only, bring their own container, either, or you provide containers. Neighbors see this before they reserve."],
+                ["We have a donor's containers", "Wash them, drop them off, and tap “We returned them” on the “On hand” tab. The donor then confirms they got them. If they're late, you can't claim food that needs containers returned until they're back."],
+                ["We can't make a pickup", "Tap “Cancel pickup” and pick a reason. The food goes straight to the next kitchen that can take it."],
+                ["The food isn't safe or isn't as listed", "Don't take it. Tap “Cancel pickup” and choose “The food isn't as listed”. It's pulled and the donor is told."],
+                ["The donor's PIN entry locked", "Tap “Get a new PIN” on the pickup and read it to the donor."],
+                ["A neighbor is late for their meal", "Call the number on their reservation. If their hold runs out, the servings go back on offer automatically."]],
+      community: [["Do I need to bring a container?", "Check the label on the meal. “Packed to go” and “containers provided” mean no. “Bring a container” means bring one with a lid. “Eat here only” means it's served at the kitchen."],
+                  ["I'm running late", "Call the kitchen. Their number is on your reservation."],
+                  ["I can't make it anymore", "Tap “Cancel” on your reservation so someone else can have the food."],
+                  ["I don't have my code", "Tell the kitchen your name. They can see your reservation and your phone number."]],
+      staff: [["Who handles what?", "Donors, kitchens and neighbors fix most things themselves. You'll only see items that need a person: second PIN lockouts, food no kitchen can take, food about to expire, and support messages."]],
+      guest: [["I can't sign in", "Check the email you signed up with, or send us a message below."],
+              ["I'm hungry and don't have a phone or account", "Walk in to any partner kitchen during serving hours. You don't need WeAllEat to get a meal."]]
+    }[r];
+    f.innerHTML = `<h2>Get help</h2>
+      <div class="emergency"><b>Emergency?</b> If someone is hurt or in danger, call <b>911</b>. If someone got sick from food, call 911 or Poison Control at <b style="white-space:nowrap">1-800-222-1222</b>.</div>
+      <div><h3 style="margin-bottom:4px">WeAllEat support</h3><div class="contact">${telLink(FAKE_PHONE)}<span class="muted">·</span>${mailLink("support@wealleat.test")}</div><p class="small muted">Every day, 7 AM–10 PM. Placeholder contact details for this prototype.</p></div>
+      ${CLOUD.assistant ? `<div class="ask"><h3 style="margin-bottom:2px">Ask a question</h3><p class="small muted" style="margin-bottom:8px">Answers come from our help articles, powered by NVIDIA AI. It can't judge food safety or change pickups. <b>Please don't include names, phone numbers or addresses</b>; questions are sent to NVIDIA to answer.</p>
+        <div class="ask-row"><input class="input" id="ask-q" maxlength="500" placeholder="e.g. I missed my pickup, what now?" aria-label="Your question"><button type="button" class="btn primary" data-act="ask-help" id="ask-btn">Ask</button></div>
+        <div class="ask-a" id="ask-a" hidden aria-live="polite"></div></div>` : ""}
+      <div><h3 style="margin-bottom:2px">Common issues</h3><p class="small muted" style="margin-bottom:8px">Quick answers that might save you a call.</p><div class="faq">${FAQ.map(([q,a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join("")}</div></div>
+      ${r === "staff" ? "" : `<div class="form" style="gap:10px"><h3>Message support</h3>
+        <div class="field"><label for="t-topic">What's it about?</label><select class="input" id="t-topic" style="width:100%"><option>A pickup or handoff</option><option>Food safety concern</option><option>My account</option><option>Something else</option></select></div>
+        ${u ? "" : `<div class="two"><div class="field"><label for="t-name">Your name</label><input class="input" id="t-name"></div><div class="field"><label for="t-contact">Phone or email</label><input class="input" id="t-contact"></div></div>`}
+        <div class="field"><label for="t-msg">What happened?</label><textarea class="input" id="t-msg" maxlength="600"></textarea></div>
+        <label class="small" style="display:flex;gap:8px"><input type="checkbox" id="t-urgent"> This is urgent (food is waiting or someone is stuck)</label></div>`}
+      <p class="err" id="mErr" hidden></p>${actions(r === "staff" ? "" : "Send message")}`;
+  } else if (m.kind === "cancel"){
+    const b = batch(m.id), k = kitchen(b.kitchenId), next = whoGetsItNext(b);
+    f.innerHTML = `<h2>Cancel this pickup?</h2><p class="small muted">${esc(b.desc)} · ${b.servings} servings from ${esc(donor(b.donorId).name)}</p>
+      <fieldset class="field"><legend>Why are you canceling?</legend><div class="opts" style="flex-direction:column;align-items:stretch">
+        <label><input type="radio" name="c-why" value="cant" checked> We can't make it in time</label>
+        <label><input type="radio" name="c-why" value="bad"> The food isn't as listed (wrong temperature, spoiled, wrong amount)</label></div></fieldset>
+      <div class="notice" id="c-what"></div>
+      <p class="err" id="mErr" hidden></p>
+      <div class="btn-row" style="justify-content:flex-end"><button class="btn" type="button" data-act="close">Keep my pickup</button><button class="btn primary" type="submit" style="background:var(--tomato);border-color:var(--tomato)">Cancel pickup</button></div>`;
+    const explain = () => { const bad = document.querySelector('input[name="c-why"]:checked').value === "bad";
+      $("#c-what").innerHTML = bad ? `<b>What happens next:</b> the donation is pulled from WeAllEat and the donor is told what you reported. It won't be offered to anyone else.`
+        : next ? `<b>What happens next:</b> it goes straight to <b>${esc(next.name)}</b>, the next kitchen that can take it. It won't come back to your list, and your ${b.servings} servings of room open back up.`
+        : `<b>What happens next:</b> no other kitchen can take it right now (${esc(nextReason(b))}). A coordinator will be alerted to find it a home. Your ${b.servings} servings of room open back up.`; };
+    f.querySelectorAll('input[name="c-why"]').forEach(r => r.addEventListener("change", explain)); explain();
+  } else if (m.kind === "profile"){
+    const u = me(), r = u.role, d = r === "donor" ? donor(u.orgId) : null, k = r === "kitchen" ? kitchen(u.orgId) : null;
+    const field = (id, label, val, extra="") => `<div class="field"><label for="${id}">${label}</label><input class="input" id="${id}" value="${esc(val)}" ${extra}></div>`;
+    f.innerHTML = `<h2>Your profile</h2><p class="small muted">${ROLE[r].name} account${d ? " · " + esc(d.name) : k ? " · " + esc(k.name) : ""}</p>
+      ${d ? field("pf-org", "Business name", d.name, 'maxlength="60"') + field("pf-addr", "Pickup address", d.addr, 'maxlength="80"') : ""}
+      ${k ? field("pf-org", "Kitchen or shelter name", k.name, 'maxlength="60"') + field("pf-addr", "Address", k.addr, 'maxlength="80"') + field("pf-hours", "Serving hours (shown to neighbors)", k.hours, 'maxlength="90"')
+          + `<fieldset class="field"><legend>Storage you have</legend><div class="opts">${Object.entries(TAGS).map(([t,v]) => `<label><input type="checkbox" data-pftag value="${t}" ${k.tags.includes(t) ? "checked" : ""}> ${v.label}</label>`).join("")}</div></fieldset>
+          <div class="two">${field("pf-cap", "Servings you can take a day", k.max, 'type="number" min="10" max="1000"')}
+          <div class="field"><label for="pf-radius">How far can you travel for pickups?</label><select class="input" id="pf-radius" style="width:100%">${[...new Set([...RADII, k.radius])].sort((x,y) => x - y).map(v => `<option value="${v}" ${v === k.radius ? "selected" : ""}>Up to ${v} miles</option>`).join("")}</select></div></div>
+          <p class="small muted">${committed(k)} servings are already reserved or received today.</p>` : ""}
+      ${r === "community" ? `<div class="two">${field("pf-start", "Where do you usually start from?", u.start || "", 'maxlength="60" placeholder="Neighborhood, cross streets or ZIP"')}
+        <div class="field"><label for="pf-radius">How far will you go for a meal?</label><select class="input" id="pf-radius" style="width:100%">${[...new Set([1,2,3,5,10,u.radius || 3])].sort((x,y) => x - y).map(v => `<option value="${v}" ${v === (u.radius || 3) ? "selected" : ""}>Up to ${v} miles</option>`).join("")}</select></div></div>` : ""}
+      <div class="two">${field("pf-name", r === "community" ? "First name or nickname" : "Your name", u.name, 'maxlength="40"')}${field("pf-email", "Email", u.email, 'type="email"')}</div>
+      ${field("pf-phone", r === "community" ? "Phone (optional, only the kitchen holding your meal sees it)" : "Phone", u.phone || "", 'type="tel" placeholder="(###) ###-####"')}
+      <p class="err" id="mErr" hidden></p>${actions("Save changes")}`;
+  } else if (m.kind === "walkin"){
+    const k = kitchen(myKitchenId());
+    const stock = S.batches.filter(b => b.status === "HANDOFF_CONFIRMED" && b.kitchenId === k.id && servingsLeft(b) > 0);
+    const pick = stock.find(b => b.id === m.id) || stock[0];
+    f.innerHTML = done ? `<h2>Recorded</h2><div class="success">${plural(done.qty,"walk-in meal")} of ${esc(batch(done.batchId).desc)} served. Thank you!</div>${actions("")}`
+      : `<h2>Serve a walk-in</h2><p class="small muted">For someone who came in without a reservation. No name or account needed.</p>
+      <div class="field"><label for="w-batch">Which food?</label><select class="input" id="w-batch" style="width:100%">${stock.map(b => `<option value="${b.id}" ${b === pick ? "selected" : ""}>${esc(b.desc)} (${servingsLeft(b)} left)</option>`).join("")}</select></div>
+      <div class="field"><label for="w-qty">How many servings did you hand out?</label><input class="input" id="w-qty" type="number" min="1" value="1" style="max-width:140px"></div>
+      <p class="small muted">Servings that people reserved are kept aside and can't be given to walk-ins.</p>
+      <p class="err" id="mErr" hidden></p>${actions("Record")}`;
+  } else if (m.kind === "detail"){
+    const b = batch(m.id), d = donor(b.donorId), live = ["AVAILABLE","UNMATCHED"].includes(b.status);
+    const reason = e => !e.tagOk ? `Can't store food kept ${TAGS[b.tag].keep}` : !e.capOk ? `Only ${e.open} servings of room left` : !e.radiusOk ? `${fmtMi(e.mi)} away, outside their ${e.k.radius}-mile radius` : !e.transitOk ? `About ${e.mins} min away, too far to make the cutoff` : "Already passed on this one";
+    let rank = 0;
+    const checks = live ? `<div><h3 style="margin-bottom:8px">Who can take it</h3><div class="checks">${evaluate(b).map(e => `<div class="check-row ${e.eligible ? "ok-row" : ""}"><span>${esc(e.k.name)}</span><span class="why">${e.eligible ? `✓ ${fmtMi(e.mi)} · can take it${++rank === 1 ? " · first in line" : ""}` : reason(e)}</span></div>`).join("")}</div></div>` : "";
+    const tl = S.log.filter(e => e.ref === b.id).map(e => `<div><span class="muted">${fmtShort(e.t)}</span><span>${esc(friendlyLog(e.msg))} <span class="muted">· ${esc(e.actor)}</span></span></div>`).join("");
+    let acts = "";
+    if (b.status === "RESERVED" && b.locked) acts += `<button class="btn sm" type="button" data-act="ops-newpin" data-id="${b.id}">Send new PIN</button><button class="btn primary sm" type="button" data-act="ops-unlock" data-id="${b.id}">Reset PIN tries</button>`;
+    if (b.status === "RESERVED") acts += `<button class="btn sm" type="button" data-act="ops-release" data-id="${b.id}">Release to next kitchen</button>`;
+    if (live) acts += `<button class="btn sm" type="button" data-act="ops-withdraw" data-id="${b.id}">Withdraw donation</button>`;
+    f.innerHTML = `<div><div class="row-title" style="font-size:22px;font-family:var(--f-display)">${esc(b.desc)} ${b.locked ? `<span class="badge b-LOCKED">PIN locked</span>` : badge(b.status)}</div>
+      ${donorLine(d, true)}<p class="small muted" style="margin-top:4px">${b.servings} servings · ${stor(b.tag)} · ${esc(contains(b))}</p></div>
+      <p>${storyOf(b)}${b.status === "RESERVED" ? ` PIN tries used: ${b.attempts} of 3.` : ""}</p>
+      <div><h3 style="margin-bottom:6px">Contacts</h3>${contactLine("donor", b.donorId, d.name + ":")}${b.kitchenId ? contactLine("kitchen", b.kitchenId, kitchen(b.kitchenId).name + ":") : ""}</div>
+      ${checks}
+      <div><h3 style="margin-bottom:8px">What's happened</h3><div class="timeline">${tl || '<span class="muted">Nothing yet.</span>'}</div></div>
+      ${acts ? `<div class="btn-row">${acts}</div>` : ""}${actions("")}`;
+  } else if (m.kind === "hold"){
+    const h = hold(m.id), b = batch(h.batchId);
+    f.innerHTML = done ? `<h2>Pickup confirmed</h2><div class="success">${esc(h.name)} picked up ${plural(h.qty,"serving")} of ${esc(b.desc)}.</div>${actions("")}`
+      : `<h2>Confirm community pickup</h2><p class="small muted">${esc(h.name)} · ${plural(h.qty,"serving")} of ${esc(b.desc)} · ${HOW_LABEL[h.how || "togo"]}</p>
+      <input id="m-code" class="code-input" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="••••" aria-label="Their 4-digit code">
+      <p class="err" id="mErr" hidden></p>${actions("Confirm pickup", `<button class="link" type="button" data-act="fill-code" style="margin-right:auto">Demo: fill in their code</button>`)}`;
+  }
+  const ci = $("#m-code"); if (ci) ci.addEventListener("input", e => { e.target.value = e.target.value.replace(/\D/g,"").slice(0,4); });
+}
+function showErr(msg){ const e = $("#mErr"); e.textContent = msg; e.hidden = false; }
+
+$("#modalForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const m = ui.modal; if (!m) return;
+  if (m.kind === "post"){
+    const desc = $("#p-desc").value.trim(), servings = Number($("#p-serv").value);
+    const tag = (document.querySelector('input[name="p-tag"]:checked') || {}).value;
+    const allergens = [...document.querySelectorAll("[data-al]:checked")].map(c => c.value);
+    const otherOn = $("#p-other").checked, otherText = $("#p-other-text").value.trim();
+    if (otherOn && !otherText) return showErr("Type the other allergen, or untick Other.");
+    if (otherOn) otherText.split(",").map(s => s.trim()).filter(Boolean).forEach(s => allergens.push(s));
+    const pack = (document.querySelector('input[name="p-pack"]:checked') || {}).value;
+    const returnDish = pack === "BULK" && (document.querySelector('input[name="p-ret"]:checked') || {}).value === "1";
+    const err = !desc ? "Add a short name for the food." :
+      !Number.isInteger(servings) || servings < 1 || servings > 1000 ? "Servings must be a whole number from 1 to 1000." :
+      !tag ? "Choose how it's stored. Kitchens are matched on this." :
+      !pack ? "Choose how it's packed, so the kitchen knows what to bring." :
+      !$("#p-none").checked && !allergens.length ? "Pick the allergens, or tick None." :
+      !$("#p-safe").checked ? "Confirm the food was stored and handled safely." : "";
+    if (err) return showErr(err);
+    const b = createBatch({donorId:myDonorId(), desc, servings, tag, allergens, windowMin:Math.min(MAX_WINDOW_MIN, Number($("#p-win").value)),
+      pack, returnDish, returnHours: Number($("#p-ret-hrs").value) || 24, returnWhat: returnDish ? $("#p-ret-what").value.trim() : ""}, donor(myDonorId()).name);
+    closeModal(); render();
+    toast(b.status === "AVAILABLE" ? `Posted. Offered to ${plural(ranked(b).length,"kitchen")}.` : "Posted, but no kitchen can take it yet.");
+  } else if (m.kind === "pin"){
+    const b = batch(m.id), r = await verifyPin(b, $("#m-code").value, donor(b.donorId).name);
+    if (r.ok){ drawModal(true); toast("Handoff confirmed."); }
+    else { showErr(r.msg); $("#mTries").textContent = `${Math.max(0, MAX_PIN_ATTEMPTS - b.attempts)} of ${MAX_PIN_ATTEMPTS} tries left`; $("#m-code").select(); }
+  } else if (m.kind === "help"){
+    const u = me(), msg = $("#t-msg").value.trim();
+    if (!msg) return showErr("Tell us what happened so we can help.");
+    const contact = u ? null : $("#t-contact").value.trim();
+    if (!u && !contact) return showErr("Add a phone number or email so we can reach you.");
+    const t = {id:"T-" + (S.tseq++), topic:$("#t-topic").value, msg, urgent:$("#t-urgent").checked, at:simNow, userId:u?.id || null,
+      from: u ? (u.role === "donor" ? `${u.name}, ${donor(u.orgId).name}` : u.role === "kitchen" ? `${u.name}, ${kitchen(u.orgId).name}` : u.name) : ($("#t-name").value.trim() || "Someone"),
+      phone: u ? u.phone : (normPhone(contact) || ""), email: u ? u.email : (validEmail(contact) ? contact : ""), resolved:false};
+    S.tickets.push(t); log("ALERT", null, `${t.urgent ? "Urgent support" : "Support"} message: ${t.topic}`, t.from);
+    notify({role:"staff"}, "alert", `${t.urgent ? "Urgent support message" : "Support message"} from ${t.from}: ${t.topic}.`);
+    closeModal(); render(); toast(`Sent. Support will reach you${t.phone ? " at " + t.phone : t.email ? " at " + t.email : ""}.`);
+  } else if (m.kind === "cancel"){
+    const b = batch(m.id), k = kitchen(b.kitchenId), bad = document.querySelector('input[name="c-why"]:checked').value === "bad";
+    if (b.status !== "RESERVED") { closeModal(); render(); return; }
+    releaseReservation(b, k.name, bad ? "kitchen said food wasn't as listed" : "kitchen couldn't make the pickup", bad);
+    runJobs(); closeModal(); render();
+    toast(bad ? "Reported. The donation was pulled and the donor was told." : b.status === "AVAILABLE" ? `Canceled. It went to ${ranked(b)[0]?.k.name || "the next kitchen"}.` : "Canceled. No other kitchen fits, so a coordinator was alerted.");
+  } else if (m.kind === "profile"){
+    const u = me(), r = u.role, name = $("#pf-name").value.trim(), email = $("#pf-email").value.trim(), phoneRaw = $("#pf-phone").value.trim(), phone = phoneRaw === FAKE_PHONE ? FAKE_PHONE : phoneRaw ? normPhone(phoneRaw) : "";
+    if (phone === null || (!phone && r !== "community" && r !== "staff")) return showErr(r === "community" ? "Enter a 10-digit phone number, or leave it blank." : "Add a 10-digit phone number so people can reach you quickly.");
+    if (!name) return showErr(r === "community" ? "Add a first name or nickname." : "Add your name.");
+    if (!validEmail(email)) return showErr("Enter a valid email address.");
+    if (S.accounts.some(a => a !== u && a.email.toLowerCase() === email.toLowerCase())) return showErr("Another account already uses that email.");
+    if (r === "donor" || r === "kitchen"){
+      if (!$("#pf-org").value.trim()) return showErr("Add your organization's name.");
+      if (!$("#pf-addr").value.trim()) return showErr("Add an address so people know where to go.");
+    }
+    if (r === "kitchen"){
+      const k = kitchen(u.orgId), tags = [...document.querySelectorAll("[data-pftag]:checked")].map(c => c.value), cap = Number($("#pf-cap").value);
+      if (!tags.length) return showErr("Pick at least one kind of storage you have.");
+      if (!Number.isInteger(cap) || cap < 10 || cap > 1000) return showErr("Servings per day must be a whole number from 10 to 1000.");
+      if (cap < committed(k)) return showErr(`You've already taken ${committed(k)} servings today, so room can't go below that.`);
+      const lost = S.batches.filter(b => b.status === "RESERVED" && b.kitchenId === k.id && !tags.includes(b.tag));
+      if (lost.length) return showErr(`You have a pickup that needs ${TAGS[lost[0].tag].label} storage (${lost[0].desc}). Finish or cancel it first.`);
+      Object.assign(k, {name:$("#pf-org").value.trim(), addr:$("#pf-addr").value.trim(), hours:$("#pf-hours").value.trim() || "Hours not posted yet", tags, max:cap, radius:Number($("#pf-radius").value), ...(k.addr !== $("#pf-addr").value.trim() ? placeFor($("#pf-addr").value.trim()) : {})});
+    }
+    if (r === "donor"){ const dn = donor(u.orgId), addr = $("#pf-addr").value.trim(); Object.assign(dn, {name:$("#pf-org").value.trim(), addr, ...(dn.addr !== addr ? placeFor(addr) : {})}); }
+    u.name = name; u.email = email; u.phone = phone;
+    if (r === "community"){ const st = $("#pf-start").value.trim(); if (st !== (u.start || "")) Object.assign(u, placeFor(st)); u.start = st; u.radius = Number($("#pf-radius").value); }
+    log("SYSTEM", null, `${name} updated their ${ROLE[r].name.toLowerCase()} profile`, name);
+    closeModal(); runJobs(); render(); toast("Profile saved.");
+  } else if (m.kind === "walkin"){
+    const b = batch($("#w-batch").value), qty = Number($("#w-qty").value);
+    if (!Number.isInteger(qty) || qty < 1) return showErr("Enter how many servings, as a whole number.");
+    if (qty > servingsLeft(b)) return showErr(`Only ${servingsLeft(b)} unreserved servings of ${b.desc} are left.`);
+    const w = {id:"W-" + (S.wseq++), batchId:b.id, kitchenId:b.kitchenId, qty, at:simNow};
+    S.walkins.push(w); log("COMMUNITY", b.id, `Served ${plural(qty,"walk-in meal")} (no reservation)`, kitchen(b.kitchenId).name);
+    drawModal(w); render();
+  } else if (m.kind === "claimret"){
+    const b = batch(m.id);
+    if (!$("#cr-ok").checked) return showErr("Tick the box to agree to return the containers.");
+    closeModal(); await claim(b, kitchen(myKitchenId()));
+  } else if (m.kind === "reserve"){
+    const b = batch(m.id), qty = Number($("#r-qty").value);
+    if (!qty || qty > servingsLeft(b)) return showErr("Those servings were just taken. Close and try again.");
+    const how = (document.querySelector('input[name="r-how"]:checked') || {}).value || SERVE[serveOf(b)].how[0];
+    const h = createHold(b, qty, Number($("#r-when").value) || 0, how); drawModal(h.id); render();
+  } else if (m.kind === "hold"){
+    const h = hold(m.id), code = $("#m-code").value;
+    if (h.status !== "HELD") return showErr("This reservation has ended.");
+    if (!/^\d{4}$/.test(code)) return showErr("Enter all 4 digits.");
+    if (code !== h.code){ log("COMMUNITY", h.id, "Wrong pickup code entered", kitchen(h.kitchenId).name); return showErr("That code doesn't match. Check it with the person."); }
+    h.status = "COLLECTED"; h.collectedAt = simNow; log("COMMUNITY", h.id, `${h.name} picked up ${h.qty} · code matched`, kitchen(h.kitchenId).name);
+    drawModal(true); render();
+  }
+});
+$("#modalForm").addEventListener("change", e => {
+  if (e.target.matches("[data-notecat]")){ const u = me(); u.mute = [...document.querySelectorAll("[data-notecat]")].filter(c => !c.checked).map(c => c.value); updateBell(); }
+  if (e.target.id === "p-none" && e.target.checked){ document.querySelectorAll("[data-al]").forEach(c => c.checked = false); $("#p-other").checked = false; }
+  if ((e.target.matches("[data-al]") || e.target.id === "p-other") && e.target.checked) $("#p-none").checked = false;
+  if (e.target.id === "p-other" && e.target.checked) $("#p-other-text").focus();
+  if (e.target.name === "p-pack"){ $("#p-bulk").hidden = e.target.value !== "BULK"; }
+  if (e.target.name === "p-ret"){ const on = e.target.value === "1"; $("#p-ret-more").hidden = !on; $("#p-ret-tip").hidden = !on; }
+  if (e.target.name === "r-how"){ const t = $("#r-togo-tip"); if (t) t.hidden = e.target.value !== "togo"; }
+});
+$("#modalForm").addEventListener("input", e => { if (e.target.id === "p-other-text"){ const on = !!e.target.value.trim(); $("#p-other").checked = on; if (on) $("#p-none").checked = false; } });
+$("#modal").addEventListener("click", e => { if (e.target.id === "modal") closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape"){ if (ui.modal) closeModal(); else if (ui.dock){ ui.dock = false; renderDock(); } } });
+
+/* ---------- Clicks ---------- */
+document.addEventListener("click", async e => {
+  const el = e.target.closest("[data-act]"); if (!el) return;
+  const act = el.dataset.act, b = el.dataset.id ? batch(el.dataset.id) : null;
+  switch (act){
+    case "home": if (me()) { ui.screen = "app"; } else { ui.screen = "home"; } window.scrollTo(0,0); render(); break;
+    case "scroll-roles": if (ui.screen !== "home"){ ui.screen = "home"; render(); } $("#roles").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); break;
+    case "goto-auth": ui.authRole = el.dataset.role; ui.authMode = "signin"; ui.screen = "auth"; window.scrollTo(0,0); render(); setTimeout(() => $("#a-email")?.focus(), 30); break;
+    case "auth-mode": ui.authMode = el.dataset.v; render(); break;
+    case "demo-login": startSession(S.accounts.find(a => a.id === el.dataset.id)); break;
+    case "signout": signOut(); break;
+    case "dock": ui.dock = !ui.dock; renderDock(); document.querySelectorAll(".speedBtns").forEach(x => x.innerHTML = [["Pause",0],["1×",1],["10×",10],["60×",60]].map(([l,v]) => `<button class="chip" data-act="speed" data-v="${v}" aria-pressed="${speed === v}">${l}</button>`).join("")); break;
+    case "dock-login": ui.dock = false; startSession(S.accounts.find(a => a.id === $("#" + el.dataset.sel).value)); break;
+    case "open-post": openModal("post"); break;
+    case "open-pin": openModal("pin", b.id); break;
+    case "open-reserve": openModal("reserve", b.id); break;
+    case "open-hold": openModal("hold", el.dataset.id); break;
+    case "open-profile": openModal("profile"); break;
+    case "comm-radius": me().radius = Number(el.dataset.v); render(); break;
+    case "open-help": openModal("help"); break;
+    case "ask-help": askHelp(); break;
+    case "resolve-ticket": { const t = S.tickets.find(x => x.id === el.dataset.id); t.resolved = true; log("SYSTEM", null, `Support message resolved: ${t.topic}`, me()?.name || "Support"); render(); toast("Marked resolved."); break; }
+    case "self-newpin": { if (b.selfPinUsed || !b.locked) break; b.pin = genPin(); b.pinHash = await sha256(pinMaterial(b, b.pin)); b.locked = false; b.attempts = 0; b.selfPinUsed = true;
+      log("PIN", b.id, "Kitchen got a new PIN after a lockout · old PIN no longer works", kitchen(b.kitchenId).name); render(); toast(`New PIN: ${b.pin}. Read it to the donor.`); break; }
+    case "open-walkin": openModal("walkin", el.dataset.id || null); break;
+    case "close": closeModal(); break;
+    case "fill-code": { const m = ui.modal; $("#m-code").value = m.kind === "pin" ? batch(m.id).pin : hold(m.id).code; break; }
+    case "claim": {
+      if (b.returnDish){
+        const late = overdueReturns(myKitchenId());
+        if (late.length){ toast(`Return ${donor(late[0].donorId).name}'s containers first. They were due ${fmtDay(returnDue(late[0]))}.`); break; }
+        openModal("claimret", b.id); break;
+      }
+      await claim(b, kitchen(myKitchenId())); break;
+    }
+    case "open-notes": { const u = me(); const unread = myNotes().filter(n => isUnread(n, u)).map(n => n.id);
+      myNotes().forEach(n => { if (!n.readBy.includes(u.id)) n.readBy.push(u.id); });
+      ui.modal = {kind:"notes", unread}; drawModal(); $("#modal").hidden = false; updateBell(); break; }
+    case "note-go": { const n = (S.notes || []).find(x => x.id === el.dataset.id), r = me().role; closeModal();
+      if (n){ if (r === "kitchen") ui.ktab = {food:"claim", pickup:"pickups", reserve:"community", return:"stock"}[n.cat] || ui.ktab;
+        if (r === "donor") ui.dtab = "open"; if (r === "community") ui.ctab = n.cat === "meal" ? "near" : "mine"; }
+      ui.screen = "app"; window.scrollTo(0,0); render(); break; }
+    case "set-serve": { b.serve = el.dataset.v; log("SYSTEM", b.id, `Serving set: ${SERVE[b.serve].label}`, kitchen(b.kitchenId).name); render(); toast(`Neighbors now see “${SERVE[b.serve].label}”.`); break; }
+    case "ret-sent": { if (!b.returnSentAt && !b.returnedAt){ b.returnSentAt = simNow; log("RETURN", b.id, `${kitchen(b.kitchenId).name} says containers were dropped off`, me()?.name || "Kitchen");
+      notify({role:"donor", org:b.donorId}, "return", `${kitchen(b.kitchenId).name} says they returned ${b.returnWhat || "your containers"}. Please confirm you got them.`, b.id); }
+      render(); toast(`Thanks! ${donor(b.donorId).name} will confirm they got them.`); break; }
+    case "ret-missing": { b.returnSentAt = null; b.overdueNoted = false; log("RETURN", b.id, `${donor(b.donorId).name} hasn't received the containers`, me()?.name || "Donor");
+      notify({role:"kitchen", org:b.kitchenId}, "return", `${donor(b.donorId).name} says they haven't received ${b.returnWhat || "their containers"}. Please call them.`, b.id);
+      notify({role:"staff"}, "alert", `${donor(b.donorId).name} says ${kitchen(b.kitchenId).name} hasn't returned ${b.returnWhat || "their containers"}.`, b.id);
+      render(); toast("Got it. The kitchen and support have been told."); break; }
+    case "ret-done": { if (!b.returnedAt){ b.returnedAt = simNow; log("RETURN", b.id, `Containers returned to ${donor(b.donorId).name}`, me()?.name || "System");
+      const by = me()?.role; if (by !== "donor") notify({role:"donor", org:b.donorId}, "return", `${kitchen(b.kitchenId).name} marked ${b.returnWhat || "your containers"} as returned.`, b.id); if (by !== "kitchen") notify({role:"kitchen", org:b.kitchenId}, "return", `${donor(b.donorId).name} got their containers back. Thanks!`, b.id); }
+      render(); toast("Marked as returned. Thanks!"); break; }
+    case "test-return": { ui.dock = false; const t = S.batches.find(needsReturn); if (!t){ toast("No containers out to test."); break; } t.returnDueAt = simNow - MIN; log("SYSTEM", t.id, "Test: container return made overdue", "Demo"); render(); renderDock(); toast(`${kitchen(t.kitchenId).name}'s containers for ${t.desc} are now overdue.`); break; }
+    case "open-cancel": openModal("cancel", b.id); break;
+    case "withdraw": transition(b, "CANCELED", donor(b.donorId).name, "withdrawn by donor"); b.terminal = true; b.note = "Withdrawn"; render(); break;
+    case "set-servings": { const n = Number($("#sv-" + b.id).value);
+      if (!Number.isInteger(n) || n < 1) { toast("Enter servings as a whole number of 1 or more."); break; }
+      if (n >= b.servings) { toast(`Enter fewer than ${b.servings} servings.`); break; }
+      log("SYSTEM", b.id, `Donor lowered servings ${b.servings} → ${n}`, donor(b.donorId).name); b.servings = n; runJobs(); render();
+      toast(b.status === "AVAILABLE" ? `Now ${n} servings. Offered to ${plural(ranked(b).length,"kitchen")}.` : `Now ${n} servings. Still no kitchen fits: ${whyNoMatch(b)}.`); break; }
+    case "cancel-hold": { const h = hold(el.dataset.id); h.status = "CANCELED"; log("COMMUNITY", h.id, `${h.name} canceled · ${h.qty} servings back on offer`, h.name); notify({role:"kitchen", org:h.kitchenId}, "reserve", `${h.name} canceled their reservation for ${batch(h.batchId).desc}.`, h.batchId); render(); break; }
+    case "ktab": ui.ktab = el.dataset.v; render(); break;
+    case "otab": ui.otab = el.dataset.v; render(); break;
+    case "dtab": ui.dtab = el.dataset.v; render(); break;
+    case "ctab": ui.ctab = el.dataset.v; render(); break;
+    case "speed": speed = Number(el.dataset.v); render(); break;
+    case "jump": simNow += Number(el.dataset.min)*MIN; log("SYSTEM", null, `Clock moved ahead ${el.dataset.min} min`, "Demo"); runJobs(); render(); break;
+    case "filter": ui.opsFilter = el.dataset.v; ui.otab = "donations"; render(); break;
+    case "scroll-help": $("#attnCard").scrollIntoView({behavior:"smooth", block:"start"}); break;
+    case "ops-release": closeModal(); releaseReservation(b, me()?.name || "Coordinator", "released by coordinator", false); runJobs(); render(); toast(`${b.desc} was offered to the next kitchen.`); break;
+    case "ops-withdraw": closeModal(); transition(b, "CANCELED", me()?.name || "Coordinator", "withdrawn by coordinator"); b.terminal = true; b.note = "Withdrawn by a coordinator"; render(); toast(`${b.desc} was withdrawn.`); break;
+    case "test-miss": { ui.dock = false; const t = S.batches.find(x => x.status === "RESERVED"); if (!t){ toast("No pickup in progress to test."); break; } t.pickupDeadline = simNow; log("SYSTEM", t.id, "Test: pickup timer forced to end", "Demo"); runJobs(); render(); toast(`${t.desc}: the kitchen missed its pickup, so it moved to the next kitchen.`); break; }
+    case "test-expire": { ui.dock = false; const t = S.batches.find(x => x.status === "AVAILABLE"); if (!t){ toast("Nothing waiting to expire."); break; } t.cutoffAt = simNow; log("SYSTEM", t.id, "Test: cutoff forced to now", "Demo"); runJobs(); render(); toast(`${t.desc} expired.`); break; }
+    case "inspect": openModal("detail", b.id); break;
+    case "ops-expire": b.cutoffAt = simNow; log("SYSTEM", b.id, "Cutoff forced to now", "Coordinator"); runJobs(); render(); break;
+    case "ops-lapse": b.pickupDeadline = simNow; log("SYSTEM", b.id, "Pickup timer forced to end", "Coordinator"); runJobs(); render(); break;
+    case "ops-wrongpin": toast((await verifyPin(b, wrongPinFor(b), "Coordinator test")).msg); break;
+    case "ops-unlock": closeModal(); b.locked = false; b.attempts = 0; log("PIN", b.id, "Coordinator reset PIN tries · donor can enter the PIN again", me()?.name || "Coordinator"); render(); toast(`PIN tries reset for ${b.desc}. The donor can try again.`); break;
+    case "ops-newpin": { closeModal(); b.pin = genPin(); b.pinHash = await sha256(pinMaterial(b, b.pin)); b.locked = false; b.attempts = 0;
+      log("PIN", b.id, `New pickup PIN sent to ${kitchen(b.kitchenId).name} · old PIN no longer works`, me()?.name || "Coordinator"); render();
+      toast(`New PIN sent to ${kitchen(b.kitchenId).name}. It shows on their Your pickups tab.`); break; }
+    case "ksort": ui.ksort = el.dataset.v; render(); break;
+    case "ops-hold-expire": { const h = hold(el.dataset.id); h.expiresAt = simNow; runJobs(); render(); break; }
+    case "overflow": { const nb = createBatch({donorId:"D3", desc:"Gala buffet leftovers", servings:420, tag:"HOT", allergens:["Milk","Wheat/Gluten"], windowMin:90}, "Coordinator test");
+      ui.dock = false; render(); toast("Posted 420 servings. That's more than any kitchen has room for, so it needs help."); break; }
+    case "lockdemo2": { const t = S.batches.find(x => x.status === "RESERVED" && !x.locked); if (!t){ toast("No pickup to test."); break; }
+      t.selfPinUsed = true; while (t.status === "RESERVED" && !t.locked) await verifyPin(t, wrongPinFor(t), "Demo test");
+      ui.dock = false; render(); toast(`${t.desc}: PIN locked a second time, so support was alerted.`); break; }
+    case "lockdemo": { const t = S.batches.find(x => x.status === "RESERVED" && !x.locked);
+      if (!t){ toast("No pickup to test. Claim a donation first."); break; }
+      while (t.status === "RESERVED" && !t.locked) await verifyPin(t, wrongPinFor(t), "Coordinator test");
+      ui.dock = false; render(); toast(`${t.desc}: PIN locked after 3 wrong tries.`); break; }
+    case "reset": await seed(); runJobs(); if (CLOUD.on) await saveNow().catch(() => {}); ui.session = null; ui.screen = "home"; ui.ktab = "claim"; ui.otab = "donations"; ui.dtab = "open"; ui.ctab = "near"; ui.inspectId = null; ui.opsFilter = "active"; ui.dock = false; closeModal(); render(); toast("Demo data reset."); break;
+  }
+});
+document.addEventListener("toggle", e => { if (e.target.id === "farWrap") ui.showFar = e.target.open; }, true);
+document.addEventListener("change", e => { if (e.target.id === "inspectSel"){ ui.inspectId = e.target.value; render(); } });
+
+/* ---------- Cloud sync (Google Cloud Run + Firestore) ----------
+   When the page is served by our Cloud Run server, all app data is saved in Firestore,
+   so every device sees the same donations, pickups and reservations.
+   Opened as a plain file or on GitHub Pages, there's no server, so it uses local demo data. */
+const CLOUD = { on:false, version:0, synced:"", busy:false, assistant:false };
+async function api(path, opts={}){
+  const r = await fetch(path, {...opts, headers:{"Content-Type":"application/json"}, signal: AbortSignal.timeout(opts.timeout || 8000)});
+  const body = await r.json().catch(() => ({}));
+  return {status: r.status, ok: r.ok, body};
+}
+const stateJSON = () => JSON.stringify(S);
+function packState(){ return JSON.stringify({S: {...S, log: S.log.slice(-400)}, simNow, savedAt: Date.now()}); }
+function adoptState(rec){
+  const d = JSON.parse(rec.data);
+  S = d.S; simNow = d.simNow + Math.max(0, Date.now() - d.savedAt);
+  CLOUD.version = rec.version; CLOUD.synced = stateJSON();
+  if (ui.session) ui.session = S.accounts.find(a => a.id === ui.session.id) || null;   // keep the signed-in person
+  if (!ui.session && ui.screen === "app") ui.screen = "home";
+}
+async function saveNow(){
+  const now = stateJSON();
+  const r = await api("/api/state", {method:"PUT", body: JSON.stringify({data: packState(), baseVersion: CLOUD.version})});
+  if (r.ok){ CLOUD.version = r.body.version; CLOUD.synced = now; }
+  else if (r.status === 409 && r.body.current){ adoptState(r.body.current); renderLive(); }   // another device saved first: use theirs
+}
+async function cloudTick(){
+  if (!CLOUD.on || CLOUD.busy) return;
+  CLOUD.busy = true;
+  try {
+    if (stateJSON() !== CLOUD.synced) await saveNow();                     // we changed something: save it
+    else {                                                                // otherwise check for changes from other devices
+      const r = await api("/api/state");
+      if (r.ok && r.body.data && r.body.version > CLOUD.version){ adoptState(r.body); renderLive(); }
+    }
+  } catch (err){ /* offline for a moment: try again next tick */ }
+  CLOUD.busy = false;
+}
+async function cloudStart(){
+  try {
+    const h = await api("/api/health", {timeout: 2500});
+    if (!h.ok || !h.body.ok) return;
+    CLOUD.on = true; CLOUD.assistant = !!h.body.assistant;
+    const r = await api("/api/state");
+    if (r.ok && r.body.data) adoptState(r.body);
+    else await saveNow();                                                  // first run: store the starter data
+    setInterval(cloudTick, 2500);
+  } catch (err){ CLOUD.on = false; }
+}
+
+/* ---------- Boot ---------- */
+(async function boot(){
+  await seed(); runJobs();
+  await cloudStart();
+  runJobs(); render();
+  setInterval(() => {
+    if (!speed) return;
+    simNow += 1000*speed;
+    if (runJobs()) renderLive(); else updateTimers();
+  }, 1000);
+})();
+</script>
+
+</body>
+</html>
