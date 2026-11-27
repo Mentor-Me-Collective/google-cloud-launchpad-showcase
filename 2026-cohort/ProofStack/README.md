@@ -2,6 +2,24 @@
 
 [![CI](https://github.com/jtflack-grc/proofstack/actions/workflows/ci.yml/badge.svg)](https://github.com/jtflack-grc/proofstack/actions/workflows/ci.yml)
 
+
+## Reviewer quick path
+
+| What to review | Evidence |
+|---|---|
+| **Recorded walkthrough (<=5 min)** | [ProofStack final walkthrough](https://drive.google.com/file/d/1Gosrkt3_wKbyLtygz-5LiWwbghcfr-gM/view?usp=sharing) |
+| **Problem + solution summary** | [Final project brief](deliverables/FINAL_BRIEF.md) |
+| **Rubric-by-rubric evidence** | [MMC BUILD rubric crosswalk](deliverables/RUBRIC_MAPPING.md) |
+| **Working product / reviewer flow** | [Product screenshots](#product-screenshots) · `app.py` |
+| **Verified evaluation** | [Evaluation results](docs/EVALUATION_RESULTS.md) · [frozen artifacts](results/) |
+| **Security / responsible AI** | [Security posture](docs/SECURITY.md) · [test matrix](docs/SECURITY_TEST_MATRIX.md) |
+| **Architecture / deployment** | [Architecture](docs/ARCHITECTURE.md) · [GCP deployment](docs/GCP_DEPLOYMENT.md) |
+| **Team contribution record** | [Contributions](deliverables/CONTRIBUTIONS.md) |
+| **Documentation index** | [docs/INDEX.md](docs/INDEX.md) |
+
+**Deployment posture:** the verified Cloud Run build is intentionally private by default. The recorded walkthrough and repository evidence demonstrate the deployed workflow without exposing an unauthenticated review endpoint.
+
+
 **Turn security-questionnaire claims into traceable evidence decisions.**
 
 ProofStack is a human-in-the-loop evidence-review capstone built for the question that matters after a security questionnaire is answered:
@@ -67,6 +85,17 @@ These screenshots were captured with ProofStack's deterministic local mock provi
 
 The application runs on **Cloud Run** and persists reviewer decisions in **Firestore**. Advisory model assessment can be provided by **Vertex AI / Gemini** or **NVIDIA NIM** through the same strict parsing and citation-grounding path. The runtime uses a dedicated Google Cloud service identity rather than downloaded service-account keys.
 
+
+## Problem → control → reviewer value
+
+| Reviewer problem | ProofStack feature | Expected reviewer value | Evidence |
+|---|---|---|---|
+| Policy language can look persuasive without proving operation | Side-by-side claim/evidence review | Forces the reviewer to distinguish control intent from operating evidence | [Evidence design](#evidence-design), `data/evidence/` |
+| LLM output may sound confident but be ambiguous or malformed | Structured response + fail-closed parser | Prevents uncertain model output from silently becoming a decision | [Security posture](docs/SECURITY.md), `src/proofstack/parser.py` |
+| A model can quote text that is absent or fabricated | Independent citation-grounding check | Makes the cited evidence inspectable before the reviewer decides | [Evaluation results](docs/EVALUATION_RESULTS.md), `src/proofstack/evidence.py` |
+| Even a real citation can be interpreted incorrectly | Human final authority + override rationale | Preserves accountable judgment for scope, timing, and assurance criteria | [Q06/E12 analysis](docs/EVALUATION_RESULTS.md) |
+| Review decisions can become detached from their provenance | Append-style decision record with provider/model/evidence metadata | Makes later review and disagreement traceable | `src/proofstack/storage/`, reviewer screenshots |
+
 ## Evidence design
 
 The synthetic corpus intentionally pairs weaker governance artifacts with stronger operational artifacts.
@@ -124,6 +153,22 @@ ProofStack was executed as a bounded four-week BUILD delivery rather than an ope
 **Testing:** automated unit/regression tests, dataset validation, Cloud Run/Firestore smoke tests, a frozen 20-case human gold evaluation, and four live adversarial provider probes.
 
 **Next steps if extended beyond the capstone:** independent labelers and inter-rater agreement, larger/less synthetic evidence sets, richer document formats, dedicated rate limiting, production privacy/security review, and broader temporal/scope adversarial testing.
+
+## MVP acceptance criteria and achieved evidence
+
+| Acceptance criterion | Target | Final evidence |
+|---|---|---|
+| Reviewer can compare a claim with its submitted evidence before seeing or accepting an AI recommendation | Working end-to-end flow | Implemented in `app.py`; documented in product screenshots |
+| Model output cannot silently become the final assurance decision | Human decision required | Explicit reviewer label required; no model approval authority |
+| Model citation must be independently verifiable against submitted evidence | Grounding check on every parsed advisory | **100% citation grounding (20/20)** in the frozen evaluation |
+| Ambiguous/malformed model output must fail closed | No unsafe label inference | **100% parse success (20/20)** in the final run; fail-closed regression tests retained |
+| Final model behavior must be evaluated against a human reference set frozen before scoring | Complete frozen reference set | **20/20 labels frozen before scoring**, SHA-256 manifest retained |
+| Advisory quality must be measurable rather than anecdotal | Report classification performance and inspect errors | **95.0% accuracy / 94.99% macro F1**, with Q06/E12 false-support analysis |
+| Evidence-borne prompt injection should not override the reviewer task | Synthetic adversarial probes pass | **4/4 live probes passed** |
+| Google Cloud and NVIDIA must each power a meaningful product capability | Verified provider/cloud paths | Cloud Run + Firestore + Vertex verified; NVIDIA NIM advisory path separately verified |
+| No real organizational evidence or secrets are required to reproduce the capstone | Synthetic/reproducible boundary | Synthetic corpus, mock provider default, ADC/Secret Manager runtime patterns |
+
+These criteria are intentionally bounded to the capstone. They do not establish production readiness, certification, or generalized model accuracy.
 
 ## Frozen human reference set
 
