@@ -1,0 +1,75 @@
+{
+  "expo": {
+    "name": "LearnLite",
+    "slug": "learnlite",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "learnlite",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "com.newly.learnlite"
+    },
+    "android": {
+      "package": "com.newly.learnlite",
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "single",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "./plugins/with-newly-build-provenance",
+      [
+        "expo-dev-client",
+        {
+          "android": {
+            "launchMode": "most-recent",
+            "toolsButton": false,
+            "skipOnboarding": true,
+            "showMenuAtLaunch": false
+          }
+        }
+      ],
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#208AEF",
+          "android": {
+            "image": "./assets/images/splash-icon.png",
+            "imageWidth": 76
+          }
+        }
+      ],
+      "expo-secure-store",
+      "expo-font",
+      "expo-image",
+      "expo-status-bar",
+      "expo-web-browser",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableMinifyInReleaseBuild": true,
+            "enableShrinkResourcesInReleaseBuild": true,
+            "buildArchs": [
+              "arm64-v8a",
+              "armeabi-v7a"
+            ]
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "ab28f0d8-f64f-46ac-b7f0-17b76e9c45d5"
+      }
+    }
+  }
+}

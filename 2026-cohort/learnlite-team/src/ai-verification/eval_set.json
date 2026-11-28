@@ -1,0 +1,45 @@
+{
+  "description": "LearnLite initial verification set (E1-E5), v0. source_id values follow the agreed source list (LearnLite_Module1_Sources.xlsx). source_text values are still short placeholder paraphrases written for testing; replace each with the exact excerpt from its source before reporting results.",
+  "items": [
+    {
+      "id": "E1",
+      "statement": "A chatbot writes its answer by predicting one token at a time.",
+      "source_id": "SRC-GOOG-LLM-01",
+      "source_text": "Large language models generate text one token at a time. At each step the model predicts the most likely next token based on the tokens that came before it, then repeats the process until the answer is complete.",
+      "expected": "SUPPORTED",
+      "why": "Matches the source."
+    },
+    {
+      "id": "E2",
+      "statement": "A chatbot looks up every answer on the internet before replying.",
+      "source_id": "SRC-GOOG-LLM-01",
+      "source_text": "Most language models answer from patterns learned during training and do not search the internet by default. Some chatbot products add a separate web-search tool, but only when that feature is switched on.",
+      "expected": "UNSUPPORTED",
+      "why": "Over-generalises; the source says most models do not search by default."
+    },
+    {
+      "id": "E3",
+      "statement": "AI never makes mistakes if you ask clearly.",
+      "source_id": "SRC-GOOG-PROMPT-01",
+      "source_text": "Clear prompts that give context, a role, the task and the desired format usually lead to more useful answers. However, even with a good prompt, language models can still produce incorrect or made-up information.",
+      "expected": "UNSUPPORTED",
+      "why": "Contradicts the source."
+    },
+    {
+      "id": "E4",
+      "statement": "A higher temperature makes the AI's answers more varied.",
+      "source_id": "SRC-GOOG-PROMPT-01",
+      "source_text": "Temperature is a setting that controls randomness in word choice. A low temperature makes answers more predictable and repetitive; a higher temperature makes answers more varied and creative, but also more likely to drift off topic.",
+      "expected": "SUPPORTED",
+      "why": "Correct, simplified."
+    },
+    {
+      "id": "E5",
+      "statement": "AI hallucinations only happen with hard questions.",
+      "source_id": "SRC-GOOG-HALL-01",
+      "source_text": "A hallucination is when a language model states false or made-up information as if it were true. Hallucinations are more common on obscure or complex questions, but they can happen on any topic, including simple ones, and are often stated confidently.",
+      "expected": "PARTIAL",
+      "why": "Hard questions raise the risk, but 'only' is too narrow."
+    }
+  ]
+}

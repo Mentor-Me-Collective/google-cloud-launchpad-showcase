@@ -1,0 +1,37 @@
+{
+  "note": "SAMPLE ONLY. These texts are short summaries written for testing the tool. Before drafting real lessons, replace each 'text' with the exact excerpt copied from the source, because the checker compares every claim against this text.",
+  "sources": [
+    {
+      "source_id": "SRC-GOOG-LLM-01",
+      "title": "Machine Learning Crash Course: Large language models",
+      "publisher": "Google",
+      "url": "https://developers.google.com/profile/badges/playlists/machine-learning-crash-course/llms",
+      "reuse": "CC BY 3.0: adapt with credit",
+      "text": "Large language models are trained on very large amounts of text. They learn which tokens tend to follow other tokens. Text is split into tokens, which can be whole words, parts of words or punctuation. Each token is turned into numbers that the model can work with. To generate text, the model predicts the most likely next token, adds it, and repeats the process one token at a time until the response is complete."
+    },
+    {
+      "source_id": "SRC-GOOG-PROMPT-01",
+      "title": "Gemini API prompting strategies",
+      "publisher": "Google",
+      "url": "https://ai.google.dev/gemini-api/docs/prompting-strategies",
+      "reuse": "No specific open licence established: link and summarise only",
+      "text": "Clear and specific instructions help the model give useful responses. A prompt can include the task, context about the situation, a role for the model, and the format you want the answer in. Giving examples can also help. Temperature controls the randomness of the output. A lower temperature gives more predictable responses, while a higher temperature can lead to more diverse or creative results."
+    },
+    {
+      "source_id": "SRC-GOOG-HALL-01",
+      "title": "What are AI hallucinations?",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/discover/what-are-ai-hallucinations",
+      "reuse": "No open licence established: link and summarise only",
+      "text": "AI hallucinations are incorrect or misleading results that AI models generate. They can happen because models predict likely text rather than checking facts, and because of gaps or biases in training data. Hallucinations are often stated confidently, so they can be hard to notice. Checking important information against trusted sources helps reduce the risk of relying on a hallucination."
+    },
+    {
+      "source_id": "SRC-UNESCO-01",
+      "title": "AI competency framework for students",
+      "publisher": "UNESCO",
+      "url": "https://unesdoc.unesco.org/ark:/48223/pf0000391105",
+      "reuse": "CC BY-SA 3.0 IGO: adapt with credit, share alike",
+      "text": "Students should develop a human-centred mindset towards AI, understand the ethics of AI, learn AI techniques and applications, and understand AI system design. Responsible use includes protecting personal data and privacy, being aware that AI can reflect bias, and keeping human judgement and responsibility when using AI tools."
+    }
+  ]
+}
