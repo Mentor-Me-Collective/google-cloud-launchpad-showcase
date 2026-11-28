@@ -1,0 +1,57 @@
+rules_version = '2';
+
+// ConsentKey Firestore rules.
+//
+// The app server uses the Admin/server SDK, which bypasses these rules. They
+// exist to stop direct access from browsers or any other client.
+//
+// Collections the app uses (src/server/repo.ts): audit, consent, pending, users.
+//
+// "Server identity" below means a request whose auth token carries the custom
+// claim `server == true`. No browser user is ever issued that claim. Anything
+// not listed is denied by default.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isServer() {
+      return request.auth != null && request.auth.token.server == true;
+    }
+
+    // Append-only, hash-chained audit log. Documents are written once under a
+    // zero-padded index id. Never updated or deleted by anyone.
+    match /audit/{entryId} {
+      allow get, list: if isServer();
+      allow create: if isServer();
+      allow update, delete: if false;
+    }
+
+    // Current consent state per learner+type.
+    match /consent/{docId} {
+      allow get, list: if isServer();
+      allow create, update, delete: if isServer();
+    }
+
+    // Changes awaiting staff approval (ids only, no names).
+    match /pending/{docId} {
+      allow get, list: if isServer();
+      allow create, update, delete: if isServer();
+    }
+
+    // Login roster with salted PIN hashes. No client access at all.
+    match /users/{docId} {
+      allow read, write: if false;
+    }
+
+    // Archived audit entries (retention job). Server-only, never client-writable.
+    match /audit_archive/{docId} {
+      allow get, list: if isServer();
+      allow create: if isServer();
+      allow update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

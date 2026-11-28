@@ -1,0 +1,960 @@
+/* ConsentKey — "the consent register".
+   A school office keeps a signed, stamped record of what each parent agreed to.
+   The UI is that register: ruled rows, a record header, a verification stamp.
+   Light, warm-bone paper with fountain-pen ink-blue. Fonts come from next/font
+   via --font-serif / --font-sans. Motion is action-driven; one quiet load fade. */
+
+:root {
+  --paper: #edebe3;
+  --surface: #f7f6f1;
+  --surface-sunk: #e7e5db;
+  --ink: #1b2a2e;
+  --ink-soft: #52605f;
+  --ink-faint: #8a897d;
+  --line: #d7d3c7;
+  --line-strong: #bdb8a8;
+
+  --brand: #2b3fa0;
+  --brand-ink: #1d2d78;
+
+  --granted: #2f6b4f;
+  --withdrawn: #a6442f;
+  --pending: #8a6410;
+  --notset: #85837a;
+
+  --focus: #2b3fa0;
+  --radius: 10px;
+  --measure: 72ch;
+
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior-y: none;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+}
+
+/* Faint ruled-paper texture so the "register" reads as a record, not a card deck. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: linear-gradient(
+    var(--surface) 0 1px,
+    transparent 1px var(--surface)
+  );
+  background-size: 100% 4px;
+  opacity: 0.25;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 450;
+  line-height: 1.1;
+  margin: 0;
+  text-wrap: balance;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--brand);
+}
+
+/* ---- Focus (never remove without a replacement) ---- */
+:where(a, button, input, [role="switch"], [tabindex]):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -48px;
+  background: var(--brand);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  z-index: 100;
+  transition: top 0.15s ease;
+}
+.skip-link:focus {
+  top: 12px;
+}
+
+/* ---- Document shell ---- */
+.doc {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px 22px 96px;
+}
+
+.enter {
+  animation: fadein 0.5s ease both;
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---- Top bar ---- */
+.topbar {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 14px 0 16px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 26px;
+  flex-wrap: wrap;
+}
+.wordmark {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+}
+.wordmark b {
+  font-weight: 600;
+}
+.wordmark .k {
+  color: var(--brand);
+  font-weight: 600;
+}
+.topnav {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.topnav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.topnav a:hover {
+  color: var(--ink);
+  background: var(--surface);
+}
+.topnav a[aria-current="page"] {
+  color: var(--brand-ink);
+  box-shadow: inset 0 -2px 0 var(--brand);
+  border-radius: 0;
+}
+.whoami {
+  font-size: 13.5px;
+  color: var(--ink-faint);
+  text-align: right;
+  line-height: 1.25;
+  padding-left: 8px;
+  border-left: 1px solid var(--line);
+}
+.whoami b {
+  display: block;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ---- Record header ---- */
+.record-kicker {
+  font-size: 13.5px;
+  color: var(--ink-faint);
+  margin: 0 0 4px;
+}
+.record h1 {
+  font-size: clamp(30px, 6vw, 46px);
+}
+.record .lede {
+  color: var(--ink-soft);
+  max-width: var(--measure);
+  margin: 10px 0 0;
+}
+.stamps {
+  display: flex;
+  gap: 8px 14px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+/* ---- Stamp (real status, not decoration) ---- */
+.stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  padding: 4px 2px;
+}
+.stamp svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+.stamp.ok {
+  color: var(--granted);
+}
+.stamp.off {
+  color: var(--ink-faint);
+}
+.stamp.warn {
+  color: var(--pending);
+}
+
+/* ---- Section heading (no all-caps eyebrow) ---- */
+.section {
+  margin: 34px 0 6px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.section h2 {
+  font-size: 19px;
+}
+.section .meta {
+  font-size: 13.5px;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Register: ruled rows, not cards ---- */
+.register {
+  border-top: 1px solid var(--line-strong);
+}
+.entry {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 18px;
+  padding: 18px 2px;
+  border-bottom: 1px solid var(--line);
+}
+.entry .type {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 20px;
+}
+.entry .affects {
+  color: var(--ink-faint);
+  font-size: 13.5px;
+  margin-top: 2px;
+  min-width: 0;
+}
+.entry .rule-note {
+  font-size: 13px;
+  color: var(--pending);
+  margin-top: 6px;
+}
+.entry .control {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+.entry .result-slot {
+  grid-column: 1 / -1;
+}
+
+/* ---- Status word ---- */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.status::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+.status.granted {
+  color: var(--granted);
+}
+.status.withdrawn {
+  color: var(--withdrawn);
+}
+.status.pending,
+.status.pending_approval,
+.status.in_progress {
+  color: var(--pending);
+}
+.status.not_set,
+.status.notset {
+  color: var(--notset);
+}
+.status.complete {
+  color: var(--granted);
+}
+.status.incomplete {
+  color: var(--pending);
+}
+.status.rejected {
+  color: var(--withdrawn);
+}
+
+/* ---- Buttons ---- */
+.btn {
+  font: inherit;
+  font-size: 14.5px;
+  font-weight: 550;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 9px 16px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease, transform 0.08s ease;
+}
+.btn:hover {
+  background: var(--surface-sunk);
+  border-color: var(--line-strong);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn--primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+.btn--primary:hover {
+  background: var(--brand-ink);
+  border-color: var(--brand-ink);
+}
+.btn--danger {
+  color: var(--withdrawn);
+  border-color: color-mix(in srgb, var(--withdrawn) 45%, var(--line));
+}
+.btn--danger:hover {
+  background: color-mix(in srgb, var(--withdrawn) 10%, var(--surface));
+}
+.btn--quiet {
+  background: transparent;
+  border-color: transparent;
+  color: var(--ink-soft);
+  padding: 6px 10px;
+}
+.btn--quiet:hover {
+  background: var(--surface);
+  color: var(--ink);
+}
+.btn--sm {
+  padding: 7px 12px;
+  font-size: 13.5px;
+}
+
+/* ---- Toggle (role=switch) ---- */
+.toggle {
+  --w: 52px;
+  --h: 30px;
+  position: relative;
+  width: var(--w);
+  height: var(--h);
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface-sunk);
+  cursor: pointer;
+  padding: 0;
+  touch-action: manipulation;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.toggle[aria-checked="true"] {
+  background: var(--granted);
+  border-color: var(--granted);
+}
+.toggle .dot {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(var(--h) - 6px);
+  height: calc(var(--h) - 6px);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.toggle[aria-checked="true"] .dot {
+  transform: translateX(calc(var(--w) - var(--h)));
+}
+.toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---- Recorded result: a true sequence, so numbered ---- */
+.recorded {
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--brand);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.recorded h3 {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.steps {
+  list-style: none;
+  counter-reset: step;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.steps li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 10px;
+  font-size: 14px;
+  align-items: start;
+}
+.steps li::before {
+  content: counter(step);
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-faint);
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+}
+.steps li.complete::before {
+  color: var(--granted);
+  border-color: var(--granted);
+  content: "\2713";
+}
+.steps li.failed::before {
+  color: var(--pending);
+  border-color: var(--pending);
+}
+.steps li.rejected::before {
+  color: var(--withdrawn);
+  border-color: var(--withdrawn);
+  content: "\00d7";
+}
+.steps .detail {
+  color: var(--ink-faint);
+}
+
+.impact {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.impact-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+  padding: 4px 0;
+  border-bottom: 1px dotted var(--line);
+}
+.impact-count {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  margin-top: 4px;
+}
+
+/* ---- Notes / banners ---- */
+.note {
+  padding: 12px 15px;
+  border-radius: var(--radius);
+  font-size: 14.5px;
+  margin: 14px 0;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.note.info {
+  border-left: 3px solid var(--brand);
+}
+.note.good {
+  border-left: 3px solid var(--granted);
+}
+.note.warn {
+  border-left: 3px solid var(--pending);
+}
+.note.bad {
+  border-left: 3px solid var(--withdrawn);
+  color: var(--withdrawn);
+}
+
+/* ---- Sign-in roster ---- */
+.roster {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line-strong);
+}
+.roster button {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  padding: 16px 6px;
+  cursor: pointer;
+  touch-action: manipulation;
+  color: inherit;
+  transition: background-color 0.15s ease, padding-left 0.15s ease;
+}
+.roster button:hover {
+  background: var(--surface);
+  padding-left: 14px;
+}
+.roster .mono-id {
+  font-size: 13px;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+.roster .name {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 19px;
+}
+.roster .who-meta {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+.seal {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 16px;
+  color: var(--brand-ink);
+  border: 1.5px solid var(--brand);
+  background: color-mix(in srgb, var(--brand) 8%, var(--surface));
+}
+.seal.staff {
+  color: #6a4a12;
+  border-color: #b98a2e;
+  background: color-mix(in srgb, #b98a2e 12%, var(--surface));
+}
+
+/* ---- Audit trail ----
+   Grouped by consent change: one card tells the whole story of one change,
+   rather than making the reader reassemble it from separate rows. */
+.trail {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.trail-group {
+  border: 1px solid var(--line-strong);
+  border-left: 3px solid var(--notset);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+.trail-group--good { border-left-color: var(--granted); }
+.trail-group--bad { border-left-color: var(--withdrawn); }
+.trail-group--warn { border-left-color: var(--pending); }
+.trail-group--neutral { border-left-color: var(--notset); }
+
+/* Housekeeping lives below the consent records, collapsed by default. It is
+   still in the chain and still inspectable — it just is not a consent
+   decision and must not read as one. */
+.system-events {
+  margin-top: 28px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+.system-events > summary {
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--ink-soft);
+  list-style-position: outside;
+}
+.system-events > summary::marker {
+  color: var(--ink-faint);
+}
+.system-events > summary:hover {
+  color: var(--ink);
+}
+.system-events > .trail {
+  margin-top: 14px;
+}
+
+/* Housekeeping entries are part of the record but are not the story — they
+   sit quieter so real consent changes lead the page. */
+.trail-group--quiet {
+  background: transparent;
+  border-color: var(--line);
+}
+.trail-group--quiet .trail-head {
+  background: transparent;
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.trail-group--quiet .trail-head h3 {
+  font-size: 14.5px;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  color: var(--ink-soft);
+}
+.trail-group--quiet .trail-steps {
+  padding-top: 4px;
+}
+
+.trail-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface-sunk) 55%, var(--surface));
+}
+.trail-head h3 {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.35;
+}
+.trail-meta {
+  margin: 3px 0 0;
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.trail-outcome {
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+.trail-outcome--good { color: var(--granted); }
+.trail-outcome--bad { color: var(--withdrawn); }
+.trail-outcome--warn { color: var(--pending); }
+.trail-outcome--neutral { color: var(--notset); }
+
+/* Steps read as a sequence: a spine runs behind the markers so the eye
+   follows the change from request to outcome. */
+.trail-steps {
+  list-style: none;
+  margin: 0;
+  padding: 10px 16px 14px;
+}
+.trail-step {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  column-gap: 12px;
+  position: relative;
+  padding-bottom: 14px;
+}
+.trail-step:last-child {
+  padding-bottom: 0;
+}
+/* The spine: drawn from each marker down to the next one. */
+.trail-step:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 20px;
+  bottom: 0;
+  width: 1px;
+  background: var(--line-strong);
+}
+
+.trail-step-marker {
+  display: grid;
+  place-items: center;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  background: var(--surface);
+  position: relative;
+  z-index: 1;
+}
+.trail-step-icon {
+  width: 12px;
+  height: 12px;
+}
+.step--good .trail-step-marker { color: var(--granted); }
+.step--bad .trail-step-marker { color: var(--withdrawn); }
+.step--warn .trail-step-marker { color: var(--pending); }
+.step--neutral .trail-step-marker { color: var(--notset); }
+
+.trail-step-body { min-width: 0; }
+.trail-step-title {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 560;
+  line-height: 1.45;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+}
+.trail-step-summary {
+  margin: 2px 0 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.trail-step-meaning {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+/* Sits beside the title and wraps under it when space runs out, instead of
+   fighting a fixed column for width. */
+.trail-step-when {
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.trail-step-toggle {
+  margin-top: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 12.5px;
+  color: var(--brand);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.trail-step-toggle:hover { color: var(--brand-ink); }
+
+.trail-step-raw {
+  margin-top: 8px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-sunk);
+}
+.trail-step-raw dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 4px 14px;
+  margin: 0 0 10px;
+  font-size: 12.5px;
+}
+.trail-step-raw dt { color: var(--ink-faint); }
+.trail-step-raw dd { margin: 0; }
+.trail-step-raw-label {
+  margin: 0 0 4px;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+}
+.trail-step-raw pre {
+  margin: 0;
+  padding: 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 11.5px;
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre;
+}
+.mono-wrap {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 11.5px;
+  word-break: break-all;
+}
+
+.trail-foot {
+  margin: 0;
+  padding: 10px 16px;
+  border-top: 1px solid var(--line);
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  background: color-mix(in srgb, var(--surface-sunk) 40%, var(--surface));
+}
+
+@media (max-width: 560px) {
+  .trail-head {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .trail-steps {
+    padding: 10px 12px 14px;
+  }
+}
+
+.hashline {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 11.5px;
+  color: var(--ink-faint);
+}
+
+/* ---- Spinner ---- */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--line-strong);
+  border-top-color: var(--brand);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+  vertical-align: -3px;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--ink-faint);
+  padding: 40px 0;
+  justify-content: center;
+}
+
+.field {
+  width: 100%;
+  font: inherit;
+  font-size: 14px;
+  padding: 9px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+}
+.field::placeholder {
+  color: var(--ink-faint);
+}
+
+.muted {
+  color: var(--ink-faint);
+}
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+@media (max-width: 560px) {
+  .entry {
+    grid-template-columns: 1fr;
+  }
+  .entry .control {
+    grid-column: 1;
+    grid-row: auto;
+    align-items: flex-start;
+    flex-direction: row;
+  }
+}
+
+/* ---- Reduced motion: drop movement, keep essential feedback ---- */
+@media (prefers-reduced-motion: reduce) {
+  .enter {
+    animation: none;
+  }
+  .toggle .dot {
+    transition: background-color 0.15s ease;
+  }
+  .roster button:hover {
+    padding-left: 6px;
+  }
+  .spinner {
+    animation-duration: 0.01ms;
+  }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Sign-in form, PIN dialog, admin forms and tables ---- */
+.form { display: grid; gap: 14px; max-width: 420px; margin-top: 16px; }
+.form label { display: block; font-size: 13.5px; color: var(--ink-soft); margin-bottom: 6px; }
+.form .hint { display: block; font-size: 12.5px; color: var(--ink-faint); margin-top: 4px; }
+.form select.field { appearance: auto; }
+.form .inline { display: flex; gap: 8px; align-items: center; }
+.form .inline label { margin: 0; color: var(--ink); }
+.card-block { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; margin-top: 14px; }
+.card-block h3 { margin: 0 0 4px; font-size: 18px; }
+.admin-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: start; }
+.admin-grid .form { max-width: none; }
+.table-wrap { overflow-x: auto; margin-top: 12px; }
+.user-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.user-table th, .user-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.user-table th { font-weight: 600; color: var(--ink-soft); font-size: 12.5px; }
+.user-table .row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+dialog.pin-dialog { border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--surface); color: var(--ink); padding: 20px; width: min(92vw, 400px); }
+dialog.pin-dialog::backdrop { background: rgba(27, 42, 46, 0.55); }
+dialog.pin-dialog h2 { margin: 0 0 8px; font-size: 20px; }
+dialog.pin-dialog .actions { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
+.activity { margin: 8px 0 0; padding-left: 18px; font-size: 14px; }
+.activity time { color: var(--ink-faint); font-size: 12.5px; }
+@media (max-width: 560px) {
+  .form { max-width: none; }
+  .btn { min-height: 44px; }
+}

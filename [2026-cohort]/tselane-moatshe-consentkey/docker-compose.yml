@@ -1,0 +1,80 @@
+# ConsentKey local stack:
+#   app       — the combined Next.js API + web container
+#   firestore — the Firestore emulator (stands in for real Firestore for now)
+#
+# Switch to real Firestore later: remove FIRESTORE_EMULATOR_HOST from the app
+# service, drop the `firestore` service + its depends_on, and provide
+# GOOGLE_CLOUD_PROJECT + GOOGLE_APPLICATION_CREDENTIALS via the .env file
+# (see .env.example).
+
+services:
+  firestore:
+    image: gcr.io/google.com/cloudsdktool/cloud-sdk:emulators
+    command: >
+      gcloud emulators firestore start
+      --host-port=0.0.0.0:8080
+      --project=consentkey-local
+    # Reachable from the app container over the compose network as
+    # firestore:8080. Not published to the host (avoids host port clashes);
+    # add `ports: ["8085:8080"]` if you want to inspect it from your machine.
+    expose:
+      - "8080"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8080/ >/dev/null 2>&1 || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      # Host port is configurable so a clash with another local app is a
+      # one-liner, not a code change:  CONSENTKEY_PORT=3100 docker compose up
+      # (Another app on the same port can also leave a service worker
+      # registered on localhost:3000, which then serves ITS pages from cache
+      # even once this container is the thing actually listening.)
+      - "${CONSENTKEY_PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      HOSTNAME: "0.0.0.0"
+      # Point the Firestore client at the emulator container.
+      FIRESTORE_EMULATOR_HOST: "firestore:8080"
+      FIRESTORE_PROJECT_ID: "consentkey-local"
+      GOOGLE_CLOUD_PROJECT: "consentkey-local"
+      # NVIDIA NIM draft feature. Passed through from your shell or .env; if
+      # it is empty the draft panel is not offered and everything else runs
+      # unchanged. The key never reaches the browser.
+      # NIM_* are the names to use; NVIDIA_* still work as fallbacks.
+      NIM_API_KEY: "${NIM_API_KEY:-}"
+      NIM_MODEL: "${NIM_MODEL:-}"
+      NVIDIA_API_KEY: "${NVIDIA_API_KEY:-}"
+      NVIDIA_MODEL: "${NVIDIA_MODEL:-}"
+      # Demo-only PIN that confirms a drafted request (set through environment variables).
+      CONSENTKEY_DEMO_PIN: "${CONSENTKEY_DEMO_PIN:-}"
+      # System Admin. The container runs in production mode, so the admin is only
+      # created when CONSENTKEY_ADMIN_PIN is set (shell or .env). No default.
+      CONSENTKEY_ADMIN_USER: "${CONSENTKEY_ADMIN_USER:-}"
+      CONSENTKEY_ADMIN_PIN: "${CONSENTKEY_ADMIN_PIN:-}"
+      CONSENTKEY_SEED_DEMO: "${CONSENTKEY_SEED_DEMO:-}"
+      CONSENTKEY_SECURE_COOKIE: "${CONSENTKEY_SECURE_COOKIE:-}"
+      # Plan phase 2 (assumptions A-01, A-02): school holidays and escalation
+      # recipient. Empty means no holidays and "the other staff role".
+      SCHOOL_HOLIDAYS: "${SCHOOL_HOLIDAYS:-}"
+      ESCALATION_RECIPIENT: "${ESCALATION_RECIPIENT:-}"
+      # Plan phase 3 (assumption A-05): Medical restriction deadline in days.
+      MEDICAL_RESTRICTION_DAYS: "${MEDICAL_RESTRICTION_DAYS:-}"
+      # OD-06: how long to keep an audit entry. Unset means the team has not
+      # decided a period yet, and nothing ever expires. There is deliberately
+      # no default — see docs/showcase/decisions-log-status.md.
+      AUDIT_RETENTION_MONTHS: "${AUDIT_RETENTION_MONTHS:-}"
+    # Production overrides (real Firestore, secrets) live here when you add them.
+    env_file:
+      - path: .env
+        required: false
+    depends_on:
+      firestore:
+        condition: service_healthy
