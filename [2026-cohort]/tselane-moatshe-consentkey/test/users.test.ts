@@ -33,7 +33,7 @@ import { getApp } from "../src/server/appSchool.js";
 import { handleConsentChange, handleLogin } from "../src/server/handlers.js";
 import { refuseAdminAudit, requireAdmin, requireStaff } from "../src/server/guards.js";
 import { getSessionStore } from "../src/server/sessions.js";
-import { DEV_ADMIN_PIN, UserService } from "../src/server/users.js";
+import { UserService } from "../src/server/users.js";
 import { PermissionDeniedError } from "../src/connector/consentConnector.js";
 import { canApprove } from "../src/approval/approvalRules.js";
 import type { Identity } from "../src/server/identities.js";
@@ -432,25 +432,38 @@ function memoryRepo(saved: unknown[] = []): Repo {
   };
 }
 
-test("production without CONSENTKEY_ADMIN_PIN refuses to seed an admin", async () => {
+test("admin seeding refuses to run without CONSENTKEY_ADMIN_PIN", async () => {
   const svc = new UserService(memoryRepo(), new AuditLog());
+
   const r = await svc.seedAdmin({ NODE_ENV: "production" });
+
   assert.equal(r.seeded, false);
   assert.match(r.reason ?? "", /CONSENTKEY_ADMIN_PIN/);
   assert.equal(svc.list().length, 0);
-  // The documented dev default must not work in production.
-  assert.equal(svc.authenticate("admin", DEV_ADMIN_PIN).ok, false);
 });
 
-test("development falls back to the documented dev PIN; a malformed PIN is refused", async () => {
+test("admin seeding requires a valid configured PIN in development", async () => {
   const dev = new UserService(memoryRepo(), new AuditLog());
-  assert.deepEqual(await dev.seedAdmin({ NODE_ENV: "development" }), { seeded: true, usedDevDefault: true });
-  assert.equal(dev.authenticate("admin", DEV_ADMIN_PIN).ok, true);
+
+  const missing = await dev.seedAdmin({ NODE_ENV: "development" });
+  assert.equal(missing.seeded, false);
+  assert.match(missing.reason ?? "", /CONSENTKEY_ADMIN_PIN/);
 
   const bad = new UserService(memoryRepo(), new AuditLog());
-  const r = await bad.seedAdmin({ NODE_ENV: "development", CONSENTKEY_ADMIN_PIN: "abc" });
-  assert.equal(r.seeded, false);
+  const invalid = await bad.seedAdmin({
+    NODE_ENV: "development",
+    CONSENTKEY_ADMIN_PIN: "abc",
+  });
+  assert.equal(invalid.seeded, false);
   assert.equal(bad.list().length, 0);
+
+  const valid = new UserService(memoryRepo(), new AuditLog());
+  const result = await valid.seedAdmin({
+    NODE_ENV: "development",
+    CONSENTKEY_ADMIN_PIN: "246810",
+  });
+  assert.deepEqual(result, { seeded: true });
+  assert.equal(valid.authenticate("admin", "246810").ok, true);
 });
 
 test("a configured admin PIN and username are used, hashed in storage, and not re-seeded", async () => {

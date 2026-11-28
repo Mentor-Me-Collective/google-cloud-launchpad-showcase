@@ -180,14 +180,12 @@ export class UserService {
   /**
    * Seed the default System Admin. `env` is passed in so this is testable.
    *
-   * The PIN comes from CONSENTKEY_ADMIN_PIN. If it is unset (or malformed) the
-   * admin is NOT seeded in a non-dev environment: there is no known default to
-   * fall back on. In dev (NODE_ENV not "production") a documented default is
-   * allowed so `npm run dev` works with no setup.
+   * The PIN must come from CONSENTKEY_ADMIN_PIN. If it is unset or malformed,
+   * the admin is not seeded in any environment.
    */
   async seedAdmin(
     env: Record<string, string | undefined> = process.env,
-  ): Promise<{ seeded: boolean; reason?: string; usedDevDefault?: boolean }> {
+  ): Promise<{ seeded: boolean; reason?: string }> {
     const username = normalizeUsername(env.CONSENTKEY_ADMIN_USER?.trim() || "admin");
     if (!USERNAME_PATTERN.test(username)) {
       return { seeded: false, reason: "CONSENTKEY_ADMIN_USER is not a valid username" };
@@ -199,24 +197,23 @@ export class UserService {
     if (this.byUsername.has(username)) {
       return { seeded: false, reason: `username "${username}" is already taken by another user` };
     }
-
     const configured = env.CONSENTKEY_ADMIN_PIN?.trim();
-    let pin: string;
-    let usedDevDefault = false;
-    if (configured) {
-      if (!PIN_PATTERN.test(configured)) {
-        return { seeded: false, reason: "CONSENTKEY_ADMIN_PIN must be 4 to 8 digits" };
-      }
-      pin = configured;
-    } else if (env.NODE_ENV !== "production") {
-      pin = DEV_ADMIN_PIN;
-      usedDevDefault = true;
-    } else {
+
+    if (!configured) {
       return {
         seeded: false,
-        reason: "CONSENTKEY_ADMIN_PIN is not set, and there is no default outside development",
+        reason: "CONSENTKEY_ADMIN_PIN is not set",
       };
     }
+
+    if (!PIN_PATTERN.test(configured)) {
+      return {
+        seeded: false,
+        reason: "CONSENTKEY_ADMIN_PIN must be 4 to 8 digits",
+      };
+    }
+
+    const pin = configured;
 
     const id = "admin-default";
     const rec: UserRecord = {
@@ -233,9 +230,8 @@ export class UserService {
     this.audit.record("user.admin_seeded", {
       targetUserId: id,
       targetUsername: username,
-      usedDevDefault,
     });
-    return { seeded: true, usedDevDefault };
+    return { seeded: true };
   }
 
   // ------------------------------------------------------------ sign-in
@@ -562,4 +558,3 @@ export class UserService {
  * (NODE_ENV is not "production"). Documented in docs/RUNNING.md. Never used
  * in production.
  */
-export const DEV_ADMIN_PIN = "135790";

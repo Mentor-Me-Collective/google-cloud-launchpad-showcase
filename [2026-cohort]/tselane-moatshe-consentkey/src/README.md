@@ -54,6 +54,8 @@ npm run dashboard # starts the Scenario 1 parent dashboard at http://127.0.0.1:4
   button simulates verification and is not an authentication feature for real
   users or real learner data.
 
+Set CONSENTKEY_DEMO_PIN (your own 4 to 8 digits) before starting the app.
+
 ## Open questions I hit while building (for kickoff)
 
 1. **Scenario 2 touches two systems** (Trips Register *and* Learner Records for
