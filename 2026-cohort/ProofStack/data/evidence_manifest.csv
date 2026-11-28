@@ -1,0 +1,21 @@
+evidence_id,question_id,title,artifact_type,path
+E01,Q01,"Privileged Access Standard",policy,data/evidence/E01.md
+E02,Q01,"Privileged Account MFA Export",system_export,data/evidence/E02.md
+E03,Q02,"Employee Offboarding Procedure",procedure,data/evidence/E03.md
+E04,Q02,"Termination-to-Disable Report",joined_report,data/evidence/E04.md
+E05,Q03,"Quarterly Access Review Procedure",procedure,data/evidence/E05.md
+E06,Q03,"Q3 Privileged Access Review",review_record,data/evidence/E06.md
+E07,Q04,"Encryption Standard",standard,data/evidence/E07.md
+E08,Q04,"Production Storage Encryption Export",configuration_export,data/evidence/E08.md
+E09,Q05,"Network Encryption Standard",standard,data/evidence/E09.md
+E10,Q05,"Public Endpoint TLS Scan",scanner_output,data/evidence/E10.md
+E11,Q06,"Backup and Recovery Policy",policy,data/evidence/E11.md
+E12,Q06,"Backup Jobs and Restore Test",operations_report,data/evidence/E12.md
+E13,Q07,"Vulnerability Management Policy",policy,data/evidence/E13.md
+E14,Q07,"Critical Vulnerability SLA Report",operations_report,data/evidence/E14.md
+E15,Q08,"Logging and Monitoring Policy",policy,data/evidence/E15.md
+E16,Q08,"SIEM Retention and Alert Configuration",configuration_export,data/evidence/E16.md
+E17,Q09,"Incident Response Plan",plan,data/evidence/E17.md
+E18,Q09,"Incident Response Tabletop — After-Action Report",exercise_record,data/evidence/E18.md
+E19,Q10,"Third-Party Access Policy",policy,data/evidence/E19.md
+E20,Q10,"Temporary Vendor Admin Access Record",access_record,data/evidence/E20.md

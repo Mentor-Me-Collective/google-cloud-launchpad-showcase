@@ -1,0 +1,42 @@
+{
+  "n": 20,
+  "accuracy": 0.95,
+  "macro_precision": 0.95,
+  "macro_recall": 0.9545454545454546,
+  "macro_f1": 0.949874686716792,
+  "per_class": {
+    "SUPPORTED": {
+      "precision": 0.9,
+      "recall": 1.0,
+      "f1": 0.9473684210526316,
+      "support": 9
+    },
+    "UNSUPPORTED": {
+      "precision": 1.0,
+      "recall": 0.9090909090909091,
+      "f1": 0.9523809523809523,
+      "support": 11
+    }
+  },
+  "confusion_matrix": {
+    "SUPPORTED_as_SUPPORTED": 9,
+    "SUPPORTED_as_UNSUPPORTED": 0,
+    "SUPPORTED_as_OTHER": 0,
+    "UNSUPPORTED_as_SUPPORTED": 1,
+    "UNSUPPORTED_as_UNSUPPORTED": 10,
+    "UNSUPPORTED_as_OTHER": 0
+  },
+  "other_prediction_count": 0,
+  "parse_success_count": 20,
+  "parse_failure_count": 0,
+  "parse_success_rate": 1.0,
+  "citation_valid_count": 20,
+  "citation_invalid_count": 0,
+  "citation_grounding_rate": 1.0,
+  "provider": "vertex",
+  "model_id": "gemini-3.8-flash",
+  "run_started_utc": "2026-11-06T19:21:57.384500+00:00",
+  "evaluation_generated_utc": "2026-11-06T19:26:08.376026+00:00",
+  "gold_labels_sha256": "1317a4c5cd1b0d02575d2e54d62d8cc03c7508805dd043cf44dc67e2503d6b74",
+  "gold_frozen_at_utc": "2026-11-06T19:17:07.450583+00:00"
+}

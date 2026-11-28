@@ -1,0 +1,9 @@
+{
+  "run_started_utc": "2026-11-06T19:21:57.384500+00:00",
+  "run_completed_utc": "2026-11-06T19:24:57.657833+00:00",
+  "provider": "vertex",
+  "model_id": "gemini-3.8-flash",
+  "item_count": 20,
+  "commit_sha": "1dbcbd157438e7a247918974ea4627140748da91",
+  "predictions_file": "results/predictions.csv"
+}
