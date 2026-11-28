@@ -1939,7 +1939,7 @@ body.hazard-cold-theme .dark-kpi-card {
           <div class="user-online-dot"></div>
         </div>
         <div class="user-details">
-          <div class="user-name" id="user-display-name">Justin Mafie</div>
+          <div class="user-name" id="user-display-name">Operations Manager</div>
           <div class="user-role-label" id="user-role-label">Manager · South Bronx CD1</div>
         </div>
       </div>
@@ -1947,11 +1947,11 @@ body.hazard-cold-theme .dark-kpi-card {
       <div>
         <label for="who" style="font-size:10px; color:var(--text-light-dim); font-weight:700; text-transform:uppercase; margin-bottom:4px; display:block;">Active Persona:</label>
         <select id="who" class="persona-select">
-          <option value="demo-manager-a">Justin (Manager, South Bronx Resilience)</option>
-          <option value="demo-staff-a">Operations Staff (Mott Haven Site)</option>
+          <option value="demo-manager-a">Operations Manager (South Bronx Resilience)</option>
+          <option value="demo-staff-a">Field Operations Staff (Mott Haven Site)</option>
           <option value="demo-validator-a">Compliance Auditor (NYC DOHMH)</option>
-          <option value="demo-manager-b">Manager (Melrose Care Operations)</option>
-          <option value="demo-staff-b">Operations Staff (Melrose Site)</option>
+          <option value="demo-manager-b">Operations Manager (Melrose Care Ops)</option>
+          <option value="demo-staff-b">Field Operations Staff (Melrose Site)</option>
         </select>
       </div>
     </div>
@@ -2592,7 +2592,14 @@ async function load() {
     const me = await api('/me');
     window.__me = me;
     const roleNames = { manager: 'Manager', staff: 'Operations Staff', validator: 'Compliance Validator' };
-    const actorLabel = me.actor_id || me.name || 'User';
+    const friendlyNames = {
+      'demo-manager-a': 'Operations Manager',
+      'demo-staff-a': 'Field Operations Staff',
+      'demo-validator-a': 'Compliance Auditor',
+      'demo-manager-b': 'Operations Manager',
+      'demo-staff-b': 'Field Operations Staff'
+    };
+    const actorLabel = friendlyNames[me.actor_id] || me.actor_id || me.name || 'Operations Lead';
     $('user-display-name').textContent = actorLabel;
     $('user-role-label').textContent = `${roleNames[me.role] || me.role} · Tenant: ${me.tenant_id}`;
     $('user-avatar-initials').textContent = actorLabel.split(/[_-\s]+/).map(s => s[0]).join('').slice(0, 2).toUpperCase() || 'CO';
@@ -2715,6 +2722,19 @@ async function load() {
       $('events-list').replaceChildren(evBox);
     } else {
       $('events-list').textContent = 'Audit history restricted to Manager and Validator roles.';
+    }
+
+    const up = new URLSearchParams(window.location.search);
+    if (up.get('scroll')) {
+      const el = document.querySelector(up.get('scroll'));
+      if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
+    }
+    if (up.get('highlight')) {
+      const el = document.querySelector(up.get('highlight'));
+      if (el) {
+        el.style.outline = '3px solid #10B981';
+        el.style.boxShadow = '0 0 28px rgba(16,185,129,0.6)';
+      }
     }
   });
 }

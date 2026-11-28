@@ -300,8 +300,8 @@ header {
         <p>Google Cloud Run, Firestore, Secret Manager, GCS, paired with NVIDIA NIM Nemotron & Llama Vision.</p>
       </div>
       <div class="card">
-        <h4>Team Contributions</h4>
-        <p>Blanca (AI Research), Justin (AI Cloud Leader), Kseniya (Data Analytics), Shiksha (Cybersecurity).</p>
+        <h4>Team Disciplines</h4>
+        <p>AI Cloud Leadership · AI Research &amp; Foundations · Cloud Data Analytics · Cloud Cybersecurity.</p>
       </div>
     </div>
   </div>
@@ -471,12 +471,12 @@ header {
 
     <div class="grid-2">
       <div class="card">
-        <h4>Four Domain Leaders</h4>
+        <h4>Four Domain Disciplines</h4>
         <ul style="padding-left: 20px; font-size: 13px; color: var(--text-dim); line-height: 1.8; margin-top: 6px;">
-          <li><strong>Blanca (@bcperez14):</strong> Team Lead · AI Research Foundations</li>
-          <li><strong>Justin (@creova-gif):</strong> AI Cloud Leader</li>
-          <li><strong>Kseniya (@ksen-nm):</strong> Cloud Data Analytics</li>
-          <li><strong>Shiksha (@Shiksha99):</strong> Cloud Cybersecurity</li>
+          <li><strong>Team Leadership:</strong> AI Research &amp; Climate Foundations</li>
+          <li><strong>Cloud Architecture:</strong> Serverless Cloud Run &amp; NVIDIA NIM Orchestration</li>
+          <li><strong>Data Engineering:</strong> NWS Alert Ingestion &amp; 5-Factor Analytics</li>
+          <li><strong>Security &amp; Governance:</strong> Role-Based Access Control &amp; ADR-001 Verification</li>
         </ul>
       </div>
       <div class="card">
@@ -495,7 +495,7 @@ header {
 <!-- SPEAKER NOTES DRAWER -->
 <div id="notes-drawer" class="speaker-notes-drawer">
   <div class="speaker-header">
-    <span class="speaker-name" id="notes-speaker">Speaker: Justin (@creova-gif)</span>
+    <span class="speaker-name" id="notes-speaker">Narration: Executive Overview</span>
     <button class="btn" style="padding: 4px 10px; font-size: 11px;" onclick="toggleNotes()">Close ✕</button>
   </div>
   <div class="speaker-text" id="notes-text">
@@ -509,36 +509,36 @@ let currentSlide = 1;
 
 const speakerNotes = [
   {
-    speaker: "Justin (@creova-gif) · 0:00 - 0:30",
+    speaker: "Executive Overview · 0:00 - 0:15",
     text: "Judges and colleagues, welcome to ClimateOps. Extreme heat is the deadliest weather-related threat in America, but the breakdown isn't the weather forecast—it's operational coordination. ClimateOps is a human-centered, approval-first readiness platform built on Google Cloud and NVIDIA NIM that translates National Weather Service warnings into prioritized, verified physical building preparations in the South Bronx."
   },
   {
-    speaker: "Kseniya (@ksen-nm) · 0:30 - 1:05",
+    speaker: "Problem & Community Grounding · 0:15 - 0:30",
     text: "In the South Bronx neighborhood of Mott Haven, the Heat Vulnerability Index is 5 out of 5—the highest in NYC. When the National Weather Service issues an Excessive Heat Warning, facility managers face three critical friction points: Alert Lag, Priority Paralysis across multiple aging buildings, and Unaccountable Execution where vital steps are coordinated over chaotic text chats without proof. ClimateOps bridges this exact gap."
   },
   {
-    speaker: "Justin & Blanca · 1:05 - 1:45",
+    speaker: "Enterprise Cloud & NIM Architecture · 0:30 - 0:45",
     text: "ClimateOps deploys a production-grade serverless architecture on Google Cloud Run with Firestore event sourcing, Secret Manager, and short-lived Cloud Storage signed URLs. For intelligence, we orchestrate NVIDIA NIM microservices using nemotron-3.5-bolt-e4b for structured readiness synthesis and llama-3.2-90b-vision for photo proof inspection. If external AI APIs become unavailable, an automated deterministic fallback guarantees 100% operational continuity."
   },
   {
-    speaker: "Kseniya (@ksen-nm) · 1:45 - 2:20",
+    speaker: "Explainable 5-Factor Scoring · 0:45 - 1:00",
     text: "Unlike opaque AI scoring systems, our Priority Facility Ranking is 100% deterministic and explainable. The 5-factor formula weights heat index, vulnerable occupant profiles, active AC outages, occupancy, and staff ratios. For example, the E. Roberts Moore Older Adult Center scores 93.3 because it houses frail seniors with an active AC compressor failure, placing it at the absolute top of the city's readiness queue."
   },
   {
-    speaker: "Justin (@creova-gif) · 2:20 - 3:00",
+    speaker: "Mandatory Safety Gate (ADR-001) · 1:00 - 1:15",
     text: "Our core architectural safety guarantee is ADR-001. We do not trust AI to command physical operations autonomously. If a staff member tries to approve a brief, the API returns HTTP 403 Forbidden. If anyone attempts to generate tasks before approval, the API returns HTTP 409 Conflict. When a manager approves, the system cryptographically binds the brief version, its SHA-256 content hash, and the manager's identity."
   },
   {
-    speaker: "Shiksha & Blanca · 3:00 - 3:45",
+    speaker: "Zero-Trust Task Execution & Photo Proof · 1:15 - 1:30",
     text: "For field task completion, we enforce a zero-trust model. Technicians must upload physical photo proof of chiller gauges and AC status directly to private Google Cloud Storage via 15-minute expiring HMAC signed URLs. Every state change is immutably logged into Google Cloud Firestore native mode event sourcing, giving municipal agencies a tamper-evident audit trail of pre-event mitigation."
   },
   {
-    speaker: "Shiksha (@Shiksha99) · 3:45 - 4:20",
+    speaker: "Automated Verification & 108 Tests · 1:30 - 1:45",
     text: "Every single feature in ClimateOps is backed by empirical verification. We have 108 automated tests running in CI that guard our security invariants, scoring math, and tenant isolation. Our secret scanner confirms zero leaked credentials. We conducted full STRIDE threat modeling and documented ten formal Architectural Decision Records. You can open our live Cloud Run endpoint right now, inspect our OpenAPI documentation, and run our test suite in 6 seconds."
   },
   {
-    speaker: "Justin & Team · 4:20 - 4:45",
-    text: "ClimateOps was built through tight interdisciplinary collaboration across our four team members: Blanca, Kseniya, Shiksha, and Justin. We are proud of our technical depth and equally proud of our honesty: our facilities are verified South Bronx public sites, and we make no exaggerated claims. Our roadmap expands into live IoT telemetry via Cloud Pub/Sub and direct NYC 311 cooling center integration. Thank you for evaluating ClimateOps!"
+    speaker: "Sustainable Roadmap · 1:45 - 2:00",
+    text: "ClimateOps was built through tight interdisciplinary collaboration across our four engineering disciplines. We are proud of our technical depth and equally proud of our honesty: our facilities are verified South Bronx public sites, and we make no exaggerated claims. Our roadmap expands into live IoT telemetry via Cloud Pub/Sub and direct NYC 311 cooling center integration. Thank you for evaluating ClimateOps!"
   }
 ];
 

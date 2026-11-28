@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-Generates a broadcast-quality 1080p MP4 Walkthrough Video for ClimateOps submission.
-Captures live UI states from http://localhost:8080 and slides from docs/09-submission/slides.html,
-composites high-contrast captions and title overlays, and encodes with ffmpeg.
+Generates a fast, high-density 1080p MP4 Walkthrough Video for ClimateOps submission.
+Covers all user journeys (Ingestion, Scoring, Stress Test, NIM Brief, ADR-001 Approval Gate,
+Field Staff Checklist, Photo Proof, Manager Verification, Audit Ledger, and 108 Tests)
+with clear on-screen transcriptions and zero personal names.
 """
 
 import os
@@ -19,170 +20,212 @@ FRAMES_DIR.mkdir(parents=True, exist_ok=True)
 
 WIDTH, HEIGHT = 1920, 1080
 
-def capture_url(url: str, out_path: Path, wait_sec: float = 1.0):
+def capture_page(url: str, out_path: Path, height: int = 1080, virtual_time_ms: int = 2000):
     cmd = [
         CHROME,
         "--headless",
         "--hide-scrollbars",
-        f"--window-size={WIDTH},{HEIGHT}",
+        f"--window-size={WIDTH},{height}",
+        f"--virtual-time-budget={virtual_time_ms}",
         f"--screenshot={out_path}",
         url
     ]
     subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
 
-def add_caption_overlay(img_path: Path, act_title: str, speaker_tag: str, caption_text: str):
+def add_transcription_overlay(img_path: Path, category: str, stage_tag: str, transcription: str):
     im = Image.open(img_path).convert("RGBA")
-    draw = ImageDraw.Draw(im)
+    
+    # Crop or resize if needed to exactly 1920x1080
+    if im.size != (WIDTH, HEIGHT):
+        im = im.crop((0, 0, WIDTH, HEIGHT))
 
-    # Dark translucent banner at the bottom
+    # Frosted dark translucent banner at bottom
     overlay = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
     overlay_draw = ImageDraw.Draw(overlay)
 
-    bar_h = 130
-    bar_y = HEIGHT - bar_h - 20
-    bar_x = 40
-    bar_w = WIDTH - 80
+    bar_h = 136
+    bar_y = HEIGHT - bar_h - 22
+    bar_x = 44
+    bar_w = WIDTH - 88
 
+    # Rounded translucent rectangle with emerald border
     overlay_draw.rounded_rectangle(
         [(bar_x, bar_y), (bar_x + bar_w, bar_y + bar_h)],
-        radius=16,
-        fill=(10, 16, 14, 230),
-        outline=(16, 185, 129, 180),
+        radius=14,
+        fill=(8, 14, 12, 235),
+        outline=(16, 185, 129, 210),
         width=2
     )
 
     im = Image.alpha_composite(im, overlay)
     draw = ImageDraw.Draw(im)
 
-    # Load standard system font
     try:
-        font_title = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 20)
-        font_sub = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 24)
-        font_meta = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 16)
+        font_header = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 20)
+        font_tag = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 17)
+        font_text = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc", 24)
     except Exception:
-        font_title = font_sub = font_meta = ImageFont.load_default()
+        font_header = font_tag = font_text = ImageFont.load_default()
 
-    # Draw header text
-    draw.text((bar_x + 24, bar_y + 16), f"CLIMATEOPS DEMO · {act_title.upper()}", fill=(16, 185, 129), font=font_title)
-    draw.text((bar_x + bar_w - 280, bar_y + 18), speaker_tag, fill=(148, 163, 184), font=font_meta)
+    # Draw Category Header (Green) and Stage Tag (Silver/Teal)
+    draw.text((bar_x + 24, bar_y + 16), f"CLIMATEOPS DEMO · {category.upper()}", fill=(16, 185, 129), font=font_header)
+    draw.text((bar_x + bar_w - 320, bar_y + 18), f"[ {stage_tag.upper()} ]", fill=(148, 163, 184), font=font_tag)
 
-    # Draw caption body
-    draw.text((bar_x + 24, bar_y + 54), caption_text, fill=(255, 255, 255), font=font_sub)
+    # Draw 2-line transcription text (White)
+    draw.text((bar_x + 24, bar_y + 52), transcription, fill=(255, 255, 255), font=font_text, spacing=8)
 
     im.convert("RGB").save(img_path)
 
 def main():
-    print("Capturing live scenes and slides for the 5-minute walkthrough...")
+    print("Generating fast-paced ClimateOps walkthrough video (zero personal names, all user journeys)...")
 
+    # Step 1: Pre-capture base fullpage renders
+    print("1. Capturing high-resolution viewport sources...")
+    mgr_full = FRAMES_DIR / "src_mgr_full.png"
+    staff_full = FRAMES_DIR / "src_staff_full.png"
+    stress_full = FRAMES_DIR / "src_stress_full.png"
+    slide1 = FRAMES_DIR / "src_slide1.png"
+    slide3 = FRAMES_DIR / "src_slide3.png"
+    slide7 = FRAMES_DIR / "src_slide7.png"
+
+    capture_page("http://localhost:8080/?who=demo-manager-a", mgr_full, height=2500, virtual_time_ms=2500)
+    capture_page("http://localhost:8080/?who=demo-staff-a", staff_full, height=2500, virtual_time_ms=2500)
+    capture_page("http://localhost:8080/?temp=104", stress_full, height=2500, virtual_time_ms=2500)
+    capture_page(f"file://{ROOT}/docs/09-submission/slides.html?slide=1", slide1, height=1080, virtual_time_ms=1000)
+    capture_page(f"file://{ROOT}/docs/09-submission/slides.html?slide=3", slide3, height=1080, virtual_time_ms=1000)
+    capture_page(f"file://{ROOT}/docs/09-submission/slides.html?slide=7", slide7, height=1080, virtual_time_ms=1000)
+
+    # Open base images
+    im_mgr = Image.open(mgr_full)
+    im_staff = Image.open(staff_full)
+    im_stress = Image.open(stress_full)
+
+    # Step 2: Define the 12 fast scenes covering every user journey
     scenes = [
         {
-            "id": "scene_01_cover",
-            "url": f"file://{ROOT}/docs/09-submission/slides.html?slide=1",
-            "title": "Act 1: Cover, Problem & SDG 13 Mission",
-            "speaker": "Justin Mafie · AI Cloud Leader",
-            "caption": "Extreme heat is America's deadliest climate event. Mott Haven & Melrose suffer from NYC's highest Heat Vulnerability Index (5/5).\nClimateOps turns raw NWS warnings into verified, human-approved physical facility preparations.",
-            "duration": 18
+            "id": "scene_01_mission",
+            "base_image": Image.open(slide1),
+            "category": "Executive Mission · SDG 13 Resilience",
+            "stage_tag": "System Overview",
+            "transcription": "Extreme heat is America's deadliest weather threat. Mott Haven (South Bronx CD1) faces NYC's highest heat vulnerability (5/5).\nClimateOps operationalizes National Weather Service alerts into verified, human-approved facility readiness preparations.",
+            "duration": 8
         },
         {
-            "id": "scene_02_weather",
-            "url": "http://localhost:8080/?scroll=.header-title-box",
-            "title": "Act 2: Real-Time Weather Alert Ingestion & Provenance",
-            "speaker": "Kseniya Naumovich · Cloud Data Analytics",
-            "caption": "ClimateOps monitors National Weather Service CAP alerts for South Bronx zone NYZ073 with active freshness labeling.\nWe track 10 facilities (6 real public sites + 2 controlled benchmark test buildings in Tenant A).",
-            "duration": 22
+            "id": "scene_02_ingestion",
+            "base_image": im_mgr.crop((0, 0, 1920, 1080)),
+            "category": "Data Provenance · Live NWS Weather Feed",
+            "stage_tag": "Data Ingestion",
+            "transcription": "Live ingestion of National Weather Service CAP alerts for South Bronx zone NYZ073 with automated freshness labeling.\nLive weather telemetry: 88°F ambient, 94°F Heat Index, providing an authoritative baseline for municipal mobilization.",
+            "duration": 9
         },
         {
-            "id": "scene_03_ranking",
-            "url": "http://localhost:8080/?scroll=%23rank-list&highlight=%23rank-list",
-            "title": "Act 3: Explainable 5-Factor Vulnerability Scoring",
-            "speaker": "Kseniya Naumovich · Cloud Data Analytics",
-            "caption": "Zero black-box decisions. Mathematical formula: Heat Index (30%) + Vulnerability (25%) + AC Outage (20%) + Occupancy (15%) + Staff (10%).\nRank #1: E. Roberts Moore Older Adult Center scores 93.3 due to fragile seniors and a broken chiller.",
-            "duration": 24
+            "id": "scene_03_scoring",
+            "base_image": im_mgr.crop((0, 260, 1920, 1340)),
+            "category": "Decision Engine · 10-Facility Portfolio",
+            "stage_tag": "Risk Scoring",
+            "transcription": "Zero black-box AI. Mathematical formula: Heat Index (30%) + Vulnerability (25%) + AC Outage (20%) + Occupancy (15%) + Staff (10%).\nRanks 10 facilities (8 real Bronx public sites + 2 demo controls). E. Roberts Moore Center scores 93.3 (CRITICAL).",
+            "duration": 10
         },
         {
-            "id": "scene_04_stress_sim",
-            "url": "http://localhost:8080/?temp=104&scroll=.hazard-bar-container",
-            "title": "Act 4: What-If Stress Testing Simulator (104°F Heat Wave)",
-            "speaker": "Kseniya Naumovich · Cloud Data Analytics",
-            "caption": "Operators can stress-test operations by adjusting ambient temperatures from 80°F to 115°F.\nAt 104°F extreme heat, facility risk scores and priority rankings recalculate dynamically in real time.",
-            "duration": 22
+            "id": "scene_04_stress_test",
+            "base_image": im_stress.crop((0, 200, 1920, 1280)),
+            "category": "Simulation · 104°F Heat Wave Stress Test",
+            "stage_tag": "What-If Analysis",
+            "transcription": "Operators stress-test facilities across temperatures from 80°F to 115°F with instantaneous score recalculation.\nAt 104°F extreme heat, priority rankings immediately reorder, escalating high-occupancy sites into the critical action queue.",
+            "duration": 9
         },
         {
             "id": "scene_05_architecture",
-            "url": f"file://{ROOT}/docs/09-submission/slides.html?slide=3",
-            "title": "Act 5: Enterprise Google Cloud & NVIDIA NIM Architecture",
-            "speaker": "Blanca Perez · Team Lead & AI Research",
-            "caption": "Google Cloud Run serverless backend with Firestore native event sourcing, Secret Manager, and Cloud Storage.\nPaired with NVIDIA NIM microservices (nemotron-3.5-bolt-e4b) for grounded synthesis and llama-3.2 vision.",
-            "duration": 22
+            "base_image": Image.open(slide3),
+            "category": "Enterprise Stack · Google Cloud + NVIDIA NIM",
+            "stage_tag": "Enterprise Stack",
+            "transcription": "Google Cloud Run serverless backend with Firestore native event sourcing, Secret Manager, and short-lived Cloud Storage signed URLs.\nOrchestrated with NVIDIA NIM microservices: nemotron-3.5-bolt-e4b for synthesis and llama-3.2 for vision verification.",
+            "duration": 9
         },
         {
-            "id": "scene_06_brief",
-            "url": "http://localhost:8080/?scroll=%23brief&highlight=%23brief",
-            "title": "Act 6: NVIDIA NIM Action Brief with Strict Citations",
-            "speaker": "Blanca Perez · Team Lead & AI Research",
-            "caption": "NVIDIA NIM Nemotron-3.5 synthesizes actionable, facility-specific preparation checklists.\nCrucially, all recommendations are grounded in verified data via citation tags [FACT-1], eliminating hallucinations.",
-            "duration": 24
+            "id": "scene_06_nim_brief",
+            "base_image": im_mgr.crop((0, 750, 1920, 1830)),
+            "category": "AI Action Plan · NVIDIA Nemotron-3.5",
+            "stage_tag": "AI Synthesis",
+            "transcription": "NVIDIA NIM Nemotron synthesizes site-specific physical preparation checklists for chillers, generators, and hydration.\nStrict evidence grounding binds every task to verified building attributes using citation anchors [FACT-1], eliminating hallucinations.",
+            "duration": 10
         },
         {
             "id": "scene_07_approval_gate",
-            "url": f"file://{ROOT}/docs/09-submission/slides.html?slide=5",
-            "title": "Act 7: ADR-001 Mandatory Human Manager Approval Gate",
-            "speaker": "Justin Mafie · AI Cloud Leader",
-            "caption": "Safety-first governance: AI proposes recommendations, but an authorized manager must formally approve.\nCryptographically binds SHA-256 brief hash. Creating tasks before approval returns HTTP 409 Conflict.",
-            "duration": 24
+            "base_image": im_mgr.crop((0, 780, 1920, 1860)),
+            "category": "User Journey 1 · ADR-001 Manager Safety Gate",
+            "stage_tag": "Operations Manager",
+            "transcription": "Safety-first governance: AI proposes actions, but an authorized Operations Manager must formally approve the brief.\nStrict safety barrier: generating physical tasks before approval returns HTTP 409 Conflict. Approval binds brief SHA-256 hash.",
+            "duration": 10
         },
         {
-            "id": "scene_08_staff_proof",
-            "url": "http://localhost:8080/?who=demo-staff-a&scroll=%23tasks-list",
-            "title": "Act 8: Field Staff Execution & GCS Signed Photo Proof",
-            "speaker": "Shiksha Kandel · Cloud Cybersecurity",
-            "caption": "Role-Based Access Control (RBAC): Staff technician Marcus sees assigned tasks with approval buttons locked (HTTP 403).\nUploads physical photo proof of chiller gauges directly to Cloud Storage via 15-minute HMAC signed URLs.",
-            "duration": 24
+            "id": "scene_08_staff_tasks",
+            "base_image": im_staff.crop((0, 1100, 1920, 2180)),
+            "category": "User Journey 2 · Field Staff Task Execution",
+            "stage_tag": "Field Operations",
+            "transcription": "Role-Based Access Control (RBAC): Field staff see assigned physical tasks with managerial approval controls locked (HTTP 403).\nStaff click 'Start Task' to begin physical deployment of portable cooling, hydration stations, and emergency power.",
+            "duration": 10
         },
         {
-            "id": "scene_09_verify_audit",
-            "url": "http://localhost:8080/?who=demo-manager-a&scroll=%23events-list",
-            "title": "Act 9: Manager Verification & Immutable Audit Ledger",
-            "speaker": "Blanca & Shiksha · Verification & Governance",
-            "caption": "Switching back to Manager, Justin signs off with 'Verify & Accept'.\nFirestore native mode event sourcing logs every state change with microsecond timestamps for city compliance.",
-            "duration": 22
+            "id": "scene_09_photo_proof",
+            "base_image": im_staff.crop((0, 1100, 1920, 2180)),
+            "category": "User Journey 2 · GCS Signed Photo Proof",
+            "stage_tag": "Field Operations",
+            "transcription": "Field technicians upload physical photo proof of chiller pressure gauges and water station deployment.\nImages stream to private Google Cloud Storage via secure 15-minute HMAC signed URLs, evaluated with Nemotron Vision.",
+            "duration": 10
         },
         {
-            "id": "scene_10_tests_credits",
-            "url": f"file://{ROOT}/docs/09-submission/slides.html?slide=7",
-            "title": "Act 10: 108 Automated Tests, Team Credits & Closing",
-            "speaker": "Justin Mafie & ClimateOps Team",
-            "caption": "108 / 108 automated backend tests passing in CI. Zero credentials leaked to git. Verified live on Cloud Run.\nBuilt for the Mentor Me Collective Google Cloud Launchpad Showcase by Blanca, Justin, Kseniya, and Shiksha.",
-            "duration": 20
+            "id": "scene_10_manager_verify",
+            "base_image": im_mgr.crop((0, 1100, 1920, 2180)),
+            "category": "User Journey 3 · Manager Verification & Sign-Off",
+            "stage_tag": "Operations Manager",
+            "transcription": "Switching to Manager persona: Manager inspects submitted field photo evidence and advisory AI checks.\nManager clicks 'Verify & Accept', certifying physical completion and preventing unverified verbal sign-offs.",
+            "duration": 10
+        },
+        {
+            "id": "scene_11_audit_ledger",
+            "base_image": im_mgr.crop((0, 1420, 1920, 2500)),
+            "category": "Compliance · Immutable SHA-256 Audit Trail",
+            "stage_tag": "Audit & Governance",
+            "transcription": "Firestore event sourcing records every state transition, brief approval, photo upload, and manager verification in real time.\nImmutable cryptographic audit stream with microsecond UTC timestamps provides full transparency for municipal heat emergencies.",
+            "duration": 9
+        },
+        {
+            "id": "scene_12_tests_closing",
+            "base_image": Image.open(slide7),
+            "category": "Verification · 108 Automated Tests in CI",
+            "stage_tag": "Production Ready",
+            "transcription": "108 / 108 automated pytest tests passing in CI. Full tenant isolation, STRIDE threat model, and zero secrets committed.\nBuilt for the Mentor Me Collective × Google Cloud Launchpad Showcase — empowering resilient South Bronx communities.",
+            "duration": 9
         }
     ]
 
-    total_duration = sum(s["duration"] for s in scenes)
-    print(f"Total video planned duration: {total_duration} seconds (~{total_duration//60}:{total_duration%60:02d} mins)")
+    total_seconds = sum(s["duration"] for s in scenes)
+    print(f"Total video planned duration: {total_seconds} seconds (~{total_seconds//60}:{total_seconds%60:02d} mins)")
 
-    # 1. Capture and prepare all scene images
+    # Step 3: Render frames with transcription overlay
     image_files = []
     for idx, s in enumerate(scenes):
-        print(f"[{idx+1}/{len(scenes)}] Capturing {s['id']}...")
-        img_path = FRAMES_DIR / f"{s['id']}.png"
-        capture_url(s["url"], img_path)
-        add_caption_overlay(img_path, s["title"], s["speaker"], s["caption"])
-        image_files.append((img_path, s["duration"]))
+        print(f"[{idx+1}/{len(scenes)}] Rendering {s['id']}...")
+        frame_path = FRAMES_DIR / f"{s['id']}.png"
+        s["base_image"].convert("RGB").save(frame_path)
+        add_transcription_overlay(frame_path, s["category"], s["stage_tag"], s["transcription"])
+        image_files.append((frame_path, s["duration"]))
 
-    # 2. Build ffmpeg concat script for seamless video rendering
+    # Step 4: Write concat file for ffmpeg
     concat_file = FRAMES_DIR / "concat.txt"
     with open(concat_file, "w") as f:
-        for img_path, dur in image_files:
-            f.write(f"file '{img_path}'\n")
+        for fpath, dur in image_files:
+            f.write(f"file '{fpath}'\n")
             f.write(f"duration {dur}\n")
-        # repeat last image for ffmpeg quirk
+        # Quirk of ffmpeg concat demuxer: last file must be repeated without duration
         f.write(f"file '{image_files[-1][0]}'\n")
 
+    # Step 5: Encode with ffmpeg
     out_mp4 = OUT_DIR / "climateops_walkthrough.mp4"
     print(f"Encoding walkthrough video to {out_mp4} using ffmpeg...")
 
-    # Encode 1080p 30fps MP4 with h264
-    cmd = [
+    cmd_ffmpeg = [
         "ffmpeg",
         "-y",
         "-f", "concat",
@@ -190,13 +233,13 @@ def main():
         "-i", str(concat_file),
         "-vf", "fps=30,format=yuv420p",
         "-c:v", "libx264",
-        "-preset", "medium",
-        "-crf", "20",
+        "-preset", "veryfast",
+        "-crf", "22",
         str(out_mp4)
     ]
-    subprocess.run(cmd, check=True)
+    subprocess.run(cmd_ffmpeg, check=True)
     size_mb = out_mp4.stat().st_size / (1024 * 1024)
-    print(f"Successfully generated {out_mp4} ({size_mb:.2f} MB, {total_duration}s duration)!")
+    print(f"Successfully generated {out_mp4} ({size_mb:.2f} MB, {total_seconds}s duration)!")
 
 if __name__ == "__main__":
     main()
