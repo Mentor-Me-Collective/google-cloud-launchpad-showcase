@@ -69,7 +69,7 @@ export default function TabsLayout() {
   // then threw the person back to the first tab when they returned. Only check them while a
   // tab really is the screen in front.
   const inTabs = segments[0] === '(tabs)';
-  const routeName = inTabs ? (segments[1] ?? 'index') : undefined;
+  const routeName = inTabs ? ((segments as readonly string[])[1] ?? 'index') : undefined;
   if (inTabs && role === 'teacher' && !TEACHER_TABS.has(routeName ?? '')) {
     return <Redirect href="/panel" />;
   }

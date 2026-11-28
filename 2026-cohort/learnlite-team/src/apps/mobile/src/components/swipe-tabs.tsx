@@ -19,7 +19,7 @@ const MIN_VELOCITY = 650;
 export function SwipeTabs({ tabs, children }: { tabs: Tab[]; children: ReactNode }) {
   const segments = useSegments();
   // The first tab is the "index" route, which has no segment of its own.
-  const current = tabs.findIndex((tab) => tab.name === (segments[1] ?? 'index'));
+  const current = tabs.findIndex((tab) => tab.name === ((segments as readonly string[])[1] ?? 'index'));
 
   const go = (direction: 1 | -1) => {
     const next = tabs[current + direction];
