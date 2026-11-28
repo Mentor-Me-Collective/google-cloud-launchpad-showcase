@@ -109,6 +109,7 @@ if (configured && PIN_PATTERN.test(configured)) {
 } else {
   console.warn("[consentkey] Demo users not seeded: configure CONSENTKEY_DEMO_PIN.");
 }
+}
   const adminSeed = await users.seedAdmin();
   if (!adminSeed.seeded && adminSeed.reason?.includes("CONSENTKEY_ADMIN")) {
     console.error(`[consentkey] System Admin NOT created: ${adminSeed.reason}.`);

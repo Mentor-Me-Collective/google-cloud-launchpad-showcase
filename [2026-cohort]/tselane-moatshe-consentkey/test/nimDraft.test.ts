@@ -202,7 +202,7 @@ test("PIN: rate limited, then unlocks after the lock period", () => {
   const pins = new PinService(() => now);
   pins.setPin("P-001", "0000");
   let last;
-  for (let i = 0; i < MAX_ATTEMPTS; i++) last = pins.verify("P-001", "0000");
+  for (let i = 0; i < MAX_ATTEMPTS; i++) last = pins.verify("P-001", "1111");
   assert.equal(last && !last.ok && last.locked, true);
   // Even the right PIN is refused while locked.
   const locked = pins.verify("P-001", "0000");

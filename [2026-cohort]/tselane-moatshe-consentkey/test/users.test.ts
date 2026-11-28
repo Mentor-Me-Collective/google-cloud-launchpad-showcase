@@ -18,7 +18,8 @@ for (const k of [
 ]) {
   delete process.env[k];
 }
-process.env.CONSENTKEY_ADMIN_PIN = "97531";
+process.env.CONSENTKEY_DEMO_PIN = "0000";
+process.env.CONSENTKEY_ADMIN_PIN = "00000";
 
 import assert from "node:assert/strict";
 import { test } from "node:test";
@@ -95,8 +96,8 @@ test("wrong PIN, unknown user and missing fields all get the same refusal", asyn
 });
 
 test("login is locked after repeated wrong PINs, even for the right PIN", async () => {
-  for (let i = 0; i < 4; i++) assert.equal((await login("chen", "0000")).status, 401);
-  const fifth = await login("chen", "0000");
+  for (let i = 0; i < 4; i++) assert.equal((await login("chen", "1111")).status, 401);
+  const fifth = await login("chen", "1111");
   assert.equal(fifth.status, 429);
   assert.equal((await login("chen", DEMO_PIN)).status, 429);
   // An unknown name is limited the same way, so it does not reveal existence.
@@ -127,13 +128,13 @@ test("a wrong PIN on a switch is rejected, audited without the PIN, and nothing 
   const app = await getApp();
   const amara = await who("parent-amara");
   const before = app.connector.getState("L-101", "Photos");
-  const r = await handleConsentChange(amara, { type: "Photos", to: "withdrawn", pin: "DEMO_PIN" });
+  const r = await handleConsentChange(amara, { type: "Photos", to: "withdrawn", pin: "1111" });
   assert.equal(r.status, 403);
   assert.equal(app.connector.getState("L-101", "Photos"), before);
   const failed = app.audit.entries().filter((e) => e.event === "consent.pin_failed");
   assert.ok(failed.length >= 1);
-  assert.doesNotMatch(JSON.stringify(app.audit.entries()), /DEMO_PIN/);
-  assert.doesNotMatch(JSON.stringify(r.body), /DEMO_PIN/);
+  assert.doesNotMatch(JSON.stringify(app.audit.entries()), /1111/);
+  assert.doesNotMatch(JSON.stringify(r.body), /1111/);
 });
 
 test("repeated wrong PINs on switches lock the parent out", async () => {
@@ -379,10 +380,10 @@ test("a deactivated user cannot sign in, and their session stops working", async
 test("the audit chain verifies after admin actions, with who/what/when and no PIN", async () => {
   const app = await getApp();
   const a = await admin();
-  await adminCreateStaff(a, { name: "Audit Check", username: "auditcheck", pin: "DEMO_PIN", role: "admin_officer" });
+  await adminCreateStaff(a, { name: "Audit Check", username: "auditcheck", pin: "12345678", role: "admin_officer" });
   const target = app.users.list().find((u) => u.username === "auditcheck");
   assert.ok(target);
-  await adminResetPin(a, { userId: target.id, pin: "DEMO_PIN" });
+  await adminResetPin(a, { userId: target.id, pin: "12345678" });
   await adminDeactivate(a, { userId: target.id });
 
   const v = app.audit.verify();
@@ -398,7 +399,7 @@ test("the audit chain verifies after admin actions, with who/what/when and no PI
     assert.equal(e.details.pin, undefined);
   }
   const whole = JSON.stringify(app.audit.entries());
-  for (const pin of ["24681357", "13572468", "73918246", "86420137", "97531", "5050"]) {
+  for (const pin of ["24681357", "13572468", "73918246", "86420137", "97531", "5050", "12345678"]) {
     assert.equal(whole.includes(`"${pin}"`), false, pin);
     assert.equal(whole.includes(pin), false, pin);
   }
