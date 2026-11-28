@@ -1,0 +1,30 @@
+{
+  "name": "scholarscope",
+  "private": true,
+  "description": "ScholarScope: track scholarship requirements with a source for every claim.",
+  "type": "module",
+  "workspaces": [
+    "shared",
+    "api",
+    "worker"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node scripts/site.mjs start",
+    "stop": "node scripts/site.mjs stop",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm test",
+    "infra:check": "node scripts/infra-check.mjs",
+    "admin": "docker compose exec api npm run admin --"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "nodemon": "^3.1.14",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.0"
+  }
+}
