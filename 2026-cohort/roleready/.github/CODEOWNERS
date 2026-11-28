@@ -1,0 +1,32 @@
+# Who reviews what. GitHub requests these reviewers automatically, and the protection rule on
+# main requires one approval from a code owner of every file a pull request touches.
+# Nobody can approve their own pull request, so every path lists at least two people.
+# Team: Mohamed @mkaba214 (Team Lead, repo owner), Andrew @dmandrew01, Joclyn @JDenise25.
+# Later lines win over earlier ones.
+
+# Default: any teammate can review
+*                               @dmandrew01 @mkaba214 @JDenise25
+
+# Security-critical: Andrew or Mohamed must approve
+/infra/iam/                     @dmandrew01 @mkaba214
+/scripts/iam.py                 @dmandrew01 @mkaba214
+/tests/iam/                     @dmandrew01 @mkaba214
+/app/policy.py                  @dmandrew01 @mkaba214
+/app/auth.py                    @dmandrew01 @mkaba214
+/.github/                       @dmandrew01 @mkaba214
+/.claude/                       @dmandrew01 @mkaba214
+/CLAUDE.md                      @dmandrew01 @mkaba214
+
+# Cloud engineering and deploy
+/infra/*.sh                     @mkaba214 @dmandrew01
+/Dockerfile                     @mkaba214 @dmandrew01
+/docker-compose.yml             @mkaba214 @dmandrew01
+
+# Agent and evaluation
+/app/agent.py                   @dmandrew01 @JDenise25
+/app/llm.py                     @dmandrew01 @JDenise25
+/evals/                         @JDenise25 @dmandrew01
+
+# Analytics
+/scripts/export_bigquery.py     @JDenise25 @mkaba214
+/scripts/metrics.sql            @JDenise25 @mkaba214
