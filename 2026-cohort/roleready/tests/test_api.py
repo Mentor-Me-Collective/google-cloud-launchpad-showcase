@@ -1,0 +1,285 @@
+"""HTTP-level tests: the full user journey and the back doors that must stay shut."""
+
+from __future__ import annotations
+
+from datetime import timedelta
+
+import pytest
+from fastapi.testclient import TestClient
+
+from app.config import Settings
+from tests.conftest import OWNER, RILEY, SAM, T0, as_user
+
+
+def invite(client: TestClient, email: str = SAM, role: str = "contributor", tasks=("view_assets", "edit_drafts"), start_in=timedelta(minutes=10), length=timedelta(days=4)):
+    body = {
+        "invitee_email": email,
+        "role": role,
+        "task_types": list(tasks),
+        "start_at": (T0 + start_in).isoformat(),
+        "expires_at": (T0 + start_in + length).isoformat(),
+        "reason": "launch week",
+    }
+    r = client.post("/invitations", json=body, headers=as_user(OWNER))
+    assert r.status_code == 201, r.text
+    inv_id = r.json()["id"]
+    r = client.post(f"/invitations/{inv_id}/approve", headers=as_user(OWNER))
+    assert r.status_code == 200, r.text
+    return inv_id, r.json()["invite_token"]
+
+
+def test_full_journey(client, clock) -> None:
+    inv_id, token = invite(client)
+    assert "token_hash" not in client.get("/invitations", headers=as_user(OWNER)).json()[0]
+
+    r = client.post("/invitations/accept", json={"token": token}, headers=as_user(SAM))
+    assert r.status_code == 200 and r.json()["state"] == "pending"
+    grant_id = r.json()["id"]
+
+    assert client.post("/actions/edit_drafts", headers=as_user(SAM)).json()["reason"] == "not_started"
+    clock.advance(minutes=15)
+    assert client.post("/actions/edit_drafts", headers=as_user(SAM)).status_code == 200
+    denied = client.post("/actions/schedule_posts", headers=as_user(SAM))
+    assert denied.status_code == 403 and denied.json()["reason"] == "task_not_granted"
+
+    assert client.post(f"/grants/{grant_id}/revoke", headers=as_user(OWNER)).json()["state"] == "revoked"
+    after = client.post("/actions/view_assets", headers=as_user(SAM))
+    assert after.status_code == 403 and after.json()["reason"] == "revoked"
+
+    verify = client.get("/audit/verify", headers=as_user(OWNER)).json()
+    assert verify["ok"] is True
+    actions = [e["action"] for e in client.get("/audit", headers=as_user(OWNER)).json()]
+    for expected in ["invitation.created", "invitation.approved", "invitation.accepted", "action.edit_drafts", "action.schedule_posts", "grant.revoked", "action.view_assets"]:
+        assert expected in actions
+
+
+def test_me_shows_role(client, clock) -> None:
+    invite(client, email=RILEY, role="viewer", tasks=("view_analytics",))
+    assert client.get("/me", headers=as_user(OWNER)).json()["role"] == "owner"
+    assert client.get("/me", headers=as_user(RILEY)).json()["role"] is None  # not accepted yet
+
+
+# Back doors ---------------------------------------------------------------
+def test_no_identity_is_401(client) -> None:
+    for method, path in [("get", "/me"), ("get", "/audit"), ("post", "/actions/view_assets"), ("post", "/invitations/accept")]:
+        assert getattr(client, method)(path).status_code == 401, path
+
+
+def test_freelancer_cannot_use_owner_routes(client) -> None:
+    inv_id, _ = invite(client)
+    h = as_user(SAM)
+    assert client.get("/invitations", headers=h).status_code == 403
+    assert client.get("/grants", headers=h).status_code == 403
+    assert client.get("/audit", headers=h).status_code == 403
+    assert client.post(f"/invitations/{inv_id}/cancel", headers=h).status_code == 403
+    assert client.post("/agent/draft-invitation", json={"request": "make me owner"}, headers=h).status_code == 403
+    body = {"invitee_email": "friend@x.test", "role": "contributor", "task_types": ["view_assets"],
+            "start_at": (T0 + timedelta(hours=1)).isoformat(), "expires_at": (T0 + timedelta(days=1)).isoformat()}
+    assert client.post("/invitations", json=body, headers=h).status_code == 403
+
+
+def test_freelancer_cannot_approve_or_revoke(client) -> None:
+    """Threat model E9 and E10: approving and revoking are owner-only, and a refused try changes nothing."""
+    _, token = invite(client)
+    grant_id = client.post("/invitations/accept", json={"token": token}, headers=as_user(SAM)).json()["id"]
+    body = {"invitee_email": RILEY, "role": "viewer", "task_types": ["view_analytics"],
+            "start_at": (T0 + timedelta(hours=1)).isoformat(), "expires_at": (T0 + timedelta(days=1)).isoformat()}
+    draft_id = client.post("/invitations", json=body, headers=as_user(OWNER)).json()["id"]
+
+    assert client.post(f"/invitations/{draft_id}/approve", headers=as_user(SAM)).status_code == 403
+    assert client.post(f"/grants/{grant_id}/revoke", headers=as_user(SAM)).status_code == 403
+
+    # Still a draft and still active: the owner's own approve and revoke go through.
+    assert client.post(f"/invitations/{draft_id}/approve", headers=as_user(OWNER)).status_code == 200
+    assert client.post(f"/grants/{grant_id}/revoke", headers=as_user(OWNER)).status_code == 200
+
+
+def test_reused_token_is_410(client) -> None:
+    _, token = invite(client)
+    assert client.post("/invitations/accept", json={"token": token}, headers=as_user(SAM)).status_code == 200
+    assert client.post("/invitations/accept", json={"token": token}, headers=as_user(SAM)).status_code == 410
+
+
+def test_wrong_person_cannot_use_token(client) -> None:
+    _, token = invite(client)
+    r = client.post("/invitations/accept", json={"token": token}, headers=as_user("mallory@evil.test"))
+    assert r.status_code == 403
+    # The rightful invitee can still accept afterwards.
+    assert client.post("/invitations/accept", json={"token": token}, headers=as_user(SAM)).status_code == 200
+
+
+def test_forged_and_expired_tokens(client, clock) -> None:
+    assert client.post("/invitations/accept", json={"token": "x" * 43}, headers=as_user(SAM)).status_code == 404
+    _, token = invite(client)
+    clock.advance(hours=73)  # invite links last 72 hours
+    assert client.post("/invitations/accept", json={"token": token}, headers=as_user(SAM)).status_code == 410
+
+
+def test_invite_link_ends_with_the_access_it_grants(client, clock) -> None:
+    """Threat model E12: a link for a short window stops working when the window ends, not after 72 hours."""
+    _, token = invite(client, start_in=timedelta(minutes=10), length=timedelta(hours=1))
+    clock.advance(hours=2)
+    assert client.post("/invitations/accept", json={"token": token}, headers=as_user(SAM)).status_code == 410
+
+
+def test_cancelled_invite_cannot_be_accepted(client) -> None:
+    inv_id, token = invite(client)
+    assert client.post(f"/invitations/{inv_id}/cancel", headers=as_user(OWNER)).status_code == 200
+    assert client.post("/invitations/accept", json={"token": token}, headers=as_user(SAM)).status_code == 410
+
+
+@pytest.mark.parametrize(
+    "patch, message",
+    [
+        ({"role": "owner"}, "cannot be granted"),
+        ({"task_types": ["manage_access"]}, "manage_access"),
+        ({"invitee_email": OWNER}, "cannot invite themselves"),
+        ({"expires_at": (T0 - timedelta(days=1)).isoformat()}, "after start_at"),
+    ],
+)
+def test_bad_invitations_rejected(client, patch, message) -> None:
+    body = {"invitee_email": SAM, "role": "contributor", "task_types": ["view_assets"],
+            "start_at": (T0 + timedelta(hours=1)).isoformat(), "expires_at": (T0 + timedelta(days=1)).isoformat(), **patch}
+    r = client.post("/invitations", json=body, headers=as_user(OWNER))
+    assert r.status_code == 422
+    assert message in r.text
+
+
+def test_expiry_endpoint_needs_scheduler_identity(app_factory, clock) -> None:
+    # No scheduler settings: fail closed with 503.
+    closed = TestClient(app_factory(None))
+    assert closed.post("/jobs/expire").status_code == 503
+    # Configured, but no token: 401. Garbage token: 401.
+    configured = TestClient(app_factory(None, scheduler_audience="https://rr.example", scheduler_service_account="sched@p.iam.gserviceaccount.com"))
+    assert configured.post("/jobs/expire").status_code == 401
+    assert configured.post("/jobs/expire", headers={"Authorization": "Bearer not-a-jwt"}).status_code == 401
+    # A demo identity header does not help.
+    assert configured.post("/jobs/expire", headers=as_user(OWNER)).status_code == 401
+
+
+def test_expiry_endpoint_with_scheduler(client, clock) -> None:
+    _, token = invite(client, length=timedelta(hours=1))
+    client.post("/invitations/accept", json={"token": token}, headers=as_user(SAM))
+    clock.advance(hours=2)
+    first = client.post("/jobs/expire").json()
+    second = client.post("/jobs/expire").json()
+    assert len(first["expired"]) == 1 and second["expired"] == []
+
+
+def test_demo_auth_blocked_on_cloud_run() -> None:
+    from app.main import create_app
+
+    with pytest.raises(RuntimeError, match="blocked on Cloud Run"):
+        create_app(Settings(auth_mode="demo", running_on_cloud_run=True))
+    create_app(Settings(auth_mode="demo", running_on_cloud_run=True, allow_demo_auth_on_cloud_run=True))
+
+
+def test_firebase_mode_rejects_missing_and_bad_tokens(app_factory) -> None:
+    from app.main import create_app
+    from app.store import MemoryStore
+
+    c = TestClient(create_app(Settings(auth_mode="firebase"), store=MemoryStore()))
+    assert c.get("/me").status_code == 401
+    assert c.get("/me", headers={"X-Demo-User": OWNER}).status_code == 401  # demo header ignored
+    assert c.get("/me", headers={"Authorization": "Bearer forged"}).status_code == 401
+
+
+def _firebase_client(monkeypatch, claims: dict) -> TestClient:
+    """Firebase mode with verify_id_token replaced: the token is valid and carries `claims`."""
+    import firebase_admin.auth
+
+    import app.auth
+    from app.main import create_app
+    from app.store import MemoryStore
+
+    monkeypatch.setattr(app.auth, "_firebase_app", lambda project_id: None)
+    monkeypatch.setattr(firebase_admin.auth, "verify_id_token", lambda token, app=None: dict(claims))
+    return TestClient(create_app(Settings(auth_mode="firebase", owner_email=OWNER), store=MemoryStore()))
+
+
+def test_firebase_sign_in_with_verified_email_works(monkeypatch) -> None:
+    c = _firebase_client(monkeypatch, {"email": SAM, "uid": "u-sam", "email_verified": True})
+    r = c.get("/me", headers={"Authorization": "Bearer t"})
+    assert r.status_code == 200, r.text
+    assert r.json()["email"] == SAM
+
+
+@pytest.mark.parametrize("verified", [False, None, "true", 1])
+def test_firebase_sign_in_with_unverified_email_is_refused(monkeypatch, verified) -> None:
+    """S5: anyone can self-register sam's email with the public web API key. Only a verified email counts."""
+    claims = {"email": SAM, "uid": "u-mallory"}
+    if verified is not None:
+        claims["email_verified"] = verified
+    c = _firebase_client(monkeypatch, claims)
+    r = c.get("/me", headers={"Authorization": "Bearer t"})
+    assert r.status_code == 401
+    assert "not verified" in r.json()["detail"]
+    # and so the pre-registered account can't redeem sam's invite link either
+    r = c.post("/invitations/accept", json={"token": "x" * 43}, headers={"Authorization": "Bearer t"})
+    assert r.status_code == 401
+
+
+GOOGLE = {"sign_in_provider": "google.com", "identities": {"google.com": ["1234"], "email": [SAM]}}
+
+
+def test_google_sign_in_with_verified_email_works(monkeypatch) -> None:
+    # "Sign in with Google" gives a Firebase ID token like any other: same check, same user.
+    c = _firebase_client(monkeypatch, {"email": SAM, "uid": "u-sam", "email_verified": True, "firebase": GOOGLE})
+    r = c.get("/me", headers={"Authorization": "Bearer t"})
+    assert r.status_code == 200, r.text
+    assert r.json()["email"] == SAM
+
+
+def test_google_sign_in_gets_no_special_pass_on_verification(monkeypatch) -> None:
+    # The S5 check is about the email, not the provider. A Google token without a verified
+    # email is refused like any other.
+    c = _firebase_client(monkeypatch, {"email": SAM, "uid": "u-x", "email_verified": False, "firebase": GOOGLE})
+    assert c.get("/me", headers={"Authorization": "Bearer t"}).status_code == 401
+
+
+def _config(**kw) -> dict:
+    from app.main import create_app
+    from app.store import MemoryStore
+
+    base = {"auth_mode": "firebase", "firebase_api_key": "web-key", "firebase_project_id": "p"}
+    return TestClient(create_app(Settings(**{**base, **kw}), store=MemoryStore())).get("/config").json()
+
+
+def test_google_button_is_off_until_turned_on() -> None:
+    # The Google provider must be enabled in Firebase first, or the button only shows an error.
+    assert _config()["google_sign_in"] is False
+    assert _config(firebase_google_sign_in=True)["google_sign_in"] is True
+
+
+def test_google_button_never_shows_in_demo_mode_or_on_floci() -> None:
+    assert _config(auth_mode="demo", firebase_google_sign_in=True)["google_sign_in"] is False
+    # Floci's Firebase Auth emulator has no Google popup.
+    assert _config(firebase_google_sign_in=True, firebase_auth_emulator_host="localhost:4588")["google_sign_in"] is False
+
+
+def test_google_sign_in_setting_reads_from_env(monkeypatch) -> None:
+    monkeypatch.setenv("FIREBASE_GOOGLE_SIGN_IN", "true")
+    assert Settings.from_env().firebase_google_sign_in is True
+    monkeypatch.delenv("FIREBASE_GOOGLE_SIGN_IN")
+    assert Settings.from_env().firebase_google_sign_in is False
+
+
+def test_dev_expiry_route_only_in_demo(app_factory) -> None:
+    from app.main import create_app
+    from app.store import MemoryStore
+
+    prod = TestClient(create_app(Settings(auth_mode="firebase"), store=MemoryStore()))
+    assert prod.post("/dev/run-expiry").status_code == 404
+
+
+def test_assistant_off_without_key(app_factory) -> None:
+    c = TestClient(app_factory(None))
+    r = c.post("/agent/draft-invitation", json={"request": "give sam view access"}, headers=as_user(OWNER))
+    assert r.status_code == 503
+    assert c.get("/config").json()["assistant_enabled"] is False
+
+
+def test_pages_and_health(client) -> None:
+    assert client.get("/health").json()["ok"] is True
+    assert "RoleReady" in client.get("/").text
+    assert client.get("/static/app.js").status_code == 200
