@@ -1,147 +1,257 @@
-# LearnLite — Offline-First AI-Assisted Learning Platform
+# LearnLite
+## Offline-First AI-Assisted Learning Platform
 
-**MMC × Google Cloud Launchpad | 2026 Cohort**
+**Mentor Me Collective | Google Cloud Launchpad | 2026 Cohort**
 
-## Project Overview
+### 1. Project Overview
 
-LearnLite is an offline-first educational application designed
-to support learners and teachers in environments with limited
-or unreliable internet connectivity.
+LearnLite is an offline-first educational platform designed
+to make structured digital learning more accessible in
+communities where reliable internet connectivity cannot
+always be guaranteed.
 
-The platform combines classroom management, structured learning
-modules, assessments, student progress tracking, gamification,
-offline synchronization and AI-assisted educational content.
+The application helps teachers organize learning materials
+and classrooms while enabling students to study, complete
+activities and track their learning progress.
 
-The application uses Expo/React Native for the client and
-Python FastAPI on Google Cloud Run for backend services.
+### 2. Target Audience
 
-## Problem and Solution
+- Students in underserved and low-connectivity communities
+- Teachers managing digital classrooms and assignments
+- Schools and learning organizations seeking accessible
+  mobile-first learning solutions
 
-Unreliable internet connectivity can interrupt learning and
-limit access to digital educational resources.
+### 3. Problem Statement
 
-LearnLite aims to provide accessible learning materials,
-classroom assignments and progress tracking, with an
-offline-first approach that supports synchronization when
-connectivity becomes available.
+Students with unreliable connectivity may lose access to
+digital resources and experience interruptions in learning.
 
-## Team
+Teachers also require accessible tools for managing content,
+classrooms, assignments and student performance.
 
-| Member | Responsibility |
+### 4. Sustainable Development Goal
+
+**SDG 4 — Quality Education**
+
+LearnLite supports the goal of improving access to inclusive
+and equitable learning opportunities through technology.
+
+### 5. Our Solution
+
+LearnLite combines:
+
+- Teacher and student authentication
+- Classroom management and student enrollment
+- Learning modules and interactive activities
+- Six supported activity types
+- Assignments and learning progress
+- XP, streaks and hearts
+- Community learning modules
+- Offline study and later synchronization
+- AI-assisted educational content workflows
+
+Mobile features require final real-device acceptance testing.
+
+### 6. Technology Stack
+
+| Technology | Purpose |
 |---|---|
-| Elvis Ncube | Cloud Engineering, Backend and Integration |
-| Harold Ormeño Meneses | Mobile and Frontend Engineering |
-| Aashma | Project Leadership and Security |
-| Reshma Thomas | AI Learning Content and Evaluation |
-| Ernest | Testing and Quality Assurance |
+| Google Cloud Run | Backend hosting |
+| Python / FastAPI | Application API |
+| Cloud Firestore | Application data and offline records |
+| Firebase Authentication | Identity and authorization |
+| Expo / React Native | Mobile and web frontend |
+| GitHub | Collaboration, CI and source control |
+| Google Gemini | AI content workflow components |
+| NVIDIA Nemotron | AI checking components in the merged repository |
 
-## Technology Stack
+The Gemini/Nemotron implementation and live execution
+status must be confirmed by the AI engineering team before
+final submission.
 
-- **Google Cloud Run:** FastAPI application hosting
-- **Cloud Firestore:** Application and synchronization data
-- **Firebase Authentication:** User identity and access
-- **Expo / React Native:** Mobile and web frontend
-- **Python / FastAPI:** Backend API
-- **GitHub:** Source control, pull requests and collaboration
-- **Gemini / NVIDIA Nemotron:** AI content pipeline components
-  represented in the merged AI API work; end-to-end integration
-  is subject to final application verification
+### 7. Google Cloud Architecture
 
-## Verified Backend Capabilities
+The mobile/web application authenticates users through
+Firebase and communicates with FastAPI over HTTPS.
 
-- Firebase teacher and student authentication
-- Role-based authorization
-- Classroom management and student enrollment APIs
-- Modules, lessons and learning blocks
-- Module publishing and classroom assignment
-- Student lesson attempts and activity grading
-- Lesson completion and persisted progress
-- XP gamification
-- Authenticated offline synchronization API
-- Revision conflict detection and duplicate operation prevention
-- Cloud Run staging deployment
+FastAPI runs on Google Cloud Run and accesses Cloud Firestore
+to manage users, classrooms, modules, assignments, learning
+attempts and synchronized records.
 
-## Validation Results
+Deployment region: africa-south1
 
-- 123 backend regression tests passed
-- 8 offline synchronization engine tests passed
-- 11 live authentication and authorization checks passed
-- 13 live teacher-to-student workflow checks passed
-- Live sync push, retry, conflict handling and pull passed
-- Cloud Run health endpoint returned HTTP 200
-- CORS preflight verified for http://localhost:8081
+Cloud project: learnlite-514514
 
-These results validate the staging backend and synchronization
-API. Final frontend integration and mobile offline/reconnection
-behavior require separate application-level testing.
+Architecture and test details:
+[Architecture and Testing](docs/ARCHITECTURE-AND-TESTING.md)
 
-## Project Source Code
+### 8. Source Code
 
-**Main LearnLite repository:**
+Main development repository:
 
 https://github.com/LearnLite-Cloud-Build/LearnLite
 
-The main repository contains the application, backend,
-AI content, synchronization engine, infrastructure,
-tests and project documentation.
+The full submission package includes application,
+infrastructure, services, tests and documentation under src/.
 
-## Staging Backend
+Source snapshot: 240c5a7
+
+### 9. Setup and Run Instructions
+
+#### Backend
+
+Requirements:
+- Python and pip
+- Project dependencies
+- A configured Google Cloud/Firebase environment
+- Authorized access to the relevant development resources
+
+Backend source: src/apps/api/
+
+For a local container build, from the submission root:
+
+```bash
+docker build -t learnlite-api ./src/apps/api
+```
+
+To run locally, configure the required development
+environment and follow the backend configuration in source.
+
+#### Mobile
+
+Requirements:
+- Node.js and npm
+- Expo development tooling
+- Firebase client configuration
+
+From the submission root:
+
+```bash
+cd src/apps/mobile
+npm install
+npx expo start
+```
+
+The exact setup commands and required environment variables
+must be validated against the final release by Harold.
+
+Never commit secrets, Firebase service-account private keys,
+passwords or private application credentials.
+
+### 10. Staging Backend
+
+API URL:
 
 https://learnlite-api-staging-669554395089.africa-south1.run.app
 
-Health endpoint:
+Health:
+GET /health
 
-`GET /health`
+API contract:
+GET /openapi.json
 
-API specification:
+Protected endpoints require valid Firebase credentials.
 
-`GET /openapi.json`
+### 11. Testing and Verification
 
-Protected endpoints require valid Firebase authentication.
+Validated backend and infrastructure work includes:
 
-## Local Development
+- 147 backend tests passed
+- 8 offline sync-engine tests passed
+- 11 live authorization checks passed
+- 13 live teacher-to-student workflow checks passed
+- Live offline sync push, pull, retries and conflicts verified
+- Successful Cloud Run deployment and API health checks
 
-Refer to the main repository for full application setup.
+These are engineering validation results, not a claim
+that all final mobile functionality passed device testing.
 
-Backend development generally requires:
+### 12. Application Screenshots
 
-1. Python and project dependencies
-2. A configured Google Cloud/Firebase development environment
-3. Appropriate application credentials and permissions
-4. FastAPI application configuration
-5. A separately configured Expo frontend
+Final approved screenshots:
+[ADD SCREENSHOT LINKS]
 
-Do not commit private keys, service-account credentials,
-Firebase passwords or other secrets.
+### 13. Product Demonstration
 
-## Architecture and Testing
+Recorded walkthrough (maximum five minutes):
+[ADD PUBLICLY ACCESSIBLE VIDEO LINK]
 
-See [Architecture and Validation](docs/ARCHITECTURE-AND-TESTING.md).
+Presentation (maximum eight slides):
+[View LearnLite Final Presentation](https://docs.google.com/presentation/d/1fBXGhE0Bb7SXsQ4TPOhIih-HsKxrqYipIHWOblvSJ5Y/edit?usp=sharing)
 
-## MVP Completion Status
+### 14. Project Team and Contributions
 
-**Backend:** Core functionality deployed and validated.
+| Member | Contribution |
+|---|---|
+| Elvis Ncube | Cloud engineering, FastAPI backend, deployment, API integration and testing |
+| Harold Ormeño Meneses | Mobile/frontend engineering, application integration and Android build |
+| Aashma Lama | Project leadership, security coordination and final delivery |
+| Reshma Thomas | AI-assisted learning content, evaluation and content integration |
+| Ernest Lukheli | Quality assurance, test evaluation and release verification |
 
-**Frontend:** Integration and application-level verification
-are being finalized by the team.
+Final individual contributions and GitHub usernames
+must be confirmed by the team.
 
-**AI:** Merged AI content API and learning materials require
-final demonstration-level verification.
+### 15. Project Summary
 
-**Presentation:** Final slides and demonstration materials
-are being prepared for the 27 November completion target.
+[Written Project Summary](docs/PROJECT-SUMMARY.md)
 
-## Future Ideas
+### 16. Known Limitations
 
-- Improved low-bandwidth content delivery
-- Offline learning analytics and progress reconciliation
-- More learning languages and accessibility features
-- Expanded AI-assisted teacher workflows
-- Additional classroom and reporting features
-- Production hardening and monitoring
+- Final mobile/device testing requires QA confirmation.
+- Offline synchronization behavior must be verified
+  through the final application build.
+- Some offline synchronization records are separate from
+  server-side lesson progress and gamification.
+- Final AI integration and production-readiness claims
+  require engineering verification.
 
-## Cohort
+### 17. Future Improvements
 
-Mentor Me Collective — Google Cloud Launchpad, 2026.
+- Expanded multilingual learning content
+- Enhanced accessibility
+- Improved offline learning analytics
+- More AI-assisted teacher tools
+- Advanced classroom reporting
+- Production scaling and monitoring
 
-Project completion target: 27 November 2026.
+### 18. License
+
+Open-source license: pending team approval.
+
+Do not assume permission to redistribute third-party images,
+sounds, models or other assets until rights are verified.
+
+---
+
+Built by the LearnLite Team for the 2026 MMC Google Cloud
+Launchpad Program.
+
+
+## Final MVP Release and Submission References
+
+- **Source repository:** https://github.com/LearnLite-Cloud-Build/LearnLite
+- **Android MVP releases:** https://github.com/LearnLite-Cloud-Build/LearnLite/releases
+- **Backend staging API:** https://learnlite-api-staging-669554395089.africa-south1.run.app
+- **Release and testing:** [Release evidence](docs/RELEASE-AND-TESTING.md)
+- **Project summary:** [Written summary](docs/PROJECT-SUMMARY.md)
+
+### GitHub Team Contributions
+
+| Member | GitHub profile | Primary responsibility |
+|---|---|---|
+| Elvis Ncube | [EXMARK-DESIGNS](https://github.com/EXMARK-DESIGNS) | Cloud and backend engineering |
+| Harold Ormeño Meneses | [haroldom](https://github.com/haroldom) | Mobile app and integration |
+| Aashma Lama | [Aashmalama](https://github.com/Aashmalama) | Leadership and coordination |
+| Reshma Thomas | [rshmthomas-cyber](https://github.com/rshmthomas-cyber) | AI content and evaluation |
+| Ernest Lukheli | [elukheli-beep](https://github.com/elukheli-beep) | Quality assurance |
+
+### Final Presentation Materials
+
+- **Presentation deck (maximum 8 slides):** [View LearnLite Final Presentation](https://docs.google.com/presentation/d/1fBXGhE0Bb7SXsQ4TPOhIih-HsKxrqYipIHWOblvSJ5Y/edit?usp=sharing)
+- **Recorded walkthrough (maximum 5 minutes):** Pending final approved link
+- **Android real-device QA report:** Pending team sign-off
+
+The iOS build has not been completed for this MVP.
+AI integration status must be verified against the final
+approved code and live deployment results.
