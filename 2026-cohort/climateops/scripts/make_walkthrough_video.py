@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """
-Generates an interactive, broadcast-quality 1080p MP4 Walkthrough Video for ClimateOps.
-Features a live-animated macOS mouse cursor that navigates, hovers, and clicks through
-every user journey and rubric requirement with realistic smoothstep Bézier motion,
-expanding click ripple rings, and on-screen transcriptions (zero personal names).
+Generates an interactive teaching-style 1080p MP4 Walkthrough Video for ClimateOps.
+Features dynamic app interactions:
+- Temperature slider physically drags from 88°F to 96°F to 104°F, recalculating scores in real-time.
+- Cursor clicks 'Approve Exact Version v1' and the brief status physically updates to APPROVED.
+- Cursor navigates Field Staff checklist, clicks 'Start Task', and inspects signed photo proof.
+- Cursor clicks 'Verify & Accept' as Manager and the task physically marks as ACCEPTED.
+- Full navigation through the Immutable Event Ledger and 108 automated tests.
+All with realistic smoothstep Bézier cursor movement, expanding click ripples, and on-screen transcriptions (zero personal names).
 """
 
 import os
@@ -14,10 +18,9 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path("/Users/justinmafie/Desktop/research/nvidia-hackathon/climateops-project-skeleton/2026-cohort/climateops")
-CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 OUT_DIR = ROOT / "docs/09-submission"
+STEPS_DIR = Path("/tmp/climateops_steps")
 FRAMES_DIR = Path("/tmp/climateops_frames")
-FRAMES_DIR.mkdir(parents=True, exist_ok=True)
 
 WIDTH, HEIGHT = 1920, 1080
 
@@ -35,29 +38,14 @@ def create_cursor_sprites():
     # 2. Hand pointer cursor
     im_hand = Image.new("RGBA", (36, 36), (0, 0, 0, 0))
     d_h = ImageDraw.Draw(im_hand)
-    # Shadow
     d_h.rounded_rectangle([(11, 8), (29, 32)], radius=7, fill=(0, 0, 0, 90))
     d_h.ellipse([(14, 2), (22, 18)], fill=(0, 0, 0, 90))
-    # Outer black outline
     d_h.rounded_rectangle([(10, 7), (28, 31)], radius=7, fill=(20, 20, 20, 255))
     d_h.ellipse([(13, 1), (21, 17)], fill=(20, 20, 20, 255))
-    # Inner white fill
     d_h.rounded_rectangle([(11, 8), (27, 30)], radius=6, fill=(255, 255, 255, 255))
     d_h.ellipse([(14, 2), (20, 16)], fill=(255, 255, 255, 255))
 
     return im_arrow, im_hand
-
-def capture_page(url: str, out_path: Path, height: int = 1080, virtual_time_ms: int = 2500):
-    cmd = [
-        CHROME,
-        "--headless",
-        "--hide-scrollbars",
-        f"--window-size={WIDTH},{height}",
-        f"--virtual-time-budget={virtual_time_ms}",
-        f"--screenshot={out_path}",
-        url
-    ]
-    subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
 
 def add_transcription_overlay(im: Image.Image, category: str, stage_tag: str, transcription: str) -> Image.Image:
     im = im.convert("RGBA")
@@ -111,39 +99,31 @@ def interpolate_cursor(waypoints, f):
     return waypoints[-1][1], waypoints[-1][2], waypoints[-1][3]
 
 def main():
-    print("Generating animated cursor walkthrough video with full user journeys...")
+    print("Generating teaching-style interactive walkthrough video...")
     arrow_sprite, hand_sprite = create_cursor_sprites()
 
-    # 1. Capture base viewports
-    print("1. Capturing high-resolution viewport sources...")
-    mgr_full = FRAMES_DIR / "src_mgr_full.png"
-    staff_full = FRAMES_DIR / "src_staff_full.png"
-    stress_full = FRAMES_DIR / "src_stress_full.png"
-    slide1 = FRAMES_DIR / "src_slide1.png"
-    slide3 = FRAMES_DIR / "src_slide3.png"
-    slide7 = FRAMES_DIR / "src_slide7.png"
+    # Load captured interactive states
+    im_mgr_88 = Image.open(STEPS_DIR / "full_mgr_88.png")
+    im_temp_96 = Image.open(STEPS_DIR / "full_temp_96.png")
+    im_temp_104 = Image.open(STEPS_DIR / "full_temp_104.png")
+    im_brief_pend = Image.open(STEPS_DIR / "full_brief_pending.png")
+    im_brief_appr = Image.open(STEPS_DIR / "full_brief_approved.png")
+    im_staff = Image.open(STEPS_DIR / "full_staff_view.png")
+    im_mgr_rev = Image.open(STEPS_DIR / "full_mgr_review.png")
+    im_mgr_acc = Image.open(STEPS_DIR / "full_mgr_accepted.png")
+    slide1 = Image.open(FRAMES_DIR / "src_slide1.png")
+    slide3 = Image.open(FRAMES_DIR / "src_slide3.png")
+    slide7 = Image.open(FRAMES_DIR / "src_slide7.png")
 
-    capture_page("http://localhost:8080/?who=demo-manager-a", mgr_full, height=2500, virtual_time_ms=2500)
-    capture_page("http://localhost:8080/?who=demo-staff-a", staff_full, height=2500, virtual_time_ms=2500)
-    capture_page("http://localhost:8080/?temp=104", stress_full, height=2500, virtual_time_ms=2500)
-    capture_page(f"file://{ROOT}/docs/09-submission/slides.html?slide=1", slide1, height=1080, virtual_time_ms=1000)
-    capture_page(f"file://{ROOT}/docs/09-submission/slides.html?slide=3", slide3, height=1080, virtual_time_ms=1000)
-    capture_page(f"file://{ROOT}/docs/09-submission/slides.html?slide=7", slide7, height=1080, virtual_time_ms=1000)
-
-    im_mgr = Image.open(mgr_full)
-    im_staff = Image.open(staff_full)
-    im_stress = Image.open(stress_full)
-
-    # 2. Scene specifications & animated cursor waypoints
-    # Each waypoint: (frame_idx, x, y, cursor_type, click_frame_or_None)
     scenes = [
+        # Scene 1: Mission
         {
             "id": "scene_01_mission",
-            "bg": Image.open(slide1),
+            "get_bg": lambda f: slide1,
             "category": "Executive Mission · SDG 13 Resilience",
             "stage_tag": "System Overview",
             "transcription": "Extreme heat is America's deadliest weather threat. Mott Haven (South Bronx CD1) faces NYC's highest heat vulnerability (5/5).\nClimateOps operationalizes National Weather Service alerts into verified, human-approved facility readiness preparations.",
-            "duration_frames": 240, # 8s
+            "duration_frames": 240,
             "waypoints": [
                 (0, 960, 260, 'arrow', None),
                 (50, 480, 580, 'hand', 50),
@@ -153,13 +133,14 @@ def main():
                 (240, 1420, 580, 'arrow', None)
             ]
         },
+        # Scene 2: Live Ingestion
         {
             "id": "scene_02_ingestion",
-            "bg": im_mgr.crop((0, 0, 1920, 1080)),
+            "get_bg": lambda f: im_mgr_88.crop((0, 0, 1920, 1080)),
             "category": "Data Provenance · Live NWS Weather Feed",
             "stage_tag": "Data Ingestion",
             "transcription": "Live ingestion of National Weather Service CAP alerts for South Bronx zone NYZ073 with automated freshness labeling.\nLive weather telemetry: 88°F ambient, 94°F Heat Index, providing an authoritative baseline for municipal mobilization.",
-            "duration_frames": 270, # 9s
+            "duration_frames": 270,
             "waypoints": [
                 (0, 1200, 750, 'arrow', None),
                 (45, 520, 160, 'hand', 45),
@@ -170,13 +151,14 @@ def main():
                 (270, 680, 310, 'arrow', None)
             ]
         },
+        # Scene 3: Explainable Scoring
         {
             "id": "scene_03_scoring",
-            "bg": im_mgr.crop((0, 260, 1920, 1340)),
+            "get_bg": lambda f: im_mgr_88.crop((0, 260, 1920, 1340)),
             "category": "Decision Engine · 10-Facility Portfolio",
             "stage_tag": "Risk Scoring",
             "transcription": "Zero black-box AI. Mathematical formula: Heat Index (30%) + Vulnerability (25%) + AC Outage (20%) + Occupancy (15%) + Staff (10%).\nRanks 10 facilities (8 real Bronx public sites + 2 demo controls). E. Roberts Moore Center scores 93.3 (CRITICAL).",
-            "duration_frames": 300, # 10s
+            "duration_frames": 300,
             "waypoints": [
                 (0, 1100, 600, 'arrow', None),
                 (50, 550, 310, 'hand', 50),
@@ -187,29 +169,37 @@ def main():
                 (300, 1200, 440, 'arrow', None)
             ]
         },
+        # Scene 4: What-If Stress Simulation (DYNAMIC SLIDER INTERACTION!)
         {
             "id": "scene_04_stress_test",
-            "bg": im_stress.crop((0, 200, 1920, 1280)),
+            # Dynamically morph background as slider is dragged!
+            "get_bg": lambda f: (
+                im_mgr_88.crop((0, 200, 1920, 1280)) if f < 50 else
+                im_temp_96.crop((0, 200, 1920, 1280)) if f < 100 else
+                im_temp_104.crop((0, 200, 1920, 1280))
+            ),
             "category": "Simulation · 104°F Heat Wave Stress Test",
             "stage_tag": "What-If Analysis",
-            "transcription": "Operators stress-test facilities across temperatures from 80°F to 115°F with instantaneous score recalculation.\nAt 104°F extreme heat, priority rankings immediately reorder, escalating high-occupancy sites into the critical action queue.",
-            "duration_frames": 270, # 9s
+            "transcription": "Operators stress-test facilities across temperatures from 80°F to 115°F with instantaneous score recalculation.\nWatch the slider drag to 104°F extreme heat: facility risk scores jump immediately and reorder the critical response queue.",
+            "duration_frames": 300,
             "waypoints": [
                 (0, 600, 500, 'arrow', None),
-                (40, 550, 270, 'hand', 40),
-                (120, 1080, 270, 'hand', 120),
-                (170, 750, 480, 'hand', 170),
-                (220, 1150, 480, 'arrow', None),
-                (270, 1150, 480, 'arrow', None)
+                (35, 550, 270, 'hand', 35),     # grab slider at 88F
+                (75, 800, 270, 'hand', None),   # drag to 96F
+                (105, 1080, 270, 'hand', 105),  # drag to 104F, release with ripple
+                (170, 750, 480, 'hand', 170),   # inspect critical score jump
+                (240, 1150, 480, 'arrow', None),
+                (300, 1150, 480, 'arrow', None)
             ]
         },
+        # Scene 5: Architecture
         {
             "id": "scene_05_architecture",
-            "bg": Image.open(slide3),
+            "get_bg": lambda f: slide3,
             "category": "Enterprise Stack · Google Cloud + NVIDIA NIM",
             "stage_tag": "Enterprise Stack",
             "transcription": "Google Cloud Run serverless backend with Firestore native event sourcing, Secret Manager, and short-lived Cloud Storage signed URLs.\nOrchestrated with NVIDIA NIM microservices: nemotron-3.5-bolt-e4b for synthesis and llama-3.2 for vision verification.",
-            "duration_frames": 270, # 9s
+            "duration_frames": 270,
             "waypoints": [
                 (0, 960, 240, 'arrow', None),
                 (50, 520, 420, 'hand', 50),
@@ -219,13 +209,14 @@ def main():
                 (270, 960, 720, 'arrow', None)
             ]
         },
+        # Scene 6: NVIDIA NIM Action Plan
         {
             "id": "scene_06_nim_brief",
-            "bg": im_mgr.crop((0, 750, 1920, 1830)),
+            "get_bg": lambda f: im_brief_pend.crop((0, 750, 1920, 1830)),
             "category": "AI Action Plan · NVIDIA Nemotron-3.5",
             "stage_tag": "AI Synthesis",
             "transcription": "NVIDIA NIM Nemotron synthesizes site-specific physical preparation checklists for chillers, generators, and hydration.\nStrict evidence grounding binds every task to verified building attributes using citation anchors [FACT-1], eliminating hallucinations.",
-            "duration_frames": 300, # 10s
+            "duration_frames": 300,
             "waypoints": [
                 (0, 1100, 550, 'arrow', None),
                 (50, 540, 240, 'hand', 50),
@@ -235,93 +226,107 @@ def main():
                 (300, 950, 440, 'arrow', None)
             ]
         },
+        # Scene 7: ADR-001 Approval Gate (DYNAMIC APPROVAL CLICK & STATE TRANSITION!)
         {
             "id": "scene_07_approval_gate",
-            "bg": im_mgr.crop((0, 780, 1920, 1860)),
+            # On frame 95 click, status flips from PENDING_APPROVAL to APPROVED!
+            "get_bg": lambda f: (
+                im_brief_pend.crop((0, 780, 1920, 1860)) if f < 95 else
+                im_brief_appr.crop((0, 780, 1920, 1860))
+            ),
             "category": "User Journey 1 · ADR-001 Manager Safety Gate",
             "stage_tag": "Operations Manager",
-            "transcription": "Safety-first governance: AI proposes actions, but an authorized Operations Manager must formally approve the brief.\nStrict safety barrier: generating physical tasks before approval returns HTTP 409 Conflict. Approval binds brief SHA-256 hash.",
-            "duration_frames": 300, # 10s
+            "transcription": "Safety-first governance: AI proposes actions, but an authorized Operations Manager must formally approve the brief.\nManager clicks 'Approve Exact Version v1': brief status physically transitions to APPROVED with SHA-256 cryptographic binding.",
+            "duration_frames": 300,
             "waypoints": [
                 (0, 1200, 650, 'arrow', None),
                 (45, 620, 240, 'hand', None),
-                (100, 540, 360, 'hand', 100),
-                (160, 950, 360, 'hand', 160),
+                (95, 540, 360, 'hand', 95),     # CLICK APPROVE BUTTON
+                (160, 950, 360, 'hand', 160),   # Inspect APPROVED badge & hash
                 (220, 1350, 240, 'arrow', None),
                 (300, 1350, 240, 'arrow', None)
             ]
         },
+        # Scene 8: Field Staff Task Execution
         {
             "id": "scene_08_staff_tasks",
-            "bg": im_staff.crop((0, 1100, 1920, 2180)),
+            "get_bg": lambda f: im_staff.crop((0, 1100, 1920, 2180)),
             "category": "User Journey 2 · Field Staff Task Execution",
             "stage_tag": "Field Operations",
             "transcription": "Role-Based Access Control (RBAC): Field staff see assigned physical tasks with managerial approval controls locked (HTTP 403).\nStaff click 'Start Task' to begin physical deployment of portable cooling, hydration stations, and emergency power.",
-            "duration_frames": 300, # 10s
+            "duration_frames": 300,
             "waypoints": [
                 (0, 750, 450, 'arrow', None),
-                (45, 180, 160, 'hand', 45),
+                (45, 180, 160, 'hand', 45),     # point to Field Staff persona
                 (105, 620, 260, 'hand', None),
-                (165, 1420, 310, 'hand', 165),
+                (165, 1420, 310, 'hand', 165),  # click Start Task
                 (225, 650, 420, 'arrow', None),
                 (300, 650, 420, 'arrow', None)
             ]
         },
+        # Scene 9: Signed Photo Proof Upload
         {
             "id": "scene_09_photo_proof",
-            "bg": im_staff.crop((0, 1100, 1920, 2180)),
+            "get_bg": lambda f: im_staff.crop((0, 1100, 1920, 2180)),
             "category": "User Journey 2 · GCS Signed Photo Proof",
             "stage_tag": "Field Operations",
             "transcription": "Field technicians upload physical photo proof of chiller pressure gauges and water station deployment.\nImages stream to private Google Cloud Storage via secure 15-minute HMAC signed URLs, evaluated with Nemotron Vision.",
-            "duration_frames": 300, # 10s
+            "duration_frames": 300,
             "waypoints": [
                 (0, 900, 600, 'arrow', None),
-                (50, 1420, 470, 'hand', 50),
-                (110, 650, 520, 'hand', 110),
-                (170, 780, 560, 'hand', 170),
-                (235, 1420, 520, 'hand', None),
+                (50, 1420, 470, 'hand', 50),    # Click Upload Photo Proof
+                (110, 650, 520, 'hand', 110),   # Inspect attached photo proof
+                (170, 780, 560, 'hand', 170),   # Inspect AI advisory check PASS
+                (235, 1420, 520, 'hand', None), # Awaiting Manager Sign-Off
                 (300, 1420, 520, 'arrow', None)
             ]
         },
+        # Scene 10: Manager Verification (DYNAMIC VERIFY & ACCEPT TRANSITION!)
         {
             "id": "scene_10_manager_verify",
-            "bg": im_mgr.crop((0, 1100, 1920, 2180)),
+            # On frame 95 click, task physically transitions from REVIEW to ACCEPTED!
+            "get_bg": lambda f: (
+                im_mgr_rev.crop((0, 1100, 1920, 2180)) if f < 95 else
+                im_mgr_acc.crop((0, 1100, 1920, 2180))
+            ),
             "category": "User Journey 3 · Manager Verification & Sign-Off",
             "stage_tag": "Operations Manager",
-            "transcription": "Switching to Manager persona: Manager inspects submitted field photo evidence and advisory AI checks.\nManager clicks 'Verify & Accept', certifying physical completion and preventing unverified verbal sign-offs.",
-            "duration_frames": 300, # 10s
+            "transcription": "Switching to Manager persona: Manager inspects submitted field photo evidence and advisory AI checks.\nManager clicks 'Verify & Accept': task immediately marks as VERIFIED & ACCEPTED, enforcing physical proof accountability.",
+            "duration_frames": 300,
             "waypoints": [
                 (0, 600, 400, 'arrow', None),
-                (45, 180, 160, 'hand', 45),
-                (105, 650, 310, 'hand', None),
-                (165, 1380, 320, 'hand', 165),
-                (225, 1460, 320, 'hand', None),
-                (300, 1460, 320, 'arrow', None)
+                (45, 180, 160, 'hand', 45),     # Persona: Operations Manager
+                (95, 1380, 320, 'hand', 95),    # CLICK VERIFY & ACCEPT
+                (165, 1380, 320, 'hand', None), # Status updates to ACCEPTED
+                (230, 750, 320, 'hand', None),
+                (300, 750, 320, 'arrow', None)
             ]
         },
+        # Scene 11: Immutable Audit Ledger
         {
             "id": "scene_11_audit_ledger",
-            "bg": im_mgr.crop((0, 1420, 1920, 2500)),
+            "get_bg": lambda f: im_mgr_acc.crop((0, 1420, 1920, 2500)),
             "category": "Compliance · Immutable SHA-256 Audit Trail",
             "stage_tag": "Audit & Governance",
             "transcription": "Firestore event sourcing records every state transition, brief approval, photo upload, and manager verification in real time.\nImmutable cryptographic audit stream with microsecond UTC timestamps provides full transparency for municipal heat emergencies.",
-            "duration_frames": 270, # 9s
+            "duration_frames": 270,
             "waypoints": [
                 (0, 1100, 550, 'arrow', None),
                 (45, 520, 200, 'hand', 45),
-                (105, 450, 280, 'hand', 105),
-                (165, 1250, 280, 'hand', None),
-                (220, 450, 340, 'hand', 220),
+                (105, 450, 280, 'hand', 105),   # TASK_VERIFIED
+                (165, 1250, 280, 'hand', None), # Actor ID
+                (220, 450, 340, 'hand', 220),   # PHOTO_SUBMITTED
                 (270, 450, 340, 'arrow', None)
             ]
         },
+        # Scene 12: Tests & Closing
         {
             "id": "scene_12_tests_closing",
-            "bg": Image.open(slide7),
+            "get_bg": lambda f: slide7,
             "category": "Verification · 108 Automated Tests in CI",
             "stage_tag": "Production Ready",
             "transcription": "108 / 108 automated pytest tests passing in CI. Full tenant isolation, STRIDE threat model, and zero secrets committed.\nBuilt for the Mentor Me Collective × Google Cloud Launchpad Showcase — empowering resilient South Bronx communities.",
-            "duration_frames": 270, # 9s
+            "duration_frames": 270,
             "waypoints": [
                 (0, 960, 240, 'arrow', None),
                 (50, 520, 420, 'hand', 50),
@@ -337,7 +342,6 @@ def main():
     total_seconds = total_frames / 30.0
     print(f"Total video planned duration: {total_seconds:.1f} seconds (~{int(total_seconds//60)}:{int(total_seconds%60):02d} mins)")
 
-    # 3. Setup ffmpeg pipeline via stdin
     out_mp4 = OUT_DIR / "climateops_walkthrough.mp4"
     cmd_ffmpeg = [
         "ffmpeg",
@@ -356,25 +360,26 @@ def main():
     ]
     proc = subprocess.Popen(cmd_ffmpeg, stdin=subprocess.PIPE, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-    # 4. Render and pipe frames
     rendered = 0
     t_start = time.time()
     for s_idx, s in enumerate(scenes):
-        base_with_transcription = add_transcription_overlay(s["bg"], s["category"], s["stage_tag"], s["transcription"])
         clicks = [w[4] for w in s["waypoints"] if w[4] is not None]
         n_frames = s["duration_frames"]
         
-        print(f"[{s_idx+1}/{len(scenes)}] Rendering {s['id']} ({n_frames} frames with animated cursor)...")
+        print(f"[{s_idx+1}/{len(scenes)}] Rendering {s['id']} ({n_frames} frames)...")
         for f in range(n_frames):
-            frame = base_with_transcription.copy()
+            # Dynamic background for interactive state changes
+            raw_bg = s["get_bg"](f)
+            frame = add_transcription_overlay(raw_bg, s["category"], s["stage_tag"], s["transcription"])
+
             cur_x, cur_y, ctype = interpolate_cursor(s["waypoints"], f)
             cur_sprite = hand_sprite if ctype == "hand" else arrow_sprite
 
-            # Draw any active click ripples
+            # Draw expanding ripple on click frames
             for clk_f in clicks:
                 if clk_f <= f <= clk_f + 16:
                     prog = (f - clk_f) / 16.0
-                    r = int(8 + prog * 38)
+                    r = int(8 + prog * 40)
                     alpha = int(220 * (1.0 - prog))
                     ov = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
                     d_ov = ImageDraw.Draw(ov)
@@ -392,7 +397,7 @@ def main():
 
     elapsed = time.time() - t_start
     size_mb = out_mp4.stat().st_size / (1024 * 1024)
-    print(f"Successfully generated {out_mp4} ({size_mb:.2f} MB, {total_seconds:.1f}s, {rendered} frames in {elapsed:.1f}s)!")
+    print(f"Successfully generated interactive video {out_mp4} ({size_mb:.2f} MB, {total_seconds:.1f}s in {elapsed:.1f}s)!")
 
 if __name__ == "__main__":
     main()
