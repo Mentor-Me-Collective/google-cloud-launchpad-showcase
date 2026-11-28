@@ -1,0 +1,985 @@
+{
+  "pack_id": "m1-inside-the-ai-chatbot",
+  "pack_version": "0.2.0",
+  "status": "draft-for-review",
+  "title": "Inside the AI Chatbot: how it works and when not to trust it",
+  "language": "en",
+  "audience": "Learners aged 14-20 in low-connectivity communities",
+  "reading_level": "About Grade 6",
+  "author": "Reshma Thomas (Learning Product, Content & AI Evaluation)",
+  "notes": [
+    "v0.2.0: full Module 1. Adds Quick check (L0), Lessons 2, 3 and 5, and Final challenge (L6) to Lessons 1 and 4.",
+    "All lesson text is written in our own words. Sources are cited by source_id; see sources[] for links and reuse terms.",
+    "Items marked illustrative: true contain example values or example AI answers written for teaching, not real model output.",
+    "Quick check (L0) and Final challenge (L6) test the same five ideas, so the score gain measures learning.",
+    "reviewed_by is null until an educator approves the item."
+  ],
+  "sources": [
+    {
+      "source_id": "SRC-GOOG-LLM-01",
+      "title": "Machine Learning Crash Course: Large language models",
+      "publisher": "Google",
+      "url": "https://developers.google.com/profile/badges/playlists/machine-learning-crash-course/llms",
+      "reuse": "CC BY 3.0: adapt with credit"
+    },
+    {
+      "source_id": "SRC-GOOG-HALL-01",
+      "title": "What are AI hallucinations?",
+      "publisher": "Google Cloud",
+      "url": "https://cloud.google.com/discover/what-are-ai-hallucinations",
+      "reuse": "No open licence established: link and summarise only"
+    },
+    {
+      "source_id": "SRC-UNESCO-01",
+      "title": "AI competency framework for students",
+      "publisher": "UNESCO",
+      "url": "https://unesdoc.unesco.org/ark:/48223/pf0000391105",
+      "reuse": "CC BY-SA 3.0 IGO: adapt with credit, share alike"
+    },
+    {
+      "source_id": "SRC-GOOG-PROMPT-01",
+      "title": "Gemini API prompting strategies",
+      "publisher": "Google",
+      "url": "https://ai.google.dev/gemini-api/docs/prompting-strategies",
+      "reuse": "No specific open licence established: link and summarise only"
+    },
+    {
+      "source_id": "SRC-DOAI-01",
+      "title": "Day of AI curriculum",
+      "publisher": "Day of AI (developed at MIT RAISE)",
+      "url": "https://dayofai.org/about-us",
+      "reuse": "CC BY-NC-SA 4.0: non-commercial, credit, share alike"
+    }
+  ],
+  "lessons": [
+    {
+      "lesson_id": "m1.l0",
+      "number": 0,
+      "title": "Quick check",
+      "minutes": 2,
+      "objective": "See what you already know about AI chatbots. There is no pass or fail.",
+      "settings": {
+        "show_feedback": false,
+        "counts_as": "pre_test"
+      },
+      "items": [
+        {
+          "item_id": "m1.l0.s1",
+          "type": "read",
+          "heading": "Before you start",
+          "body": "Answer 5 quick questions. Just choose what you think. You will see how much you learned at the end of the module.",
+          "source_id": "SRC-UNESCO-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l0.q1",
+          "type": "single_choice",
+          "prompt": "How does a chatbot usually create its answer?",
+          "options": [
+            "It finds a finished answer on a website",
+            "It predicts likely words, one piece at a time",
+            "A person types it"
+          ],
+          "correct": 1,
+          "feedback": "It predicts likely next pieces of text, one at a time.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l0.q2",
+          "type": "single_choice",
+          "prompt": "When a chatbot reads your message, what does it work with?",
+          "options": [
+            "Small pieces of text called tokens",
+            "Pictures of each letter",
+            "The meaning, exactly like a person"
+          ],
+          "correct": 0,
+          "feedback": "Text is split into small pieces called tokens, which the model turns into numbers.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l0.q3",
+          "type": "single_choice",
+          "prompt": "Which question will probably get the most useful answer?",
+          "options": [
+            "Tell me about crops",
+            "Crops?",
+            "I grow maize on a small, dry farm. Suggest 3 ways to save water, as a short list."
+          ],
+          "correct": 2,
+          "feedback": "Giving context, a clear task and a format usually gets a more useful answer.",
+          "source_id": "SRC-GOOG-PROMPT-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l0.q4",
+          "type": "single_choice",
+          "prompt": "A chatbot answer sounds very confident. What does that tell you?",
+          "options": [
+            "It must be true",
+            "Nothing on its own: confident answers can still be wrong",
+            "It was checked by a teacher"
+          ],
+          "correct": 1,
+          "feedback": "Chatbots can state false information confidently. This is called a hallucination.",
+          "source_id": "SRC-GOOG-HALL-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l0.q5",
+          "type": "single_choice",
+          "prompt": "Which of these is safest to share with a chatbot?",
+          "options": [
+            "Your home address",
+            "Your password",
+            "A question about how volcanoes work"
+          ],
+          "correct": 2,
+          "feedback": "Keep personal details private. General questions are fine.",
+          "source_id": "SRC-UNESCO-01",
+          "reviewed_by": null
+        }
+      ]
+    },
+    {
+      "lesson_id": "m1.l1",
+      "number": 1,
+      "title": "AI is a next-word guesser",
+      "minutes": 5,
+      "objective": "Explain in your own words how a chatbot builds an answer.",
+      "items": [
+        {
+          "item_id": "m1.l1.s1",
+          "type": "read",
+          "heading": "What is inside a chatbot?",
+          "body": "A chatbot like Gemini or ChatGPT runs on a large language model. The model was trained on a huge amount of text, such as books and websites. From all that text, it learned which words usually come after other words.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l1.s2",
+          "type": "read",
+          "heading": "It guesses, one piece at a time",
+          "body": "When you ask a question, the model does not look up a finished answer. It guesses the most likely next word, adds it, and then guesses the next one. It repeats this again and again until the answer is complete. Let's try being the model.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l1.a1",
+          "type": "next_word",
+          "prompt": "I drink a cup of hot ___",
+          "options": [
+            "tea",
+            "coffee",
+            "shoe",
+            "rain"
+          ],
+          "correct": 0,
+          "ai_choices": [
+            {
+              "word": "tea",
+              "p": 0.48
+            },
+            {
+              "word": "coffee",
+              "p": 0.37
+            },
+            {
+              "word": "milk",
+              "p": 0.1
+            },
+            {
+              "word": "water",
+              "p": 0.05
+            }
+          ],
+          "illustrative": true,
+          "feedback": "The model picks words that often follow 'a cup of hot'. 'Shoe' or 'rain' almost never come next, so they get a tiny chance.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l1.a2",
+          "type": "next_word",
+          "prompt": "The sun rises in the ___",
+          "options": [
+            "east",
+            "west",
+            "kitchen",
+            "night"
+          ],
+          "correct": 0,
+          "ai_choices": [
+            {
+              "word": "east",
+              "p": 0.86
+            },
+            {
+              "word": "morning",
+              "p": 0.11
+            },
+            {
+              "word": "west",
+              "p": 0.03
+            }
+          ],
+          "illustrative": true,
+          "feedback": "This phrase appears very often in text, so the model is very sure about the next word.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l1.a3",
+          "type": "next_word",
+          "prompt": "After school, I finish my ___",
+          "options": [
+            "homework",
+            "lunch",
+            "bicycle",
+            "chores"
+          ],
+          "correct": 0,
+          "ai_choices": [
+            {
+              "word": "homework",
+              "p": 0.62
+            },
+            {
+              "word": "chores",
+              "p": 0.18
+            },
+            {
+              "word": "lunch",
+              "p": 0.12
+            },
+            {
+              "word": "work",
+              "p": 0.08
+            }
+          ],
+          "illustrative": true,
+          "feedback": "Several words could fit. The model chooses one of the likely ones. That is why the same question can get slightly different answers.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l1.a4",
+          "type": "next_word",
+          "prompt": "The farmer waters the ___",
+          "options": [
+            "plants",
+            "phone",
+            "sky",
+            "goats"
+          ],
+          "correct": 0,
+          "ai_choices": [
+            {
+              "word": "plants",
+              "p": 0.55
+            },
+            {
+              "word": "crops",
+              "p": 0.3
+            },
+            {
+              "word": "garden",
+              "p": 0.12
+            },
+            {
+              "word": "goats",
+              "p": 0.03
+            }
+          ],
+          "illustrative": true,
+          "feedback": "The model has seen 'farmer' and 'waters' near words like 'plants' and 'crops' many times.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l1.a5",
+          "type": "next_word",
+          "prompt": "Two plus two equals ___",
+          "options": [
+            "four",
+            "five",
+            "blue",
+            "ten"
+          ],
+          "correct": 0,
+          "ai_choices": [
+            {
+              "word": "four",
+              "p": 0.93
+            },
+            {
+              "word": "4",
+              "p": 0.05
+            },
+            {
+              "word": "five",
+              "p": 0.02
+            }
+          ],
+          "illustrative": true,
+          "feedback": "The model gets this right because it has seen this sentence many times, not because it did the sum like a calculator. With rare or tricky questions, a likely-sounding word can be wrong.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l1.s3",
+          "type": "read",
+          "heading": "Key idea",
+          "body": "A chatbot builds its answer one small piece at a time by choosing likely next words. Likely is not the same as true. That is why answers can sound perfect and still be wrong. You will see this in Lesson 4.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l1.q1",
+          "type": "single_choice",
+          "prompt": "How does a chatbot usually write its answer?",
+          "options": [
+            "It copies a finished answer from a website",
+            "It predicts likely next words, one piece at a time",
+            "A person types the answer very quickly"
+          ],
+          "correct": 1,
+          "feedback": "The model keeps predicting the next likely piece until the answer is complete.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l1.q2",
+          "type": "single_choice",
+          "prompt": "Where did the model learn which words go together?",
+          "options": [
+            "From a huge amount of text it was trained on",
+            "From the user's phone contacts",
+            "It was born knowing them"
+          ],
+          "correct": 0,
+          "feedback": "Training on lots of text taught the model common word patterns.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l1.q3",
+          "type": "single_choice",
+          "prompt": "A chatbot's answer sounds confident and clear. Does that mean it is correct?",
+          "options": [
+            "Yes, confident answers are always correct",
+            "No, the model chooses likely words, and likely is not always true",
+            "Only if the answer is long"
+          ],
+          "correct": 1,
+          "feedback": "Fluent text can still contain mistakes. Lesson 4 shows how to spot them.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        }
+      ]
+    },
+    {
+      "lesson_id": "m1.l2",
+      "number": 2,
+      "title": "Words become tokens",
+      "minutes": 5,
+      "objective": "Explain that a chatbot reads and writes text as small pieces called tokens.",
+      "items": [
+        {
+          "item_id": "m1.l2.s1",
+          "type": "read",
+          "heading": "A chatbot does not read like you",
+          "body": "When you type a message, the model first cuts your text into small pieces called tokens. A token can be a whole short word, part of a longer word, or a mark like a comma.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l2.s2",
+          "type": "read",
+          "heading": "Tokens become numbers",
+          "body": "Each token is turned into a number. The model works with these numbers, not with letters or meanings like a person does. Then it predicts the next token, as you saw in Lesson 1.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l2.a1",
+          "type": "token_demo",
+          "prompt": "Tap each sentence to see how it might be split into tokens.",
+          "examples": [
+            {
+              "text": "I love maths",
+              "tokens": [
+                "I",
+                " love",
+                " maths"
+              ]
+            },
+            {
+              "text": "Hello, friend!",
+              "tokens": [
+                "Hello",
+                ",",
+                " friend",
+                "!"
+              ]
+            },
+            {
+              "text": "unbelievable",
+              "tokens": [
+                "un",
+                "believ",
+                "able"
+              ]
+            },
+            {
+              "text": "homework",
+              "tokens": [
+                "home",
+                "work"
+              ]
+            }
+          ],
+          "illustrative": true,
+          "feedback": "Short, common words are often one token. Long or rare words are often split into parts. The exact split depends on the model.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l2.q1",
+          "type": "single_choice",
+          "prompt": "Which word is more likely to be split into several tokens?",
+          "options": [
+            "cat",
+            "unbelievably",
+            "the"
+          ],
+          "correct": 1,
+          "feedback": "Long or less common words are often split into smaller parts.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l2.q2",
+          "type": "single_choice",
+          "prompt": "What does the model do with each token?",
+          "options": [
+            "Turns it into a number",
+            "Draws it as a picture",
+            "Looks it up in a dictionary"
+          ],
+          "correct": 0,
+          "feedback": "Each token becomes a number, and the model works with those numbers.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l2.s3",
+          "type": "read",
+          "heading": "Why this matters",
+          "body": "Because the model sees tokens and not single letters, it can make strange mistakes, like miscounting the letters in a word. It is very good at patterns in text, but it does not see words the way you do.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l2.q3",
+          "type": "single_choice",
+          "prompt": "A chatbot says the word 'strawberry' has 2 letter r's. It has 3. What is one likely reason?",
+          "options": [
+            "It sees tokens, not single letters",
+            "It does not like fruit",
+            "The internet was slow"
+          ],
+          "correct": 0,
+          "feedback": "The model works with tokens, so counting single letters is surprisingly hard for it.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l2.s4",
+          "type": "read",
+          "heading": "Key idea",
+          "body": "Your words become tokens, and tokens become numbers. The model predicts the next token again and again to build its answer.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        }
+      ]
+    },
+    {
+      "lesson_id": "m1.l3",
+      "number": 3,
+      "title": "Ask better, get better",
+      "minutes": 6,
+      "objective": "Write a clear prompt that gets a more useful answer.",
+      "items": [
+        {
+          "item_id": "m1.l3.s1",
+          "type": "read",
+          "heading": "What is a prompt?",
+          "body": "A prompt is what you type to the chatbot. The model uses your words as the start of its prediction. A vague prompt often gets a vague answer. A clear prompt usually gets a more useful one.",
+          "source_id": "SRC-GOOG-PROMPT-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l3.s2",
+          "type": "read",
+          "heading": "Four parts of a clear prompt",
+          "body": "1. Role: who should the AI act as? 2. Context: what does it need to know about you? 3. Task: what exactly do you want? 4. Format: how should the answer look, for example a short list?",
+          "source_id": "SRC-GOOG-PROMPT-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l3.a1",
+          "type": "prompt_builder",
+          "prompt": "Make this weak prompt better. Add each part and watch the answer improve.",
+          "weak_prompt": "Tell me about crops",
+          "weak_answer": "Crops are plants grown by people for food, fibre or other uses. There are many kinds of crops around the world, such as rice, wheat and maize.",
+          "parts": [
+            {
+              "part": "role",
+              "text": "You are a friendly farming adviser."
+            },
+            {
+              "part": "context",
+              "text": "I grow maize on a small farm where it rarely rains."
+            },
+            {
+              "part": "task",
+              "text": "Suggest 3 ways to save water."
+            },
+            {
+              "part": "format",
+              "text": "Answer as a short list, in simple words."
+            }
+          ],
+          "strong_answer": "1. Cover the soil around your plants with dry grass or leaves to keep it damp.\n2. Water early in the morning or in the evening, when less water dries up.\n3. Water the roots directly instead of spraying the whole field.",
+          "illustrative": true,
+          "feedback": "Same AI, much more useful answer. The clear prompt told it who you are, what you need and how to answer.",
+          "source_id": "SRC-GOOG-PROMPT-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l3.q1",
+          "type": "single_choice",
+          "prompt": "Which part is missing from this prompt: 'You are a science teacher. Explain photosynthesis.'?",
+          "options": [
+            "Role",
+            "Task",
+            "Format, such as 'in 3 short sentences'"
+          ],
+          "correct": 2,
+          "feedback": "It has a role and a task. Adding a format makes the answer easier to use.",
+          "source_id": "SRC-GOOG-PROMPT-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l3.s3",
+          "type": "read",
+          "heading": "The creativity setting",
+          "body": "Some AI tools have a setting called temperature. A low temperature makes answers more predictable. A higher temperature makes answers more varied and creative, but they can also drift off topic.",
+          "source_id": "SRC-GOOG-PROMPT-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l3.a2",
+          "type": "slider_compare",
+          "prompt": "Move the slider to see how the same prompt can give different answers.",
+          "base_prompt": "Write a one-line slogan for a school library.",
+          "settings": [
+            {
+              "label": "Low",
+              "answer": "Read more, learn more."
+            },
+            {
+              "label": "Medium",
+              "answer": "Every book is a door to a new world."
+            },
+            {
+              "label": "High",
+              "answer": "Books are paper spaceships. Blast off at the library!"
+            }
+          ],
+          "illustrative": true,
+          "feedback": "Higher temperature gives more surprising answers. For facts, predictable is better. For stories and slogans, a little creativity can help.",
+          "source_id": "SRC-GOOG-PROMPT-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l3.q2",
+          "type": "single_choice",
+          "prompt": "You need correct facts for a science test. Which temperature setting is best?",
+          "options": [
+            "Low: predictable answers",
+            "High: very creative answers",
+            "It does not matter"
+          ],
+          "correct": 0,
+          "feedback": "For facts, predictable answers are better. Creativity is useful for stories and ideas.",
+          "source_id": "SRC-GOOG-PROMPT-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l3.q3",
+          "type": "single_choice",
+          "prompt": "You wrote a very clear prompt. Does that make the answer always correct?",
+          "options": [
+            "Yes, clear prompts always give true answers",
+            "No, clear prompts help, but the AI can still be wrong",
+            "Only if the prompt is long"
+          ],
+          "correct": 1,
+          "feedback": "A clear prompt usually gives a more useful answer, but it can still contain mistakes. Lesson 4 shows how to spot them.",
+          "source_id": "SRC-GOOG-PROMPT-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l3.s4",
+          "type": "read",
+          "heading": "Key idea",
+          "body": "Role, context, task and format make a clear prompt. Clear prompts get more useful answers, but you still need to check them.",
+          "source_id": "SRC-GOOG-PROMPT-01",
+          "reviewed_by": null
+        }
+      ]
+    },
+    {
+      "lesson_id": "m1.l4",
+      "number": 4,
+      "title": "When AI gets it wrong",
+      "minutes": 6,
+      "objective": "Spot a likely wrong AI answer and know how to check it.",
+      "items": [
+        {
+          "item_id": "m1.l4.s1",
+          "type": "read",
+          "heading": "What is an AI hallucination?",
+          "body": "Sometimes a chatbot states something false or made up, as if it were a fact. This is called a hallucination. The answer often sounds confident, so it is easy to believe.",
+          "source_id": "SRC-GOOG-HALL-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l4.s2",
+          "type": "read",
+          "heading": "Why does it happen?",
+          "body": "Remember Lesson 1: the model chooses likely words. It does not check each fact as it writes. Mistakes are more common with rare topics, but they can happen with any question, even a simple one. A chatbot can even invent names, numbers or studies that do not exist.",
+          "source_id": "SRC-GOOG-HALL-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l4.a1",
+          "type": "spot_the_error",
+          "prompt": "A chatbot gave these three sentences about honey. Which one did it make up?",
+          "options": [
+            "People have eaten honey for thousands of years.",
+            "Bees make honey from the nectar of flowers.",
+            "Eating honey every day cures malaria."
+          ],
+          "correct": 2,
+          "feedback": "There is no evidence that honey cures malaria. Always check health claims with a doctor, nurse or trusted health service.",
+          "source_id": "SRC-GOOG-HALL-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l4.a2",
+          "type": "spot_the_error",
+          "prompt": "Which sentence about capital cities is wrong?",
+          "options": [
+            "Nairobi is the capital of Kenya.",
+            "Lima is the capital of Brazil.",
+            "Hanoi is the capital of Vietnam."
+          ],
+          "correct": 1,
+          "feedback": "Lima is the capital of Peru. The capital of Brazil is Brasilia. A wrong fact can hide between two true ones.",
+          "source_id": "SRC-GOOG-HALL-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l4.a3",
+          "type": "spot_the_error",
+          "prompt": "You asked a chatbot to help with science homework about plants. Which part should you not trust without checking?",
+          "options": [
+            "Plants use sunlight to make their own food.",
+            "Plants take in carbon dioxide from the air.",
+            "A 2019 study by Dr. Ana Lopes proved that plants grow 50% faster when people sing to them."
+          ],
+          "correct": 2,
+          "feedback": "Chatbots can invent studies, names and numbers. Search for the study yourself before you use it. If you cannot find it, leave it out.",
+          "source_id": "SRC-GOOG-HALL-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l4.s3",
+          "type": "read",
+          "heading": "How to check an AI answer",
+          "body": "1. Ask: where did this come from? 2. Check important facts in a second trusted source, such as a textbook, a teacher or an official website. 3. Take extra care with health, money and news. 4. If you cannot confirm it, do not share it.",
+          "source_id": "SRC-UNESCO-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l4.q1",
+          "type": "single_choice",
+          "prompt": "What is an AI hallucination?",
+          "options": [
+            "When the chatbot stops working",
+            "When the chatbot states false or made-up information as if it were true",
+            "When the chatbot answers very slowly"
+          ],
+          "correct": 1,
+          "feedback": "A hallucination is false or invented information presented as fact.",
+          "source_id": "SRC-GOOG-HALL-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l4.q2",
+          "type": "single_choice",
+          "prompt": "Can hallucinations happen with easy questions?",
+          "options": [
+            "No, only with very hard questions",
+            "Yes, they are more common with rare topics but can happen with any question",
+            "No, never if the answer is short"
+          ],
+          "correct": 1,
+          "feedback": "Rare topics raise the risk, but any answer can contain a mistake.",
+          "source_id": "SRC-GOOG-HALL-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l4.q3",
+          "type": "single_choice",
+          "prompt": "A chatbot tells you a home remedy for a fever. What should you do?",
+          "options": [
+            "Try it right away because the chatbot sounded sure",
+            "Share it with your family group first",
+            "Check with a doctor, nurse or trusted health source before using it"
+          ],
+          "correct": 2,
+          "feedback": "Health advice needs checking with a trusted human expert or official health source.",
+          "source_id": "SRC-UNESCO-01",
+          "reviewed_by": null
+        }
+      ]
+    },
+    {
+      "lesson_id": "m1.l5",
+      "number": 5,
+      "title": "Use AI wisely",
+      "minutes": 6,
+      "objective": "Decide when to check an AI answer, protect your privacy, and use AI honestly.",
+      "items": [
+        {
+          "item_id": "m1.l5.s1",
+          "type": "read",
+          "heading": "AI is a tool, you are in charge",
+          "body": "AI can help you learn, write and explore ideas. But you decide what to trust, what to share and how to use it. Three habits help: check important facts, protect your privacy and be honest about AI help.",
+          "source_id": "SRC-UNESCO-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l5.a1",
+          "type": "sort_cards",
+          "prompt": "Sort each AI answer: is it low risk, or should you check it first?",
+          "categories": [
+            "Low risk",
+            "Check first"
+          ],
+          "cards": [
+            {
+              "text": "AI suggests five words that rhyme with 'light'.",
+              "answer": 0
+            },
+            {
+              "text": "AI says a new medicine cures diabetes.",
+              "answer": 1
+            },
+            {
+              "text": "AI gives you the deadline for your exam registration.",
+              "answer": 1
+            },
+            {
+              "text": "AI suggests a title for your poem.",
+              "answer": 0
+            },
+            {
+              "text": "AI says a scholarship will give you money if you send your bank details.",
+              "answer": 1
+            },
+            {
+              "text": "AI summarises a chapter you have already read, so you can compare it with the book.",
+              "answer": 0
+            }
+          ],
+          "feedback": "Check anything about health, money, dates, news or offers that ask for personal details. Use official sources, a teacher or a trusted adult.",
+          "source_id": "SRC-DOAI-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l5.s2",
+          "type": "read",
+          "heading": "Protect your privacy",
+          "body": "What you type into a chatbot may be stored. Never share passwords, your home address, phone number, ID numbers or bank details. Ask general questions instead of sharing private ones.",
+          "source_id": "SRC-UNESCO-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l5.q1",
+          "type": "single_choice",
+          "prompt": "Which of these should you never type into a chatbot?",
+          "options": [
+            "How do plants make food?",
+            "Your password",
+            "Ideas for a birthday card"
+          ],
+          "correct": 1,
+          "feedback": "Passwords and personal details must stay private.",
+          "source_id": "SRC-UNESCO-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l5.s3",
+          "type": "read",
+          "heading": "AI can be unfair too",
+          "body": "AI learned from text written by people, and some of that text contains unfair ideas about groups of people. So AI answers can sometimes repeat those unfair ideas. If an answer treats a group unfairly, question it.",
+          "source_id": "SRC-UNESCO-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l5.q2",
+          "type": "single_choice",
+          "prompt": "Why can AI answers sometimes be unfair to a group of people?",
+          "options": [
+            "The AI learned from text that contains unfair ideas",
+            "The AI wants to be unkind",
+            "Computers never make unfair answers"
+          ],
+          "correct": 0,
+          "feedback": "AI repeats patterns from its training text, including unfair ones.",
+          "source_id": "SRC-UNESCO-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l5.s4",
+          "type": "read",
+          "heading": "Be honest about AI help",
+          "body": "Follow your school's rules about using AI. If you use AI to help with homework, say so. Use it to understand and practise, not to hand in work that is not yours.",
+          "source_id": "SRC-DOAI-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l5.q3",
+          "type": "single_choice",
+          "prompt": "Your teacher allows AI for brainstorming but not for writing essays. What should you do?",
+          "options": [
+            "Use AI to write the whole essay",
+            "Use AI for ideas, then write the essay yourself",
+            "Copy an essay from a friend"
+          ],
+          "correct": 1,
+          "feedback": "Follow the rules and do your own writing. AI can help you think, not replace your work.",
+          "source_id": "SRC-DOAI-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l5.s5",
+          "type": "read",
+          "heading": "Key idea",
+          "body": "Check important facts. Keep personal details private. Watch for unfair answers. Be honest about AI help.",
+          "source_id": "SRC-UNESCO-01",
+          "reviewed_by": null
+        }
+      ]
+    },
+    {
+      "lesson_id": "m1.l6",
+      "number": 6,
+      "title": "Final challenge",
+      "minutes": 5,
+      "objective": "Use everything from Module 1 in real-life situations.",
+      "settings": {
+        "show_feedback": true,
+        "counts_as": "post_test",
+        "badge": "AI Smart"
+      },
+      "items": [
+        {
+          "item_id": "m1.l6.q1",
+          "type": "single_choice",
+          "prompt": "Your cousin says the chatbot 'knows everything because it searches the internet each time'. What do you tell him?",
+          "options": [
+            "He is right",
+            "Most chatbots predict likely words from patterns they learned; some apps add search, but not always",
+            "Chatbots only copy from books"
+          ],
+          "correct": 1,
+          "feedback": "A chatbot builds answers by predicting likely next words. Some apps add a search tool, but that is a separate feature.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l6.q2",
+          "type": "single_choice",
+          "prompt": "A chatbot keeps miscounting the letters in long words. What is the best explanation?",
+          "options": [
+            "It reads text as tokens, not single letters",
+            "It is broken",
+            "It is bad at English only"
+          ],
+          "correct": 0,
+          "feedback": "Words are split into tokens, so the model does not see each letter on its own.",
+          "source_id": "SRC-GOOG-LLM-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l6.q3",
+          "type": "single_choice",
+          "prompt": "You want help planning a 1-week revision timetable for 3 subjects. Which prompt is best?",
+          "options": [
+            "Help",
+            "Timetable please",
+            "You are a study coach. I have exams in maths, science and English in one week and 2 free hours each day. Make a daily plan as a table."
+          ],
+          "correct": 2,
+          "feedback": "It gives a role, context, a clear task and a format.",
+          "source_id": "SRC-GOOG-PROMPT-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l6.q4",
+          "type": "single_choice",
+          "prompt": "Your friend's essay quotes a study the chatbot suggested, but you cannot find the study anywhere. What happened?",
+          "options": [
+            "The study is secret",
+            "The chatbot may have invented it: a hallucination",
+            "Your internet is slow"
+          ],
+          "correct": 1,
+          "feedback": "Chatbots can invent studies, names and numbers. If you cannot find it, do not use it.",
+          "source_id": "SRC-GOOG-HALL-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l6.q5",
+          "type": "single_choice",
+          "prompt": "A message says 'AI confirms you won a prize. Send your phone number and bank details.' What do you do?",
+          "options": [
+            "Send the details quickly",
+            "Do not share anything; check with a trusted adult or the official source",
+            "Share only your phone number"
+          ],
+          "correct": 1,
+          "feedback": "Never share personal or bank details. Offers that ask for them are often scams.",
+          "source_id": "SRC-UNESCO-01",
+          "reviewed_by": null
+        },
+        {
+          "item_id": "m1.l6.s1",
+          "type": "read",
+          "heading": "Module complete: you are AI Smart!",
+          "body": "You now know how chatbots build answers, why they use tokens, how to write clear prompts, how to spot mistakes, and how to use AI wisely. Compare your score with your Quick check to see how much you learned.",
+          "source_id": "SRC-UNESCO-01",
+          "reviewed_by": null
+        }
+      ]
+    }
+  ]
+}

@@ -217,7 +217,7 @@ must be confirmed by the team.
 
 ### 18. License
 
-Open-source license: pending team approval.
+Open-source license: MIT License — approved by the LearnLite team.
 
 Do not assume permission to redistribute third-party images,
 sounds, models or other assets until rights are verified.
